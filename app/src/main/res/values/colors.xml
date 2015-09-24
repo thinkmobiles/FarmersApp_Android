@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="project_background_dark">#1f2128</color>
+    <color name="project_primary">#00b9e6</color>
+    <color name="opaque">#00000000</color>
+    <color name="text_white">#ccffffff</color>
+    <color name="white">#ffffff</color>
+    <color name="white_opague">#44ffffff</color>
+</resources>
