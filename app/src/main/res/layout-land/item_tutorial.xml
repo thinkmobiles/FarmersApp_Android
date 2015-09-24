@@ -24,7 +24,7 @@
                 android:text="TITLE"/>
 
         <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:maxWidth="@dimen/tutorial_max_width"
                 android:paddingRight="@dimen/tutorial_content_side_padding"
@@ -43,14 +43,14 @@
 
             <ImageView
                     android:id="@+id/iv_TutorialItemBG"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal|bottom"
                     android:clickable="true"
-                    android:scaleType="fitXY"/>
+                    android:scaleType="fitEnd"  />
         </LinearLayout>
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

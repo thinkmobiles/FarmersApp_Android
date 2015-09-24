@@ -12,4 +12,5 @@
     <dimen name="tutorial_tv_size">20sp</dimen>
     <dimen name="tutorial_content_top_margin">55dp</dimen>
     <dimen name="tutorial_title_side_margin">55dp</dimen>
+    <dimen name="tutorial_max_width">400dp</dimen>
 </resources>

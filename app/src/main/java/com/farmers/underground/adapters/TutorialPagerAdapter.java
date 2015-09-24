@@ -1,4 +1,4 @@
-package com.farmers.underground.ui.adapters;
+package com.farmers.underground.adapters;
 
 
 import android.support.v4.app.Fragment;
