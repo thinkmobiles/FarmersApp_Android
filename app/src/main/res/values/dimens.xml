@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="tutorial_dot_size">40dp</dimen>
+    <dimen name="tutorial_dot_drawable_size">15dp</dimen>
+    <dimen name="tutorial_bg_corners">10dp</dimen>
+    <dimen name="tutorial_bg_item_offset">8dp</dimen>
+    <dimen name="tutorial_radio_top_margin">45dp</dimen>
+    <dimen name="tutorial_title_top_margin">45dp</dimen>
+    <dimen name="tutorial_content_side_padding">55dp</dimen>
+    <dimen name="tutorial_iv_height">200dp</dimen>
+    <dimen name="tutorial_iv_width">200dp</dimen>
+    <dimen name="tutorial_tv_size">20sp</dimen>
+    <dimen name="tutorial_content_top_margin">55dp</dimen>
+    <dimen name="tutorial_title_side_margin">55dp</dimen>
+    <dimen name="tutorial_max_width">400dp</dimen>
+</resources>

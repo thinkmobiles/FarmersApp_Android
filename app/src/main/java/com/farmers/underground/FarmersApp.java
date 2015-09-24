@@ -2,6 +2,8 @@ package com.farmers.underground;
 
 import android.app.Application;
 
+import com.facebook.FacebookSdk;
+
 /**
  * Created by tZpace
  * on 24-Sep-15.
@@ -24,6 +26,10 @@ public class FarmersApp extends Application {
     public void onCreate() {
         super.onCreate();
         ourInstance = this;
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        // Initialize the SDK before executing any other operations,
+        // especially, if you're using Facebook UI elements.
 
         /** put your code below */
 
