@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">Farmers iw</string>
-
+    <string name="app_name">Farmers en</string>
 
     <string name="tutorial_test_title">Test</string>
     <string name="tutorial_test_text">You should always provide bitmap resources

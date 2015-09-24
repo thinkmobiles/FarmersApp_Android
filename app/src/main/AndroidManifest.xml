@@ -17,11 +17,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".ui.activities.TutorialActivity"
-                  android:theme="@style/TutorialActivityTheme">
-
-        </activity>
-
+                  android:theme="@style/TutorialActivityTheme" />
 
         <activity
             android:name="com.facebook.FacebookActivity"

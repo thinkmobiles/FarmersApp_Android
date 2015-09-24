@@ -1,46 +1,53 @@
 package com.farmers.underground.ui.activities;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+
 import butterknife.Bind;
+import butterknife.OnPageChange;
 import butterknife.ButterKnife;
 
-import butterknife.OnPageChange;
 import com.farmers.underground.R;
 import com.farmers.underground.adapters.TutorialPagerAdapter;
 import com.farmers.underground.models.TutorialItemDataHolder;
+import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.fragments.FragmentTutorialItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by omar on 9/24/15.
+ * Created by omar
+ * on 9/24/15.
  */
-public class TutorialActivity extends AppCompatActivity {
+public class TutorialActivity extends BaseActivity {
+
+    public static final String KEY_DATA = "data";
 
     @Bind(R.id.rg_Tutorial)
     ViewGroup radioGroup;
     @Bind(R.id.vp_Tutorial)
     ViewPager viewPager;
 
-    private TutorialPagerAdapter adapter;
+    private TutorialPagerAdapter<FragmentTutorialItem> adapter;
+
+    @Override
+    public int getLayoutResId() {
+        return R.layout.tutorial_activity;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.tutorial_activity);
         ButterKnife.bind(this);
         initPager();
     }
 
     public void initPager() {
-        adapter = new TutorialPagerAdapter(getSupportFragmentManager());
+        adapter = new TutorialPagerAdapter<>(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
         adapter.setFragments(getFragmentList(getDataList()));
         adapter.notifyDataSetChanged();
@@ -49,7 +56,7 @@ public class TutorialActivity extends AppCompatActivity {
 
     private List<TutorialItemDataHolder> getDataList() {
         List<TutorialItemDataHolder> dataHolderList = new ArrayList<>();
-        dataHolderList.add( new TutorialItemDataHolder(R.string.tutorial_test_title,
+        dataHolderList.add(new TutorialItemDataHolder(R.string.tutorial_test_title,
                 R.string.tutorial_test_text,
                 R.drawable.screenshot_1));
         dataHolderList.add(new TutorialItemDataHolder(R.string.tutorial_test_title,
@@ -61,11 +68,11 @@ public class TutorialActivity extends AppCompatActivity {
         return dataHolderList;
     }
 
-    private List<Fragment> getFragmentList(List<TutorialItemDataHolder> dataHolderList) {
-        List<Fragment> fragmentList = new ArrayList<>();
+    private List<FragmentTutorialItem> getFragmentList(List<TutorialItemDataHolder> dataHolderList) {
+        List<FragmentTutorialItem> fragmentList = new ArrayList<>();
         for (TutorialItemDataHolder item : dataHolderList) {
             Bundle args = new Bundle();
-            args.putSerializable("data", item);
+            args.putSerializable(KEY_DATA, item);
             FragmentTutorialItem fragmentTutorialItem = new FragmentTutorialItem();
             fragmentTutorialItem.setArguments(args);
             fragmentList.add(fragmentTutorialItem);
@@ -91,6 +98,4 @@ public class TutorialActivity extends AppCompatActivity {
     void onPagerPageChanged(int position) {
         ((RadioButton) radioGroup.getChildAt(position)).setChecked(true);
     }
-
-
 }

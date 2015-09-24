@@ -1,55 +1,51 @@
 package com.farmers.underground.ui.fragments;
 
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import com.farmers.underground.R;
 import com.farmers.underground.models.TutorialItemDataHolder;
-import android.support.design.widget.Snackbar;
-
+import com.farmers.underground.ui.activities.TutorialActivity;
+import com.farmers.underground.ui.base.BaseFragment;
 
 /**
- * Created by omar on 9/24/15.
+ * Created by omar
+ * on 9/24/15.
  */
-public class FragmentTutorialItem extends Fragment {
+public class FragmentTutorialItem extends BaseFragment<TutorialActivity> {
 
     @Bind(R.id.iv_TutorialItemBG)
-    ImageView iv_TutorialItemBG;
+    protected ImageView iv_TutorialItemBG;
+
     @Bind(R.id.tv_TutorialText)
-    TextView tv_TutorialText;
+    protected  TextView tv_TutorialText;
+
     @Bind(R.id.tv_TutorialTitle)
-    TextView tv_TutorialTitle;
-    @Bind(R.id.snackbarPosition)
-    View coordinatorLayoutView;
+    protected  TextView tv_TutorialTitle;
 
     private TutorialItemDataHolder tutorialItemDataHolder;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        tutorialItemDataHolder = (TutorialItemDataHolder) getArguments().getSerializable("data");
+        tutorialItemDataHolder = (TutorialItemDataHolder) getArguments().getSerializable(TutorialActivity.KEY_DATA);
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.item_tutorial, container, false);
-        ButterKnife.bind(this, view);
-        return view;
+    protected int getLayoutResId() {
+        return R.layout.item_tutorial;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        ButterKnife.bind(this, view);
+
         setData();
     }
 
@@ -57,18 +53,5 @@ public class FragmentTutorialItem extends Fragment {
         iv_TutorialItemBG.setImageResource(tutorialItemDataHolder.getContentImageRes());
         tv_TutorialText.setText(getString(tutorialItemDataHolder.getContentTextRes()));
         tv_TutorialTitle.setText(getString(tutorialItemDataHolder.getContentTitleRes()));
-    }
-
-    @OnClick(R.id.iv_TutorialItemBG)
-    void showSnackBar(){
-        Snackbar
-                .make(coordinatorLayoutView, R.string.tutorial_snackbar_text, Snackbar.LENGTH_LONG)
-                .setAction(R.string.tutorial_snackbar_btn_text, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        getActivity().onBackPressed();
-                    }
-                })
-                .show();
     }
 }

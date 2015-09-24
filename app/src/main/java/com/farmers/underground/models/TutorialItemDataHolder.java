@@ -6,17 +6,18 @@ import android.support.annotation.StringRes;
 import java.io.Serializable;
 
 /**
- * Created by omar on 9/24/15.
+ * Created by omar
+ * on 9/24/15.
  */
 public class TutorialItemDataHolder implements Serializable {
     @DrawableRes
-    int contentImageRes;
+    private int contentImageRes;
     @StringRes
-    int contentText;
+    private int contentText;
     @StringRes
-    int contentTitle;
+    private int contentTitle;
 
-    public TutorialItemDataHolder( int contentTitle, int contentText, int contentImageRes) {
+    public TutorialItemDataHolder(int contentTitle, int contentText, int contentImageRes) {
         this.contentImageRes = contentImageRes;
         this.contentText = contentText;
         this.contentTitle = contentTitle;

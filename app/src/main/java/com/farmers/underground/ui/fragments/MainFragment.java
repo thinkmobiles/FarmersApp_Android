@@ -14,7 +14,6 @@ import com.farmers.underground.ui.base.BaseFragment;
 /** JUST EXAMPLE*/
 public class MainFragment extends BaseFragment<MainActivity> {
 
-
     @Override
     public int getLayoutResId() {
         //set layout res id here;

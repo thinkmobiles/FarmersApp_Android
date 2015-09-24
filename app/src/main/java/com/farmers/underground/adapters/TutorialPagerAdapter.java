@@ -1,21 +1,20 @@
 package com.farmers.underground.adapters;
 
-
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-
+import com.farmers.underground.ui.fragments.FragmentTutorialItem;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by omar on 9/24/15.
+ * Created by omar
+ * on 9/24/15.
  */
-public class TutorialPagerAdapter extends FragmentPagerAdapter {
+public class TutorialPagerAdapter<F extends FragmentTutorialItem> extends FragmentPagerAdapter {
 
-    List<Fragment> fragmentList;
+    private List<F> fragmentList;
 
-    public void setFragments(List<Fragment> fragmentList){
+    public void setFragments(List<F> fragmentList){
         this.fragmentList = fragmentList;
     }
 
@@ -25,7 +24,7 @@ public class TutorialPagerAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public Fragment getItem(int position) {
+    public F getItem(int position) {
         return fragmentList.get(position);
     }
 

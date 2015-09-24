@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/tutorial_bg_item_offset"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/snackbarPosition">
 
 
     <RelativeLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/tutorial_bg"
@@ -53,4 +46,3 @@
                     android:scaleType="fitXY"/>
         </LinearLayout>
     </RelativeLayout>
-</android.support.design.widget.CoordinatorLayout>

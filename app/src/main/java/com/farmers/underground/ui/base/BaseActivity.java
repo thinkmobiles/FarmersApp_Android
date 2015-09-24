@@ -1,14 +1,16 @@
 package com.farmers.underground.ui.base;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
+import android.support.v7.app.AppCompatActivity;
 
 /**
  * Created by tZpace
  * on 24-Sep-15.
  */
-public abstract class BaseActivity extends Activity {
+public abstract class BaseActivity extends AppCompatActivity {
 
+    @LayoutRes
     public abstract int getLayoutResId();
 
     @Override

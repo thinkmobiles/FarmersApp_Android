@@ -2,4 +2,19 @@
 <resources>
     <!-- \u200F (this is RIGHT-TO-LEFT MARK character)  -->
     <string name="app_name">\u200FFarmers iw</string>
+
+
+    <string name="tutorial_test_title">Test</string><!--TODO-->
+    <string name="tutorial_test_text">You should always provide bitmap resources
+        that are properly scaled to each of
+        the generalized density buckets: low, medium, high and extra-high density.
+        This helps you achieve good graphical quality and performance on all screen densities.
+        To generate these images, you should start with your raw resource in vector
+        format and generate the images for each density using the following size scale:</string><!--TODO-->
+    <string name="tutorial_snackbar_text">Finish tutorial</string><!--TODO-->
+    <string name="tutorial_snackbar_btn_text">LEAVE</string><!--TODO-->
+
+
+    <string name="facebook_app_id">todo</string><!--TODO-->
+
 </resources>
