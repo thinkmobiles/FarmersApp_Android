@@ -1,9 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="project_background_dark">#1f2128</color>
-    <color name="project_primary">#00b9e6</color>
+
+    //main colors
     <color name="opaque">#00000000</color>
-    <color name="text_white">#ccffffff</color>
     <color name="white">#ffffff</color>
+    <color name="aqua">#009688</color>
+    <color name="light_blue">#00b9e6</color>
     <color name="white_opague">#44ffffff</color>
+
+    //colors of background
+    <color name="project_background_dark">#1f2128</color>
+    <color name="bg_light_blue">#00b9e6</color>
+    <color name="bg_btn_login">#80b957</color>
+    <color name="bg_dark_aqua">#009688</color>
+    <color name="bg_btn_facebook">#36599a</color>
+    <color name="bg_light_grey">#eeeeee</color>
+    <color name="bg_grey_opaque">#59000000</color>
+    <color name="bg_grey">#979797</color>
+    <color name="shadow_dialog">#aa000000</color>
+    <color name="bg_calendar">#fafafa</color>
+    <color name="bg_graph_golden">#d8c171</color>
+    <color name="bg_graph_aqua">#2ea998</color>
+    <color name="bg_graph_light_blue">#00b9e6</color>
+    <color name="bg_graph_background">#f2f5f8</color>
+    <color name="bg_graph_devider">#dee2e7</color>
+    <color name="bg_graph_year">#c6ccd1</color>
+
+    //colors of text
+    <color name="text_white">#ccffffff</color>
+    <color name="text_grey">#515151</color>
+    <color name="text_light_grey">#bbbbbb</color>
+    <color name="text_cyan">#05d1bc</color>
+    <color name="text_aqua">#009688</color>
+    <color name="text_light_blue">#4a90e2</color>
+    <color name="hint_login_color">#546979</color>
+    <color name="text_dark_grey">#333333</color>
+    <color name="text_black">#df000000</color>
+    <color name="text_selected_month">#b1dfdb</color>
+    <color name="text_top_statistic">#0a89a7</color>
 </resources>
