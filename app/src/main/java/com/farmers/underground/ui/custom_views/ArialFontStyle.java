@@ -10,5 +10,6 @@ package com.farmers.underground.ui.custom_views;
  */
 public enum ArialFontStyle {
     REGULAR,
+    BOLD
 
 }

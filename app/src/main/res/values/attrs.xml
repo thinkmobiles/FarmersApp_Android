@@ -11,6 +11,7 @@
     <attr name="customFont" format="enum">
         <enum name="regular" value="0"/>
 
+        <enum name="bold" value="1"/>
     </attr>
 
 

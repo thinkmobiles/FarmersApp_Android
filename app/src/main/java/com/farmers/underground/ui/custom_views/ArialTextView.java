@@ -24,7 +24,7 @@ import com.farmers.underground.R;
  */
 public class ArialTextView extends TextView {
     
-    private static final String fontDir = "Fonts/ArialMT/";
+    private static final String fontDir = "Fonts/";
     
     public ArialTextView(Context context) { super(context); }
 
@@ -71,6 +71,9 @@ public class ArialTextView extends TextView {
                 typeface = Typeface.createFromAsset(am, fontDir + "ArialMT.ttf");
                 break;
 
+            case 1:
+                typeface = Typeface.createFromAsset(am, fontDir + "ArialMTBold.otf");
+                break;
         }
         setTypeface(typeface);
     }

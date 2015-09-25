@@ -19,7 +19,7 @@ import com.farmers.underground.R;
  */
 public class ArialEditText extends EditText {
 
-    private static final String fontDir = "Fonts/ArialMT/";
+    private static final String fontDir = "Fonts/";
 
     public ArialEditText(Context context) { super(context); }
 
@@ -68,6 +68,10 @@ public class ArialEditText extends EditText {
             default:
             case 0:
                 typeface = Typeface.createFromAsset(am, fontDir + "ArialMT.ttf");
+                break;
+
+            case 1:
+                typeface = Typeface.createFromAsset(am, fontDir + "ArialMTBold.otf");
                 break;
 
         }
