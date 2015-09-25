@@ -5,6 +5,7 @@ import android.widget.FrameLayout;
 
 import com.farmers.underground.R;
 import com.farmers.underground.ui.base.BaseActivity;
+import com.farmers.underground.ui.fragments.LoginFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -32,6 +33,10 @@ public class LoginSignUpActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(getFragmentContainerId(), new LoginFragment())
+                .commit();
     }
 
 }

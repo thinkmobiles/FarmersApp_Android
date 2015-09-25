@@ -3,7 +3,7 @@
     <!-- \u200F (this is RIGHT-TO-LEFT MARK character)  -->
     <string name="app_name">\u200FFarmers iw</string>
 
-
+    //tutotial
     <string name="tutorial_test_title">Test</string><!--TODO-->
     <string name="tutorial_test_text">You should always provide bitmap resources
         that are properly scaled to each of
@@ -16,5 +16,16 @@
 
 
     <string name="facebook_app_id">todo</string><!--TODO-->
+    //login
+    <string name="login_text_header">העיקר האיכר</string>
+    <string name="login_text_subheader">מחירי גידולים בצורה נוחה</string>
+    <string name="login_email">\u200Fאימייל</string>
+    <string name="login_password">\u200Fסיסמא</string>
+    <string name="login_forgot_password">\u200Fשכחת את הסיסמא?</string>
+    <string name="login_text_login">כניסה</string>
+    <string name="login_or">או</string>
+    <string name="login_text_login_facebook">כניסה עם פייסבוק</string>
+    <string name="login_register">רישום</string>
+    <string name="login_is_not_register">לא חבר עדיין?</string>
 
 </resources>

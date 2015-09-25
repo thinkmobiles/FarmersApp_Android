@@ -13,4 +13,21 @@
     <dimen name="tutorial_content_top_margin">55dp</dimen>
     <dimen name="tutorial_title_side_margin">55dp</dimen>
     <dimen name="tutorial_max_width">400dp</dimen>
+
+    //login
+    <dimen name="login_fragment_padding">15dp</dimen>
+    <dimen name="login_divider_height">1dp</dimen>
+    <dimen name="login_text_header_size">32sp</dimen>
+    <dimen name="login_text_subheader_size">18sp</dimen>
+    <dimen name="login_text_size">16sp</dimen>
+    <dimen name="login_edit_text_height">40dp</dimen>
+    <dimen name="login_btn_register_height">30dp</dimen>
+    <dimen name="login_btn_register_padding_top_bottom">3dp</dimen>
+    <dimen name="login_btn_register_padding_left_right">30dp</dimen>
+    <dimen name="login_btn_login_height">45dp</dimen>
+    <dimen name="login_small_padding_margin">5dp</dimen>
+    <dimen name="login_margin_register_login_fb">40dp</dimen>
+    <dimen name="login_margin_btn_logins">8dp</dimen>
+    <dimen name="login_margin_btn_login_edit">30dp</dimen>
+    <dimen name="login_margin_top_header">15dp</dimen>
 </resources>

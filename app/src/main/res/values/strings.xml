@@ -14,4 +14,16 @@
 
     <string name="facebook_app_id">todo</string><!--TODO-->
 
+    //login
+    <string name="login_text_header">The main thing is the farmer</string>
+    <string name="login_text_subheader">Prices tumors comfortably</string>
+    <string name="login_email">Email</string>
+    <string name="login_password">Passwor</string>
+    <string name="login_forgot_password">Forgot password?</string>
+    <string name="login_text_login">Login</string>
+    <string name="login_or">or</string>
+    <string name="login_text_login_facebook">Login with Facebook</string>
+    <string name="login_register">Register</string>
+    <string name="login_is_not_register">Not a member yet?</string>
+
 </resources>
