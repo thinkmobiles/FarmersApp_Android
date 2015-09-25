@@ -10,19 +10,7 @@
 
     <attr name="customFont" format="enum">
         <enum name="regular" value="0"/>
-        <enum name="thinItalic" value="1"/>
-        <enum name="thin" value="2"/>
-        <enum name="semiBoldItalic" value="3"/>
-        <enum name="semiBold" value="4"/>
-        <enum name="light" value="5"/>
-        <enum name="lightItalic" value="6"/>
-        <enum name="italic" value="7"/>
-        <enum name="hairLineItalic" value="8"/>
-        <enum name="hairline" value="9"/>
-        <enum name="boldItalic" value="10"/>
-        <enum name="bold" value="11"/>
-        <enum name="blackItalic" value="12"/>
-        <enum name="black" value="13"/>
+
     </attr>
 
     <declare-styleable name="CGridView">
