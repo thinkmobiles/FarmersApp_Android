@@ -143,6 +143,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/login_btn_register_height"
+                android:text="@string/login_is_not_register"
+                android:id="@+id/textView3"
+                android:textSize="@dimen/login_text_size"
+                style="@style/TextLoginScreen" />
+
+            <View android:layout_height="0dp" android:layout_width="6.5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/login_btn_register_height"
                 android:text="@string/login_register"
                 android:id="@+id/tvRegister"
                 android:gravity="center"
@@ -154,14 +164,6 @@
                 android:paddingRight="@dimen/login_btn_register_padding_left_right"
                 android:layout_marginRight="@dimen/login_small_padding_margin"
                 android:textStyle="bold"
-                style="@style/TextLoginScreen" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/login_btn_register_height"
-                android:text="@string/login_is_not_register"
-                android:id="@+id/textView3"
-                android:textSize="@dimen/login_text_size"
                 style="@style/TextLoginScreen" />
         </LinearLayout>
     </LinearLayout>
