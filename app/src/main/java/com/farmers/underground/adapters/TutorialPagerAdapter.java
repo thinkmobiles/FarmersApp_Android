@@ -2,7 +2,7 @@ package com.farmers.underground.adapters;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import com.farmers.underground.ui.fragments.FragmentTutorialItem;
+import com.farmers.underground.ui.fragments.TutorialItemFragment;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
  * Created by omar
  * on 9/24/15.
  */
-public class TutorialPagerAdapter<F extends FragmentTutorialItem> extends FragmentPagerAdapter {
+public class TutorialPagerAdapter<F extends TutorialItemFragment> extends FragmentPagerAdapter {
 
     private List<F> fragmentList;
 

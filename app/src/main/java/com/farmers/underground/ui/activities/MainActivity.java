@@ -21,9 +21,13 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Intent intent;
+        //run Tutorial test
+//        intent= new Intent(this, TutorialActivity.class);
+//        startActivity(intent);
 
-        //run TUTORIAL test
-        Intent intent = new Intent(this, TutorialActivity.class);
+        //run LoginSignUp test
+        intent = new Intent(this, LoginSignUpActivity.class);
         startActivity(intent);
     }
 }

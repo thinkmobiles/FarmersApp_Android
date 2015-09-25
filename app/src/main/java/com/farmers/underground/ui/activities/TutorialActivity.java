@@ -14,7 +14,7 @@ import com.farmers.underground.R;
 import com.farmers.underground.adapters.TutorialPagerAdapter;
 import com.farmers.underground.models.TutorialItemDataHolder;
 import com.farmers.underground.ui.base.BaseActivity;
-import com.farmers.underground.ui.fragments.FragmentTutorialItem;
+import com.farmers.underground.ui.fragments.TutorialItemFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,7 @@ public class TutorialActivity extends BaseActivity {
     @Bind(R.id.vp_Tutorial)
     ViewPager viewPager;
 
-    private TutorialPagerAdapter<FragmentTutorialItem> adapter;
+    private TutorialPagerAdapter<TutorialItemFragment> adapter;
 
     @Override
     public int getLayoutResId() {
@@ -68,12 +68,12 @@ public class TutorialActivity extends BaseActivity {
         return dataHolderList;
     }
 
-    private List<FragmentTutorialItem> getFragmentList(List<TutorialItemDataHolder> dataHolderList) {
-        List<FragmentTutorialItem> fragmentList = new ArrayList<>();
+    private List<TutorialItemFragment> getFragmentList(List<TutorialItemDataHolder> dataHolderList) {
+        List<TutorialItemFragment> fragmentList = new ArrayList<>();
         for (TutorialItemDataHolder item : dataHolderList) {
             Bundle args = new Bundle();
             args.putSerializable(KEY_DATA, item);
-            FragmentTutorialItem fragmentTutorialItem = new FragmentTutorialItem();
+            TutorialItemFragment fragmentTutorialItem = new TutorialItemFragment();
             fragmentTutorialItem.setArguments(args);
             fragmentList.add(fragmentTutorialItem);
             addDot();
