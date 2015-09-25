@@ -2,8 +2,18 @@
 <resources>
     <color name="project_background_dark">#1f2128</color>
     <color name="project_primary">#00b9e6</color>
+
     <color name="opaque">#00000000</color>
     <color name="text_white">#ccffffff</color>
     <color name="white">#ffffff</color>
     <color name="white_opague">#44ffffff</color>
+
+    <color name="tutorial_next_bg_color">#009688</color>
+    <color name="tutorial_next_bg_color_pressed">#20b6a8</color>
+
+    <color name="tutorial_gradient_start">#00b9e6</color>
+    <color name="tutorial_gradient_end">#1f00b8e6</color>
+
+
+
 </resources>

@@ -7,7 +7,6 @@
 
     <style name="TutorialActivityTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowNoTitle">true</item>
-        <item name="android:windowFullscreen">true</item>
         <item name="android:windowActionBar">false</item>
     </style>
 
@@ -22,8 +21,4 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/tutorial_tv_size</item>
     </style>
-
-
-
-
 </resources>
