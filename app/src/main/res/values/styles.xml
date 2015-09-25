@@ -11,7 +11,11 @@
         <item name="android:windowActionBar">false</item>
     </style>
 
-
+    <style name="LoginSignUpActivityTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowActionBar">false</item>
+    </style>
 
     <style name="TV_Tutorial_Content">
         <item name="android:textColor">@color/text_white</item>

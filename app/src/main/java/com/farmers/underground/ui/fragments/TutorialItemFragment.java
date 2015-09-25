@@ -16,7 +16,7 @@ import com.farmers.underground.ui.base.BaseFragment;
  * Created by omar
  * on 9/24/15.
  */
-public class FragmentTutorialItem extends BaseFragment<TutorialActivity> {
+public class TutorialItemFragment extends BaseFragment<TutorialActivity> {
 
     @Bind(R.id.iv_TutorialItemBG)
     protected ImageView iv_TutorialItemBG;
