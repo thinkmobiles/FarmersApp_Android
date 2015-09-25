@@ -18,6 +18,11 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
+    protected int getFragmentContainerId() {
+        return 0;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

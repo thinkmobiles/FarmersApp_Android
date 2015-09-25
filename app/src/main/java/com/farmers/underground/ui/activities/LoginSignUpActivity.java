@@ -15,12 +15,17 @@ import butterknife.ButterKnife;
  */
 public class LoginSignUpActivity extends BaseActivity {
 
-    @Bind(R.id.fr_containrer_LSA)
-    protected FrameLayout container;
+    /*@Bind(R.id.fr_containrer_LSA)
+    protected FrameLayout container;*/
 
     @Override
     public int getLayoutResId() {
         return R.layout.activity_login_signup;
+    }
+
+    @Override
+    protected int getFragmentContainerId() {
+        return R.id.fr_containrer_LSA;
     }
 
     @Override

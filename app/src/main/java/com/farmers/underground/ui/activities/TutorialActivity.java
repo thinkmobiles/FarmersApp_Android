@@ -40,6 +40,11 @@ public class TutorialActivity extends BaseActivity {
     }
 
     @Override
+    protected int getFragmentContainerId() {
+        return 0;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
