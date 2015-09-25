@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ArialTextView">
+        <attr name="customFont"/>
+    </declare-styleable>
+
+    <declare-styleable name="ArialEditText">
+        <attr name="customFont"/>
+    </declare-styleable>
+
+    <attr name="customFont" format="enum">
+        <enum name="regular" value="0"/>
+
+    </attr>
+
+
+    <!-- Menu related values -->
+
+</resources>

@@ -23,7 +23,9 @@ import java.util.List;
  * Created by omar
  * on 9/24/15.
  */
-public class TutorialActivity extends BaseActivity {
+public class TutorialActivity
+        extends BaseActivity
+        implements   TutorialItemFragment.Callback{
 
     public static final String KEY_DATA = "data";
 
@@ -56,19 +58,15 @@ public class TutorialActivity extends BaseActivity {
         viewPager.setAdapter(adapter);
         adapter.setFragments(getFragmentList(getDataList()));
         adapter.notifyDataSetChanged();
+        viewPager.setCurrentItem(adapter.getCount() - 1);
     }
 
 
     private List<TutorialItemDataHolder> getDataList() {
         List<TutorialItemDataHolder> dataHolderList = new ArrayList<>();
-        dataHolderList.add(new TutorialItemDataHolder(R.string.tutorial_test_title,
-                R.string.tutorial_test_text,
-                R.drawable.screenshot_1));
-        dataHolderList.add(new TutorialItemDataHolder(R.string.tutorial_test_title,
-                R.string.tutorial_test_text,
-                R.drawable.screenshot_2));
-        dataHolderList.add(new TutorialItemDataHolder(R.string.tutorial_test_title,
-                R.string.tutorial_test_text,
+        dataHolderList.add(new TutorialItemDataHolder(R.string.tutorial_back_title, R.string.tutorial_test_text, R.drawable.screenshot_1));
+        dataHolderList.add(new TutorialItemDataHolder(R.string.tutorial_back_title, R.string.tutorial_test_text, R.drawable.screenshot_2));
+        dataHolderList.add(new TutorialItemDataHolder(R.string.tutorial_back_title, R.string.tutorial_test_text,
                 R.drawable.screenshot_1));
         return dataHolderList;
     }
@@ -96,11 +94,17 @@ public class TutorialActivity extends BaseActivity {
         radioButton.setLayoutParams(params);
         radioButton.setButtonDrawable(R.drawable.tutorial_dot_selector);
         radioGroup.addView(radioButton);
-        ((RadioButton) radioGroup.getChildAt(0)).setChecked(true);
     }
 
     @OnPageChange(R.id.vp_Tutorial)
     void onPagerPageChanged(int position) {
         ((RadioButton) radioGroup.getChildAt(position)).setChecked(true);
+    }
+
+    @Override
+    public void onNextClicked() {
+        int currentPagerItem = viewPager.getCurrentItem();
+        if(0== currentPagerItem) onBackPressed();
+        else viewPager.setCurrentItem(currentPagerItem-1);
     }
 }
