@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import com.farmers.underground.R;
 
 /**
  * Created by tZpace
@@ -71,6 +72,10 @@ public abstract class BaseActivity extends AppCompatActivity {
             ft.addToBackStack(fragmentTag);
         }
         ft.commit();
+    }
+
+    protected final boolean isRTL(){
+        return getResources().getBoolean(R.bool.isRTL);
     }
 
 }

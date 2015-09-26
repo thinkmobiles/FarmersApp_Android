@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.view.animation.ScaleAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,10 +28,8 @@ public class TutorialItemFragment extends BaseFragment<TutorialActivity> {
     @Bind(R.id.tv_TutorialText)
     protected TextView tv_TutorialText;
 
-    @Bind(R.id.tv_TutorialTitle)
-    protected TextView tv_TutorialTitle;
-
-
+    @Bind(R.id.fl_TutorialNext)
+    protected FrameLayout fl_nextButton;
 
     private TutorialItemDataHolder tutorialItemDataHolder;
     private Callback callback;
@@ -63,12 +62,12 @@ public class TutorialItemFragment extends BaseFragment<TutorialActivity> {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         setData();
+        animateNextButton();
     }
 
     private void setData() {
         iv_TutorialItemBG.setImageResource(tutorialItemDataHolder.getContentImageRes());
         tv_TutorialText.setText(getString(tutorialItemDataHolder.getContentTextRes()));
-        tv_TutorialTitle.setText(getString(tutorialItemDataHolder.getContentTitleRes()));
     }
 
     @OnClick(R.id.fl_TutorialNext)
@@ -78,11 +77,22 @@ public class TutorialItemFragment extends BaseFragment<TutorialActivity> {
 
     @OnClick(R.id.tv_TutorialTitle)
     protected void OnTitleClicked() {
-        getActivity().onBackPressed();
+        callback.onSkipClicked();
+    }
+
+    public void animateNextButton() {
+        if (fl_nextButton != null) {
+            fl_nextButton.setTranslationY(1000);
+            fl_nextButton.animate().translationYBy(1000)
+                    .translationY(0)
+                    .setDuration(getResources().getInteger(android.R.integer.config_longAnimTime));
+        }
     }
 
     public interface Callback {
         void onNextClicked();
+
+        void onSkipClicked();
     }
 
 

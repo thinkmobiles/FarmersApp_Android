@@ -14,13 +14,10 @@ public class TutorialItemDataHolder implements Serializable {
     private int contentImageRes;
     @StringRes
     private int contentText;
-    @StringRes
-    private int contentTitle;
 
-    public TutorialItemDataHolder(int contentTitle, int contentText, int contentImageRes) {
+    public TutorialItemDataHolder( int contentText, int contentImageRes) {
         this.contentImageRes = contentImageRes;
         this.contentText = contentText;
-        this.contentTitle = contentTitle;
     }
 
 
@@ -30,9 +27,5 @@ public class TutorialItemDataHolder implements Serializable {
 
     public int getContentTextRes() {
         return contentText;
-    }
-
-    public int getContentTitleRes() {
-        return contentTitle;
     }
 }

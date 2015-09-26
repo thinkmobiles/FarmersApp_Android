@@ -1,5 +1,6 @@
 package com.farmers.underground.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.ViewGroup;
@@ -17,22 +18,21 @@ import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.fragments.TutorialItemFragment;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by omar
  * on 9/24/15.
  */
-public class TutorialActivity
-        extends BaseActivity
-        implements   TutorialItemFragment.Callback{
+public class TutorialActivity extends BaseActivity implements TutorialItemFragment.Callback {
 
     public static final String KEY_DATA = "data";
 
     @Bind(R.id.rg_Tutorial)
-    ViewGroup radioGroup;
+    protected ViewGroup radioGroup;
     @Bind(R.id.vp_Tutorial)
-    ViewPager viewPager;
+    protected ViewPager viewPager;
 
     private TutorialPagerAdapter<TutorialItemFragment> adapter;
 
@@ -58,16 +58,15 @@ public class TutorialActivity
         viewPager.setAdapter(adapter);
         adapter.setFragments(getFragmentList(getDataList()));
         adapter.notifyDataSetChanged();
-        viewPager.setCurrentItem(adapter.getCount() - 1);
+        viewPager.setCurrentItem(isRTL() ? adapter.getCount() - 1 : 0);
     }
 
 
     private List<TutorialItemDataHolder> getDataList() {
         List<TutorialItemDataHolder> dataHolderList = new ArrayList<>();
-        dataHolderList.add(new TutorialItemDataHolder(R.string.tutorial_back_title, R.string.tutorial_test_text, R.drawable.screenshot_1));
-        dataHolderList.add(new TutorialItemDataHolder(R.string.tutorial_back_title, R.string.tutorial_test_text, R.drawable.screenshot_2));
-        dataHolderList.add(new TutorialItemDataHolder(R.string.tutorial_back_title, R.string.tutorial_test_text,
-                R.drawable.screenshot_1));
+        dataHolderList.add(new TutorialItemDataHolder(R.string.tutorial_content_1, R.drawable.tutorial_image_1));
+        dataHolderList.add(new TutorialItemDataHolder(R.string.tutorial_content_2, R.drawable.tutorial_image_2));
+        if (isRTL()) Collections.reverse(dataHolderList);
         return dataHolderList;
     }
 
@@ -94,17 +93,31 @@ public class TutorialActivity
         radioButton.setLayoutParams(params);
         radioButton.setButtonDrawable(R.drawable.tutorial_dot_selector);
         radioGroup.addView(radioButton);
+        ((RadioButton) radioGroup.getChildAt(0)).setChecked(true);
     }
 
     @OnPageChange(R.id.vp_Tutorial)
-    void onPagerPageChanged(int position) {
+   protected void onPagerPageChanged(int position) {
         ((RadioButton) radioGroup.getChildAt(position)).setChecked(true);
+        adapter.getItem(position).animateNextButton();
     }
 
     @Override
     public void onNextClicked() {
         int currentPagerItem = viewPager.getCurrentItem();
-        if(0== currentPagerItem) onBackPressed();
-        else viewPager.setCurrentItem(currentPagerItem-1);
+        if (isRTL()) {
+            if (0 == currentPagerItem)  onSkipClicked();
+            else viewPager.setCurrentItem(currentPagerItem - 1);
+        } else {
+            if (adapter.getCount() - 1 == currentPagerItem)  onSkipClicked();
+            else viewPager.setCurrentItem(currentPagerItem + 1);
+        }
+    }
+
+    @Override
+    public void onSkipClicked() {
+        Intent intent = new Intent(this, LoginSignUpActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

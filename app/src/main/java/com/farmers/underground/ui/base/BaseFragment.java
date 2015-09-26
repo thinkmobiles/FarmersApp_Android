@@ -6,13 +6,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.farmers.underground.R;
 
 /**
  * Created by tZpace
  * on 24-Sep-15.
  */
 public abstract class BaseFragment<A extends BaseActivity> extends Fragment {
-
     protected BaseFragment() {
         /* nothing to do */
     }
@@ -39,5 +39,7 @@ public abstract class BaseFragment<A extends BaseActivity> extends Fragment {
 
         return inflater.inflate(getLayoutResId(), container, false);
     }
-
+    protected final boolean isRTL(){
+        return getResources().getBoolean(R.bool.isRTL);
+    }
 }

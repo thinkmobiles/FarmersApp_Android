@@ -3,9 +3,21 @@
     <!-- \u200F (this is RIGHT-TO-LEFT MARK character)  -->
     <string name="app_name">\u200FFarmers iw</string>
 
-
-    <string name="tutorial_back_title">דלג</string><!--TODO-->
-    <string name="tutorial_test_text">\ברוכים הבאים להעיקר האיכר אפליקציה חברתית לחקלאי שחושפת ,משווה ועורכת סטטיסטיקות של מחירי מועצת הצמחים, השוק הסיטונאי ומחירי המשווקים. </string><!--TODO-->
+    \\tutorial
+    <string name="tutorial_skip">דלג</string>
+    <string name="tutorial_content_1">
+       ברוכים הבאים להעיקר האיכר\n
+        אפליקציה חברתית לחקלאי\n
+        שחושפת ,משווה ועורכת סטטיסטיקות\n
+         של מחירי מועצת הצמחים, השוק\n
+         הסיטונאי ומחירי המשווקים. </string>
+    <string name="tutorial_content_2">
+        כל סוג גידול מתעדכן ברמה היומית\n
+        מול מועצת הצמחים,השוק הסיטונאי\n
+        ומחיר המשווק האישי שלך,\n
+        באפשרותך  לראות מחירי משווקים
+        נוספים שהוזנו על ידי\nחבריך החקלאים</string>
+    <string name="tutorial_next">הבא</string>
 
 
     <string name="facebook_app_id">todo</string><!--TODO-->
@@ -21,9 +33,7 @@
     <string name="login_register">רישום</string>
     <string name="login_is_not_register">לא חבר עדיין?</string>
 
-    <string name="tutorial_next">הבא</string>
-    <string name="test_login_fragment">\u200FLogin Fragment</string>
-    <string name="test_tutorial_fragment">\u200FTutorial Fragment</string>
+
     <!--TODO-->
 
 </resources>
