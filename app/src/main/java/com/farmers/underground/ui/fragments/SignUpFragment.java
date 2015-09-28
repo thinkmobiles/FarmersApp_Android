@@ -64,6 +64,9 @@ public class SignUpFragment extends BaseFragment<LoginSignUpActivity> implements
             case R.id.tvLogin_FSU:
                 break;
             case R.id.btnSignUp_FSU:
+                getHostActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(getHostActivity().getFragmentContainerId(), new LoginAfterRegistrationAFragment())
+                        .commit();
                 break;
             case R.id.btnSignUpFB_FSU:
                 break;

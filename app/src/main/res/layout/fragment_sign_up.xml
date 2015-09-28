@@ -179,7 +179,7 @@
             <View android:layout_height="0dp" android:layout_width="6.5dp"/>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/login_btn_register_width"
                 android:layout_height="@dimen/login_btn_register_height"
                 android:text="@string/sign_up_text_login"
                 android:id="@+id/tvLogin_FSU"

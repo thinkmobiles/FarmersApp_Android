@@ -141,7 +141,7 @@
             android:layout_marginTop="@dimen/login_margin_register_login_fb">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/login_btn_register_width"
                 android:layout_height="@dimen/login_btn_register_height"
                 android:text="@string/login_register"
                 android:id="@+id/tvRegister"

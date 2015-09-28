@@ -27,6 +27,7 @@
     <dimen name="login_text_size">16sp</dimen>
     <dimen name="login_edit_text_height">40dp</dimen>
     <dimen name="login_btn_register_height">30dp</dimen>
+    <dimen name="login_btn_register_width">110dp</dimen>
     <dimen name="login_btn_register_padding_top_bottom">3dp</dimen>
     <dimen name="login_btn_register_padding_left_right">30dp</dimen>
     <dimen name="login_btn_login_height">45dp</dimen>
@@ -39,6 +40,12 @@
     <dimen name="sign_up_edit_text_margin_padding">15dp</dimen>
     <dimen name="sign_up_arrow_padding">5dp</dimen>
     <dimen name="sign_up_edit_text_height">48dp</dimen>
+    //after sign
+    <dimen name="after_sign_header_text_size">24sp</dimen>
+    <dimen name="after_sign_propose_skip_text_size">14sp</dimen>
+    <dimen name="after_sign_margin_start_skip">45dp</dimen>
+    <dimen name="after_sign_enter_marketeer_margin_top">60dp</dimen>
+
 
 
 </resources>
