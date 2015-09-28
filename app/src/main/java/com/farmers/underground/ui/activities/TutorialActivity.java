@@ -12,8 +12,8 @@ import butterknife.OnPageChange;
 import butterknife.ButterKnife;
 
 import com.farmers.underground.R;
-import com.farmers.underground.adapters.TutorialPagerAdapter;
-import com.farmers.underground.models.TutorialItemDataHolder;
+import com.farmers.underground.ui.adapters.TutorialPagerAdapter;
+import com.farmers.underground.ui.models.TutorialItemDataHolder;
 import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.fragments.TutorialItemFragment;
 
