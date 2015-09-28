@@ -1,4 +1,4 @@
-package com.farmers.underground.models;
+package com.farmers.underground.ui.models;
 
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;

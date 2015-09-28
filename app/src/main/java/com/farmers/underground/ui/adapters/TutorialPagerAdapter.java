@@ -1,4 +1,4 @@
-package com.farmers.underground.adapters;
+package com.farmers.underground.ui.adapters;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
