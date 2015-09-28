@@ -60,6 +60,9 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> implements 
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.tvRegister:
+                getHostActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(getHostActivity().getFragmentContainerId(), new SignUpFragment())
+                        .commit();
                 break;
             case R.id.btnLogin:
                 break;

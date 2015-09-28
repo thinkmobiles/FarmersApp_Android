@@ -33,6 +33,13 @@
     <string name="login_register">רישום</string>
     <string name="login_is_not_register">לא חבר עדיין?</string>
 
+    //sign_up
+    <string name="sign_up_full_name">שם מלא</string>
+    <string name="sign_up_text_sign_up">הירשם</string>
+    <string name="sign_up_register_facebook">רישום עם פייסבוקהירשם</string>
+    <string name="sign_up_text_login">כניסה</string>
+    <string name="sign_up_is_registred">רשומים כבר?</string>
+
 
     <!--TODO-->
 

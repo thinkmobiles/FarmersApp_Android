@@ -6,6 +6,7 @@
     //main colors
     <color name="opaque">#00000000</color>
     <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
     <color name="aqua">#009688</color>
     <color name="light_blue">#00b9e6</color>
     <color name="white_opague">#44ffffff</color>
@@ -31,6 +32,7 @@
     <color name="bg_graph_background">#f2f5f8</color>
     <color name="bg_graph_devider">#dee2e7</color>
     <color name="bg_graph_year">#c6ccd1</color>
+    <color name="bg_edit_text_sign_up">#4dffffff</color>
 
     //colors of text
     <color name="text_white">#ccffffff</color>
