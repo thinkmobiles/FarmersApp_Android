@@ -38,4 +38,23 @@
     <string name="login_register">Register</string>
     <string name="login_is_not_register">Not a member yet?</string>
 
+    //sign_up
+    <string name="sign_up_full_name">Full name</string>
+    <string name="sign_up_text_sign_up">Sign up</string>
+    <string name="sign_up_register_facebook">Register with Facebook</string>
+    <string name="sign_up_text_login">Login</string>
+    <string name="sign_up_is_registred">Registered already?</string>
+
+    //after sign up
+    <string name="after_sign_header">A little something, immediately ending!</string>
+    <string name="after_sign_text">We\'d love to know who your reseller, so you can enter the price of your reseller Recent anonymously and securely for the benefit of other farmers and farmers exposed to other marketers prices</string>
+    <string name="after_sign_enter_marketeer">Enter the name of your dealer</string>
+    <string name="after_sign_start">Let\'s start</string>
+    <string name="after_sign_skip">Skip</string>
+    <string name="after_sign_propose_skip">You can jump, but then not be exposed to prices in other markets</string>
+
+    //after sign b/ selection marketeer
+    <string name="select_marketeer_text_name">Name marketer</string>
+    <string name="select_marketeer_add_name">Add a new marketer </string>
+
 </resources>

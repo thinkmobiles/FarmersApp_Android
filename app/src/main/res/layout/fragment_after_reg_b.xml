@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/login_fragment_padding"
+    android:background="@drawable/bg_login">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="@dimen/login_fragment_padding"
+        android:textSize="@dimen/select_marketeer_text_size"
+        android:textColor="@color/white"
+        android:text="@string/select_marketeer_text_name"
+        android:id="@+id/textView6" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/select_marketeer_name_height"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/main_text_size"
+        android:textColor="@color/white"
+        android:background="@null"
+        android:id="@+id/etMarketeer" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/login_divider_height"
+        android:layout_marginBottom="@dimen/select_marketeer_small_margin"
+        android:background="@color/aqua"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/select_marketeer_text_size"
+        android:textColor="@color/white"
+        android:text="50 / 31"
+        android:id="@+id/tvCounter"
+        android:layout_marginBottom="@dimen/select_marketeer_small_margin"
+        android:gravity="left" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lvListMarketeers" />
+</LinearLayout>

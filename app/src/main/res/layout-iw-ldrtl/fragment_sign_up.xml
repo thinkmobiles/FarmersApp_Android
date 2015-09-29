@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:padding="@dimen/login_fragment_padding"
+    android:background="@drawable/bg_login">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:gravity="center_horizontal"
+        android:layout_above="@+id/llLogin">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login_register"
+                android:id="@+id/textView"
+                android:layout_centerInParent="true"
+                style="@style/TextLoginScreen" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/sign_up_arrow_padding"
+                android:id="@+id/ivBack_FSU"
+                android:src="@drawable/arrow_back"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentLeft="false" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView2"
+                android:layout_centerInParent="true"
+                android:src="@drawable/circles_avatar" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView3"
+                android:layout_centerInParent="true"
+                android:src="@drawable/user_oval" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/llLogin"
+        android:gravity="center_horizontal">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/login_margin_btn_logins"
+            android:background="@color/bg_edit_text_sign_up">
+
+            <EditText
+                style="@style/EditSignUpScreen"
+                android:layout_width="match_parent"
+                android:id="@+id/etName_FSU"
+                android:paddingRight="@dimen/sign_up_edit_text_margin_padding"
+                android:hint="@string/sign_up_full_name"
+                android:textSize="@dimen/login_text_size" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/login_divider_height"
+                android:background="@color/black" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:id="@+id/etEmail_FSU"
+                android:paddingRight="@dimen/sign_up_edit_text_margin_padding"
+                android:hint="@string/login_email"
+                android:textSize="@dimen/login_text_size"
+                style="@style/EditSignUpScreen" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/login_divider_height"
+                android:background="@color/black"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/ivShowPass_FSU"
+                    android:src="@drawable/eye_line"
+                    android:layout_marginLeft="@dimen/sign_up_edit_text_margin_padding"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:id="@+id/etPassword_FSU"
+                    android:paddingRight="@dimen/sign_up_edit_text_margin_padding"
+                    android:hint="@string/login_password"
+                    android:textSize="@dimen/login_text_size"
+                    style="@style/EditSignUpScreen" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/login_btn_login_height"
+            android:gravity="center"
+            android:id="@+id/btnSignUp_FSU"
+            android:background="@drawable/btn_login">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/login_btn_login_height"
+                android:text="@string/sign_up_text_sign_up"
+                android:id="@+id/tvSignUp_FSU"
+                android:textSize="@dimen/login_text_size"
+                android:textStyle="bold"
+                style="@style/TextLoginScreen" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_or"
+            android:id="@+id/textView4"
+            android:textSize="@dimen/login_text_size"
+            style="@style/TextLoginScreen"
+            android:layout_marginTop="@dimen/login_margin_btn_logins"
+            android:layout_marginBottom="@dimen/login_margin_btn_logins" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/login_btn_login_height"
+            android:gravity="center"
+            android:id="@+id/btnSignUpFB_FSU"
+            android:background="@drawable/btn_login_facebook">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sign_up_register_facebook"
+                android:id="@+id/tvSignUpFB_FSU"
+                android:textSize="@dimen/login_text_size"
+                android:textStyle="bold"
+                android:drawableRight="@drawable/icon_fb"
+                android:drawablePadding="@dimen/login_small_padding_margin"
+                style="@style/TextLoginScreen" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/login_margin_register_login_fb">
+
+            <TextView
+                android:layout_width="@dimen/login_btn_register_width"
+                android:layout_height="@dimen/login_btn_register_height"
+                android:text="@string/sign_up_text_login"
+                android:id="@+id/tvLogin_FSU"
+                android:gravity="center"
+                android:textSize="@dimen/login_text_size"
+                android:background="@drawable/btn_register"
+                android:paddingBottom="@dimen/login_btn_register_padding_top_bottom"
+                android:paddingTop="@dimen/login_btn_register_padding_top_bottom"
+                android:paddingLeft="@dimen/login_btn_register_padding_left_right"
+                android:paddingRight="@dimen/login_btn_register_padding_left_right"
+                android:layout_marginRight="@dimen/login_small_padding_margin"
+                android:textStyle="bold"
+                style="@style/TextLoginScreen" />
+
+            <View android:layout_height="0dp" android:layout_width="6.5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/login_btn_register_height"
+                android:text="@string/sign_up_is_registred"
+                android:textSize="@dimen/login_text_size"
+                style="@style/TextLoginScreen" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -33,6 +33,28 @@
     <string name="login_register">רישום</string>
     <string name="login_is_not_register">לא חבר עדיין?</string>
 
+    //sign_up
+    <string name="sign_up_full_name">שם מלא</string>
+    <string name="sign_up_text_sign_up">הירשם</string>
+    <string name="sign_up_register_facebook">רישום עם פייסבוקהירשם</string>
+    <string name="sign_up_text_login">כניסה</string>
+    <string name="sign_up_is_registred">רשומים כבר?</string>
+
+    //after sign up
+    <string name="after_sign_header">עוד משהו קטן, מייד מסיימים!</string>
+    <string name="after_sign_text">אנחנו נשמח לדעת מי המשווק שלך, כך תוכל\n
+        להזין מחיר עדכני של המשווק שלך בצורה\n
+        אנונימית ובטוחה לרווחת שאר החקלאים וגם\n
+        תיחשף למחירי משווקים מחקלאים אחרים</string>
+    <string name="after_sign_enter_marketeer">הזן את שם המשווק שלך</string>
+    <string name="after_sign_start">בוא נתחיל</string>
+    <string name="after_sign_skip">דלג</string>
+    <string name="after_sign_propose_skip">אתה יכול לדלג, אבל אז לא\n
+        תיחשף למחירי משווקים אחרים</string>
+
+    //after sign b/ selection marketeer
+    <string name="select_marketeer_text_name">שם המשווק</string>
+    <string name="select_marketeer_add_name">הוסף שם משווק חדש</string>
 
     <!--TODO-->
 

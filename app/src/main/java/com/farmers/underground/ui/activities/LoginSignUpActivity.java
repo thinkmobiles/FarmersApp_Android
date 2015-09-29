@@ -25,7 +25,7 @@ public class LoginSignUpActivity extends BaseActivity {
     }
 
     @Override
-    protected int getFragmentContainerId() {
+    public int getFragmentContainerId() {
         return R.id.fr_containrer_LSA;
     }
 
