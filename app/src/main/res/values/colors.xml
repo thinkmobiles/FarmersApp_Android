@@ -17,6 +17,7 @@
 
     //colors of background
     <color name="project_background_dark">#1f2128</color>
+    <color name="bg_login">#aa000000</color>
     <color name="bg_light_blue">#00b9e6</color>
     <color name="bg_btn_login">#80b957</color>
     <color name="bg_dark_aqua">#009688</color>
@@ -32,7 +33,7 @@
     <color name="bg_graph_background">#f2f5f8</color>
     <color name="bg_graph_devider">#dee2e7</color>
     <color name="bg_graph_year">#c6ccd1</color>
-    <color name="bg_edit_text_sign_up">#4dffffff</color>
+    <color name="bg_edit_text_sign_up">#b3ffffff</color>
 
     //colors of text
     <color name="text_white">#ccffffff</color>
