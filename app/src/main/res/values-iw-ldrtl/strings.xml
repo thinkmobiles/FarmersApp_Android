@@ -52,6 +52,10 @@
     <string name="after_sign_propose_skip">אתה יכול לדלג, אבל אז לא\n
         תיחשף למחירי משווקים אחרים</string>
 
+    //after sign b/ selection marketeer
+    <string name="select_marketeer_text_name">שם המשווק</string>
+    <string name="select_marketeer_add_name">הוסף שם משווק חדש</string>
+
     <!--TODO-->
 
 </resources>

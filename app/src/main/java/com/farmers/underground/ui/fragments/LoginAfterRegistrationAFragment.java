@@ -47,6 +47,9 @@ public class LoginAfterRegistrationAFragment extends BaseFragment<LoginSignUpAct
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.tvEnterMarketeer:
+                getHostActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(getHostActivity().getFragmentContainerId(), new LoginAfterRegistrationBFragment())
+                        .commit();
                 break;
             case R.id.tvSkip:
                 break;

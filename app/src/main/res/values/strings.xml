@@ -53,5 +53,8 @@
     <string name="after_sign_skip">Skip</string>
     <string name="after_sign_propose_skip">You can jump, but then not be exposed to prices in other markets</string>
 
+    //after sign b/ selection marketeer
+    <string name="select_marketeer_text_name">Name marketer</string>
+    <string name="select_marketeer_add_name">Add a new marketer </string>
 
 </resources>
