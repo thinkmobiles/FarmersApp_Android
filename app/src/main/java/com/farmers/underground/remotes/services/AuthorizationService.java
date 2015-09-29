@@ -1,8 +1,8 @@
-package com.farmers.underground.remote.services;
+package com.farmers.underground.remotes.services;
 
-import com.farmers.underground.remote.models.SuccessMsg;
-import com.farmers.underground.remote.models.UserCredentials;
-import com.farmers.underground.remote.models.UserRegistration;
+import com.farmers.underground.remotes.models.SuccessMsg;
+import com.farmers.underground.remotes.models.UserCredentials;
+import com.farmers.underground.remotes.models.UserRegistration;
 
 import retrofit.Call;
 import retrofit.http.Body;

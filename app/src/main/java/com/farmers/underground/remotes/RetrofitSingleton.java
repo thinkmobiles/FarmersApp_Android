@@ -1,16 +1,16 @@
-package com.farmers.underground.remote;
+package com.farmers.underground.remotes;
 
 import android.support.annotation.NonNull;
 
 import com.farmers.underground.BuildConfig;
 import com.farmers.underground.config.ApiConstants;
-import com.farmers.underground.remote.models.ErrorMsg;
-import com.farmers.underground.remote.models.SuccessMsg;
-import com.farmers.underground.remote.models.UserCredentials;
-import com.farmers.underground.remote.models.UserRegistration;
-import com.farmers.underground.remote.services.AuthorizationService;
-import com.farmers.underground.remote.util.ACallback;
-import com.farmers.underground.remote.util.Loger;
+import com.farmers.underground.remotes.models.ErrorMsg;
+import com.farmers.underground.remotes.models.SuccessMsg;
+import com.farmers.underground.remotes.models.UserCredentials;
+import com.farmers.underground.remotes.models.UserRegistration;
+import com.farmers.underground.remotes.services.AuthorizationService;
+import com.farmers.underground.remotes.util.ACallback;
+import com.farmers.underground.remotes.util.Loger;
 
 import com.squareup.okhttp.ResponseBody;
 

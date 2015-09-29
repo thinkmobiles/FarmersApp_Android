@@ -1,4 +1,4 @@
-package com.farmers.underground.remote.util;
+package com.farmers.underground.remotes.util;
 
 import android.support.annotation.NonNull;
 

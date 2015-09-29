@@ -1,4 +1,4 @@
-package com.farmers.underground.remote.models;
+package com.farmers.underground.remotes.models;
 
 /**
  * Created by tZpace

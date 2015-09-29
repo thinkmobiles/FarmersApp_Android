@@ -1,6 +1,4 @@
-package com.farmers.underground.remote.util;
-
-import android.support.annotation.Nullable;
+package com.farmers.underground.remotes.util;
 
 /**
  * Created by tZpace
