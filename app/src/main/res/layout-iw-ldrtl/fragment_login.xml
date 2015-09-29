@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:padding="@dimen/login_fragment_padding"
-    android:background="#33000000">
+    android:background="@drawable/bg_login">
 
     <LinearLayout
         android:orientation="vertical"
@@ -45,7 +45,7 @@
             android:id="@+id/etEmail"
             android:hint="@string/login_email"
             android:textSize="@dimen/login_text_size"
-            style="@style/EditLoginScree" />
+            style="@style/EditLoginScreen" />
 
         <View
             android:layout_width="match_parent"
@@ -69,7 +69,7 @@
                 android:id="@+id/etPassword"
                 android:hint="@string/login_password"
                 android:textSize="@dimen/login_text_size"
-                style="@style/EditLoginScree" />
+                style="@style/EditLoginScreen" />
 
         </LinearLayout>
 
@@ -141,7 +141,7 @@
             android:layout_marginTop="@dimen/login_margin_register_login_fb">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/login_btn_register_width"
                 android:layout_height="@dimen/login_btn_register_height"
                 android:text="@string/login_register"
                 android:id="@+id/tvRegister"

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -8,23 +12,46 @@
         android:text="@string/app_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+
     <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/tv_loginAct"
-            android:text="Login Fragment"
-            android:layout_margin="10dp"
-            android:padding="20dp"/>
-    <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_tutorialAct"
-            android:text="Tutorial Fragment"
             android:layout_margin="10dp"
-            android:padding="20dp"/>
+            android:padding="20dp"
+            android:text="Login Fragment" />
+
+    <Button
+            android:id="@+id/tv_tutorialAct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:padding="20dp"
+            android:text="Tutorial Fragment" />
+
+    <Button
+            android:id="@+id/btn_api_call_test_reg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:padding="20dp"
+            android:text="API call register" />
+
+    <Button
+            android:id="@+id/btn_api_call_test_log_in"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:padding="20dp"
+            android:text="API call signIn" />
+
+    <Button
+            android:id="@+id/btn_api_call_test_log_out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:padding="20dp"
+            android:text="API call signOut" />
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -33,3 +60,4 @@
             android:layout_margin="10dp"
             android:padding="20dp"/>
 </LinearLayout>
+</ScrollView>
