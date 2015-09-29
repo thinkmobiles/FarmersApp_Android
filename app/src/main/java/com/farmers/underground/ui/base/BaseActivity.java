@@ -82,7 +82,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         return getResources().getBoolean(R.bool.isRTL);
     }
 
-    protected void showToast(String msg, @MagicConstant(intValues = {Toast.LENGTH_LONG, Toast.LENGTH_SHORT}) final int duration){
+    public void showToast(String msg, @MagicConstant(intValues = {Toast.LENGTH_LONG, Toast.LENGTH_SHORT}) final int duration){
         Toast.makeText(this, msg, duration).show();
     }
 

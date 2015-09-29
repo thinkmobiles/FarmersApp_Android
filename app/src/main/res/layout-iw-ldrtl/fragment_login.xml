@@ -44,6 +44,7 @@
             android:layout_width="match_parent"
             android:id="@+id/etEmail"
             android:hint="@string/login_email"
+            android:gravity="right|center_vertical"
             android:textSize="@dimen/login_text_size"
             style="@style/EditLoginScreen" />
 
@@ -68,6 +69,9 @@
                 android:layout_width="match_parent"
                 android:id="@+id/etPassword"
                 android:hint="@string/login_password"
+                android:gravity="center_vertical|right"
+                android:inputType="textNoSuggestions"
+
                 android:textSize="@dimen/login_text_size"
                 style="@style/EditLoginScreen" />
 

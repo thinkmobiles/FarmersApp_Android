@@ -75,6 +75,7 @@
                 android:id="@+id/etName_FSU"
                 android:paddingRight="@dimen/sign_up_edit_text_margin_padding"
                 android:hint="@string/sign_up_full_name"
+                android:gravity="right|center_vertical"
                 android:textSize="@dimen/login_text_size" />
 
             <View
@@ -87,6 +88,7 @@
                 android:id="@+id/etEmail_FSU"
                 android:paddingRight="@dimen/sign_up_edit_text_margin_padding"
                 android:hint="@string/login_email"
+                android:gravity="right|center_vertical"
                 android:textSize="@dimen/login_text_size"
                 style="@style/EditSignUpScreen" />
 
@@ -112,8 +114,10 @@
                     android:layout_weight="1"
                     android:id="@+id/etPassword_FSU"
                     android:paddingRight="@dimen/sign_up_edit_text_margin_padding"
+                    android:gravity="right|center_vertical"
                     android:hint="@string/login_password"
                     android:textSize="@dimen/login_text_size"
+                    android:inputType="textNoSuggestions"
                     style="@style/EditSignUpScreen" />
 
             </LinearLayout>
