@@ -8,10 +8,10 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.farmers.underground.R;
-import com.farmers.underground.remotes.RetrofitSingleton;
-import com.farmers.underground.remotes.models.ErrorMsg;
-import com.farmers.underground.remotes.models.SuccessMsg;
-import com.farmers.underground.remotes.util.ACallback;
+import com.farmers.underground.remote.RetrofitSingleton;
+import com.farmers.underground.remote.models.ErrorMsg;
+import com.farmers.underground.remote.models.SuccessMsg;
+import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.ui.base.BaseActivity;
 
 /**

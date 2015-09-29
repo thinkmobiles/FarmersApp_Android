@@ -1,4 +1,4 @@
-package com.farmers.underground.remotes.util;
+package com.farmers.underground.remote.util;
 
 import android.util.Log;
 

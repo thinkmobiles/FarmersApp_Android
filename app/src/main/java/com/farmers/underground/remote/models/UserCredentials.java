@@ -1,4 +1,4 @@
-package com.farmers.underground.remotes.models;
+package com.farmers.underground.remote.models;
 
 import android.support.annotation.NonNull;
 
