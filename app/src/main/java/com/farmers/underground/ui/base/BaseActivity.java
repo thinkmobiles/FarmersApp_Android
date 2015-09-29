@@ -7,7 +7,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
+
 import com.farmers.underground.R;
+
+import org.intellij.lang.annotations.MagicConstant;
 
 /**
  * Created by tZpace
@@ -76,6 +80,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected final boolean isRTL(){
         return getResources().getBoolean(R.bool.isRTL);
+    }
+
+    protected void showToast(String msg, @MagicConstant(intValues = {Toast.LENGTH_LONG, Toast.LENGTH_SHORT}) final int duration){
+        Toast.makeText(this, msg, duration).show();
     }
 
 }
