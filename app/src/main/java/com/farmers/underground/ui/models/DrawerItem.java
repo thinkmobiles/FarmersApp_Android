@@ -13,7 +13,7 @@ public class DrawerItem {
         DEVIDER
     }
 
-    // header constructor
+    // item constructor
     public DrawerItem(int icon,int contentName) {
         this.item_type =  DRAWER_ITEM.CONTENT_ITEM;
         this.contentName = contentName;
@@ -32,6 +32,7 @@ public class DrawerItem {
     public DrawerItem(){
         this.item_type =  DRAWER_ITEM.DEVIDER;
     }
+
 
     public DRAWER_ITEM item_type;
     @DrawableRes  public int  icon;
