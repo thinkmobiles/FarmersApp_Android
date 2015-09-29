@@ -3,7 +3,15 @@
     <!-- \u200F (this is RIGHT-TO-LEFT MARK character)  -->
     <string name="app_name">\u200FFarmers iw</string>
 
-    \\tutorial
+
+    //drawer
+
+    <string name="drawer_content_0">כל הגידולים</string>
+    <string name="drawer_content_1">הוספת מחיר משווק</string>
+    <string name="drawer_content_2">הזמן חברים</string>
+    <string name="drawer_content_3">המעודפים שלי</string>
+
+    //tutorial
     <string name="tutorial_skip">דלג</string>
     <string name="tutorial_content_1">
        ברוכים הבאים להעיקר האיכר\n
@@ -32,6 +40,8 @@
     <string name="login_text_login_facebook">כניסה עם פייסבוק</string>
     <string name="login_register">רישום</string>
     <string name="login_is_not_register">לא חבר עדיין?</string>
+    <string name="toolbar_item_menu">תפריט</string>
+    <string name="toolbar_item_search">חיפוש</string>
 
 
     <!--TODO-->

@@ -11,18 +11,25 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-    <TextView
+    <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_loginAct"
             android:text="Login Fragment"
             android:layout_margin="10dp"
             android:padding="20dp"/>
-    <TextView
+    <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_tutorialAct"
             android:text="Tutorial Fragment"
+            android:layout_margin="10dp"
+            android:padding="20dp"/>
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_mainAct"
+            android:text="Main drawer activity"
             android:layout_margin="10dp"
             android:padding="20dp"/>
 </LinearLayout>

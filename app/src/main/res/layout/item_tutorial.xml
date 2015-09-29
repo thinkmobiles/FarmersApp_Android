@@ -61,7 +61,7 @@
                     android:layout_width="@dimen/tutorial_arrow_size"
                     android:layout_height="match_parent"
                     android:id="@+id/imageView"
-                    android:src="@drawable/forward"
+                    android:src="@drawable/ic_toolbar_forward"
                     android:layout_gravity="center_horizontal"/>
         </LinearLayout>
     </FrameLayout>

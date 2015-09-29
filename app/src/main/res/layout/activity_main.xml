@@ -1,28 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
 
-    <TextView
-        android:text="@string/app_name"
+
+<android.support.v4.widget.DrawerLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/drawer_conainer_MainActivity"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_loginAct"
-            android:text="Login Fragment"
-            android:layout_margin="10dp"
-            android:padding="20dp"/>
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_tutorialAct"
-            android:text="Tutorial Fragment"
-            android:layout_margin="10dp"
-            android:padding="20dp"/>
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".MainActivity">
+    <ListView
+            android:id="@+id/lv_DrawerHolder_MainActivity"
+            android:layout_width="@dimen/drawer_width"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:divider="@android:color/transparent"
+            android:background="@color/white"/>
+
+    <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/aqua"
+        />
+        <FrameLayout
+                android:id="@+id/fl_ContainerMainActivity"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+    </LinearLayout>
+
+</android.support.v4.widget.DrawerLayout>
+
+

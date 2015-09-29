@@ -3,6 +3,7 @@
     <color name="project_primary">#00b9e6</color>
 
 
+
     //main colors
     <color name="opaque">#00000000</color>
     <color name="white">#ffffff</color>
@@ -44,4 +45,10 @@
     <color name="text_black">#df000000</color>
     <color name="text_selected_month">#b1dfdb</color>
     <color name="text_top_statistic">#0a89a7</color>
+
+
+    //drawer
+    <color name="drawer_bg_color">#33000000</color>
+    <color name="drawer_list_devider">#22000000</color>
+    <color name="drawer_text_color">#555555</color>
 </resources>

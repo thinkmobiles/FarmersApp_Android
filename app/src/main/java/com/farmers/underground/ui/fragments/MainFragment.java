@@ -2,8 +2,7 @@ package com.farmers.underground.ui.fragments;
 
 import android.os.Bundle;
 import android.view.View;
-
-import com.farmers.underground.ui.activities.MainActivity;
+import com.farmers.underground.ui.activities.TestActivity;
 import com.farmers.underground.ui.base.BaseFragment;
 
 /**
@@ -12,7 +11,7 @@ import com.farmers.underground.ui.base.BaseFragment;
  */
 
 /** JUST EXAMPLE*/
-public class MainFragment extends BaseFragment<MainActivity> {
+public class MainFragment extends BaseFragment<TestActivity> {
 
     @Override
     public int getLayoutResId() {

@@ -1,9 +1,17 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/aqua</item>
+        <item name="colorPrimaryDark">@color/project_background_dark</item>
+        <item name="colorAccent">@color/aqua</item>
+        <item name="android:textColorPrimary">@color/text_white</item>
+        <item name="android:textColorSecondary">@color/text_white</item>
+
     </style>
+
+
 
     <style name="TutorialActivityTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowNoTitle">true</item>
@@ -41,6 +49,10 @@
         <item name="android:layout_height">@dimen/login_edit_text_height</item>
     </style>
 
+    <style name="TV_Drawer">
+        <item name="android:textColor">@color/drawer_text_color</item>
+        <item name="android:textSize">@dimen/drawer_item_text_size</item>
+    </style>
 
 
 </resources>

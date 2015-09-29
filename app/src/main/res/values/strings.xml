@@ -1,6 +1,16 @@
 <resources>
     <string name="app_name">Farmers en</string>
 
+
+
+    //drawer
+    <string name="drawer_content_0">All crops</string>
+    <string name="drawer_content_1">Add reseller price</string>
+    <string name="drawer_content_2">Invite friends</string>
+    <string name="drawer_content_3">My Favorites</string>
+
+
+    //tutorial
     <string name="tutorial_skip">Skip</string>
     <string name="tutorial_content_1">
         Welcome Lhaikr peasant farmers \n
@@ -37,5 +47,7 @@
     <string name="login_text_login_facebook">Login with Facebook</string>
     <string name="login_register">Register</string>
     <string name="login_is_not_register">Not a member yet?</string>
+    <string name="toolbar_item_menu">menu</string>
+    <string name="toolbar_item_search">Search</string>
 
 </resources>

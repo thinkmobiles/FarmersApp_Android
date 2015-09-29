@@ -10,7 +10,7 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
 
-        <activity android:name=".ui.activities.MainActivity"
+        <activity android:name=".ui.activities.TestActivity"
                   android:screenOrientation="sensorPortrait">
 
             <intent-filter>
@@ -25,6 +25,9 @@
 
         <activity android:name=".ui.activities.LoginSignUpActivity"
                   android:theme="@style/LoginSignUpActivityTheme"
+                  android:screenOrientation="sensorPortrait"/>
+
+        <activity android:name=".ui.activities.MainActivity"
                   android:screenOrientation="sensorPortrait"/>
 
         <activity

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/llDrawerHeader"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/drawer_header_height"
+        android:adjustViewBounds="true"
+        android:background="@color/drawer_bg_color"
+        android:clickable="true">
+
+
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iv_DrawerSettingIcon"
+            android:layout_alignTop="@+id/ll_DrawerUserContainer"
+            android:layout_toLeftOf="@+id/ll_DrawerUserContainer"
+            android:layout_toStartOf="@+id/ll_DrawerUserContainer"
+            android:src="@drawable/selector_drawer_settings"
+            android:clickable="true"/>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_centerInParent="true"
+            android:id="@+id/ll_DrawerUserContainer">
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/iv_DrawerUserIcon"
+                android:src="@drawable/test_user_icon"/>
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                style="@style/TV_Drawer"
+                android:id="@+id/tv_DrawerUserName"
+                android:gravity="center_horizontal"/>
+    </LinearLayout>
+</RelativeLayout>
