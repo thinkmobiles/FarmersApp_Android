@@ -25,8 +25,7 @@ import retrofit.Retrofit;
 /**
  * Created by tZpace
  * on 28-Sep-15.
- * <p/>
- * <p/>
+ *
  * HELP
  * Retrofit 2.0
  * http://inthecheesefactory.com/blog/retrofit-2.0/en
