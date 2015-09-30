@@ -3,6 +3,9 @@
     <!-- \u200F (this is RIGHT-TO-LEFT MARK character)  -->
     <string name="app_name">\u200FFarmers iw</string>
 
+    <string name="facebook_app_id">889106887840848</string>
+
+
 
     //drawer
 
@@ -27,8 +30,6 @@
         נוספים שהוזנו על ידי\nחבריך החקלאים</string>
     <string name="tutorial_next">הבא</string>
 
-
-    <string name="facebook_app_id">todo</string><!--TODO-->
     //login
     <string name="login_text_header">העיקר האיכר</string>
     <string name="login_text_subheader">מחירי גידולים בצורה נוחה</string>

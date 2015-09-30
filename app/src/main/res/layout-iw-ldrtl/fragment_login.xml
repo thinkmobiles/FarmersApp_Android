@@ -70,7 +70,10 @@
                 android:id="@+id/etPassword"
                 android:hint="@string/login_password"
                 android:gravity="center_vertical|right"
+
                 android:inputType="textNoSuggestions"
+
+                android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789"
 
                 android:textSize="@dimen/login_text_size"
                 style="@style/EditLoginScreen" />
@@ -98,6 +101,7 @@
             android:layout_height="@dimen/login_btn_login_height"
             android:gravity="center"
             android:id="@+id/btnLogin"
+            android:clickable="true"
             android:background="@drawable/btn_login">
 
             <TextView

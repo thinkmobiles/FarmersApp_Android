@@ -74,13 +74,14 @@ public class RetrofitSingleton {
         getAuthorizationService().registerViaEmail(new UserRegistration(fullName, email, pass)).enqueue(new Callback<SuccessMsg>() {
 
             @Override
-            public void onResponse(Response<SuccessMsg> response) {
+            public void onResponse(Response<SuccessMsg> response, Retrofit retrofit) {
                 performCallback(callback, response);
                 callback.anyway();
             }
 
             @Override
             public void onFailure(Throwable t) {
+                callback.onError(new ErrorMsg("Unknown Error"));
                 callback.anyway();
             }
 
@@ -91,13 +92,14 @@ public class RetrofitSingleton {
 
         getAuthorizationService().loginViaEmail(new UserCredentials(email, pass)).enqueue(new Callback<SuccessMsg>() {
             @Override
-            public void onResponse(Response<SuccessMsg> response) {
+            public void onResponse(Response<SuccessMsg> response, Retrofit retrofit) {
                 performCallback(callback, response);
                 callback.anyway();
             }
 
             @Override
             public void onFailure(Throwable t) {
+                callback.onError(new ErrorMsg("Unknown Error"));
                 callback.anyway();
             }
         });
@@ -107,20 +109,22 @@ public class RetrofitSingleton {
     public void signOut(final ACallback<SuccessMsg, ErrorMsg> callback) {
 
         getAuthorizationService().signOut().enqueue(new Callback<SuccessMsg>() {
+
             @Override
-            public void onResponse(Response<SuccessMsg> response) {
+            public void onResponse(Response<SuccessMsg> response, Retrofit retrofit) {
                 performCallback(callback, response);
                 callback.anyway();
             }
 
             @Override
             public void onFailure(Throwable t) {
+                callback.onError(new ErrorMsg("Unknown Error"));
                 callback.anyway();
             }
         });
     }
 
-    private static final Converter<?> errorConverter = GsonConverterFactory.create().get(ErrorMsg.class);
+    private static final Converter<ResponseBody, ?> errorConverter = GsonConverterFactory.create().fromResponseBody(ErrorMsg.class, null) ;
 
     private <R> void performCallback(ACallback<R, ErrorMsg> callback, Response<R> response) {
         if (response.isSuccess()) {
@@ -133,7 +137,7 @@ public class RetrofitSingleton {
     private static ErrorMsg parseErrorMsg(ResponseBody rawResponseBody) {
         ErrorMsg myError;
         try {
-            myError = (ErrorMsg) errorConverter.fromBody(rawResponseBody);
+            myError = (ErrorMsg) errorConverter.convert(rawResponseBody);
         } catch (IOException e) {
             if (BuildConfig.DEBUG)
                 myError = new ErrorMsg(e.getMessage());

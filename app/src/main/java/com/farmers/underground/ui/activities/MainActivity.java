@@ -1,16 +1,20 @@
 package com.farmers.underground.ui.activities;
 
-import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
+
+import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.Toolbar;
+
+import com.facebook.appevents.AppEventsLogger;
 import com.farmers.underground.R;
 import com.farmers.underground.ui.adapters.DrawerAdapter;
 import com.farmers.underground.ui.base.BaseActivity;
@@ -22,11 +26,10 @@ import java.util.List;
 
 
 /**
- * Created by omar on 9/28/15.
+ * Created by omar
+ * on 9/28/15.
  */
-public class MainActivity
-        extends BaseActivity
-implements DrawerAdapter.DrawerCallback {
+public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCallback {
 
     @Bind(R.id.toolbar)
     protected Toolbar mToolbar;
@@ -48,8 +51,24 @@ implements DrawerAdapter.DrawerCallback {
         setDrawerList();
     }
 
-    private void defineDrawer(){
-        mDrawerlayout.setDrawerListener(new DrawerLayout.SimpleDrawerListener(){
+    /*@Override
+    protected void onResume() {
+        super.onResume();
+
+        // Logs 'install' and 'app activate' App Events.
+        AppEventsLogger.activateApp(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        // Logs 'app deactivate' App Event.
+        AppEventsLogger.deactivateApp(this);
+    }*/
+
+    private void defineDrawer() {
+        mDrawerlayout.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
@@ -69,13 +88,12 @@ implements DrawerAdapter.DrawerCallback {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId())
-        {
+        switch (item.getItemId()) {
             case R.id.action_burger:
                 openDrawer();
                 return true;
         }
-      return false;
+        return false;
     }
 
     @Override
@@ -88,8 +106,8 @@ implements DrawerAdapter.DrawerCallback {
 
     @Override
     public void onBackPressed() {
-        if(drawerOpened)  mDrawerlayout.closeDrawers();
-        else  super.onBackPressed();
+        if (drawerOpened) mDrawerlayout.closeDrawers();
+        else super.onBackPressed();
     }
 
     @Override
@@ -111,7 +129,7 @@ implements DrawerAdapter.DrawerCallback {
 
     public void setDrawerList() {
         List<DrawerItem> drawerItemList = new ArrayList<>();
-        drawerItemList.add(new DrawerItem("","אילן עדני"));
+        drawerItemList.add(new DrawerItem("", "אילן עדני"));
         drawerItemList.add(new DrawerItem());
         drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_crops, R.string.drawer_content_0));
         drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_marketer_price, R.string.drawer_content_1));
@@ -122,14 +140,14 @@ implements DrawerAdapter.DrawerCallback {
     }
 
     @OnItemClick(R.id.lv_DrawerHolder_MainActivity)
-    void onItemClick(int pos){
-        NotYetHelper. notYetImplmented(this, "drawer items");
+    void onItemClick(int pos) {
+        NotYetHelper.notYetImplmented(this, "drawer items");
         mDrawerlayout.closeDrawers();
     }
 
     @Override
     public void onSettingsClicked() {
-       NotYetHelper. notYetImplmented(this, "drawer settings");
+        NotYetHelper.notYetImplmented(this, "drawer settings");
         mDrawerlayout.closeDrawers();
     }
 }

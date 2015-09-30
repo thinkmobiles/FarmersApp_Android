@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
+
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
 import com.farmers.underground.R;
+import com.farmers.underground.BuildConfig;
 import com.farmers.underground.remote.RetrofitSingleton;
 import com.farmers.underground.remote.models.ErrorMsg;
 import com.farmers.underground.remote.models.SuccessMsg;
@@ -34,29 +37,37 @@ public class TestActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (BuildConfig.PRODUCTION) {
+            intent = new Intent(this, TutorialActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
         ButterKnife.bind(this);
     }
 
     @OnClick(R.id.tv_tutorialAct)
-    void startTutorialActivity(){
-        intent= new Intent(this, TutorialActivity.class);
-               startActivity(intent);
+    void startTutorialActivity() {
+        intent = new Intent(this, TutorialActivity.class);
+        startActivity(intent);
     }
 
     @OnClick(R.id.tv_loginAct)
-    void startLoginActivity(){
+    void startLoginActivity() {
         intent = new Intent(this, LoginSignUpActivity.class);
         startActivity(intent);
     }
 
     @OnClick(R.id.tv_mainAct)
-    void startMainActivity(){
+    void startMainActivity() {
         intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
     @OnClick(R.id.btn_api_call_test_reg)
-    void testApiCallsReg(){
+    void testApiCallsReg() {
         //todo showProgressDialog
         RetrofitSingleton.getInstance().registerViaEmail("FirstName LastName",/* "test" + System.currentTimeMillis() +*/   "tapacko7@gmail.com", "testpass", new ACallback<SuccessMsg, ErrorMsg>() {
             @Override
@@ -92,7 +103,7 @@ public class TestActivity extends BaseActivity {
     }
 
     @OnClick(R.id.btn_api_call_test_log_out)
-    void testApiCallsOUT(){
+    void testApiCallsOUT() {
         RetrofitSingleton.getInstance().signOut(new ACallback<SuccessMsg, ErrorMsg>() {
             @Override
             public void onSuccess(SuccessMsg result) {
