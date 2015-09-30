@@ -62,6 +62,9 @@
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:id="@+id/etPassword"
+
+                android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789"
+
                 android:hint="@string/login_password"
                 android:textSize="@dimen/login_text_size"
                 style="@style/EditLoginScreen" />
@@ -94,6 +97,7 @@
             android:layout_height="@dimen/login_btn_login_height"
             android:gravity="center"
             android:id="@+id/btnLogin"
+            android:clickable="true"
             android:background="@drawable/btn_login">
 
             <TextView

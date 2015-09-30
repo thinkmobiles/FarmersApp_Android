@@ -6,9 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.method.PasswordTransformationMethod;
 import android.text.method.TransformationMethod;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -85,6 +83,7 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> implements 
                 showHidePass();
                 break;
             case R.id.tvForgot:
+                getHostActivity().showToast("To be done, later", Toast.LENGTH_SHORT);
                 break;
         }
     }
@@ -123,7 +122,7 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> implements 
             getHostActivity().showToast("Password is incorrect", Toast.LENGTH_SHORT);
             return;
         }
-//        RetrofitSingleton.getInstance().loginViaEmail("tapacko7@gmail.com", "testpass", new ACallback<SuccessMsg, ErrorMsg>() {
+
         RetrofitSingleton.getInstance().loginViaEmail(email, password, new ACallback<SuccessMsg, ErrorMsg>() {
             @Override
             public void onSuccess(SuccessMsg result) {
@@ -137,6 +136,7 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> implements 
             public void onError(@NonNull ErrorMsg error) {
                 getHostActivity().showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
             }
+
         });
     }
 

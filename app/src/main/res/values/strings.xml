@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Farmers en</string>
 
+    <string name="facebook_app_id">889106887840848</string>
+
     //tutorial
     <string name="tutorial_skip">Skip</string>
     <string name="tutorial_content_1">
@@ -20,8 +22,6 @@
         fed by your friends Farmers
     </string>
 
-
-    <string name="facebook_app_id">todo</string>
     <string name="tutorial_next">Next</string>
     <string name="test_login_fragment">Login Fragment</string>
     <string name="test_tutorial_fragment">Tutorial Fragment</string>
