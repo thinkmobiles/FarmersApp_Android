@@ -1,11 +1,15 @@
 package com.farmers.underground.ui.activities;
 
+import android.app.SearchManager;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -51,15 +55,17 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     @Bind(R.id.vp_MainActivity)
     protected ViewPager viewPager;
 
+
+    private SearchManager searchManager;
     private ProjectPagerAdapter<BaseFragment> adapter;
     private boolean drawerOpened;
-    private String querry = "";
+    private String query = "";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null) querry = savedInstanceState.getString(ProjectConstants.KEY_DATA);
+        if (savedInstanceState != null) query = savedInstanceState.getString(ProjectConstants.KEY_DATA);
 
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
@@ -69,6 +75,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         setDrawerList();
         setViewPager();
         setTabs();
+        setSearchViewListeners();
 
         searchView.setVisibility(View.VISIBLE);
     }
@@ -86,11 +93,56 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(ProjectConstants.KEY_DATA, querry);
+        outState.putString(ProjectConstants.KEY_DATA, query);
+    }
+
+
+    //search
+
+    private void setSearchViewListeners() {
+        searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("search","clicked");
+            }
+        });
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if (!query.isEmpty()) {
+                    searchView.setIconified(false);
+                    searchView.setQuery(query, false);
+                    searchView.clearFocus();
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                return false;
+            }
+        });
+
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            query = intent.getStringExtra(SearchManager.QUERY);
+            setViewPager();
+
+        }
     }
 
     //drawer
-
     private void setDrawer() {
         mDrawerlayout.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
             @Override
@@ -134,16 +186,13 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         adapter.setFragments(getFragmentList());
         adapter.setTitles(getTitlesList());
         adapter.notifyDataSetChanged();
-        viewPager.setCurrentItem( adapter.getCount() - 1);
+        viewPager.setCurrentItem(adapter.getCount() - 1);
     }
 
-
-
     //tabs
-
-    private void setTabs(){
+    private void setTabs() {
         tabLayout.setupWithViewPager(viewPager);
-      }
+    }
 
 
     //view pager
@@ -155,23 +204,18 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     }
 
     private List<BaseFragment> getFragmentList() {
-        List <BaseFragment> fragmentList = new ArrayList<>();
+        List<BaseFragment> fragmentList = new ArrayList<>();
         fragmentList.add(createFavFragemnt());
         fragmentList.add(createCropFragemnt());
-
         return fragmentList;
     }
 
     private BaseFragment createFavFragemnt() {
-        return CropsListFragment.getInstance(CropsListFragment.TYPE.FAVORITIES, querry);
+        return CropsListFragment.getInstance(CropsListFragment.TYPE.FAVORITIES, query);
     }
 
     private BaseFragment createCropFragemnt() {
-        return CropsListFragment.getInstance(CropsListFragment.TYPE.ALL_CROPS, querry);
-    }
-
-    private void updateCropsFragment(String querry) {
-
+        return CropsListFragment.getInstance(CropsListFragment.TYPE.ALL_CROPS, query);
     }
 
 

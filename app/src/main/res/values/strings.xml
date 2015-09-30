@@ -70,4 +70,5 @@
     //main activity
     <string name="main_activity_tab_all_crops">All crops</string>
     <string name="main_activity_tab_favourites">My favourites</string>
+    <string name="search_label">Search crops</string>
 </resources>
