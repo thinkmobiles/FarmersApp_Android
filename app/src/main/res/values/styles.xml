@@ -8,9 +8,14 @@
         <item name="colorAccent">@color/aqua</item>
         <item name="android:textColorPrimary">@color/text_white</item>
         <item name="android:textColorSecondary">@color/text_white</item>
+        <item name="actionModeStyle">@style/LStyled.ActionMode</item>
 
     </style>
 
+    <style name="LStyled.ActionMode" parent="@style/Widget.AppCompat.ActionMode">
+        <item name="background">@color/light_blue</item>
+        <item name="height">?attr/actionBarSize</item>
+    </style>
 
     <style name="TestTheme" parent="AppTheme">
         <item name="android:textColorPrimary">@color/text_grey</item>
@@ -72,5 +77,12 @@
         <item name="android:textSize">@dimen/tabs_text_size</item>
     </style>
 
+    <style name="TV_SearchHintListItem">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/search_hint_list_item_text_size</item>
+        <item name="android:textColor">@color/text_dark_grey</item>
+    </style>
 
+
+    <dimen name="search_hint_list_item_text_size">18sp</dimen>
 </resources>

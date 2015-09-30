@@ -1,7 +1,6 @@
 package com.farmers.underground.remote;
 
 import android.support.annotation.NonNull;
-
 import com.farmers.underground.BuildConfig;
 import com.farmers.underground.config.ApiConstants;
 import com.farmers.underground.remote.models.ErrorMsg;
@@ -11,16 +10,10 @@ import com.farmers.underground.remote.models.UserRegistration;
 import com.farmers.underground.remote.services.AuthorizationService;
 import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.remote.util.Loger;
-
 import com.squareup.okhttp.ResponseBody;
+import retrofit.*;
 
 import java.io.IOException;
-
-import retrofit.Callback;
-import retrofit.Converter;
-import retrofit.GsonConverterFactory;
-import retrofit.Response;
-import retrofit.Retrofit;
 
 /**
  * Created by tZpace

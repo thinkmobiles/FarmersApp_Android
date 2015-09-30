@@ -3,7 +3,6 @@ package com.farmers.underground.remote.services;
 import com.farmers.underground.remote.models.SuccessMsg;
 import com.farmers.underground.remote.models.UserCredentials;
 import com.farmers.underground.remote.models.UserRegistration;
-
 import retrofit.Call;
 import retrofit.http.Body;
 import retrofit.http.POST;

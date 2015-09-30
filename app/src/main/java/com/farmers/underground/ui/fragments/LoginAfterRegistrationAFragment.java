@@ -2,9 +2,8 @@ package com.farmers.underground.ui.fragments;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.farmers.underground.R;
 import com.farmers.underground.ui.activities.LoginSignUpActivity;
 import com.farmers.underground.ui.base.BaseFragment;
@@ -13,10 +12,7 @@ import com.farmers.underground.ui.base.BaseFragment;
  * Created by tZpace
  * on 25-Sep-15.
  */
-public class LoginAfterRegistrationAFragment extends BaseFragment<LoginSignUpActivity> implements View.OnClickListener {
-
-    private TextView tvEnterMarketeer, tvSkip;
-    private LinearLayout llStart;
+public class LoginAfterRegistrationAFragment extends BaseFragment<LoginSignUpActivity>   {
 
     @Override
     protected int getLayoutResId() {
@@ -26,35 +22,22 @@ public class LoginAfterRegistrationAFragment extends BaseFragment<LoginSignUpAct
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
 
-        findViews(view);
-        setListeners();
     }
 
-    private void findViews(View view){
-        tvEnterMarketeer = (TextView) view.findViewById(R.id.tvEnterMarketeer);
-        tvSkip = (TextView) view.findViewById(R.id.tvSkip);
-        llStart = (LinearLayout) view.findViewById(R.id.btnStart);
+    @OnClick(R.id.tvEnterMarketeer)
+    protected void enterMarketeer(){
+        getHostActivity().getSupportFragmentManager().beginTransaction()
+                .replace(getHostActivity().getFragmentContainerId(), new LoginAfterRegistrationBFragment())
+                .commit();
     }
 
-    private void setListeners(){
-        tvEnterMarketeer.setOnClickListener(this);
-        tvSkip.setOnClickListener(this);
-        llStart.setOnClickListener(this);
-    }
+    @OnClick(R.id.tvSkip)
+    protected void skip(){}
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.tvEnterMarketeer:
-                getHostActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(getHostActivity().getFragmentContainerId(), new LoginAfterRegistrationBFragment())
-                        .commit();
-                break;
-            case R.id.tvSkip:
-                break;
-            case R.id.btnStart:
-                break;
-        }
-    }
+    @OnClick(R.id.btnStart)
+    protected void start(){}
+
+
 }

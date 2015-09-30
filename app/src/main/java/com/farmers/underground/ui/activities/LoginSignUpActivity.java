@@ -1,7 +1,6 @@
 package com.farmers.underground.ui.activities;
 
 import android.os.Bundle;
-
 import com.farmers.underground.R;
 import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.fragments.LoginFragment;
