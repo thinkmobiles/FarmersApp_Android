@@ -9,7 +9,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,6 +16,7 @@ import android.view.View;
 import android.widget.ListView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnItemClick;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
@@ -24,9 +24,12 @@ import com.farmers.underground.ui.adapters.DrawerAdapter;
 import com.farmers.underground.ui.adapters.ProjectPagerAdapter;
 import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.base.BaseFragment;
+import com.farmers.underground.ui.custom_views.CustomSearchView;
 import com.farmers.underground.ui.fragments.CropsListFragment;
 import com.farmers.underground.ui.models.DrawerItem;
-import com.farmers.underground.utils.NotYetHelper;
+import com.farmers.underground.ui.utils.NotYetHelper;
+import com.farmers.underground.ui.utils.SearchController;
+import com.farmers.underground.ui.utils.SharedPrefHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +50,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     protected ListView lvDrawerContainer;
 
     @Bind(R.id.searchView)
-    protected SearchView searchView;
+    protected CustomSearchView searchView;
 
     @Bind(R.id.tabs_MainActivity)
     protected TabLayout tabLayout;
@@ -55,8 +58,12 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     @Bind(R.id.vp_MainActivity)
     protected ViewPager viewPager;
 
+    @Bind(R.id.lv_SearchHint_MainActivity)
+    protected ListView lv_SearchHint;
+
 
     private SearchManager searchManager;
+    private SearchController searchController;
     private ProjectPagerAdapter<BaseFragment> adapter;
     private boolean drawerOpened;
     private String query = "";
@@ -98,41 +105,49 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
 
 
-
-
     //search
     private void setSearchViewListeners() {
+        searchController = new SearchController(lv_SearchHint) {
+            @Override
+            public void searchByHint(String querry){
+                SharedPrefHelper.saveSearchHint(MainActivity.this, querry);
+                searchView.setQuery(querry, true);
+            }
+        };
         searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setOnSearchClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("search","clicked");
+                onSearchClicked();
             }
         });
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-             /*   if (!query.isEmpty()) {
-                    searchView.setIconified(false);
-                    searchView.setQuery(query, false);
-                    searchView.clearFocus();
-                }*/
+                SharedPrefHelper.saveSearchHint(MainActivity.this, query);
+                searchController.hide();
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                if(newText.isEmpty() && query != null) {
+                    query = null;
+                    setViewPager();
+                    NotYetHelper.notYetImplmented(MainActivity.this, "search");
+                }
                 return false;
             }
         });
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
+                searchController.hide();
                 return false;
             }
         });
-
     }
 
     @Override
@@ -144,8 +159,14 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         }
     }
 
+    private boolean forceHideSaerch(){
 
-
+        if(searchView.isIconified())
+            return false;
+        else{
+        searchView.setIconified(true);
+        return true;}
+    }
 
     //drawer
     private void setDrawer() {
@@ -156,6 +177,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                 lvDrawerContainer.bringToFront();
                 mDrawerlayout.requestLayout();
                 drawerOpened = true;
+                forceHideSaerch();
             }
 
             @Override
@@ -262,6 +284,12 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         mDrawerlayout.closeDrawers();
     }
 
+    @OnClick(R.id.searchView)
+    protected void onSearchClicked(){
+        searchController.setHinsList(SharedPrefHelper.getSearchHints(MainActivity.this));
+        searchController.  show();
+    }
+
     @Override
     public void onSettingsClicked() {
         NotYetHelper.notYetImplmented(this, "drawer settings");
@@ -271,6 +299,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     @Override
     public void onBackPressed() {
         if (drawerOpened) mDrawerlayout.closeDrawers();
-        else super.onBackPressed();
+        else if(!forceHideSaerch())super.onBackPressed();
     }
 }

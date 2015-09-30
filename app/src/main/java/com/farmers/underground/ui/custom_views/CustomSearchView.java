@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by omar on 9/30/15.
  */
-public class CustomSearchView extends SearchView {
+public class CustomSearchView extends SearchView implements View.OnClickListener {
     public CustomSearchView(Context context) {
         super(context);
         reverseOrderEditArea();
@@ -50,7 +50,12 @@ public class CustomSearchView extends SearchView {
         imgSearch = this.findViewById(R.id.search_src_text);
         ((SearchAutoComplete) imgSearch).setGravity(Gravity.RIGHT);
         ((SearchAutoComplete) imgSearch).setHintTextColor(getResources().getColor(com.farmers.underground.R.color.text_white));
+        imgSearch.setOnClickListener(this);
         return super.isIconified();
     }
 
+    @Override
+    public void onClick(View view) {
+        this.callOnClick();
+    }
 }
