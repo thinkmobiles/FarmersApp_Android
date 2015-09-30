@@ -49,6 +49,7 @@ public class CustomSearchView extends SearchView {
         View imgSearch;
         imgSearch = this.findViewById(R.id.search_src_text);
         ((SearchAutoComplete) imgSearch).setGravity(Gravity.RIGHT);
+        ((SearchAutoComplete) imgSearch).setHintTextColor(getResources().getColor(com.farmers.underground.R.color.text_white));
         return super.isIconified();
     }
 

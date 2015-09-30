@@ -97,8 +97,10 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     }
 
 
-    //search
 
+
+
+    //search
     private void setSearchViewListeners() {
         searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
@@ -111,11 +113,11 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                if (!query.isEmpty()) {
+             /*   if (!query.isEmpty()) {
                     searchView.setIconified(false);
                     searchView.setQuery(query, false);
                     searchView.clearFocus();
-                }
+                }*/
                 return false;
             }
 
@@ -138,9 +140,12 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             query = intent.getStringExtra(SearchManager.QUERY);
             setViewPager();
-
+            NotYetHelper.notYetImplmented(this, "search");
         }
     }
+
+
+
 
     //drawer
     private void setDrawer() {
@@ -189,10 +194,15 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         viewPager.setCurrentItem(adapter.getCount() - 1);
     }
 
+
+
+
     //tabs
     private void setTabs() {
         tabLayout.setupWithViewPager(viewPager);
     }
+
+
 
 
     //view pager
@@ -219,7 +229,9 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     }
 
 
-    //click events
+
+
+    //options menu
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -238,6 +250,12 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         return false;
     }
 
+
+
+
+
+    //click events
+
     @OnItemClick(R.id.lv_DrawerHolder_MainActivity)
     void onItemClick(int pos) {
         NotYetHelper.notYetImplmented(this, "drawer items");
@@ -255,6 +273,4 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         if (drawerOpened) mDrawerlayout.closeDrawers();
         else super.onBackPressed();
     }
-
-
 }
