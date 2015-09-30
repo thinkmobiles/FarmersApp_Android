@@ -5,15 +5,6 @@
 
     <string name="facebook_app_id">889106887840848</string>
 
-
-
-    //drawer
-
-    <string name="drawer_content_0">כל הגידולים</string>
-    <string name="drawer_content_1">הוספת מחיר משווק</string>
-    <string name="drawer_content_2">הזמן חברים</string>
-    <string name="drawer_content_3">המעודפים שלי</string>
-
     //tutorial
     <string name="tutorial_skip">דלג</string>
     <string name="tutorial_content_1">
