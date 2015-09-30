@@ -7,10 +7,13 @@
         android:fitsSystemWindows="true"
         android:background="@color/aqua"
         >
-    <android.support.v7.widget.SearchView
+    <com.farmers.underground.ui.custom_views.CustomSearchView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"/>
+            android:layout_gravity="left"
+            android:visibility="gone"
+            android:id="@+id/searchView"
+            />
 
     <TextView
             android:layout_width="wrap_content"

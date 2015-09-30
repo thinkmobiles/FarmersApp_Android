@@ -11,9 +11,10 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.farmers.underground.R;
-import com.farmers.underground.ui.models.TutorialItemDataHolder;
+import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.ui.activities.TutorialActivity;
 import com.farmers.underground.ui.base.BaseFragment;
+import com.farmers.underground.ui.models.TutorialItemDataHolder;
 
 /**
  * Created by omar
@@ -36,7 +37,7 @@ public class TutorialItemFragment extends BaseFragment<TutorialActivity> {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        tutorialItemDataHolder = (TutorialItemDataHolder) getArguments().getSerializable(TutorialActivity.KEY_DATA);
+        tutorialItemDataHolder = (TutorialItemDataHolder) getArguments().getSerializable(ProjectConstants.KEY_DATA);
     }
 
     @Override

@@ -52,17 +52,18 @@
     <dimen name="select_marketeer_text_size">12sp</dimen>
     <dimen name="select_marketeer_name_height">30dp</dimen>
     <dimen name="select_marketeer_small_margin">5dp</dimen>
-
-
     //drawer
-
     <dimen name="drawer_item_icon_padding">18dp</dimen>
     <dimen name="drawer_item_text_size">16sp</dimen>
     <dimen name="drawer_devider_height">40dp</dimen>
     <dimen name="drawer_width">240dp</dimen>
     <dimen name="drawer_header_height">170dp</dimen>
     <dimen name="drawer_item_height">60dp</dimen>
+    //toolbar
     <dimen name="toolbar_text_size">20sp</dimen>
+    //main activity
+    <dimen name="fragment_crops_recycler_sidepadding">10dp</dimen>
+    <dimen name="tabs_text_size">18sp</dimen>
 
 
 </resources>

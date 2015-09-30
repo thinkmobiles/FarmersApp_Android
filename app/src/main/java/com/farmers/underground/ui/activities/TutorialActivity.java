@@ -6,16 +6,15 @@ import android.support.v4.view.ViewPager;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-
 import butterknife.Bind;
-import butterknife.OnPageChange;
 import butterknife.ButterKnife;
-
+import butterknife.OnPageChange;
 import com.farmers.underground.R;
-import com.farmers.underground.ui.adapters.TutorialPagerAdapter;
-import com.farmers.underground.ui.models.TutorialItemDataHolder;
+import com.farmers.underground.config.ProjectConstants;
+import com.farmers.underground.ui.adapters.ProjectPagerAdapter;
 import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.fragments.TutorialItemFragment;
+import com.farmers.underground.ui.models.TutorialItemDataHolder;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,14 +26,14 @@ import java.util.List;
  */
 public class TutorialActivity extends BaseActivity implements TutorialItemFragment.Callback {
 
-    public static final String KEY_DATA = "data";
+
 
     @Bind(R.id.rg_Tutorial)
     protected ViewGroup radioGroup;
     @Bind(R.id.vp_Tutorial)
     protected ViewPager viewPager;
 
-    private TutorialPagerAdapter<TutorialItemFragment> adapter;
+    private ProjectPagerAdapter<TutorialItemFragment> adapter;
 
     @Override
     public int getLayoutResId() {
@@ -54,7 +53,7 @@ public class TutorialActivity extends BaseActivity implements TutorialItemFragme
     }
 
     public void initPager() {
-        adapter = new TutorialPagerAdapter<>(getSupportFragmentManager());
+        adapter = new ProjectPagerAdapter<>(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
         adapter.setFragments(getFragmentList(getDataList()));
         adapter.notifyDataSetChanged();
@@ -74,7 +73,7 @@ public class TutorialActivity extends BaseActivity implements TutorialItemFragme
         List<TutorialItemFragment> fragmentList = new ArrayList<>();
         for (TutorialItemDataHolder item : dataHolderList) {
             Bundle args = new Bundle();
-            args.putSerializable(KEY_DATA, item);
+            args.putSerializable(ProjectConstants.KEY_DATA, item);
             TutorialItemFragment fragmentTutorialItem = new TutorialItemFragment();
             fragmentTutorialItem.setArguments(args);
             fragmentList.add(fragmentTutorialItem);

@@ -68,8 +68,8 @@
     <!--TODO-->
 
     //main activity
-    <string name="main_activity_tab_1">כל הגידולים</string>
-    <string name="main_activity_tab_2">המועדפים שלי</string>
+    <string name="main_activity_tab_all_crops">כל הגידולים</string>
+    <string name="main_activity_tab_favourites">המועדפים שלי</string>
 
 
 </resources>

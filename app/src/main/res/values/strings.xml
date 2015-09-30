@@ -68,6 +68,6 @@
     <string name="drawer_content_3">My Favorites</string>
 
     //main activity
-    <string name="main_activity_tab_1">All crops</string>
-    <string name="main_activity_tab_2">My favourites</string>
+    <string name="main_activity_tab_all_crops">All crops</string>
+    <string name="main_activity_tab_favourites">My favourites</string>
 </resources>

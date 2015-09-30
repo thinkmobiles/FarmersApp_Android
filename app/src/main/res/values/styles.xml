@@ -12,6 +12,12 @@
     </style>
 
 
+    <style name="TestTheme" parent="AppTheme">
+        <item name="android:textColorPrimary">@color/text_grey</item>
+        <item name="android:textColorSecondary">@color/text_grey</item>
+
+    </style>
+
 
     <style name="TutorialActivityTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowNoTitle">true</item>
@@ -59,6 +65,11 @@
     <style name="TV_Drawer">
         <item name="android:textColor">@color/drawer_text_color</item>
         <item name="android:textSize">@dimen/drawer_item_text_size</item>
+    </style>
+
+    <style name="TV_TABS">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/tabs_text_size</item>
     </style>
 
 
