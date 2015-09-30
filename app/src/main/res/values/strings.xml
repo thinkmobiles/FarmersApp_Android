@@ -69,4 +69,14 @@
     <string name="select_marketeer_text_name">Name marketer</string>
     <string name="select_marketeer_add_name">Add a new marketer </string>
 
+
+    //drawer
+    <string name="drawer_content_0">All crops</string>
+    <string name="drawer_content_1">Add reseller price</string>
+    <string name="drawer_content_2">Invite friends</string>
+    <string name="drawer_content_3">My Favorites</string>
+
+    //main activity
+    <string name="main_activity_tab_1">All crops</string>
+    <string name="main_activity_tab_2">My favourites</string>
 </resources>

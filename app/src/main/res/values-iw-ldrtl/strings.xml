@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- \u200F (this is RIGHT-TO-LEFT MARK character)  -->
-    <string name="app_name">\u200FFarmers iw</string>
+    <string name="app_name">העיקר האיכר</string>
 
     <string name="facebook_app_id">889106887840848</string>
 
@@ -67,6 +67,18 @@
     <string name="select_marketeer_text_name">שם המשווק</string>
     <string name="select_marketeer_add_name">הוסף שם משווק חדש</string>
 
+
+    //drawer
+
+    <string name="drawer_content_0">כל הגידולים</string>
+    <string name="drawer_content_1">הוספת מחיר משווק</string>
+    <string name="drawer_content_2">הזמן חברים</string>
+    <string name="drawer_content_3">המעודפים שלי</string>
     <!--TODO-->
+
+    //main activity
+    <string name="main_activity_tab_1">כל הגידולים</string>
+    <string name="main_activity_tab_2">המועדפים שלי</string>
+
 
 </resources>

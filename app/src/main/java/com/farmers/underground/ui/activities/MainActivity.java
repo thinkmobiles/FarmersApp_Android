@@ -38,15 +38,14 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     @Bind(R.id.lv_DrawerHolder_MainActivity)
     protected ListView lvDrawerContainer;
 
-
     private boolean drawerOpened;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         defineDrawer();
         setDrawerList();
     }
