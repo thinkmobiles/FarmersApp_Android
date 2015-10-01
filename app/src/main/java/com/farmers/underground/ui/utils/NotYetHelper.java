@@ -1,4 +1,4 @@
-package com.farmers.underground.utils;
+package com.farmers.underground.ui.utils;
 
 import android.content.Context;
 import android.widget.Toast;

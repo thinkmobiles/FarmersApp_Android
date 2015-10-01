@@ -1,13 +1,11 @@
 package com.farmers.underground.ui.adapters;
 
 import android.content.Context;
-import android.graphics.drawable.LayerDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
 import com.farmers.underground.R;
 
 import java.util.ArrayList;

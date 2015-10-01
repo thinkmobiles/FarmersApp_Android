@@ -1,16 +1,10 @@
 package com.farmers.underground.remote.util;
 
 import android.util.Log;
-
-import com.squareup.okhttp.Interceptor;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
-import com.squareup.okhttp.ResponseBody;
+import com.squareup.okhttp.*;
+import okio.Buffer;
 
 import java.io.IOException;
-
-import okio.Buffer;
 
 /**
  * Created by tZpace

@@ -1,112 +1,93 @@
 package com.farmers.underground.ui.activities;
 
+import android.app.SearchManager;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ListView;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnItemClick;
-
-import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.Toolbar;
-
-import com.facebook.appevents.AppEventsLogger;
 import com.farmers.underground.R;
+import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.ui.adapters.DrawerAdapter;
+import com.farmers.underground.ui.adapters.ProjectPagerAdapter;
 import com.farmers.underground.ui.base.BaseActivity;
+import com.farmers.underground.ui.base.BaseFragment;
+import com.farmers.underground.ui.custom_views.CustomSearchView;
+import com.farmers.underground.ui.fragments.CropsListFragment;
+import com.farmers.underground.ui.fragments.SearchQueryFragmentCallback;
+import com.farmers.underground.ui.models.CropsListFragmentModel;
 import com.farmers.underground.ui.models.DrawerItem;
-import com.farmers.underground.utils.NotYetHelper;
+import com.farmers.underground.ui.utils.NotYetHelper;
+import com.farmers.underground.ui.utils.SearchController;
+import com.farmers.underground.ui.utils.SharedPrefHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 /**
- * Created by omar
- * on 9/28/15.
+ * Created by omar on 9/28/15.
  */
 public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCallback {
 
     @Bind(R.id.toolbar)
     protected Toolbar mToolbar;
+
     @Bind(R.id.drawer_conainer_MainActivity)
     protected DrawerLayout mDrawerlayout;
+
     @Bind(R.id.lv_DrawerHolder_MainActivity)
     protected ListView lvDrawerContainer;
 
+    @Bind(R.id.searchView)
+    protected CustomSearchView searchView;
+
+    @Bind(R.id.tabs_MainActivity)
+    protected TabLayout tabLayout;
+
+    @Bind(R.id.vp_MainActivity)
+    protected ViewPager viewPager;
+
+    @Bind(R.id.lv_SearchHint_MainActivity)
+    protected ListView lv_SearchHint;
+
+
+    private SearchManager searchManager;
+    private SearchController searchController;
+    private ProjectPagerAdapter<BaseFragment> adapter;
     private boolean drawerOpened;
+    private static String query = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) query = savedInstanceState.getString(ProjectConstants.KEY_DATA);
+
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        defineDrawer();
+
+        setDrawer();
         setDrawerList();
-    }
+        setViewPager();
+        setTabs();
+        setSearchViewListeners();
 
-    /*@Override
-    protected void onResume() {
-        super.onResume();
-
-        // Logs 'install' and 'app activate' App Events.
-        AppEventsLogger.activateApp(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        // Logs 'app deactivate' App Event.
-        AppEventsLogger.deactivateApp(this);
-    }*/
-
-    private void defineDrawer() {
-        mDrawerlayout.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                lvDrawerContainer.bringToFront();
-                mDrawerlayout.requestLayout();
-                drawerOpened = true;
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                super.onDrawerClosed(drawerView);
-                drawerOpened = false;
-            }
-        });
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_burger:
-                openDrawer();
-                return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        if (drawerOpened) mDrawerlayout.closeDrawers();
-        else super.onBackPressed();
+        searchView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -116,10 +97,116 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     @Override
     protected int getFragmentContainerId() {
-        return R.id.fl_ContainerMainActivity;
+        return 0;
     }
 
-    void openDrawer() {
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(ProjectConstants.KEY_DATA, query);
+    }
+
+
+
+
+
+
+    //search
+    private void setSearchViewListeners() {
+        searchController = new SearchController(lv_SearchHint) {
+            @Override
+            public void searchByHint(String query) {
+                SharedPrefHelper.saveSearchHint(MainActivity.this, query);
+                searchView.setQuery(query, true);
+            }
+        };
+        searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onSearchClicked();
+            }
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                SharedPrefHelper.saveSearchHint(MainActivity.this, query);
+                searchController.hide();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (newText.isEmpty()) {
+                    query = "";
+                    updateFragments();
+                }
+                return false;
+            }
+        });
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                searchController.hide();
+                return false;
+            }
+        });
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            query = intent.getStringExtra(SearchManager.QUERY);
+            updateFragments();
+        }
+    }
+
+    private void forceHideSearchList(){
+        hideKeyboard();
+        lv_SearchHint.setVisibility(View.GONE);
+    }
+
+    private boolean forceHideSaerch() {
+
+        if (searchView.isIconified()) return false;
+        else {
+            searchView.setIconified(true);
+            hideKeyboard();
+            return true;
+        }
+    }
+
+    private void hideKeyboard(){
+        InputMethodManager imm = (InputMethodManager)  getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow( getCurrentFocus().getWindowToken(), 0);
+
+    }
+
+
+
+    //drawer
+    private void setDrawer() {
+        mDrawerlayout.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                lvDrawerContainer.bringToFront();
+                mDrawerlayout.requestLayout();
+                drawerOpened = true;
+                forceHideSearchList();
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                drawerOpened = false;
+            }
+        });
+    }
+
+    private void openDrawer() {
         if (mDrawerlayout.isDrawerOpen(lvDrawerContainer)) {
             mDrawerlayout.closeDrawer(lvDrawerContainer);
         }
@@ -138,15 +225,98 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         lvDrawerContainer.setAdapter(new DrawerAdapter(drawerItemList, this));
     }
 
+    public void setViewPager() {
+
+        adapter = new ProjectPagerAdapter<>(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
+        adapter.setFragments(getFragmentList());
+        adapter.setTitles(getTitlesList());
+        adapter.notifyDataSetChanged();
+        viewPager.setCurrentItem(adapter.getCount() - 1);
+    }
+
+    private void updateFragments(){
+        for(BaseFragment f : adapter.getFragmentList()){
+            ((SearchQueryFragmentCallback)f).onReceive(query);
+        }
+    }
+
+
+    //tabs
+    private void setTabs() {
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
+
+
+
+    //view pager
+    private List<String> getTitlesList() {
+        List<String> titles = new ArrayList<>();
+        titles.add(getString(R.string.main_activity_tab_favourites));
+        titles.add(getString(R.string.main_activity_tab_all_crops));
+        return titles;
+    }
+
+    private List<BaseFragment> getFragmentList() {
+        List<BaseFragment> fragmentList = new ArrayList<>();
+        fragmentList.add(createFavFragemnt());
+        fragmentList.add(createCropFragemnt());
+        return fragmentList;
+    }
+
+    private BaseFragment createFavFragemnt() {
+        return CropsListFragment.getInstance(CropsListFragmentModel.TYPE.FAVORITIES, query);
+    }
+
+    private BaseFragment createCropFragemnt() {
+        return CropsListFragment.getInstance(CropsListFragmentModel.TYPE.ALL_CROPS, query);
+    }
+
+
+    //options menu
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_burger:
+                openDrawer();
+                return true;
+        }
+        return false;
+    }
+
+
+    //click events
+
     @OnItemClick(R.id.lv_DrawerHolder_MainActivity)
     void onItemClick(int pos) {
         NotYetHelper.notYetImplmented(this, "drawer items");
         mDrawerlayout.closeDrawers();
     }
 
+    @OnClick(R.id.searchView)
+    protected void onSearchClicked() {
+        searchController.setHinsList(SharedPrefHelper.getSearchHints(MainActivity.this));
+        searchController.show();
+    }
+
     @Override
     public void onSettingsClicked() {
         NotYetHelper.notYetImplmented(this, "drawer settings");
         mDrawerlayout.closeDrawers();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerOpened) mDrawerlayout.closeDrawers();
+        else if (!forceHideSaerch()) super.onBackPressed();
     }
 }

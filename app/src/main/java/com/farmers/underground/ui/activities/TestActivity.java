@@ -4,12 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
-
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import com.farmers.underground.R;
 import com.farmers.underground.BuildConfig;
+import com.farmers.underground.R;
 import com.farmers.underground.remote.RetrofitSingleton;
 import com.farmers.underground.remote.models.ErrorMsg;
 import com.farmers.underground.remote.models.SuccessMsg;
