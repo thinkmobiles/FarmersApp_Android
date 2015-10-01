@@ -91,7 +91,7 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback {
                                 object.get(FB.name);    //full name
                                 object.get(FB.email);   //can be null
                                 object.get(FB.picture); //link
-                                //accessToken
+                                // + accessToken
 
                                 onSuccess(null);  // <-- TODO
 

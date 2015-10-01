@@ -3,7 +3,7 @@
 
     <string name="facebook_app_id">889106887840848</string>
 
-    //tutorial
+    <!--//tutorial-->
     <string name="tutorial_skip">Skip</string>
     <string name="tutorial_content_1">
         Welcome Lhaikr peasant farmers \n
@@ -27,7 +27,7 @@
     <string name="test_tutorial_fragment">Tutorial Fragment</string>
     <!--TODO-->
 
-    //login
+    <!--//login-->
     <string name="login_text_header">The main thing is the farmer</string>
     <string name="login_text_subheader">Prices tumors comfortably</string>
     <string name="login_email">Email</string>
@@ -41,14 +41,19 @@
     <string name="toolbar_item_menu">menu</string>
     <string name="toolbar_item_search">Search</string>
 
-    //sign_up
+    <!--//dialogs-->
+    <string name="dialog_title_forgot_password">Please, enter your email</string>
+    <string name="dialog_btn_ok">OK</string>
+    <string name="dialog_btn_cancel">Cancel</string>
+
+    <!--//sign_up-->
     <string name="sign_up_full_name">Full name</string>
     <string name="sign_up_text_sign_up">Sign up</string>
     <string name="sign_up_register_facebook">Register with Facebook</string>
     <string name="sign_up_text_login">Login</string>
     <string name="sign_up_is_registred">Registered already?</string>
 
-    //after sign up
+    <!--//after sign up-->
     <string name="after_sign_header">A little something, immediately ending!</string>
     <string name="after_sign_text">We\'d love to know who your reseller, so you can enter the price of your reseller Recent anonymously and securely for the benefit of other farmers and farmers exposed to other marketers prices</string>
     <string name="after_sign_enter_marketeer">Enter the name of your dealer</string>
@@ -56,18 +61,18 @@
     <string name="after_sign_skip">Skip</string>
     <string name="after_sign_propose_skip">You can jump, but then not be exposed to prices in other markets</string>
 
-    //after sign b/ selection marketeer
+    <!--//after sign b/ selection marketeer-->
     <string name="select_marketeer_text_name">Name marketer</string>
     <string name="select_marketeer_add_name">Add a new marketer </string>
 
 
-    //drawer
+    <!--//drawer-->
     <string name="drawer_content_0">All crops</string>
     <string name="drawer_content_1">Add reseller price</string>
     <string name="drawer_content_2">Invite friends</string>
     <string name="drawer_content_3">My Favorites</string>
 
-    //main activity
+    <!--//main activity-->
     <string name="main_activity_tab_all_crops">All crops</string>
     <string name="main_activity_tab_favourites">My favourites</string>
     <string name="search_label">Search crops</string>
