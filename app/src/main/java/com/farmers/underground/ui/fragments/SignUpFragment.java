@@ -7,6 +7,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.text.method.TransformationMethod;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -39,6 +40,13 @@ public class SignUpFragment extends BaseFragment<LoginSignUpActivity>  {
 
     @Bind(R.id.etPassword_FSU)
     protected EditText etPassword;
+
+    public ImageView getImageView3() {
+        return imageView3;
+    }
+
+    @Bind(R.id.imageView3)
+    protected ImageView imageView3;
 
     private boolean isVisiablePass = true;
 
