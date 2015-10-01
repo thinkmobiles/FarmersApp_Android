@@ -5,6 +5,8 @@ import com.farmers.underground.remote.models.UserCredentials;
 import com.farmers.underground.remote.models.UserRegistration;
 import retrofit.Call;
 import retrofit.http.Body;
+import retrofit.http.Field;
+import retrofit.http.FormUrlEncoded;
 import retrofit.http.POST;
 
 /**
@@ -21,5 +23,9 @@ public interface AuthorizationService {
 
     @POST("users/signOut")
     Call<SuccessMsg> signOut();
+
+    @FormUrlEncoded
+    @POST("users/forgotPass")
+    Call<SuccessMsg> forgotPass(@Field("email") String email);
 
 }

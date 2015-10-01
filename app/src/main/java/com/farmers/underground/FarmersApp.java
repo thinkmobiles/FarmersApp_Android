@@ -32,4 +32,8 @@ public class FarmersApp extends Application {
         FacebookSdk.sdkInitialize(getApplicationContext());
 
     }
+/*
+    public void killProcess() {
+        android.os.Process.killProcess(android.os.Process.myPid());
+    }*/
 }

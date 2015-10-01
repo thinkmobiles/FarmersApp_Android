@@ -117,6 +117,24 @@ public class RetrofitSingleton {
         });
     }
 
+    public void forgotPass(@NonNull String email, final ACallback<SuccessMsg, ErrorMsg> callback) {
+
+        getAuthorizationService().forgotPass(email).enqueue(new Callback<SuccessMsg>() {
+
+            @Override
+            public void onResponse(Response<SuccessMsg> response, Retrofit retrofit) {
+                performCallback(callback, response);
+                callback.anyway();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                callback.onError(new ErrorMsg("Unknown Error"));
+                callback.anyway();
+            }
+        });
+    }
+
     private static final Converter<ResponseBody, ?> errorConverter = GsonConverterFactory.create().fromResponseBody(ErrorMsg.class, null) ;
 
     private <R> void performCallback(ACallback<R, ErrorMsg> callback, Response<R> response) {

@@ -11,6 +11,8 @@ import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import com.facebook.login.LoginManager;
 import com.farmers.underground.R;
 import com.farmers.underground.remote.RetrofitSingleton;
 import com.farmers.underground.remote.models.ErrorMsg;
@@ -19,6 +21,8 @@ import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.ui.activities.LoginSignUpActivity;
 import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.utils.ValidationUtil;
+
+import java.util.Arrays;
 
 /**
  * Created by tZpace
@@ -66,8 +70,7 @@ public class SignUpFragment extends BaseFragment<LoginSignUpActivity>  {
 
     @OnClick(R.id.btnSignUpFB_FSU)
     protected void signUpFB() {
-        getHostActivity().getSupportFragmentManager().popBackStack();
-        getHostActivity().switchFragment(LoginAfterRegistrationAFragment.class.getName(), false);
+        LoginManager.getInstance().logInWithReadPermissions(getHostActivity(), Arrays.asList("public_profile", "email"));
     }
 
     @OnClick(R.id.ivShowPass_FSU)
