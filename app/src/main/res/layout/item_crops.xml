@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:custom="http://schemas.android.com/apk/res-auto"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        custom:cardCornerRadius="@dimen/crops_card_corner_radius"
+        custom:cardBackgroundColor="#84ffff"
+        custom:cardElevation="4dp"
+        custom:cardPreventCornerOverlap="false"
+
+        android:layout_margin="8dp"
+        android:id="@+id/crops_item_view">
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                  android:orientation="vertical">
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:background="@color/light_blue">
+            <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/iv_CropsItemImage"/>
+            <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cb_FavouriteCropsItem"
+                    android:button="@drawable/selector_crops_fav_checkbox"
+                    android:layout_gravity="left|top" android:layout_margin="@dimen/crops_item_fav_cb_margin"/>
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|top"
+                    android:padding="4dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/bg_crops_calendar">
+                <com.farmers.underground.ui.custom_views.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="9"
+                        android:id="@+id/tv_DayCropsItem"
+                        android:textSize="40sp"
+                        android:textColor="@color/white"
+                        android:layout_marginTop="8dp"
+                        android:layout_gravity="center_horizontal"
+                        custom:customFont="avenir"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="New Text"
+                        android:textSize="12sp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:id="@+id/tv_MonthCropsCalendar" android:layout_gravity="center_horizontal"/>
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/white"
+                        android:layout_margin="4dp"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        android:text="New Text"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:id="@+id/tv_YearCropsItem"/>
+            </LinearLayout>
+        </FrameLayout>
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_weight="2"
+                android:layout_height="0dp">
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

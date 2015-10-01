@@ -66,6 +66,8 @@
     <dimen name="tabs_text_size">18sp</dimen>
     <dimen name="search_hint_list_item_padding_x">20dp</dimen>
     <dimen name="search_hint_list_item_padding_y">10dp</dimen>
+    <dimen name="crops_item_fav_cb_margin">16dp</dimen>
+    <dimen name="crops_card_corner_radius">6dp</dimen>
 
 
 </resources>

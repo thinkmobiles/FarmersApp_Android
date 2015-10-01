@@ -1,5 +1,6 @@
 package com.farmers.underground.ui.base;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -7,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 import com.farmers.underground.R;
 import org.intellij.lang.annotations.MagicConstant;
@@ -31,6 +33,11 @@ public abstract class BaseActivity extends AppCompatActivity {
             throw new Error("WTF! add/override getLayoutResId.");
 
         setContentView(getLayoutResId());
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 
     public void switchFragment(@NonNull String fragmentClassName, boolean saveInBackStack) {
@@ -83,5 +90,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void showToast(String msg, @MagicConstant(intValues = {Toast.LENGTH_LONG, Toast.LENGTH_SHORT}) final int duration){
         Toast.makeText(this, msg, duration).show();
     }
+    public void hideSoftKeyboard(){
+        InputMethodManager imm = (InputMethodManager)  getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow( getCurrentFocus().getWindowToken(), 0);
 
+    }
 }
