@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.login.LoginManager;
 import com.farmers.underground.R;
 import com.farmers.underground.remote.RetrofitSingleton;
 import com.farmers.underground.remote.models.ErrorMsg;
@@ -22,6 +23,8 @@ import com.farmers.underground.ui.activities.LoginSignUpActivity;
 import com.farmers.underground.ui.activities.MainActivity;
 import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.utils.ValidationUtil;
+
+import java.util.Arrays;
 
 /**
  * Created by tZpace
@@ -78,6 +81,7 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> implements 
                 login();
                 break;
             case R.id.btnLoginFB:
+                LoginManager.getInstance().logInWithReadPermissions(getHostActivity(), Arrays.asList("public_profile","email"));
                 break;
             case R.id.ivShowPass:
                 showHidePass();
