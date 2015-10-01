@@ -22,10 +22,10 @@ public class SearchHint {
         this.hintsList = hintsList;
     }
 
-    public void add(String querry) {
-       int index =  hintsList.indexOf(querry);
+    public void add(String query) {
+       int index =  hintsList.indexOf(query);
         if(index >= 0 )
             hintsList.remove(index);
-        hintsList.add(0, querry);
+        hintsList.add(0, query);
     }
 }

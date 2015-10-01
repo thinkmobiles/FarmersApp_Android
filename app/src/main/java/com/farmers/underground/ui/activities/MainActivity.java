@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ListView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -26,6 +27,8 @@ import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.custom_views.CustomSearchView;
 import com.farmers.underground.ui.fragments.CropsListFragment;
+import com.farmers.underground.ui.fragments.SearchQueryFragmentCallback;
+import com.farmers.underground.ui.models.CropsListFragmentModel;
 import com.farmers.underground.ui.models.DrawerItem;
 import com.farmers.underground.ui.utils.NotYetHelper;
 import com.farmers.underground.ui.utils.SearchController;
@@ -66,7 +69,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     private SearchController searchController;
     private ProjectPagerAdapter<BaseFragment> adapter;
     private boolean drawerOpened;
-    private String query = "";
+    private static String query = "";
 
 
     @Override
@@ -105,13 +108,16 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
 
 
+
+
+
     //search
     private void setSearchViewListeners() {
         searchController = new SearchController(lv_SearchHint) {
             @Override
-            public void searchByHint(String querry){
-                SharedPrefHelper.saveSearchHint(MainActivity.this, querry);
-                searchView.setQuery(querry, true);
+            public void searchByHint(String query) {
+                SharedPrefHelper.saveSearchHint(MainActivity.this, query);
+                searchView.setQuery(query, true);
             }
         };
         searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -133,10 +139,9 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if(newText.isEmpty() && query != null) {
-                    query = null;
-                    setViewPager();
-                    NotYetHelper.notYetImplmented(MainActivity.this, "search");
+                if (newText.isEmpty()) {
+                    query = "";
+                    updateFragments();
                 }
                 return false;
             }
@@ -154,19 +159,32 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     protected void onNewIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             query = intent.getStringExtra(SearchManager.QUERY);
-            setViewPager();
-            NotYetHelper.notYetImplmented(this, "search");
+            updateFragments();
         }
     }
 
-    private boolean forceHideSaerch(){
-
-        if(searchView.isIconified())
-            return false;
-        else{
-        searchView.setIconified(true);
-        return true;}
+    private void forceHideSearchList(){
+        hideKeyboard();
+        lv_SearchHint.setVisibility(View.GONE);
     }
+
+    private boolean forceHideSaerch() {
+
+        if (searchView.isIconified()) return false;
+        else {
+            searchView.setIconified(true);
+            hideKeyboard();
+            return true;
+        }
+    }
+
+    private void hideKeyboard(){
+        InputMethodManager imm = (InputMethodManager)  getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow( getCurrentFocus().getWindowToken(), 0);
+
+    }
+
+
 
     //drawer
     private void setDrawer() {
@@ -177,7 +195,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                 lvDrawerContainer.bringToFront();
                 mDrawerlayout.requestLayout();
                 drawerOpened = true;
-                forceHideSaerch();
+                forceHideSearchList();
             }
 
             @Override
@@ -208,6 +226,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     }
 
     public void setViewPager() {
+
         adapter = new ProjectPagerAdapter<>(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
         adapter.setFragments(getFragmentList());
@@ -216,7 +235,11 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         viewPager.setCurrentItem(adapter.getCount() - 1);
     }
 
-
+    private void updateFragments(){
+        for(BaseFragment f : adapter.getFragmentList()){
+            ((SearchQueryFragmentCallback)f).onReceive(query);
+        }
+    }
 
 
     //tabs
@@ -243,14 +266,12 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     }
 
     private BaseFragment createFavFragemnt() {
-        return CropsListFragment.getInstance(CropsListFragment.TYPE.FAVORITIES, query);
+        return CropsListFragment.getInstance(CropsListFragmentModel.TYPE.FAVORITIES, query);
     }
 
     private BaseFragment createCropFragemnt() {
-        return CropsListFragment.getInstance(CropsListFragment.TYPE.ALL_CROPS, query);
+        return CropsListFragment.getInstance(CropsListFragmentModel.TYPE.ALL_CROPS, query);
     }
-
-
 
 
     //options menu
@@ -273,9 +294,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     }
 
 
-
-
-
     //click events
 
     @OnItemClick(R.id.lv_DrawerHolder_MainActivity)
@@ -285,9 +303,9 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     }
 
     @OnClick(R.id.searchView)
-    protected void onSearchClicked(){
+    protected void onSearchClicked() {
         searchController.setHinsList(SharedPrefHelper.getSearchHints(MainActivity.this));
-        searchController.  show();
+        searchController.show();
     }
 
     @Override
@@ -299,6 +317,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     @Override
     public void onBackPressed() {
         if (drawerOpened) mDrawerlayout.closeDrawers();
-        else if(!forceHideSaerch())super.onBackPressed();
+        else if (!forceHideSaerch()) super.onBackPressed();
     }
 }

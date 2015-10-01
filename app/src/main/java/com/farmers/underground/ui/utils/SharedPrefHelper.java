@@ -16,13 +16,13 @@ public class SharedPrefHelper {
 
     public static final String SEARCH_HINTS = "search_hints";
 
-    public static void saveSearchHint(Context context, String querry) {
+    public static void saveSearchHint(Context context, String query) {
         Gson gson = new GsonBuilder().create();
         SearchHint hint;
         String hintsJson = getPrivatePrefs(context).getString(SEARCH_HINTS, new String());
         if (!hintsJson.isEmpty()) hint = gson.fromJson(hintsJson, SearchHint.class);
         else hint = new SearchHint();
-        hint.add(querry);
+        hint.add(query);
         hintsJson = gson.toJson(hint);
         SharedPreferences.Editor editor = getPrivatePrefs(context).edit();
         editor.putString(SEARCH_HINTS, hintsJson);

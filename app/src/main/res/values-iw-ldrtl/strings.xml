@@ -71,6 +71,8 @@
     <string name="main_activity_tab_all_crops">כל הגידולים</string>
     <string name="main_activity_tab_favourites">המועדפים שלי</string>
     <string name="search_label">גידולי חיפושּ</string>
+    <string name="no_crops_found">"לא מצאו גידולים \n"</string>
+    <string name="all">" את כל"</string>
 
 
 </resources>

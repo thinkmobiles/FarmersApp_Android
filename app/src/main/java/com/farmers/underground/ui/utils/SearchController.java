@@ -46,5 +46,5 @@ abstract public class SearchController implements AdapterView.OnItemClickListene
 
         searchByHint(hintList.get(i));
     }
-    abstract public void searchByHint(String querry);
+    abstract public void searchByHint(String query);
 }

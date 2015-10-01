@@ -1,31 +1,53 @@
 package com.farmers.underground.ui.models;
 
-import com.farmers.underground.ui.fragments.CropsListFragment;
-
 import java.io.Serializable;
 
 /**
  * Created by omar on 9/30/15.
  */
 public class CropsListFragmentModel implements Serializable {
-    private CropsListFragment.TYPE type;
-    private String querry;
+    public enum TYPE {
+        ALL_CROPS,
+        FAVORITIES
+    }
 
-    public CropsListFragmentModel(CropsListFragment.TYPE type, String querry) {
+    private  TYPE type;
+    private String querry;
+    private int pageCount = 0;
+    private int itemRange = 10;
+
+
+    public CropsListFragmentModel( TYPE type, String querry) {
         this.type = type;
         this.querry = querry;
     }
 
-    public CropsListFragment.TYPE getType() {
+
+    public int getPageCount() {
+        return pageCount;
+    }
+
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
+    }
+
+    public int getItemRange() {
+        return itemRange;
+    }
+
+    public void setItemRange(int itemRange) {
+        this.itemRange = itemRange;
+    }
+
+    public  TYPE getType() {
         return type;
     }
 
-    public void setType(CropsListFragment.TYPE type) {
+    public void setType( TYPE type) {
         this.type = type;
     }
 
     public String getQuerry() {
-        if (querry == null)  querry = "";
         return querry;
     }
 
