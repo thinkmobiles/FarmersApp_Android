@@ -13,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ListView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -67,7 +66,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     private SearchManager searchManager;
     private SearchController searchController;
-    private ProjectPagerAdapter<BaseFragment> adapter;
+    private ProjectPagerAdapter<BaseFragment> pagerAdapter;
     private boolean drawerOpened;
     private static String query = "";
 
@@ -107,10 +106,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     }
 
 
-
-
-
-
     //search
     private void setSearchViewListeners() {
         searchController = new SearchController(lv_SearchHint) {
@@ -138,12 +133,19 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
-                if (newText.isEmpty()) {
+            public boolean onQueryTextChange(final String newText) {
+                String newQuerry = "";
+                if (newText.length() > 0) newQuerry = newText.trim();
+                if (newQuerry.isEmpty()) {
                     query = "";
                     updateFragments();
+                    return false;
+                } else if (newQuerry.length() > 1 && newQuerry.length() < 2) return true;
+                else {
+                    query = newQuerry;
+                    return false;
                 }
-                return false;
+
             }
         });
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
@@ -163,27 +165,20 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         }
     }
 
-    private void forceHideSearchList(){
-        hideKeyboard();
+    private void forceHideSearchList() {
+        hideSoftKeyboard();
         lv_SearchHint.setVisibility(View.GONE);
     }
 
-    private boolean forceHideSaerch() {
+    private boolean forceHideSearch() {
 
         if (searchView.isIconified()) return false;
         else {
             searchView.setIconified(true);
-            hideKeyboard();
+            hideSoftKeyboard();
             return true;
         }
     }
-
-    private void hideKeyboard(){
-        InputMethodManager imm = (InputMethodManager)  getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow( getCurrentFocus().getWindowToken(), 0);
-
-    }
-
 
 
     //drawer
@@ -227,17 +222,17 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     public void setViewPager() {
 
-        adapter = new ProjectPagerAdapter<>(getSupportFragmentManager());
-        viewPager.setAdapter(adapter);
-        adapter.setFragments(getFragmentList());
-        adapter.setTitles(getTitlesList());
-        adapter.notifyDataSetChanged();
-        viewPager.setCurrentItem(adapter.getCount() - 1);
+        pagerAdapter = new ProjectPagerAdapter<>(getSupportFragmentManager());
+        viewPager.setAdapter(pagerAdapter);
+        pagerAdapter.setFragments(getFragmentList());
+        pagerAdapter.setTitles(getTitlesList());
+        pagerAdapter.notifyDataSetChanged();
+        viewPager.setCurrentItem(pagerAdapter.getCount() - 1);
     }
 
-    private void updateFragments(){
-        for(BaseFragment f : adapter.getFragmentList()){
-            ((SearchQueryFragmentCallback)f).onReceive(query);
+    private void updateFragments() {
+        for (BaseFragment f : pagerAdapter.getFragmentList()) {
+            ((SearchQueryFragmentCallback) f).onReceive(query);
         }
     }
 
@@ -246,8 +241,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     private void setTabs() {
         tabLayout.setupWithViewPager(viewPager);
     }
-
-
 
 
     //view pager
@@ -317,6 +310,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     @Override
     public void onBackPressed() {
         if (drawerOpened) mDrawerlayout.closeDrawers();
-        else if (!forceHideSaerch()) super.onBackPressed();
+        else if (!forceHideSearch()) super.onBackPressed();
     }
 }
