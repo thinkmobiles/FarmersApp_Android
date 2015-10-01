@@ -12,24 +12,25 @@ import android.util.AttributeSet;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import com.farmers.underground.R;
+import com.farmers.underground.ui.utils.TypefaceManager;
 
 
 /**
  * @author Oleg Bondarenko on 5/11/2015.
  */
-public class ArialEditText extends EditText {
+public class CustomEditText extends EditText {
 
     private static final String fontDir = "Fonts/";
 
-    public ArialEditText(Context context) { super(context); }
+    public CustomEditText(Context context) { super(context); }
 
-    public ArialEditText(Context context, AttributeSet attrs) {
+    public CustomEditText(Context context, AttributeSet attrs) {
 
         super(context, attrs);
         defineTypeface(context, attrs);
     }
 
-    public ArialEditText(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CustomEditText(Context context, AttributeSet attrs, int defStyleAttr) {
 
         super(context, attrs, defStyleAttr);
         defineTypeface(context, attrs);
@@ -44,11 +45,11 @@ public class ArialEditText extends EditText {
 
         TypedArray a = context.getTheme().obtainStyledAttributes(
                 attrs,
-                R.styleable.ArialEditText,
+                R.styleable.CustomEditText,
                 0, 0);
 
         try {
-            int font = a.getInteger(R.styleable.ArialEditText_customFont, 0);
+            int font = a.getInteger(R.styleable.CustomEditText_customFont, 0);
             setTypefaceBasedOnInt(font);
         }
         finally {
@@ -56,7 +57,7 @@ public class ArialEditText extends EditText {
         }
     }
 
-    public void setFontStyle(ArialFontStyle style){
+    public void setFontStyle(CustomFontStyle style){
         setTypefaceBasedOnInt(style.ordinal());
     }
 
@@ -67,11 +68,13 @@ public class ArialEditText extends EditText {
         switch (fontEnum){
             default:
             case 0:
-                typeface = Typeface.createFromAsset(am, fontDir + "ArialMT.ttf");
+                typeface = TypefaceManager.getInstance().getArial();
                 break;
-
             case 1:
-                typeface = Typeface.createFromAsset(am, fontDir + "ArialMTBold.otf");
+                typeface = TypefaceManager.getInstance().getArialBold();
+                break;
+            case 2:
+                typeface = TypefaceManager.getInstance().getAvenir();
                 break;
 
         }

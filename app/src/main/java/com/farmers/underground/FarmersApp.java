@@ -2,6 +2,7 @@ package com.farmers.underground;
 
 import android.app.Application;
 import com.facebook.FacebookSdk;
+import com.farmers.underground.ui.utils.TypefaceManager;
 
 /**
  * Created by tZpace
@@ -24,7 +25,7 @@ public class FarmersApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        TypefaceManager.init(this);
         ourInstance = this;
 
         // Initialize the SDK before executing any other operations,

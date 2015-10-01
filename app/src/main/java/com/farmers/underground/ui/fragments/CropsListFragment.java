@@ -1,11 +1,13 @@
 package com.farmers.underground.ui.fragments;
 
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -24,6 +26,9 @@ public class CropsListFragment extends BaseFragment implements SearchQueryFragme
 
     @Bind(R.id.tv_NoItemsCropsFragment)
     protected TextView tv_NoItems;
+
+    @Bind(R.id.crops_item_view)
+    protected CardView cardView;
 
     private CropsListFragmentModel thisModel;
 
@@ -48,6 +53,16 @@ public class CropsListFragment extends BaseFragment implements SearchQueryFragme
         View v = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this,v);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+
+
+        cardView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                cardView.getLayoutParams().height    = cardView.getMeasuredWidth();
+                cardView.getViewTreeObserver().removeOnPreDrawListener(this);
+                return false;
+            }
+        });
         return v;
     }
 
