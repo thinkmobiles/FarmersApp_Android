@@ -5,7 +5,7 @@
 
     <string name="facebook_app_id">889106887840848</string>
 
-    //tutorial
+   <!-- //tutorial-->
     <string name="tutorial_skip">דלג</string>
     <string name="tutorial_content_1">
        ברוכים הבאים להעיקר האיכר\n
@@ -21,7 +21,7 @@
         נוספים שהוזנו על ידי\nחבריך החקלאים</string>
     <string name="tutorial_next">הבא</string>
 
-    //login
+    <!--//login-->
     <string name="login_text_header">העיקר האיכר</string>
     <string name="login_text_subheader">מחירי גידולים בצורה נוחה</string>
     <string name="login_email">\u200Fאימייל</string>
@@ -35,14 +35,19 @@
     <string name="toolbar_item_menu">תפריט</string>
     <string name="toolbar_item_search">חיפוש</string>
 
-    //sign_up
+    <!--//dialogs-->
+    <string name="dialog_title_forgot_password">אנא, הכנס את הדוא"ל שלך</string>
+    <string name="dialog_btn_ok">אוקיי</string>
+    <string name="dialog_btn_cancel">לבטל</string>
+
+  <!--  //sign_up-->
     <string name="sign_up_full_name">שם מלא</string>
     <string name="sign_up_text_sign_up">הירשם</string>
     <string name="sign_up_register_facebook">רישום עם פייסבוקהירשם</string>
     <string name="sign_up_text_login">כניסה</string>
     <string name="sign_up_is_registred">רשומים כבר?</string>
 
-    //after sign up
+    <!--//after sign up-->
     <string name="after_sign_header">עוד משהו קטן, מייד מסיימים!</string>
     <string name="after_sign_text">אנחנו נשמח לדעת מי המשווק שלך, כך תוכל\n
         להזין מחיר עדכני של המשווק שלך בצורה\n
@@ -54,12 +59,12 @@
     <string name="after_sign_propose_skip">אתה יכול לדלג, אבל אז לא\n
         תיחשף למחירי משווקים אחרים</string>
 
-    //after sign b/ selection marketeer
+    <!--//after sign b/ selection marketeer-->
     <string name="select_marketeer_text_name">שם המשווק</string>
     <string name="select_marketeer_add_name">הוסף שם משווק חדש</string>
 
 
-    //drawer
+    <!--//drawer-->
 
     <string name="drawer_content_0">כל הגידולים</string>
     <string name="drawer_content_1">הוספת מחיר משווק</string>
@@ -67,7 +72,7 @@
     <string name="drawer_content_3">המעודפים שלי</string>
     <!--TODO-->
 
-    //main activity
+ <!--   //main activity-->
     <string name="main_activity_tab_all_crops">כל הגידולים</string>
     <string name="main_activity_tab_favourites">המועדפים שלי</string>
     <string name="search_label">גידולי חיפושּ</string>
