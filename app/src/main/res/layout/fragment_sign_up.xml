@@ -67,6 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/login_margin_btn_logins"
+            android:layout_marginTop="@dimen/login_margin_btn_logins"
             android:background="@color/bg_edit_text_sign_up">
 
             <EditText
@@ -117,6 +118,23 @@
                     android:src="@drawable/eye_line"
                     android:layout_marginRight="@dimen/sign_up_edit_text_margin_padding"/>
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/login_divider_height"
+                android:background="@color/black" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/sign_up_edit_text_height"
+                android:id="@+id/etConfirm_FSU"
+                android:paddingRight="@dimen/sign_up_edit_text_margin_padding"
+                android:hint="@string/login_password"
+                android:gravity="right|center_vertical"
+                android:textSize="@dimen/login_text_size"
+                android:inputType="textNoSuggestions"
+                android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789"
+                style="@style/EditSignUpScreen" />
         </LinearLayout>
 
         <LinearLayout
@@ -168,7 +186,7 @@
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/login_margin_register_login_fb">
+            android:layout_marginTop="@dimen/sign_up_margin_register_login_fb">
 
             <TextView
                 android:layout_width="wrap_content"

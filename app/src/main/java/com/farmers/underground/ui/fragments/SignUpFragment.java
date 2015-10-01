@@ -36,7 +36,10 @@ public class SignUpFragment extends BaseFragment<LoginSignUpActivity>  {
     @Bind(R.id.etPassword_FSU)
     protected EditText etPassword;
 
-    private boolean isVisiablePass = true;
+    @Bind(R.id.etConfirm_FSU)
+    protected EditText etConfirm;
+
+    private boolean isVisiablePass = false;
 
     @Override
     protected int getLayoutResId() {
@@ -47,7 +50,12 @@ public class SignUpFragment extends BaseFragment<LoginSignUpActivity>  {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        showHidePass();
+        hidePasswords();
+    }
+
+    private void hidePasswords(){
+        etPassword.setTransformationMethod(new PasswordTransformationMethod());
+        etConfirm.setTransformationMethod(new PasswordTransformationMethod());
     }
 
     @OnClick({R.id.ivBack_FSU, R.id.tvLogin_FSU})
@@ -58,6 +66,8 @@ public class SignUpFragment extends BaseFragment<LoginSignUpActivity>  {
 
     @OnClick(R.id.btnSignUpFB_FSU)
     protected void signUpFB() {
+        getHostActivity().getSupportFragmentManager().popBackStack();
+        getHostActivity().switchFragment(LoginAfterRegistrationAFragment.class.getName(), false);
     }
 
     @OnClick(R.id.ivShowPass_FSU)
@@ -95,6 +105,10 @@ public class SignUpFragment extends BaseFragment<LoginSignUpActivity>  {
         }
         if (!ValidationUtil.isValidPassword(password)) {
             getHostActivity().showToast("Password is incorrect", Toast.LENGTH_SHORT);
+            return;
+        }
+        if(!password.equals(etConfirm.getText().toString())){
+            getHostActivity().showToast("Password is not confirmed", Toast.LENGTH_SHORT);
             return;
         }
         //todo showProgressDialog

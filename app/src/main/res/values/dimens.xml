@@ -43,6 +43,7 @@
     <dimen name="sign_up_edit_text_margin_padding">15dp</dimen>
     <dimen name="sign_up_arrow_padding">5dp</dimen>
     <dimen name="sign_up_edit_text_height">48dp</dimen>
+    <dimen name="sign_up_margin_register_login_fb">25dp</dimen>
     //after sign
     <dimen name="after_sign_header_text_size">24sp</dimen>
     <dimen name="after_sign_propose_skip_text_size">14sp</dimen>
