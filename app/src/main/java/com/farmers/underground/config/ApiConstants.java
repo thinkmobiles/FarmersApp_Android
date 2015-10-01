@@ -13,7 +13,7 @@ public final class ApiConstants {
       *  local "192.168.88.250"
       *
       * */
-    public static final String IP = BuildConfig.PRODUCTION ? "134.249.164.53": "192.168.88.250";
+    public static final String IP =/* BuildConfig.PRODUCTION ?*/ "134.249.164.53"/*: "192.168.88.250"*/;
 
     public static final String PORT = "7792";
 
