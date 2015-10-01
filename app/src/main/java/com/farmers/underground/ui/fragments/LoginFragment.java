@@ -9,6 +9,8 @@ import android.text.method.TransformationMethod;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.facebook.login.LoginManager;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -21,6 +23,8 @@ import com.farmers.underground.ui.activities.LoginSignUpActivity;
 import com.farmers.underground.ui.activities.MainActivity;
 import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.utils.ValidationUtil;
+
+import java.util.Arrays;
 
 /**
  * Created by tZpace
