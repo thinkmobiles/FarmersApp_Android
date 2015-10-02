@@ -41,8 +41,9 @@ public class TestActivity extends BaseActivity {
 
             if(FarmersApp.showTutorial()){
                 intent = new Intent(this, TutorialActivity.class);
-            } else if (true){
+            } else /*if (true)*/{
                 //todo autologin
+                intent = new Intent(this, LoginSignUpActivity.class);
             }
 
             startActivity(intent);

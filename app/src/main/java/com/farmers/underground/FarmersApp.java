@@ -85,7 +85,7 @@ public class FarmersApp extends Application {
 
     public static void skipTutorialNextTime() {
         getAppPreferences().edit()
-                .putBoolean(ProjectConstants.KEY_APP_SHOW_SKIP_TUTORIAL, true)
+                .putBoolean(ProjectConstants.KEY_APP_SHOW_SKIP_TUTORIAL, false)
                 .apply();
     }
 
