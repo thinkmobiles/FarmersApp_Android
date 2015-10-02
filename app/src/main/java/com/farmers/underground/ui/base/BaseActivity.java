@@ -1,6 +1,8 @@
 package com.farmers.underground.ui.base;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -8,10 +10,15 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.farmers.underground.R;
+import com.farmers.underground.ui.dialogs.ProgressDialog;
+
 import org.intellij.lang.annotations.MagicConstant;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by tZpace
@@ -94,5 +101,42 @@ public abstract class BaseActivity extends AppCompatActivity {
         InputMethodManager imm = (InputMethodManager)  getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow( getCurrentFocus().getWindowToken(), 0);
 
+    }
+
+    private ProgressDialog mProgressDialog;
+
+    public final void showProgressDialog(final @NotNull String progressDialogString, @Nullable DialogInterface.OnDismissListener dismissListener) {
+        if (this.isFinishing()) {
+            return;
+        }
+
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+        }
+
+        mProgressDialog.setText(progressDialogString);
+        mProgressDialog.setCanceledOnTouchOutside(false);
+        mProgressDialog.setCancelable(dismissListener != null);
+        mProgressDialog.setOnDismissListener(dismissListener);
+
+        if (!mProgressDialog.isShowing())
+            mProgressDialog.show();
+    }
+
+    public final void showProgressDialog(@Nullable DialogInterface.OnDismissListener dismissListener) {
+        showProgressDialog(getString(R.string.dialog_progress_message_default), dismissListener);
+    }
+
+    public void showProgressDialog() {
+        showProgressDialog((DialogInterface.OnDismissListener) null);
+    }
+
+
+    public void hideProgressDialog() {
+        if (mProgressDialog != null) {
+            if (mProgressDialog.isShowing())
+                mProgressDialog.dismiss();
+            mProgressDialog = null;
+        }
     }
 }

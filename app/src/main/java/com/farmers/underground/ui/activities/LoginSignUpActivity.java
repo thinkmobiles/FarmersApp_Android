@@ -45,6 +45,7 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         switchFragment(LoginFragment.class.getName(), false);
 
 

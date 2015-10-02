@@ -95,7 +95,6 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> {
                 })
                 .create();
         dialog.show();
-//        getHostActivity().showToast("To be done, later", Toast.LENGTH_SHORT);
     }
 
 
@@ -136,6 +135,7 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> {
             return;
         }
 
+        getHostActivity().showProgressDialog();
         RetrofitSingleton.getInstance().loginViaEmail(email, password, new ACallback<SuccessMsg, ErrorMsg>() {
             @Override
             public void onSuccess(SuccessMsg result) {
@@ -150,6 +150,11 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> {
                 getHostActivity().showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
             }
 
+            @Override
+            public void anyway() {
+                super.anyway();
+                getHostActivity().hideProgressDialog();
+            }
         });
     }
 
@@ -162,7 +167,7 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> {
             getHostActivity().showToast("Email is incorrect", Toast.LENGTH_SHORT);
             return;
         }
-
+        getHostActivity().showProgressDialog();
         RetrofitSingleton.getInstance().forgotPass(email, new ACallback<SuccessMsg, ErrorMsg>() {
             @Override
             public void onSuccess(SuccessMsg result) {
@@ -177,6 +182,7 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> {
             @Override
             public void anyway() {
                 super.anyway();
+                getHostActivity().hideProgressDialog();
             }
         });
     }

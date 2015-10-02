@@ -13,5 +13,5 @@ public class FB {
 
     public static final String fields = "fields";
 
-    private FB(){ /**/}
+    private FB(){/*prevent creation*/}
 }

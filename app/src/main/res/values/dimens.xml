@@ -69,5 +69,19 @@
     <dimen name="crops_item_fav_cb_margin">16dp</dimen>
     <dimen name="crops_card_corner_radius">6dp</dimen>
 
+    <!--margins-->
+    <dimen name="margin_default_tiny">5dp</dimen>
+    <dimen name="margin_default_small">10dp</dimen>
+    <dimen name="margin_default_medium">15dp</dimen>
+    <dimen name="margin_default_normal">20dp</dimen>
+    <dimen name="margin_default_large">30dp</dimen>
+
+    <!--paddings-->
+    <dimen name="padding_default_tiny">5dp</dimen>
+    <dimen name="padding_default_small">10dp</dimen>
+    <dimen name="padding_default_medium">15dp</dimen>
+    <dimen name="padding_default_normal">20dp</dimen>
+    <dimen name="padding_default_large">30dp</dimen>
+
 
 </resources>
