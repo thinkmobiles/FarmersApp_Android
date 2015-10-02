@@ -30,28 +30,31 @@
             android:text="Tutorial Fragment" />
 
     <Button
-            android:id="@+id/btn_api_call_test_reg"
+            android:id="@+id/btn_api_call_test"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:padding="20dp"
-            android:text="API call register" />
+            android:text="API call test" />
 
     <Button
-            android:id="@+id/btn_api_call_test_log_in"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:padding="20dp"
-            android:text="API call signIn" />
+        android:id="@+id/btn_wipe_app_prefs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="20dp"
+        android:text="Wipe App Prefs" />
 
     <Button
-            android:id="@+id/btn_api_call_test_log_out"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:padding="20dp"
-            android:text="API call signOut" />
+        android:id="@+id/btn_wipe_usr_prefs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="20dp"
+        android:text="Wipe Usr Prefs" />
+
+
+
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

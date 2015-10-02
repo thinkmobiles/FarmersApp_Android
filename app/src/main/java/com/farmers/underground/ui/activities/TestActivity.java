@@ -72,9 +72,9 @@ public class TestActivity extends BaseActivity {
         startActivity(intent);
     }
 
-    @OnClick(R.id.btn_api_call_test_reg)
+    @OnClick(R.id.btn_api_call_test)
     void testApiCallsReg() {
-        //todo showProgressDialog
+        showProgressDialog();
         RetrofitSingleton.getInstance().registerViaEmail("FirstName LastName",/* "test" + System.currentTimeMillis() +*/   "tapacko7@gmail.com", "testpass", new ACallback<SuccessMsg, ErrorMsg>() {
             @Override
             public void onSuccess(SuccessMsg result) {
@@ -88,38 +88,19 @@ public class TestActivity extends BaseActivity {
 
             @Override
             public void anyway() {
-                //todo hideProgressDialog
+                hideProgressDialog();
             }
         });
     }
 
-    @OnClick(R.id.btn_api_call_test_log_in)
-    void testApiCallsIN() {
-        RetrofitSingleton.getInstance().loginViaEmail("tapacko7@gmail.com", "testpass", new ACallback<SuccessMsg, ErrorMsg>() {
-            @Override
-            public void onSuccess(SuccessMsg result) {
-                showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
-            }
-
-            @Override
-            public void onError(@NonNull ErrorMsg error) {
-                showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
-            }
-        });
+    @OnClick(R.id.btn_wipe_app_prefs)
+    void testWipeAppPrefs() {
+        FarmersApp.wipeAppPreferences();
     }
 
-    @OnClick(R.id.btn_api_call_test_log_out)
-    void testApiCallsOUT() {
-        RetrofitSingleton.getInstance().signOut(new ACallback<SuccessMsg, ErrorMsg>() {
-            @Override
-            public void onSuccess(SuccessMsg result) {
-                showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
-            }
-
-            @Override
-            public void onError(@NonNull ErrorMsg error) {
-                showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
-            }
-        });
+    @OnClick(R.id.btn_wipe_usr_prefs)
+    void testWipeUsrPrefs() {
+        FarmersApp.wipeUsrPreferences();
     }
+
 }

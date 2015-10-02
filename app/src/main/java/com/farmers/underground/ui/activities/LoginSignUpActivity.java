@@ -3,6 +3,7 @@ package com.farmers.underground.ui.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -15,6 +16,11 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.farmers.underground.R;
 import com.farmers.underground.config.FB;
+import com.farmers.underground.remote.RetrofitSingleton;
+import com.farmers.underground.remote.models.ErrorMsg;
+import com.farmers.underground.remote.models.SuccessMsg;
+import com.farmers.underground.remote.models.UserSignUpFB;
+import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.remote.util.ICallback;
 import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.fragments.LoginFragment;
@@ -28,7 +34,7 @@ import org.json.JSONObject;
  * Created by tZpace
  * on 25-Sep-15.
  */
-public class LoginSignUpActivity extends BaseActivity implements ICallback {
+public class LoginSignUpActivity extends BaseActivity implements ICallback<SuccessMsg, ErrorMsg> {
 
     private CallbackManager callbackManager;
 
@@ -55,6 +61,7 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback {
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
+                        showProgressDialog();
                         fethMyFB(loginResult.getAccessToken());
                     }
 
@@ -79,67 +86,74 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void fethMyFB(final AccessToken accessToken) {
+    private void fethMyFB(@NonNull final AccessToken accessToken) {
         GraphRequest request = GraphRequest.newMeRequest(
                 accessToken,
                 new GraphRequest.GraphJSONObjectCallback() {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
 
-                        if (response.getError() == null){
+                        if (response.getError() == null) {
                             try {
-                                //TODO check if json has next keys;
 
-                                object.get(FB.id);      //FB id
-                                object.get(FB.name);    //full name
-                                object.get(FB.email);   //can be null
-                                object.get(FB.picture); //link
-                                // + accessToken
+                                String id = object.getString(FB.id);        //FB id
+                                String name = object.getString(FB.name);    //full name
+                                String email = object.getString(FB.email);  //can be null
+                                String picture = null;
 
-                                if(object.has(FB.picture) && getCurrentFragment() instanceof SignUpFragment){
+                                if (object.has(FB.picture)) {
                                     try {
-                                      object.getJSONObject(FB.picture).getJSONObject("data").getString("url") ; //pic url
+                                        picture = object.getJSONObject(FB.picture).getJSONObject("data").getString("url"); //pic url
                                     } catch (JSONException e) {
-                                        /*ignore*/
+                                       /* ignore */
                                     }
-
                                 }
-                                onSuccess(null);  // <-- TODO
+                                if (TextUtils.isEmpty(id)||TextUtils.isEmpty(accessToken.getToken())){
+                                    onError(new ErrorMsg("No facebook id")); //<--TODO
+                                } else {
 
+                                    final UserSignUpFB userSignUpFB = new UserSignUpFB(id, accessToken.getToken(), picture,name,email);
+                                    apiCallSignupFb(userSignUpFB);
+                                }
                             } catch (JSONException e) {
-                                onError(e.getMessage());
+                                onError(new ErrorMsg(e.getMessage()));
                             }
 
                         } else {
-                            onError(response.getError());
+                            onError(new ErrorMsg(response.getError().toString()));
                         }
 
                     }
                 });
         final Bundle parameters = new Bundle();
 
-        parameters.putString(FB.fields,  FB.id      +","+
-                                         FB.name    +","+
-                                         FB.email   +","+
-                                         FB.picture);
+        parameters.putString(FB.fields, FB.id + "," +
+                FB.name + "," +
+                FB.email + "," +
+                FB.picture);
         request.setParameters(parameters);
         request.executeAsync();
     }
 
-    @Override
-    public void onSuccess(Object result) {
+    public void apiCallSignupFb(@NonNull UserSignUpFB userSignUpFB){
+        RetrofitSingleton.getInstance().signUpFb(userSignUpFB,this);
+    }
 
-        // TODO switch to add marketir screen A
+
+    @Override
+    public void onSuccess(SuccessMsg result) {
+
+        // TODO switch to add marketire screen A
 
     }
 
     @Override
-    public void onError(@NonNull Object error) {
-
+    public void onError(@NonNull ErrorMsg error) {
+        // TODO
     }
 
     @Override
     public void anyway() {
-
+        hideProgressDialog();
     }
 }
