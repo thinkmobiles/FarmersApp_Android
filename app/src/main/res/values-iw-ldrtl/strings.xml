@@ -79,6 +79,7 @@
     <string name="search_label">גידולי חיפושּ</string>
     <string name="no_crops_found">"לא מצאו גידולים \n"</string>
     <string name="all">" את כל"</string>
+    <string name="tap_to_refresh_price">לחץ לעדכן מחיר</string>
 
 
 </resources>
