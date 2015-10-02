@@ -130,6 +130,8 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback {
     @Override
     public void onSuccess(Object result) {
 
+        // TODO switch to add marketir screen A
+
     }
 
     @Override
