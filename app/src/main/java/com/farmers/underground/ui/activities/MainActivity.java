@@ -20,6 +20,8 @@ import butterknife.OnClick;
 import butterknife.OnItemClick;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
+import com.farmers.underground.remote.models.CropModel;
+import com.farmers.underground.ui.adapters.CropsListAdapter;
 import com.farmers.underground.ui.adapters.DrawerAdapter;
 import com.farmers.underground.ui.adapters.ProjectPagerAdapter;
 import com.farmers.underground.ui.base.BaseActivity;
@@ -29,6 +31,7 @@ import com.farmers.underground.ui.fragments.CropsListFragment;
 import com.farmers.underground.ui.fragments.SearchQueryFragmentCallback;
 import com.farmers.underground.ui.models.CropsListFragmentModel;
 import com.farmers.underground.ui.models.DrawerItem;
+import com.farmers.underground.ui.utils.CropsFragmentStateController;
 import com.farmers.underground.ui.utils.NotYetHelper;
 import com.farmers.underground.ui.utils.SearchController;
 import com.farmers.underground.ui.utils.SharedPrefHelper;
@@ -40,7 +43,7 @@ import java.util.List;
 /**
  * Created by omar on 9/28/15.
  */
-public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCallback {
+public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCallback, FragmentViewsCreatedCallback {
 
     @Bind(R.id.toolbar)
     protected Toolbar mToolbar;
@@ -67,6 +70,10 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     private SearchManager searchManager;
     private SearchController searchController;
     private ProjectPagerAdapter<BaseFragment> pagerAdapter;
+    private CropsListAdapter.CropsAdapterCallback cropsListCallback;
+    private CropsFragmentStateController cropsFragmentStateController;
+
+
     private boolean drawerOpened;
     private static String query = "";
 
@@ -80,11 +87,15 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+
+        setCropsListCallback();
         setDrawer();
         setDrawerList();
         setViewPager();
         setTabs();
         setSearchViewListeners();
+        setFragmentStateController();
+
 
         searchView.setVisibility(View.VISIBLE);
     }
@@ -103,6 +114,76 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(ProjectConstants.KEY_DATA, query);
+    }
+
+
+    //crops list control
+    private void showTestCropItems() {
+        List<CropModel> cropsList = new ArrayList<>();
+
+
+        for (int i = 0; i < 10; i++) {
+            CropModel basquiatCropModel = new CropModel(i);
+            basquiatCropModel.setImgLink("http://www.potomitan.info/ki_nov/images/basquiat_brownspots.jpg");
+            cropsList.add(basquiatCropModel);
+        }
+
+        for (BaseFragment f : pagerAdapter.getFragmentList()) {
+            ((SearchQueryFragmentCallback) f).onReceiveCrops(cropsList);
+        }
+
+    }
+
+
+
+    private void initCropFragmentAdapters() {
+        for (BaseFragment f : pagerAdapter.getFragmentList()) {
+            ((SearchQueryFragmentCallback) f).setListCallback(cropsListCallback);
+
+        }
+
+    }
+
+    private void setFragmentStateController() {
+        cropsFragmentStateController = new CropsFragmentStateController(pagerAdapter.getCount());
+    }
+
+
+    @Override
+    public void onFragmentViewCreated() {
+        cropsFragmentStateController.addCreated();
+        if (cropsFragmentStateController.isAllCreated()) {
+            initCropFragmentAdapters();
+            showTestCropItems();
+        }
+
+    }
+
+    @Override
+    public void onFragmentViewDestroyed() {
+        cropsFragmentStateController.removeCreated();
+    }
+
+
+
+
+    private void setCropsListCallback() {
+        cropsListCallback = new CropsListAdapter.CropsAdapterCallback() {
+            @Override
+            public void onItemClicked(int pos) {
+
+            }
+
+            @Override
+            public void onFavChecked(int pos, boolean isChecked) {
+
+            }
+
+            @Override
+            public void onPriceRefreshClicked(int pos) {
+
+            }
+        };
     }
 
 
@@ -162,6 +243,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             query = intent.getStringExtra(SearchManager.QUERY);
             updateFragments();
+
         }
     }
 
@@ -232,7 +314,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     private void updateFragments() {
         for (BaseFragment f : pagerAdapter.getFragmentList()) {
-            ((SearchQueryFragmentCallback) f).onReceive(query);
+            ((SearchQueryFragmentCallback) f).onReceiveStringQuerry(query);
         }
     }
 
@@ -312,4 +394,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         if (drawerOpened) mDrawerlayout.closeDrawers();
         else if (!forceHideSearch()) super.onBackPressed();
     }
+
+
 }

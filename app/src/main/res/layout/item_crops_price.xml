@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_height="match_parent"
+              android:layout_width="0dp"
+              android:layout_weight="1"
+        >
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/tv_PriceDate_CropItem"
+            android:layout_gravity="bottom"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tap_to_refresh_price"
+            android:id="@+id/tv_RefresPrice_CropsItem"
+            android:textColor="@color/text_light_blue"
+            android:layout_gravity="bottom"
+            android:layout_alignParentBottom="true"
+            android:clickable="true"/>
+
+</LinearLayout>

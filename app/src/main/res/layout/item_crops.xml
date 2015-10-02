@@ -8,7 +8,6 @@
         custom:cardBackgroundColor="#84ffff"
         custom:cardElevation="4dp"
         custom:cardPreventCornerOverlap="false"
-
         android:layout_margin="8dp"
         android:id="@+id/crops_item_view">
 
@@ -22,7 +21,9 @@
             <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/iv_CropsItemImage" android:background="#33000000" android:clickable="true"/>
+                    android:id="@+id/iv_CropsItemImage"
+                    android:clickable="true"
+                    android:scaleType="fitXY"/>
             <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
