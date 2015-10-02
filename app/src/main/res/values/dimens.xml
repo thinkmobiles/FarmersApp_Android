@@ -69,6 +69,8 @@
     <dimen name="search_hint_list_item_padding_y">10dp</dimen>
     <dimen name="crops_item_fav_cb_margin">16dp</dimen>
     <dimen name="crops_card_corner_radius">6dp</dimen>
+    <dimen name="search_hint_list_item_text_size">18sp</dimen>
+    <dimen name="crop_item_title_size">20sp</dimen>
 
     <!--margins-->
     <dimen name="margin_default_tiny">5dp</dimen>

@@ -80,4 +80,5 @@
     <string name="search_label">Search crops</string>
     <string name="no_crops_found">"No crops found:\n"</string>
     <string name="all">" all"</string>
+    <string name="tap_to_refresh_price">Tap to refresh price</string>
 </resources>

@@ -24,6 +24,5 @@
              android:paddingLeft="@dimen/search_hint_list_item_padding_x"
              android:paddingBottom="@dimen/search_hint_list_item_padding_y"
              android:paddingTop="@dimen/search_hint_list_item_padding_y"/>
-    <include layout="@layout/item_crops" />
 </FrameLayout>
 

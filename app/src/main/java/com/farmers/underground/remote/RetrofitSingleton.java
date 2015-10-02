@@ -7,8 +7,10 @@ import com.farmers.underground.remote.models.ErrorMsg;
 import com.farmers.underground.remote.models.SuccessMsg;
 import com.farmers.underground.remote.models.UserCredentials;
 import com.farmers.underground.remote.models.UserRegistration;
+import com.farmers.underground.remote.models.UserSignUpFB;
 import com.farmers.underground.remote.services.AuthorizationService;
 import com.farmers.underground.remote.util.ACallback;
+import com.farmers.underground.remote.util.ICallback;
 import com.farmers.underground.remote.util.Loger;
 import com.squareup.okhttp.ResponseBody;
 import retrofit.*;
@@ -98,6 +100,23 @@ public class RetrofitSingleton {
         });
     }
 
+    public void signUpFb(@NonNull UserSignUpFB user, final ICallback<SuccessMsg, ErrorMsg> callback) {
+
+        getAuthorizationService().signUpFb(user).enqueue(new Callback<SuccessMsg>() {
+            @Override
+            public void onResponse(Response<SuccessMsg> response, Retrofit retrofit) {
+                performCallback(callback, response);
+                callback.anyway();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                callback.onError(new ErrorMsg("Unknown Error"));
+                callback.anyway();
+            }
+        });
+    }
+
 
     public void signOut(final ACallback<SuccessMsg, ErrorMsg> callback) {
 
@@ -138,6 +157,13 @@ public class RetrofitSingleton {
     private static final Converter<ResponseBody, ?> errorConverter = GsonConverterFactory.create().fromResponseBody(ErrorMsg.class, null) ;
 
     private <R> void performCallback(ACallback<R, ErrorMsg> callback, Response<R> response) {
+        if (response.isSuccess()) {
+            callback.onSuccess(response.body());
+        } else {
+            callback.onError(parseErrorMsg(response.errorBody()));
+        }
+    }
+    private <R> void performCallback(ICallback<R, ErrorMsg> callback, Response<R> response) {
         if (response.isSuccess()) {
             callback.onSuccess(response.body());
         } else {
