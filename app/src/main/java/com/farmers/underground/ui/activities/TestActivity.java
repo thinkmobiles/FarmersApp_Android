@@ -69,8 +69,7 @@ public class TestActivity extends BaseActivity {
 
     @OnClick(R.id.tv_mainAct)
     void startMainActivity() {
-        intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        MainActivity.start(this);
     }
 
     @OnClick(R.id.btn_api_call_test)

@@ -14,15 +14,18 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
 import com.farmers.underground.config.FB;
 import com.farmers.underground.remote.RetrofitSingleton;
 import com.farmers.underground.remote.models.ErrorMsg;
 import com.farmers.underground.remote.models.SuccessMsg;
+import com.farmers.underground.remote.models.UserProfile;
 import com.farmers.underground.remote.models.UserSignUpFB;
 import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.remote.util.ICallback;
 import com.farmers.underground.ui.base.BaseActivity;
+import com.farmers.underground.ui.fragments.LoginAfterRegistrationAFragment;
 import com.farmers.underground.ui.fragments.LoginFragment;
 import com.farmers.underground.ui.fragments.SignUpFragment;
 import com.squareup.picasso.Picasso;
@@ -136,13 +139,19 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
     }
 
     public void apiCallSignupFb(@NonNull UserSignUpFB userSignUpFB){
-        RetrofitSingleton.getInstance().signUpFb(userSignUpFB,this);
+        RetrofitSingleton.getInstance().signUpFb(userSignUpFB, this);
     }
 
 
     @Override
     public void onSuccess(SuccessMsg result) {
-        // TODO switch to add marketire screen A
+        // TODO switch to add marketire screen A or MainActivity
+
+        if (true) {
+            switchFragment(new LoginAfterRegistrationAFragment(),false);
+        } else {
+
+        }
 
         showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
         anyway();
@@ -167,5 +176,25 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
 
     public void setNameMarketeer(String nameMarketeer) {
         this.nameMarketeer = nameMarketeer;
+    }
+
+    public void getUserProfileAsync() {
+        showProgressDialog();
+        FarmersApp.getInstance().getUserProfileAsync(new ICallback<UserProfile, ErrorMsg>() {
+            @Override
+            public void onSuccess(UserProfile result) {
+
+            }
+
+            @Override
+            public void onError(@NonNull ErrorMsg error) {
+
+            }
+
+            @Override
+            public void anyway() {
+                hideProgressDialog();
+            }
+        });
     }
 }

@@ -130,7 +130,7 @@
                 android:layout_height="@dimen/sign_up_edit_text_height"
                 android:id="@+id/etConfirm_FSU"
                 android:paddingLeft="@dimen/sign_up_edit_text_margin_padding"
-                android:hint="@string/login_password"
+                android:hint="@string/login_password_confirm"
                 android:gravity="left|center_vertical"
                 android:textSize="@dimen/login_text_size"
                 android:inputType="textNoSuggestions"

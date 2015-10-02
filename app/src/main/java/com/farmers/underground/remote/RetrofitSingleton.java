@@ -143,14 +143,14 @@ public class RetrofitSingleton {
             @Override
             public void onResponse(Response<UserProfile> response, Retrofit retrofit) {
                 //TODO
-
+                callback.onSuccess(response.body());
                 callback.anyway();
             }
 
             @Override
             public void onFailure(Throwable t) {
                 //TODO
-                 //do relogin
+                //do relogin maybe
 
                 callback.onError(new ErrorMsg("Unknown Error"));
                 callback.anyway();

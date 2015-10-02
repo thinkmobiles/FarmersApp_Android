@@ -12,7 +12,7 @@ public final class ApiConstants {
 
     public static final String PORT = "7792";
 
-    public static final String BASE_URL = "http://"+ IP + ":" + PORT + "/";
+    public static final String BASE_URL =  "http://projects.thinkmobiles.com:7792//";//http://"+ IP + ":" + PORT + "/";
 
     private ApiConstants(){/*prevent creation*/}
 
