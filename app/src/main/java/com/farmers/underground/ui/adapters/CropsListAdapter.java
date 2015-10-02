@@ -15,34 +15,35 @@ import java.util.List;
 /**
  * Created by omar on 10/2/15.
  */
-public class CropsListAdapter
-        extends RecyclerView.Adapter<CropsListItemVH> {
-
-
+public class CropsListAdapter extends RecyclerView.Adapter<CropsListItemVH> {
+    private int height = 0;
     private List<CropsListItemDH> dataList;
 
-
-    public CropsListAdapter(  ) {
-
-
+    public CropsListAdapter() {
         dataList = new ArrayList<>();
     }
 
-    public void setDataList(List<CropsListItemDH> dataList){
+    public void setDataList(List<CropsListItemDH> dataList) {
         this.dataList = dataList;
     }
 
     @Override
     public CropsListItemVH onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_crops, parent, false);
-        view.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+        if (height == 0) view.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
-                view.getLayoutParams().height    = view.getMeasuredWidth();
+                if (height == 0) {
+                    height = view.getMeasuredWidth();
+                    view.getLayoutParams().height = height;
+                } else view.getLayoutParams().height = height;
                 view.getViewTreeObserver().removeOnPreDrawListener(this);
                 return false;
             }
         });
+        else {
+            view.getLayoutParams().height = height;
+        }
         return new CropsListItemVH(view);
     }
 
@@ -59,7 +60,9 @@ public class CropsListAdapter
 
     public interface CropsAdapterCallback {
         void onItemClicked(int pos);
+
         void onFavChecked(int pos, boolean isChecked);
+
         void onPriceRefreshClicked(int pos);
     }
 }
