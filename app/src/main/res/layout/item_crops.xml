@@ -5,7 +5,6 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         custom:cardCornerRadius="@dimen/crops_card_corner_radius"
-        custom:cardBackgroundColor="#84ffff"
         custom:cardElevation="4dp"
         custom:cardPreventCornerOverlap="false"
         android:layout_margin="8dp"
@@ -17,20 +16,24 @@
         <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="4"
+                android:layout_weight="5"
                 >
-            <ImageView
+            <com.joooonho.SelectableRoundedImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/iv_CropsItemImage"
                     android:clickable="true"
-                    android:scaleType="fitXY"/>
+                    android:scaleType="fitXY"
+                    custom:sriv_left_top_corner_radius="@dimen/crops_card_corner_radius"
+                    custom:sriv_right_top_corner_radius="@dimen/crops_card_corner_radius"/>
             <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/cb_FavouriteCropsItem"
                     android:button="@drawable/selector_crops_fav_checkbox"
-                    android:layout_gravity="left|top" android:layout_margin="@dimen/crops_item_fav_cb_margin"/>
+                    android:layout_gravity="left|top"
+                    android:layout_margin="@dimen/crops_item_fav_cb_margin"
+                    android:background="@color/opaque"/>
             <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="wrap_content"
@@ -77,22 +80,27 @@
         </FrameLayout>
         <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_weight="2"
+                android:layout_weight="3"
                 android:layout_height="0dp">
 
             <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:nestedScrollingEnabled="false" android:layout_margin="@dimen/crops_item_fav_cb_margin">
+                    android:nestedScrollingEnabled="false"
+                    android:layout_marginRight="@dimen/crops_item_fav_cb_margin_small"
+                    android:layout_marginLeft="@dimen/crops_item_fav_cb_margin_small"
+                    android:layout_marginBottom="@dimen/crops_item_fav_cb_margin"
+                    android:layout_marginTop="@dimen/crops_item_fav_cb_margin_small">
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="New Text"
+                        android:text="עגבניות שרי תמר"
                         android:id="@+id/tv_CropsNameCropItem"
                         android:layout_gravity="right"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentTop="true"
                         android:textStyle="bold"
+                        android:textColor="@color/text_dark_grey"
                         android:textSize="@dimen/crop_item_title_size"/>
                 <LinearLayout
                         android:id="@+id/ll_PricesContainer_CropItem"
@@ -104,7 +112,6 @@
                     <include layout="@layout/item_crops_price"/>
                     <include layout="@layout/item_crops_price"/>
                 </LinearLayout>
-
 
 
             </RelativeLayout>

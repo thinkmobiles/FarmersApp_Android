@@ -89,7 +89,7 @@ public class CropsListFragment
         if (savedInstanceState != null)
             thisModel = (CropsListFragmentModel) savedInstanceState.getSerializable(ProjectConstants.KEY_DATA);
         else thisModel = (CropsListFragmentModel) getArguments().getSerializable(ProjectConstants.KEY_DATA);
-        showNoItems();
+        //showNoItems();
         adapter = new CropsListAdapter();
         recyclerView.setAdapter(adapter);
         stateCallback.onFragmentViewCreated();
@@ -118,7 +118,7 @@ public class CropsListFragment
     @Override
     public void onReceiveStringQuerry(String querry) {
         thisModel.setQuerry(querry);
-        showNoItems();
+       // showNoItems();
     }
 
     @Override
