@@ -97,13 +97,13 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
                             try {
 
                                 String id = object.getString(FB.id);        //FB id
-                                String name = object.getString(FB.name);    //full name
-                                String email = object.getString(FB.email);  //can be null
-                                String picture = null;
+                                String name = object.optString(FB.name);    //full name
+                                String email = object.optString(FB.email);  //can be null
+                                String picture = "";
 
                                 if (object.has(FB.picture)) {
                                     try {
-                                        picture = object.getJSONObject(FB.picture).getJSONObject("data").getString("url"); //pic url
+                                        picture = object.getJSONObject(FB.picture).getJSONObject("data").optString("url"); //pic url
                                     } catch (JSONException e) {
                                        /* ignore */
                                     }
@@ -111,8 +111,7 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
                                 if (TextUtils.isEmpty(id)||TextUtils.isEmpty(accessToken.getToken())){
                                     onError(new ErrorMsg("No facebook id")); //<--TODO
                                 } else {
-
-                                    final UserSignUpFB userSignUpFB = new UserSignUpFB(id, accessToken.getToken(), picture,name,email);
+                                    final UserSignUpFB userSignUpFB = new UserSignUpFB(id, accessToken.getToken(), picture, name, email);
                                     apiCallSignupFb(userSignUpFB);
                                 }
                             } catch (JSONException e) {
@@ -142,14 +141,18 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
 
     @Override
     public void onSuccess(SuccessMsg result) {
-
         // TODO switch to add marketire screen A
 
+        showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
+        anyway();
     }
 
     @Override
     public void onError(@NonNull ErrorMsg error) {
         // TODO
+
+        showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
+        anyway();
     }
 
     @Override
