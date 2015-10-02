@@ -2,6 +2,7 @@ package com.farmers.underground.remote.services;
 
 import com.farmers.underground.remote.models.SuccessMsg;
 import com.farmers.underground.remote.models.UserCredentials;
+import com.farmers.underground.remote.models.UserProfile;
 import com.farmers.underground.remote.models.UserRegistration;
 import com.farmers.underground.remote.models.UserSignUpFB;
 
@@ -35,6 +36,6 @@ public interface AuthorizationService {
     Call<SuccessMsg> forgotPass(@Field("email") String email);
 
     @GET("users/profile")
-    Call<?> getUserProfileBySession(); //TODO
+    Call<UserProfile> getUserProfileBySession();
 
 }

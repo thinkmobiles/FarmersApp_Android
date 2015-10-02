@@ -6,6 +6,7 @@ import com.farmers.underground.config.ApiConstants;
 import com.farmers.underground.remote.models.ErrorMsg;
 import com.farmers.underground.remote.models.SuccessMsg;
 import com.farmers.underground.remote.models.UserCredentials;
+import com.farmers.underground.remote.models.UserProfile;
 import com.farmers.underground.remote.models.UserRegistration;
 import com.farmers.underground.remote.models.UserSignUpFB;
 import com.farmers.underground.remote.services.AuthorizationService;
@@ -130,6 +131,27 @@ public class RetrofitSingleton {
 
             @Override
             public void onFailure(Throwable t) {
+                callback.onError(new ErrorMsg("Unknown Error"));
+                callback.anyway();
+            }
+        });
+    }
+
+    public void getUserProfileBySession(final ACallback<UserProfile, ErrorMsg> callback) {
+        getAuthorizationService().getUserProfileBySession().enqueue(new Callback<UserProfile>() {
+
+            @Override
+            public void onResponse(Response<UserProfile> response, Retrofit retrofit) {
+                //TODO
+
+                callback.anyway();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                //TODO
+                 //do relogin
+
                 callback.onError(new ErrorMsg("Unknown Error"));
                 callback.anyway();
             }
