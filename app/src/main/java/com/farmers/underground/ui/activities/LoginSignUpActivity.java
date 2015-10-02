@@ -29,6 +29,7 @@ import org.json.JSONObject;
 public class LoginSignUpActivity extends BaseActivity implements ICallback {
 
     private CallbackManager callbackManager;
+    private String nameMarketeer = null;
 
     @Override
     public int getLayoutResId() {
@@ -128,5 +129,13 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback {
     @Override
     public void anyway() {
 
+    }
+
+    public String getNameMarketeer() {
+        return nameMarketeer;
+    }
+
+    public void setNameMarketeer(String nameMarketeer) {
+        this.nameMarketeer = nameMarketeer;
     }
 }

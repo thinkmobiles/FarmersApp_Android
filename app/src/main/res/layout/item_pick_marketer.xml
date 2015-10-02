@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:gravity="center_vertical"
+    android:layout_height="@dimen/select_marketeer_name_height">
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/select_marketeer_name_height"
+        android:layout_height="match_parent"
         android:text="New Text"
-        android:gravity="right|center_vertical"
+        android:gravity="left|center_vertical"
         android:textSize="@dimen/main_text_size"
         android:textColor="@color/white"
         android:layout_marginRight="@dimen/select_marketeer_small_margin"

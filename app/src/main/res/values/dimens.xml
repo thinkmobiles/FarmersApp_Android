@@ -51,7 +51,7 @@
     <dimen name="after_sign_enter_marketeer_margin_top">60dp</dimen>
     //after sign b/ selection marketeer
     <dimen name="select_marketeer_text_size">12sp</dimen>
-    <dimen name="select_marketeer_name_height">30dp</dimen>
+    <dimen name="select_marketeer_name_height">40dp</dimen>
     <dimen name="select_marketeer_small_margin">5dp</dimen>
     //drawer
     <dimen name="drawer_item_icon_padding">18dp</dimen>

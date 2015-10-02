@@ -143,4 +143,10 @@ public class SignUpFragment extends BaseFragment<LoginSignUpActivity>  {
         }
         return false;
     }
+
+    @OnClick(R.id.rlIcon)
+    protected void goToPickMarketer(){
+        getHostActivity().getSupportFragmentManager().popBackStack();
+        getHostActivity().switchFragment(LoginAfterRegistrationAFragment.class.getName(), false);
+    }
 }
