@@ -43,7 +43,7 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> {
     @Bind(R.id.etPassword)
     protected EditText etPassword;
 
-    private boolean isVisiablePass = true;
+    private boolean isVisiablePass = false;
 
     @Override
     protected int getLayoutResId() {
@@ -53,8 +53,12 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
-        showHidePass();
+        ButterKnife.bind(this,view);
+        hidePassword();
+    }
+
+    private void hidePassword(){
+        etPassword.setTransformationMethod(new PasswordTransformationMethod());
     }
 
     @OnClick(R.id.tvRegister)
