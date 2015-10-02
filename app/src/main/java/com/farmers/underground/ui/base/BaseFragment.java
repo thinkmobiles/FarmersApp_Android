@@ -1,11 +1,13 @@
 package com.farmers.underground.ui.base;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import com.farmers.underground.R;
 
 /**
@@ -41,5 +43,11 @@ public abstract class BaseFragment<A extends BaseActivity> extends Fragment {
     }
     protected final boolean isRTL(){
         return getResources().getBoolean(R.bool.isRTL);
+    }
+
+    public void hideSoftKeyboard(){
+        InputMethodManager imm = (InputMethodManager)  getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow( getActivity().getCurrentFocus().getWindowToken(), 0);
+
     }
 }

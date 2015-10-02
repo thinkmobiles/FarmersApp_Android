@@ -9,6 +9,8 @@ import android.widget.RadioGroup;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnPageChange;
+
+import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.ui.adapters.ProjectPagerAdapter;
@@ -115,6 +117,7 @@ public class TutorialActivity extends BaseActivity implements TutorialItemFragme
 
     @Override
     public void onSkipClicked() {
+        FarmersApp.skipTutorialNextTime();
         Intent intent = new Intent(this, LoginSignUpActivity.class);
         startActivity(intent);
         finish();

@@ -54,4 +54,7 @@
     <color name="drawer_bg_color">#33000000</color>
     <color name="drawer_list_devider">#22000000</color>
     <color name="drawer_text_color">#555555</color>
+
+    //crops
+    <color name="crops_calendar_color">#59000000</color>
 </resources>

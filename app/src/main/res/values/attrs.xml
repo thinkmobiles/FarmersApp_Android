@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="ArialTextView">
+    <declare-styleable name="CustomTextView">
         <attr name="customFont"/>
     </declare-styleable>
 
-    <declare-styleable name="ArialEditText">
+    <declare-styleable name="CustomEditText">
         <attr name="customFont"/>
     </declare-styleable>
 
     <attr name="customFont" format="enum">
         <enum name="regular" value="0"/>
         <enum name="bold" value="1"/>
+        <enum name="avenir" value="2"/>
     </attr>
 </resources>

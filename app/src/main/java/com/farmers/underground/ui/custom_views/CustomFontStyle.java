@@ -8,8 +8,9 @@ package com.farmers.underground.ui.custom_views;
 /**
  * @author Created by Oleg Bondarenko on 6/1/2015.
  */
-public enum ArialFontStyle {
+public enum CustomFontStyle {
     REGULAR,
-    BOLD
+    BOLD,
+    AVENIR
 
 }
