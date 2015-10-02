@@ -117,9 +117,7 @@ public class TutorialActivity extends BaseActivity implements TutorialItemFragme
 
     @Override
     public void onSkipClicked() {
-
         FarmersApp.skipTutorialNextTime();
-
         Intent intent = new Intent(this, LoginSignUpActivity.class);
         startActivity(intent);
         finish();
