@@ -13,5 +13,7 @@ public class FB {
 
     public static final String fields = "fields";
 
-    private FB(){ /**/}
+    public static final String public_profile = "public_profile";
+
+    private FB(){/*prevent creation*/}
 }

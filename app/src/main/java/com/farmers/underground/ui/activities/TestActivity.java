@@ -7,6 +7,7 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.farmers.underground.BuildConfig;
+import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
 import com.farmers.underground.remote.RetrofitSingleton;
 import com.farmers.underground.remote.models.ErrorMsg;
@@ -37,7 +38,14 @@ public class TestActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         if (BuildConfig.PRODUCTION) {
-            intent = new Intent(this, TutorialActivity.class);
+
+            if(FarmersApp.showTutorial()){
+                intent = new Intent(this, TutorialActivity.class);
+            } else /*if (true)*/{
+                //todo autologin
+                intent = new Intent(this, LoginSignUpActivity.class);
+            }
+
             startActivity(intent);
             finish();
             return;

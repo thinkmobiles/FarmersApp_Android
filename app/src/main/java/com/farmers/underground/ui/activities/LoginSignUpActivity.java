@@ -18,6 +18,8 @@ import com.farmers.underground.config.FB;
 import com.farmers.underground.remote.util.ICallback;
 import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.fragments.LoginFragment;
+import com.farmers.underground.ui.fragments.SignUpFragment;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,6 +45,7 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         switchFragment(LoginFragment.class.getName(), false);
 
 
@@ -93,6 +96,14 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback {
                                 object.get(FB.picture); //link
                                 // + accessToken
 
+                                if(object.has(FB.picture) && getCurrentFragment() instanceof SignUpFragment){
+                                    try {
+                                      object.getJSONObject(FB.picture).getJSONObject("data").getString("url") ; //pic url
+                                    } catch (JSONException e) {
+                                        /*ignore*/
+                                    }
+
+                                }
                                 onSuccess(null);  // <-- TODO
 
                             } catch (JSONException e) {
@@ -117,6 +128,8 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback {
 
     @Override
     public void onSuccess(Object result) {
+
+        // TODO switch to add marketir screen A
 
     }
 

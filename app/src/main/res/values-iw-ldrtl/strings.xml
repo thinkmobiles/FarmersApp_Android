@@ -39,6 +39,7 @@
     <string name="dialog_title_forgot_password">אנא, הכנס את הדוא"ל שלך</string>
     <string name="dialog_btn_ok">אוקיי</string>
     <string name="dialog_btn_cancel">לבטל</string>
+    <string name="dialog_progress_message_default">המתן בבקשה…</string>
 
   <!--  //sign_up-->
     <string name="sign_up_full_name">שם מלא</string>

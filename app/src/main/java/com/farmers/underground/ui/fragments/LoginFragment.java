@@ -5,11 +5,9 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.text.method.PasswordTransformationMethod;
 import android.text.method.TransformationMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -21,6 +19,7 @@ import butterknife.OnClick;
 
 import com.facebook.login.LoginManager;
 import com.farmers.underground.R;
+import com.farmers.underground.config.FB;
 import com.farmers.underground.remote.RetrofitSingleton;
 import com.farmers.underground.remote.models.ErrorMsg;
 import com.farmers.underground.remote.models.SuccessMsg;
@@ -65,9 +64,8 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> {
 
     @OnClick(R.id.btnLoginFB)
     protected void loginFB() {
-        LoginManager.getInstance().logInWithReadPermissions(getHostActivity(), Arrays.asList("public_profile", "email"));
+        LoginManager.getInstance().logInWithReadPermissions(getHostActivity(), Arrays.asList(FB.public_profile, FB.email));
     }
-
 
     @OnClick(R.id.tvForgot)
     protected void forgotPW() {
@@ -81,10 +79,12 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> {
                 .setPositiveButton(R.string.dialog_btn_ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
                         EditText editText = (EditText) view.findViewById(R.id.et_dialog_field);
+
                         String email = editText.getText().toString();
-                        // Log.d("forgotPW", "OnClick " + email);
-                        apiCallforgotPass(email);
+
+                        apiCallForgotPass(email);
                     }
                 })
                 .setNegativeButton(R.string.dialog_btn_cancel, new DialogInterface.OnClickListener() {
@@ -95,7 +95,6 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> {
                 })
                 .create();
         dialog.show();
-//        getHostActivity().showToast("To be done, later", Toast.LENGTH_SHORT);
     }
 
 
@@ -136,6 +135,7 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> {
             return;
         }
 
+        getHostActivity().showProgressDialog();
         RetrofitSingleton.getInstance().loginViaEmail(email, password, new ACallback<SuccessMsg, ErrorMsg>() {
             @Override
             public void onSuccess(SuccessMsg result) {
@@ -150,10 +150,15 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> {
                 getHostActivity().showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
             }
 
+            @Override
+            public void anyway() {
+                super.anyway();
+                getHostActivity().hideProgressDialog();
+            }
         });
     }
 
-    private void apiCallforgotPass(@NonNull String email) {
+    private void apiCallForgotPass(@NonNull String email) {
 
         if (isEmpty(email, "email")) {
             return;
@@ -163,6 +168,7 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> {
             return;
         }
 
+        getHostActivity().showProgressDialog();
         RetrofitSingleton.getInstance().forgotPass(email, new ACallback<SuccessMsg, ErrorMsg>() {
             @Override
             public void onSuccess(SuccessMsg result) {
@@ -176,8 +182,9 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> {
 
             @Override
             public void anyway() {
-                super.anyway();
+                getHostActivity().hideProgressDialog();
             }
+
         });
     }
 
