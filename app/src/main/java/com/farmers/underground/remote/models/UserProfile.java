@@ -17,7 +17,7 @@ public class UserProfile {
 
     private String updatedAt; //"2015-10-02T09:32:53.979Z"
     private String createdAt; //"2015-10-02T09:32:53.979Z"
-    private String marketeer;
+    public String marketeer;
     private String[] favorites;
 
     public boolean hasMarketir(){

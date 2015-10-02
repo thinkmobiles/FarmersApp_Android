@@ -147,11 +147,7 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
     public void onSuccess(SuccessMsg result) {
         // TODO switch to add marketire screen A or MainActivity
 
-        if (true) {
-            switchFragment(new LoginAfterRegistrationAFragment(),false);
-        } else {
-
-        }
+        getUserProfileAsync();
 
         showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
         anyway();
@@ -183,7 +179,11 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
         FarmersApp.getInstance().getUserProfileAsync(new ICallback<UserProfile, ErrorMsg>() {
             @Override
             public void onSuccess(UserProfile result) {
-
+                if (result!=null && !result.hasMarketir()) {
+                    switchFragment(new LoginAfterRegistrationAFragment(),false);
+                } else {
+                    MainActivity.start(LoginSignUpActivity.this);
+                }
             }
 
             @Override

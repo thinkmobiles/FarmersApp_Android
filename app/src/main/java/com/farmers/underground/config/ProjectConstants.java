@@ -15,6 +15,7 @@ public class ProjectConstants {
 
     public static final String KEY_CURRENT_USER_LOGIN       = "currentUser::Login";
     public static final String KEY_CURRENT_USER_PASSWORD    = "currentUser::Password";
+    public static final String KEY_CURRENT_USER_COOKIES    = "currentUser::Cookies";
 
     public static final String KEY_APP_SHOW_SKIP_TUTORIAL   = "application::TutorialShowSkip";
     public static final String KEY_APP_LAUNCHED_BEFORE      = "application::LaunchedBefore";
