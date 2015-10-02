@@ -37,6 +37,7 @@ import org.json.JSONObject;
 public class LoginSignUpActivity extends BaseActivity implements ICallback<SuccessMsg, ErrorMsg> {
 
     private CallbackManager callbackManager;
+    private String nameMarketeer = null;
 
     @Override
     public int getLayoutResId() {
@@ -158,5 +159,13 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
     @Override
     public void anyway() {
         hideProgressDialog();
+    }
+
+    public String getNameMarketeer() {
+        return nameMarketeer;
+    }
+
+    public void setNameMarketeer(String nameMarketeer) {
+        this.nameMarketeer = nameMarketeer;
     }
 }

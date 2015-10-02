@@ -43,6 +43,7 @@
     <dimen name="sign_up_edit_text_margin_padding">15dp</dimen>
     <dimen name="sign_up_arrow_padding">5dp</dimen>
     <dimen name="sign_up_edit_text_height">48dp</dimen>
+    <dimen name="sign_up_margin_register_login_fb">25dp</dimen>
     //after sign
     <dimen name="after_sign_header_text_size">24sp</dimen>
     <dimen name="after_sign_propose_skip_text_size">14sp</dimen>
@@ -50,7 +51,7 @@
     <dimen name="after_sign_enter_marketeer_margin_top">60dp</dimen>
     //after sign b/ selection marketeer
     <dimen name="select_marketeer_text_size">12sp</dimen>
-    <dimen name="select_marketeer_name_height">30dp</dimen>
+    <dimen name="select_marketeer_name_height">40dp</dimen>
     <dimen name="select_marketeer_small_margin">5dp</dimen>
     //drawer
     <dimen name="drawer_item_icon_padding">18dp</dimen>

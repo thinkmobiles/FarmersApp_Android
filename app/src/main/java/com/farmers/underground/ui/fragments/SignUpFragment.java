@@ -41,7 +41,10 @@ public class SignUpFragment extends BaseFragment<LoginSignUpActivity>  {
     @Bind(R.id.etPassword_FSU)
     protected EditText etPassword;
 
-    private boolean isVisiablePass = true;
+    @Bind(R.id.etConfirm_FSU)
+    protected EditText etConfirm;
+
+    private boolean isVisiablePass = false;
 
     @Override
     protected int getLayoutResId() {
@@ -52,7 +55,12 @@ public class SignUpFragment extends BaseFragment<LoginSignUpActivity>  {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        showHidePass();
+        hidePasswords();
+    }
+
+    private void hidePasswords(){
+        etPassword.setTransformationMethod(new PasswordTransformationMethod());
+        etConfirm.setTransformationMethod(new PasswordTransformationMethod());
     }
 
     @OnClick({R.id.ivBack_FSU, R.id.tvLogin_FSU})
@@ -103,6 +111,10 @@ public class SignUpFragment extends BaseFragment<LoginSignUpActivity>  {
             getHostActivity().showToast("Password is incorrect", Toast.LENGTH_SHORT);
             return;
         }
+        if(!password.equals(etConfirm.getText().toString())){
+            getHostActivity().showToast("Password is not confirmed", Toast.LENGTH_SHORT);
+            return;
+        }
         //todo showProgressDialog
         //        RetrofitSingleton.getInstance().registerViaEmail("FirstName LastName",/* "test" + System.currentTimeMillis() +*/   "tapacko7@gmail.com", "testpass", new ACallback<SuccessMsg, ErrorMsg>() {
         RetrofitSingleton.getInstance().registerViaEmail(name, email, password, new ACallback<SuccessMsg, ErrorMsg>() {
@@ -131,5 +143,11 @@ public class SignUpFragment extends BaseFragment<LoginSignUpActivity>  {
             return true;
         }
         return false;
+    }
+
+    @OnClick(R.id.rlIcon)
+    protected void goToPickMarketer(){
+        getHostActivity().getSupportFragmentManager().popBackStack();
+        getHostActivity().switchFragment(LoginAfterRegistrationAFragment.class.getName(), false);
     }
 }

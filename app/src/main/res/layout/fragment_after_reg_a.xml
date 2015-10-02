@@ -34,17 +34,17 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/select_marketeer_name_height"
             android:layout_marginTop="@dimen/after_sign_enter_marketeer_margin_top"
             android:text="@string/after_sign_enter_marketeer"
             android:textColor="@color/white"
+            android:gravity="center_vertical"
             android:id="@+id/tvEnterMarketeer"
             android:textSize="16sp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/login_divider_height"
-            android:layout_marginTop="8dp"
             android:background="@color/white"/>
     </LinearLayout>
 

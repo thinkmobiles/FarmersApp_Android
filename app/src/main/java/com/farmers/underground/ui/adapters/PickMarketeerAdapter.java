@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.farmers.underground.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by samson on 29.09.15.
@@ -16,11 +17,29 @@ import java.util.ArrayList;
 public class PickMarketeerAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<String> list;
+    private List<String> list;
+    private List<String> fullList;
 
-    public PickMarketeerAdapter(Context context, ArrayList<String> list) {
+    public PickMarketeerAdapter(Context context, List<String> list) {
         this.context = context;
         this.list = list;
+        this.fullList = list;
+    }
+
+    public void findMarketeer(String name){
+        if(name.length() != 0){
+            List<String> tempList = new ArrayList<>();
+            for(String marketeer : fullList){
+                if(marketeer.contains(name)){
+                    tempList.add(marketeer);
+                }
+            }
+            //tempList.add(context.getString(R.string.select_marketeer_add_name) + " \"" + name + "\"");
+            list = tempList;
+        } else {
+            list = fullList;
+        }
+        notifyDataSetChanged();
     }
 
     @Override
@@ -43,7 +62,7 @@ public class PickMarketeerAdapter extends BaseAdapter {
         ViewHolder holder;
         if(convertView == null){
             holder = new ViewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_pick_marketer, parent);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_pick_marketer, parent, false);
             holder.init(convertView);
             convertView.setTag(holder);
         } else {
@@ -52,9 +71,11 @@ public class PickMarketeerAdapter extends BaseAdapter {
 
         holder.setData(getItem(position));
 
-        if(position == list.size() - 1){
-            holder.select();
-        }
+//        if(position == list.size() - 1 && list.size() != fullList.size()){
+//            holder.select();
+//        } else {
+//            holder.diselect();
+//        }
 
         return convertView;
     }
@@ -72,6 +93,10 @@ public class PickMarketeerAdapter extends BaseAdapter {
 
         public void select(){
             tvNameMarketer.setTextColor(context.getResources().getColor(R.color.text_aqua));
+        }
+
+        public void diselect(){
+            tvNameMarketer.setTextColor(context.getResources().getColor(R.color.white));
         }
     }
 }

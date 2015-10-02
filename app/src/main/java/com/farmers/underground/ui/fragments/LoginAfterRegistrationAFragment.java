@@ -2,6 +2,9 @@ package com.farmers.underground.ui.fragments;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
+
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.farmers.underground.R;
@@ -14,6 +17,9 @@ import com.farmers.underground.ui.base.BaseFragment;
  */
 public class LoginAfterRegistrationAFragment extends BaseFragment<LoginSignUpActivity>   {
 
+    @Bind(R.id.tvEnterMarketeer)
+    protected TextView tvNameMarketer;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_after_reg_a;
@@ -23,14 +29,19 @@ public class LoginAfterRegistrationAFragment extends BaseFragment<LoginSignUpAct
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+        setNameMarketer();
+    }
 
+    private void setNameMarketer(){
+        String name = getHostActivity().getNameMarketeer();
+        if(name != null){
+            tvNameMarketer.setText(name);
+        }
     }
 
     @OnClick(R.id.tvEnterMarketeer)
     protected void enterMarketeer(){
-        getHostActivity().getSupportFragmentManager().beginTransaction()
-                .replace(getHostActivity().getFragmentContainerId(), new LoginAfterRegistrationBFragment())
-                .commit();
+        getHostActivity().switchFragment(LoginAfterRegistrationBFragment.class.getName(), false);
     }
 
     @OnClick(R.id.tvSkip)
