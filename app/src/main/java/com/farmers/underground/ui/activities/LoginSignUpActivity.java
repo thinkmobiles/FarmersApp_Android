@@ -98,9 +98,7 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback {
 
                                 if(object.has(FB.picture) && getCurrentFragment() instanceof SignUpFragment){
                                     try {
-                                        Picasso.with(LoginSignUpActivity.this)
-                                                .load(object.getJSONObject(FB.picture).getJSONObject("data").getString("url"))
-                                                .into(((SignUpFragment) getCurrentFragment()).getImageView3());
+                                      object.getJSONObject(FB.picture).getJSONObject("data").getString("url") ; //pic url
                                     } catch (JSONException e) {
                                         /*ignore*/
                                     }

@@ -41,13 +41,6 @@ public class SignUpFragment extends BaseFragment<LoginSignUpActivity>  {
     @Bind(R.id.etPassword_FSU)
     protected EditText etPassword;
 
-    public ImageView getImageView3() {
-        return imageView3;
-    }
-
-    @Bind(R.id.imageView3)
-    protected ImageView imageView3;
-
     private boolean isVisiablePass = true;
 
     @Override

@@ -1,6 +1,5 @@
 package com.farmers.underground.ui.base;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -10,9 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.TextView;
 import android.widget.Toast;
 import com.farmers.underground.R;
 import com.farmers.underground.ui.dialogs.ProgressDialog;
@@ -47,12 +44,24 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onPause();
     }
 
+    public void switchFragment(@NotNull Fragment fragment, boolean saveInBackStack) {
+        updateFragment(fragment, saveInBackStack, false);
+    }
+
     public void switchFragment(@NonNull String fragmentClassName, boolean saveInBackStack) {
         updateFragment(instantiateFragment(fragmentClassName), saveInBackStack, false);
     }
 
     public void addFragment(@NonNull String fragmentClassName, boolean saveInBackStack) {
         updateFragment(instantiateFragment(fragmentClassName), saveInBackStack, true);
+    }
+
+    public void popBackStackUpTo(@Nullable Class<? extends BaseFragment<?>> fragmentClass, int flags) {
+        getSupportFragmentManager().popBackStackImmediate(fragmentClass != null ? fragmentClass.getName() : null, flags);
+    }
+
+    public void popBackStackUpTo(@Nullable Class<? extends BaseFragment<?>> fragmentClass) {
+        popBackStackUpTo(fragmentClass, 0);
     }
 
     @Nullable
@@ -99,8 +108,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
     public void hideSoftKeyboard(){
         InputMethodManager imm = (InputMethodManager)  getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow( getCurrentFocus().getWindowToken(), 0);
-
+        if (imm.isActive() && getCurrentFocus()!=null)
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
     }
 
     private ProgressDialog mProgressDialog;
