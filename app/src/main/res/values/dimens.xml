@@ -72,6 +72,8 @@
     <dimen name="crops_card_corner_radius">6dip</dimen>
     <dimen name="search_hint_list_item_text_size">18sp</dimen>
     <dimen name="crop_item_title_size">20sp</dimen>
+    <dimen name="crop_item_text_small">10sp</dimen>
+    <dimen name="search_hint_offset">1000dp</dimen>
 
     <!--margins-->
     <dimen name="margin_default_tiny">5dp</dimen>
@@ -86,7 +88,7 @@
     <dimen name="padding_default_medium">15dp</dimen>
     <dimen name="padding_default_normal">20dp</dimen>
     <dimen name="padding_default_large">30dp</dimen>
-    <dimen name="crop_item_text_small">10sp</dimen>
+
 
 
 </resources>

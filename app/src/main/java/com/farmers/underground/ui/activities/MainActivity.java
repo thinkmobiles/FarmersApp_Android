@@ -22,6 +22,7 @@ import butterknife.OnItemClick;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.CropModel;
+import com.farmers.underground.remote.models.SearchHint;
 import com.farmers.underground.ui.adapters.CropsListAdapter;
 import com.farmers.underground.ui.adapters.DrawerAdapter;
 import com.farmers.underground.ui.adapters.ProjectPagerAdapter;
@@ -196,9 +197,9 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     private void setSearchViewListeners() {
         searchController = new SearchController(lv_SearchHint) {
             @Override
-            public void searchByHint(String query) {
+            public void searchByHint(SearchHint query) {
                 SharedPrefHelper.saveSearchHint(MainActivity.this, query);
-                searchView.setQuery(query, true);
+                searchView.setQuery(query.getName(), true);
             }
         };
         searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -213,7 +214,9 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                SharedPrefHelper.saveSearchHint(MainActivity.this, query);
+                SearchHint hint = new SearchHint();
+                hint.setName(query);
+                SharedPrefHelper.saveSearchHint(MainActivity.this, hint);
                 searchController.hide();
                 return false;
             }
@@ -254,7 +257,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     private void forceHideSearchList() {
         hideSoftKeyboard();
-        lv_SearchHint.setVisibility(View.GONE);
+        searchController.hide();
     }
 
     private boolean forceHideSearch() {

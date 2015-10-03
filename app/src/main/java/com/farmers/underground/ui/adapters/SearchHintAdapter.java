@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import com.farmers.underground.R;
+import com.farmers.underground.remote.models.SearchHint;
 
 import java.util.List;
 
@@ -13,9 +14,9 @@ import java.util.List;
  * Created by omar on 9/30/15.
  */
 public class SearchHintAdapter extends BaseAdapter {
-    private List<String> hintList;
+    private List<SearchHint> hintList;
 
-    public void setItems(List<String> hintList) {
+    public void setItems(List<SearchHint> hintList) {
         this.hintList = hintList;
     }
 
@@ -25,7 +26,7 @@ public class SearchHintAdapter extends BaseAdapter {
     }
 
     @Override
-    public String getItem(int i) {
+    public SearchHint getItem(int i) {
         return hintList.get(i);
     }
 
@@ -37,7 +38,7 @@ public class SearchHintAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_search_hint, viewGroup, false);
-        ((TextView)view).setText(hintList.get(i));
+        ((TextView)view).setText(getItem(i).getName());
         return view;
     }
 }

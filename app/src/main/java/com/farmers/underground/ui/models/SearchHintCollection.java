@@ -1,31 +1,30 @@
 package com.farmers.underground.ui.models;
 
+import com.farmers.underground.remote.models.SearchHint;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by omar on 9/30/15.
  */
-public class SearchHint {
-    private List<String> hintsList;
+public class SearchHintCollection {
+    private List<SearchHint> hintsList;
 
-    public SearchHint(){
+    public SearchHintCollection(){
         hintsList = new ArrayList<>();
     }
 
-
-    public List<String> getHintsList() {
+    public List<SearchHint> getHintsList() {
         return hintsList;
     }
 
-    public void setHintsList(List<String> hintsList) {
-        this.hintsList = hintsList;
-    }
-
-    public void add(String query) {
+    public void add(SearchHint query) {
        int index =  hintsList.indexOf(query);
         if(index >= 0 )
             hintsList.remove(index);
         hintsList.add(0, query);
+        if(hintsList.size() > 5)
+            hintsList.remove(5);
     }
 }
