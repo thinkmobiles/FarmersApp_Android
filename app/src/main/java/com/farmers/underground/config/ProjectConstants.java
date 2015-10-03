@@ -10,8 +10,12 @@ public class ProjectConstants {
     public static final String PREFERENCES_FILE_NAME_USR = "preferences_usr";
     public static final String PREFERENCES_FILE_NAME_APP = "preferences_app";
 
+
+    public static final String KEY_CURRENT_USER_SEARCH_HINTS = "currentUser::search_hints";
+
     public static final String KEY_CURRENT_USER_LOGIN       = "currentUser::Login";
     public static final String KEY_CURRENT_USER_PASSWORD    = "currentUser::Password";
+    public static final String KEY_CURRENT_USER_COOKIES    = "currentUser::Cookies";
 
     public static final String KEY_SKIP_MODE                = "skip_mode";
 

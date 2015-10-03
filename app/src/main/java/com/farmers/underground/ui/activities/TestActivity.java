@@ -12,6 +12,7 @@ import com.farmers.underground.R;
 import com.farmers.underground.remote.RetrofitSingleton;
 import com.farmers.underground.remote.models.ErrorMsg;
 import com.farmers.underground.remote.models.SuccessMsg;
+import com.farmers.underground.remote.models.UserProfile;
 import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.ui.base.BaseActivity;
 
@@ -68,17 +69,16 @@ public class TestActivity extends BaseActivity {
 
     @OnClick(R.id.tv_mainAct)
     void startMainActivity() {
-        intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        MainActivity.start(this);
     }
 
     @OnClick(R.id.btn_api_call_test)
     void testApiCallsReg() {
         showProgressDialog();
-        RetrofitSingleton.getInstance().registerViaEmail("FirstName LastName",/* "test" + System.currentTimeMillis() +*/   "tapacko7@gmail.com", "testpass", new ACallback<SuccessMsg, ErrorMsg>() {
+        RetrofitSingleton.getInstance().getUserProfileBySession(new ACallback<UserProfile, ErrorMsg>() {
             @Override
-            public void onSuccess(SuccessMsg result) {
-                showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
+            public void onSuccess(UserProfile result) {
+                showToast("OK", Toast.LENGTH_SHORT);
             }
 
             @Override

@@ -1,5 +1,6 @@
 package com.farmers.underground.ui.models;
 
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
@@ -10,7 +11,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.farmers.underground.R;
-import com.farmers.underground.ui.utils.CropsImageLoader;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by omar on 10/2/15.
@@ -36,22 +37,38 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
 
     @Bind(R.id.ll_PricesContainer_CropItem)
     protected LinearLayout ll_PriceContainer;
-
-
     private CropsListItemDH dateHolder;
 
+    float radius;
 
 
     public CropsListItemVH(final View itemView) {
         super(itemView);
         ButterKnife.bind(this,itemView);
+        radius =   ((CardView) itemView).getRadius();
+
     }
 
     public void bindData(CropsListItemDH dateHolder) {
-
         this.dateHolder = dateHolder;
+
         cb_Fav.setChecked(false);
-        CropsImageLoader.loadImage(iv_CropsImage, dateHolder.getModel().getImgLink());
+
+        Picasso.with(iv_CropsImage.getContext()).load(dateHolder.getModel().getImgLink())
+                .into(iv_CropsImage);
+
+        for ( int  i = 0 ; i  < ll_PriceContainer.getChildCount(); i ++)
+        {
+            TextView tv_refreshDate = (TextView) ll_PriceContainer.getChildAt(i).findViewById(R.id.tv_PriceDate_CropItem);
+            TextView tv_refresh = (TextView) ll_PriceContainer.getChildAt(i).findViewById(R.id.tv_RefresPrice_CropsItem);
+
+            if(i != 0 ){
+                tv_refreshDate.setVisibility(View.INVISIBLE);
+                tv_refreshDate.setOnClickListener(null);
+                tv_refresh.setVisibility(View.INVISIBLE);
+            }
+
+        }
 
     }
 

@@ -2,6 +2,9 @@ package com.farmers.underground.ui.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import com.farmers.underground.FarmersApp;
+import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.ui.activities.MainActivity;
 import com.farmers.underground.ui.models.SearchHint;
 import com.google.gson.Gson;
@@ -14,7 +17,7 @@ import java.util.List;
  */
 public class SharedPrefHelper {
 
-    public static final String SEARCH_HINTS = "search_hints";
+    public static final String SEARCH_HINTS = ProjectConstants.KEY_CURRENT_USER_SEARCH_HINTS;
 
     public static void saveSearchHint(Context context, String query) {
         Gson gson = new GsonBuilder().create();
@@ -40,6 +43,7 @@ public class SharedPrefHelper {
 
 
     private static SharedPreferences getPrivatePrefs(Context context) {
-        return context.getSharedPreferences(MainActivity.class.getSimpleName(), Context.MODE_PRIVATE);
+        return FarmersApp.getUsrPreferences();
+        //return context.getSharedPreferences(MainActivity.class.getSimpleName(), Context.MODE_PRIVATE);
     }
 }

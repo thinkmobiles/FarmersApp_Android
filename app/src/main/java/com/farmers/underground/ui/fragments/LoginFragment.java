@@ -145,8 +145,10 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> {
             public void onSuccess(SuccessMsg result) {
                 getHostActivity().showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
                 // TODO: 29.09.15
-                Intent intent = new Intent(getHostActivity(), MainActivity.class);
-                startActivity(intent);
+                getHostActivity().getUserProfileAsync();
+
+//                Intent intent = new Intent(getHostActivity(), MainActivity.class);
+//                startActivity(intent);
             }
 
             @Override
