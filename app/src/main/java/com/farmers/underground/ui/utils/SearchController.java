@@ -16,8 +16,22 @@ abstract public class SearchController implements AdapterView.OnItemClickListene
     private ListView lv_Container;
     private SearchHintAdapter adapter;
     private List<SearchHint> hintList;
+    private boolean isShowing;
+    private SearchHint querry;
+
+
+    public SearchHint getQuerry() {
+        return querry;
+    }
+
+    public boolean isShowing() {
+        return isShowing;
+    }
 
     public SearchController(ListView hitnContainer){
+        SearchHint querry = new SearchHint();
+        querry.setName("");
+
         setContainerListView(hitnContainer);
     }
 
@@ -38,7 +52,13 @@ abstract public class SearchController implements AdapterView.OnItemClickListene
 
     }
 
-    public void show(){
+    public void setQuerry(SearchHint querry) {
+        this.querry = querry;
+    }
+
+    public void show( ){
+
+        isShowing = true;
         lv_Container.animate().translationYBy(-ResourceRetriever.retrievePX(lv_Container.getContext(), R.dimen
                 .search_hint_offset))
                 .translationY(0)
@@ -47,6 +67,7 @@ abstract public class SearchController implements AdapterView.OnItemClickListene
     }
 
     public void hide(){
+        isShowing = false;
         lv_Container.animate().translationYBy(0)
                 .translationY(-ResourceRetriever.retrievePX(lv_Container.getContext(), R.dimen
                         .search_hint_offset))

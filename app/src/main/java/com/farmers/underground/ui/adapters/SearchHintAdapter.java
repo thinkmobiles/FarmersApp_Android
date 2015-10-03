@@ -38,7 +38,7 @@ public class SearchHintAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_search_hint, viewGroup, false);
-        ((TextView)view).setText(getItem(i).getName());
+        ((TextView)view.findViewById(R.id.tv_HintItemSearch)).setText(getItem(i).getName());
         return view;
     }
 }

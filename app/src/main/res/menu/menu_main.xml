@@ -7,4 +7,9 @@
           android:title="@string/toolbar_item_menu"
           app:showAsAction="always"
             />
+    <item android:id="@+id/action_back"
+          android:icon="@drawable/ic_toolbar_forward"
+          android:title="@string/toolbar_item_menu"
+          app:showAsAction="always"
+            />
 </menu>

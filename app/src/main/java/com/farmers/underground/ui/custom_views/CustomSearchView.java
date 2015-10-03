@@ -5,8 +5,11 @@ import android.support.v7.appcompat.R;
 import android.support.v7.widget.SearchView;
 import android.util.AttributeSet;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -14,6 +17,8 @@ import java.util.ArrayList;
  * Created by omar on 9/30/15.
  */
 public class CustomSearchView extends SearchView implements View.OnClickListener {
+    LinearLayout llSearchbar = (LinearLayout) this.findViewById(R.id.search_bar);
+
     public CustomSearchView(Context context) {
         super(context);
         reverseOrderEditArea();
@@ -22,7 +27,6 @@ public class CustomSearchView extends SearchView implements View.OnClickListener
     public CustomSearchView(Context context, AttributeSet attrs) {
         super(context, attrs);
         reverseOrderEditArea();
-
     }
 
     public CustomSearchView(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -41,13 +45,23 @@ public class CustomSearchView extends SearchView implements View.OnClickListener
 
             llSearchholder.addView(views.get(x));
         }
+        TextView tv =  (TextView)LayoutInflater.from(llSearchbar.getContext()).inflate(com.farmers.underground.R
+                .layout.search_hint,null);
+        tv.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        tv.setTag("lalala");
+        llSearchbar.addView(tv);
     }
 
 
     @Override
     public boolean isIconified() {
-        View imgSearch;
-        imgSearch = this.findViewById(R.id.search_src_text);
+        if (super.isIconified()) {
+            llSearchbar.findViewWithTag("lalala").setVisibility(VISIBLE);
+        } else {
+            llSearchbar.findViewWithTag("lalala").setVisibility(GONE);
+        }
+        View  imgSearch = this.findViewById(R.id.search_src_text);
+        
         ((SearchAutoComplete) imgSearch).setGravity(Gravity.RIGHT);
         ((SearchAutoComplete) imgSearch).setHintTextColor(getResources().getColor(com.farmers.underground.R.color.text_white));
         imgSearch.setOnClickListener(this);
