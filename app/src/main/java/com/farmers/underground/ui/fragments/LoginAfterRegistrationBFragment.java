@@ -15,7 +15,7 @@ import com.farmers.underground.ui.activities.LoginSignUpActivity;
 import com.farmers.underground.ui.adapters.PickMarketeerAdapter;
 import com.farmers.underground.ui.base.BaseFragment;
 
-import java.util.ArrayList;
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,7 +23,7 @@ import java.util.List;
  * Created by tZpace
  * on 25-Sep-15.
  */
-public class LoginAfterRegistrationBFragment extends BaseFragment<LoginSignUpActivity>   {
+public class LoginAfterRegistrationBFragment extends BaseFragment<LoginSignUpActivity> implements PickMarketeerAdapter.OnFindMarketerListener {
 
     @Bind(R.id.tvCounter)
     protected TextView tvCounter;
@@ -50,7 +50,7 @@ public class LoginAfterRegistrationBFragment extends BaseFragment<LoginSignUpAct
     }
 
     private void setAdapter(){
-        mAdapter = new PickMarketeerAdapter(getHostActivity(), listMarketeers);
+        mAdapter = new PickMarketeerAdapter(getHostActivity(), listMarketeers, this);
         lvMarketeers.setAdapter(mAdapter);
     }
 
@@ -63,5 +63,11 @@ public class LoginAfterRegistrationBFragment extends BaseFragment<LoginSignUpAct
     protected void onListItemClicked(int pos){
        getHostActivity().setNameMarketeer(mAdapter.getItem(pos));
        getHostActivity().switchFragment(LoginAfterRegistrationAFragment.class.getName(), false);
+       getHostActivity().hideSoftKeyboard();
    }
+
+    @Override
+    public void onFind(int countMarketer) {
+        tvCounter.setText(String.valueOf(countMarketer + File.separator + listMarketeers.size()));
+    }
 }

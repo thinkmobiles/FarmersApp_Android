@@ -3,6 +3,7 @@ package com.farmers.underground.ui.fragments;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -48,7 +49,15 @@ public class LoginAfterRegistrationAFragment extends BaseFragment<LoginSignUpAct
     protected void skip(){}
 
     @OnClick(R.id.btnStart)
-    protected void start(){}
+    protected void start(){
+        String name = getHostActivity().getNameMarketeer();
+        if(name != null){
+            getHostActivity().showToast("", Toast.LENGTH_SHORT);
+        } else {
+            // todo request and marketer in profile
+
+        }
+    }
 
 
 }

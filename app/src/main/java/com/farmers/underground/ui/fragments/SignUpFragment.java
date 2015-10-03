@@ -115,14 +115,13 @@ public class SignUpFragment extends BaseFragment<LoginSignUpActivity>  {
             getHostActivity().showToast("Password is not confirmed", Toast.LENGTH_SHORT);
             return;
         }
-        //todo showProgressDialog
+        getHostActivity().showProgressDialog();
         //        RetrofitSingleton.getInstance().registerViaEmail("FirstName LastName",/* "test" + System.currentTimeMillis() +*/   "tapacko7@gmail.com", "testpass", new ACallback<SuccessMsg, ErrorMsg>() {
         RetrofitSingleton.getInstance().registerViaEmail(name, email, password, new ACallback<SuccessMsg, ErrorMsg>() {
             @Override
             public void onSuccess(SuccessMsg result) {
                 getHostActivity().showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
                 getHostActivity().getSupportFragmentManager().popBackStack();
-                getHostActivity().switchFragment(LoginAfterRegistrationAFragment.class.getName(), false);
             }
 
             @Override
@@ -132,7 +131,7 @@ public class SignUpFragment extends BaseFragment<LoginSignUpActivity>  {
 
             @Override
             public void anyway() {
-                //todo hideProgressDialog
+                getHostActivity().hideProgressDialog();
             }
         });
     }
@@ -147,7 +146,7 @@ public class SignUpFragment extends BaseFragment<LoginSignUpActivity>  {
 
     @OnClick(R.id.rlIcon)
     protected void goToPickMarketer(){
-        getHostActivity().getSupportFragmentManager().popBackStack();
+        getHostActivity().popBackStackUpTo(getClass());
         getHostActivity().switchFragment(LoginAfterRegistrationAFragment.class.getName(), false);
     }
 }
