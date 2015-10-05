@@ -74,13 +74,17 @@ public class PickMarketeerAdapter extends BaseAdapter {
 
         holder.setData(getItem(position));
 
-        if(position == list.size() - 1 && list.size() != fullList.size()){
+        if(isAddItem(position)){
             holder.select();
         } else {
             holder.diselect();
         }
 
         return convertView;
+    }
+
+    public boolean isAddItem(int position){
+        return position == list.size() - 1 && list.size() != fullList.size();
     }
 
     class ViewHolder{

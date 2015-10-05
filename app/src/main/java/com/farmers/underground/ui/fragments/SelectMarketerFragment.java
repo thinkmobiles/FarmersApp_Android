@@ -59,7 +59,7 @@ public class SelectMarketerFragment extends BaseFragment<LoginSignUpActivity>   
     protected void start(){
         String name = getHostActivity().getNameMarketeer();
         if(name == null){
-            getHostActivity().showToast("", Toast.LENGTH_SHORT);
+            getHostActivity().showDialogAboutAddMarketer();
         } else {
             // todo request and marketer in profile
             FarmersApp.setSkipMode(false);

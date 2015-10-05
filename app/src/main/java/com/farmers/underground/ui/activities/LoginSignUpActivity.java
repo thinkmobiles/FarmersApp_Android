@@ -212,4 +212,12 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
                 .create()
                 .show();
     }
+
+    public void showDialogAboutAddMarketer(){
+        new AlertDialog.Builder(this)
+                .setMessage("Please select marketer for start or tap Skip button")
+                .setPositiveButton(getString(R.string.dialog_btn_ok), null)
+                .create()
+                .show();
+    }
 }

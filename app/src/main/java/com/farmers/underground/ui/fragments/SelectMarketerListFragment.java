@@ -66,8 +66,7 @@ public class SelectMarketerListFragment extends BaseFragment<LoginSignUpActivity
 
    @OnItemClick(R.id.lvListMarketeers)
     protected void onListItemClicked(int pos){
-       int size = mAdapter.getCount();
-       if(pos == size - 1 && size != listMarketeers.size()){
+       if(mAdapter.isAddItem(pos)){
            sendRequestAddNewMarketer();
        } else {
            selectMarketer(pos);
@@ -75,7 +74,7 @@ public class SelectMarketerListFragment extends BaseFragment<LoginSignUpActivity
     }
 
     private void sendRequestAddNewMarketer(){
-        // todo requst for create new marketer
+        // todo request for create new marketer  etMarketeer.getText().toString()
         getHostActivity().showToast("send new marketer", Toast.LENGTH_SHORT);
     }
 
@@ -88,6 +87,8 @@ public class SelectMarketerListFragment extends BaseFragment<LoginSignUpActivity
 
     @Override
     public void onFind(int countMarketer) {
+        if(countMarketer != listMarketeers.size())
+            --countMarketer;
         tvCounter.setText(String.valueOf(countMarketer + File.separator + listMarketeers.size()));
     }
 
