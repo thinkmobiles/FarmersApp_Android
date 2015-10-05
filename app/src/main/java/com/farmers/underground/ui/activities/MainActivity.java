@@ -113,14 +113,18 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
         setCropsListCallback();
         setDrawer();
-        setDrawerList();
         setViewPager();
         setTabs();
         setSearchViewListeners();
         setFragmentStateController();
 
-
         searchView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setDrawerList();
     }
 
     @Override
@@ -145,7 +149,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         List<CropModel> cropsList = new ArrayList<>();
 
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
             CropModel basquiatCropModel = new CropModel(i);
             basquiatCropModel.setImgLink("http://www.potomitan.info/ki_nov/images/basquiat_brownspots.jpg");
             cropsList.add(basquiatCropModel);
@@ -333,7 +337,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_favourites, R.string.drawer_content_3));
 
         if(!FarmersApp.getInstance().getCurrentUser().hasMarketir()){
-            drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_invite_friends, R.string.drawer_content_5));
+            drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_marketer_price, R.string.drawer_content_5));
         } else {
             //remove maybe
         }

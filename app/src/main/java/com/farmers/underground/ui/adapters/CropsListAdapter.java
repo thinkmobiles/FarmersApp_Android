@@ -35,14 +35,14 @@ public class CropsListAdapter extends RecyclerView.Adapter<CropsListItemVH> {
             public boolean onPreDraw() {
                 if (height == 0) {
                     height = view.getMeasuredWidth();
-                    view.getLayoutParams().height = height;
-                } else view.getLayoutParams().height = height;
+                    setHeight(view, height);
+                } else setHeight(view, height);
                 view.getViewTreeObserver().removeOnPreDrawListener(this);
                 return false;
             }
         });
         else {
-            view.getLayoutParams().height = height;
+            setHeight(view, height);
         }
         return new CropsListItemVH(view);
     }
@@ -64,5 +64,8 @@ public class CropsListAdapter extends RecyclerView.Adapter<CropsListItemVH> {
         void onFavChecked(int pos, boolean isChecked);
 
         void onPriceRefreshClicked(int pos);
+    }
+    private void setHeight(View view,int height){
+        view.getLayoutParams().height = height;
     }
 }
