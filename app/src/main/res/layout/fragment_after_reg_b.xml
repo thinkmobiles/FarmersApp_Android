@@ -22,6 +22,8 @@
         android:textSize="@dimen/main_text_size"
         android:textColor="@color/white"
         android:background="@null"
+        android:singleLine="true"
+        android:imeOptions="actionDone"
         android:id="@+id/etMarketeer" />
 
     <View

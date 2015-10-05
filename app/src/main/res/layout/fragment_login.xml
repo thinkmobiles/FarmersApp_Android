@@ -43,14 +43,13 @@
         <EditText
             android:layout_width="match_parent"
             android:id="@+id/etEmail"
-
-            android:singleLine="true"
             android:hint="@string/login_email"
+            android:singleLine="true"
             android:imeOptions="actionNext"
             android:textSize="@dimen/login_text_size"
             style="@style/EditLoginScreen" />
         
-        <View
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/login_divider_height"
             android:background="@color/white"
@@ -82,7 +81,7 @@
                 android:src="@drawable/show_password_icon"/>
         </LinearLayout>
 
-        <View
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/login_divider_height"
             android:background="@color/white"
