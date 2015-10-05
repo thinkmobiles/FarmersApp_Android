@@ -331,6 +331,14 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_crops, R.string.drawer_content_0));
         drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_invite_friends, R.string.drawer_content_2));
         drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_favourites, R.string.drawer_content_3));
+
+        if(!FarmersApp.getInstance().getCurrentUser().hasMarketir()){
+            drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_invite_friends, R.string.drawer_content_5));
+        } else {
+            //remove maybe
+        }
+
+
         drawerItemList.add(new DrawerItem());
         lvDrawerContainer.setAdapter(new DrawerAdapter(drawerItemList, this));
     }
@@ -432,6 +440,9 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                 break;
             case 4:
                 viewPager.setCurrentItem(0);
+                break;
+            case 5:
+                LoginSignUpActivity.startChooseMarketier(this);
                 break;
         }
         mDrawerlayout.closeDrawers();

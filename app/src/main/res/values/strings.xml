@@ -75,6 +75,7 @@
     <string name="drawer_content_2">Invite friends</string>
     <string name="drawer_content_3">My Favorites</string>
     <string name="drawer_content_4">LogOut</string>
+    <string name="drawer_content_5">Add Marketer</string>
 
     <!--//main activity-->
     <string name="main_activity_tab_all_crops">All crops</string>
