@@ -24,4 +24,7 @@ public class UserProfile {
          return !TextUtils.isEmpty(marketeer);
     }
 
+    public String getEmail() {
+        return email;
+    }
 }

@@ -76,6 +76,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/sign_up_edit_text_height"
                 android:id="@+id/etName_FSU"
+
+                android:imeOptions="actionNext"
+
                 android:paddingRight="@dimen/sign_up_edit_text_margin_padding"
                 android:hint="@string/sign_up_full_name"
                 android:gravity="right|center_vertical"
@@ -90,6 +93,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/sign_up_edit_text_height"
                 android:id="@+id/etEmail_FSU"
+
+                android:imeOptions="actionNext"
+
                 android:paddingRight="@dimen/sign_up_edit_text_margin_padding"
                 android:hint="@string/login_email"
                 android:gravity="right|center_vertical"
@@ -118,6 +124,9 @@
                     android:layout_height="@dimen/sign_up_edit_text_height"
                     android:layout_weight="1"
                     android:id="@+id/etPassword_FSU"
+
+                    android:imeOptions="actionNext"
+
                     android:paddingRight="@dimen/sign_up_edit_text_margin_padding"
                     android:gravity="right|center_vertical"
                     android:hint="@string/login_password"
@@ -138,6 +147,9 @@
                 android:layout_height="@dimen/sign_up_edit_text_height"
                 android:id="@+id/etConfirm_FSU"
                 android:paddingRight="@dimen/sign_up_edit_text_margin_padding"
+
+                android:imeOptions="actionDone"
+
                 android:hint="@string/login_password_confirm"
                 android:gravity="right|center_vertical"
                 android:textSize="@dimen/login_text_size"

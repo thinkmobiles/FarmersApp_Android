@@ -2,6 +2,7 @@ package com.farmers.underground.remote;
 
 import android.support.annotation.NonNull;
 import com.farmers.underground.BuildConfig;
+import com.farmers.underground.FarmersApp;
 import com.farmers.underground.config.ApiConstants;
 import com.farmers.underground.remote.models.ErrorMsg;
 import com.farmers.underground.remote.models.SuccessMsg;
@@ -119,6 +120,23 @@ public class RetrofitSingleton {
     public void signUpFb(@NonNull UserSignUpFB user, final ICallback<SuccessMsg, ErrorMsg> callback) {
 
         getAuthorizationService().signUpFb(user).enqueue(new Callback<SuccessMsg>() {
+            @Override
+            public void onResponse(Response<SuccessMsg> response, Retrofit retrofit) {
+                performCallback(callback, response);
+                callback.anyway();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                callback.onError(new ErrorMsg("Unknown Error"));
+                callback.anyway();
+            }
+        });
+    }
+
+    //TODO this is just for testing
+    public void dellAccountByEmail(final ACallback<SuccessMsg, ErrorMsg> callback) {
+        getAuthorizationService().dellAccountByEmail().enqueue(new Callback<SuccessMsg>() {
             @Override
             public void onResponse(Response<SuccessMsg> response, Retrofit retrofit) {
                 performCallback(callback, response);

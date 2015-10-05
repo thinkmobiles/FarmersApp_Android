@@ -62,6 +62,13 @@
             android:text="Main drawer activity"
             android:layout_margin="10dp"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_dellAccountByEmail"
+        android:text="Dell Email Account"
+        android:layout_margin="10dp"
+        android:padding="20dp"/>
 
     <Button
         android:layout_width="wrap_content"

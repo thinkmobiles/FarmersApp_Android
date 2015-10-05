@@ -8,9 +8,11 @@ import com.farmers.underground.remote.models.UserSignUpFB;
 
 import retrofit.Call;
 import retrofit.http.Body;
+import retrofit.http.DELETE;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
+import retrofit.http.HTTP;
 import retrofit.http.POST;
 
 /**
@@ -37,5 +39,8 @@ public interface AuthorizationService {
 
     @GET("users/profile")
     Call<UserProfile> getUserProfileBySession();
+
+    @DELETE ("users/dellAccountByEmail")
+    Call<SuccessMsg> dellAccountByEmail();
 
 }
