@@ -21,6 +21,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
+
+import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.RetrofitSingleton;
@@ -454,8 +456,8 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
             @Override
             public void onSuccess(SuccessMsg result) {
                 showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
-                LoginSignUpActivity.start(MainActivity.this);
                 finish();
+                FarmersApp.getInstance().onUserLogOut();
             }
 
             @Override
