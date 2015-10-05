@@ -185,16 +185,20 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
         FarmersApp.getInstance().getUserProfileAsync(new ICallback<UserProfile, ErrorMsg>() {
             @Override
             public void onSuccess(UserProfile result) {
-                if (result!=null && !result.hasMarketir()) {
-                    switchFragment(new SelectMarketerFragment(),false);
+                if(result!=null){
+                    if (!result.hasMarketir()) {
+                        switchFragment(new SelectMarketerFragment(),false);
+                    } else {
+                        MainActivity.start(LoginSignUpActivity.this);
+                    }
                 } else {
-                    MainActivity.start(LoginSignUpActivity.this);
+                    onError(new ErrorMsg("Profile is not fetched"));
                 }
             }
 
             @Override
             public void onError(@NonNull ErrorMsg error) {
-
+                showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
             }
 
             @Override

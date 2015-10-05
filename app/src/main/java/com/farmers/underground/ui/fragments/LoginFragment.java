@@ -1,7 +1,6 @@
 package com.farmers.underground.ui.fragments;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,14 +17,15 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import com.facebook.login.LoginManager;
+import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
 import com.farmers.underground.config.FB;
 import com.farmers.underground.remote.RetrofitSingleton;
 import com.farmers.underground.remote.models.ErrorMsg;
 import com.farmers.underground.remote.models.SuccessMsg;
+import com.farmers.underground.remote.models.UserCredentials;
 import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.ui.activities.LoginSignUpActivity;
-import com.farmers.underground.ui.activities.MainActivity;
 import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.utils.ValidationUtil;
 
@@ -53,8 +53,24 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
         hidePassword();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        final UserCredentials userCredentials;
+
+        if((userCredentials = FarmersApp.getInstance().getUserCredentials())!=null){
+            etEmail.setText(userCredentials.getEmail());
+            //etPassword.setText(userCredentials.getPass());
+        }
+
+        if (FarmersApp.getInstance().isUserAuthenticated()){
+            getHostActivity().getUserProfileAsync();
+        }
     }
 
     private void hidePassword(){
@@ -125,8 +141,8 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> {
 
     @OnClick(R.id.btnLogin)
     protected void login() {
-        String email = etEmail.getText().toString();
-        String password = etPassword.getText().toString();
+        final String email = etEmail.getText().toString();
+        final String password = etPassword.getText().toString();
         if (isEmpty(email, "email") || isEmpty(password, "password")) {
             return;
         }
@@ -144,11 +160,11 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> {
             @Override
             public void onSuccess(SuccessMsg result) {
                 getHostActivity().showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
-                // TODO: 29.09.15
+
+                FarmersApp.getInstance().saveUserCredentials(new UserCredentials(email,password));
+
                 getHostActivity().getUserProfileAsync();
 
-//                Intent intent = new Intent(getHostActivity(), MainActivity.class);
-//                startActivity(intent);
             }
 
             @Override

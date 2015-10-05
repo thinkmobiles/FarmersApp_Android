@@ -16,4 +16,12 @@ public class UserCredentials {
         this.email = email;
         this.pass = pass;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPass() {
+        return pass;
+    }
 }

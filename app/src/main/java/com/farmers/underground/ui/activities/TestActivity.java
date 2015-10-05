@@ -103,4 +103,22 @@ public class TestActivity extends BaseActivity {
         FarmersApp.wipeUsrPreferences();
     }
 
+
+    @OnClick(R.id.tv_log_Out)
+    void testLogout() {
+        RetrofitSingleton.getInstance().signOut(new ACallback<SuccessMsg, ErrorMsg>() {
+            @Override
+            public void onSuccess(SuccessMsg result) {
+                FarmersApp.getInstance().onUserLogOut();
+            }
+
+            @Override
+            public void onError(@NonNull ErrorMsg error) {
+
+            }
+        });
+
+    }
+
+
 }

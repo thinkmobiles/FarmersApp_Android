@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.facebook.FacebookSdk;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.RetrofitSingleton;
 import com.farmers.underground.remote.models.ErrorMsg;
+import com.farmers.underground.remote.models.UserCredentials;
 import com.farmers.underground.remote.models.UserProfile;
 import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.remote.util.ICallback;
@@ -17,6 +19,8 @@ import com.farmers.underground.ui.activities.LoginSignUpActivity;
 import com.farmers.underground.ui.utils.TypefaceManager;
 import com.vincentbrison.openlibraries.android.dualcache.lib.DualCacheContextUtils;
 import com.vincentbrison.openlibraries.android.dualcache.lib.DualCacheLogUtils;
+
+import java.util.HashSet;
 
 /**
  * Created by tZpace
@@ -66,8 +70,12 @@ public class FarmersApp extends Application {
 
     }
 
-    public void onUserLogOut(){
+    public void onUserLogOut() {
         wipeUsrPreferences();
+        Intent intent = new Intent(getApplicationContext(), LoginSignUpActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     private UserProfile currentUser;
@@ -93,19 +101,33 @@ public class FarmersApp extends Application {
 
             @Override
             public void onError(@NonNull ErrorMsg error) {
-
                 if (callback != null) {
                     callback.onError(error);
                     callback.anyway();
                 } else {
-                    Intent intent = new Intent(getApplicationContext(), LoginSignUpActivity.class);
-                    getApplicationContext().startActivity(intent);
+                    onUserLogOut();
                 }
 
             }
         });
     }
 
+    public boolean isUserAuthenticated(){
+       return getUsrPreferences().contains(ProjectConstants.KEY_CURRENT_USER_COOKIES) && !getUsrPreferences().getStringSet(ProjectConstants.KEY_CURRENT_USER_COOKIES,new HashSet<String>(0)).isEmpty();
+    }
+
+    public void saveUserCredentials(@NonNull UserCredentials userCredentials){
+        getUsrPreferences().edit()
+                .putString(ProjectConstants.KEY_CURRENT_USER_LOGIN, userCredentials.getEmail())
+                .putString(ProjectConstants.KEY_CURRENT_USER_PASSWORD, userCredentials.getPass())
+                .apply();
+    }
+
+    public UserCredentials getUserCredentials(){
+        if (getUsrPreferences().contains(ProjectConstants.KEY_CURRENT_USER_LOGIN) && getUsrPreferences().contains(ProjectConstants.KEY_CURRENT_USER_PASSWORD)){
+            return new UserCredentials(getUsrPreferences().getString(ProjectConstants.KEY_CURRENT_USER_LOGIN,""),getUsrPreferences().getString(ProjectConstants.KEY_CURRENT_USER_PASSWORD,""));
+        } else return null;
+    }
 
     public static SharedPreferences getAppPreferences() {
         return getInstance().getSharedPreferences(ProjectConstants.PREFERENCES_FILE_NAME_APP, MODE_PRIVATE);

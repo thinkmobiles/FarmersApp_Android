@@ -107,7 +107,8 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
 
-        if (getSupportActionBar() != null) getSupportActionBar().setDisplayShowTitleEnabled(false);
+        if( getSupportActionBar()!=null)
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 
         setCropsListCallback();
@@ -320,15 +321,12 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     public void setDrawerList() {
         List<DrawerItem> drawerItemList = new ArrayList<>();
-
         if (BuildConfig.PRODUCTION) {
             drawerItemList.add(new DrawerItem(FarmersApp.getInstance().getCurrentUser().getAvatar(), FarmersApp.getInstance().getCurrentUser().getFullName()));
         } else
             drawerItemList.add(new DrawerItem("http://s2.turbopic.org/img/2007_03/i4603058af2b30.jpg", "Bela  " +
                     "Lugosie"
                      ));
-
-
         drawerItemList.add(new DrawerItem());
         drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_crops, R.string.drawer_content_0));
         drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_invite_friends, R.string.drawer_content_2));
@@ -336,6 +334,8 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         drawerItemList.add(new DrawerItem());
         lvDrawerContainer.setAdapter(new DrawerAdapter(drawerItemList, this));
     }
+
+
 
 
     //tabs
@@ -424,7 +424,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     @OnItemClick(R.id.lv_DrawerHolder_MainActivity)
     void onItemClick(int pos) {
         switch (pos) {
-
             case 2:
                 viewPager.setCurrentItem(1);
                 break;
@@ -434,7 +433,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
             case 4:
                 viewPager.setCurrentItem(0);
                 break;
-
         }
         mDrawerlayout.closeDrawers();
     }
@@ -462,16 +460,15 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         } else super.onBackPressed();
 
     }
-
     @OnClick(R.id.ll_logoutMainActivity)
-    protected void logOut() {
+    protected void logOut(){
         showProgressDialog();
         RetrofitSingleton.getInstance().signOut(new ACallback<SuccessMsg, ErrorMsg>() {
             @Override
             public void onSuccess(SuccessMsg result) {
                 showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
-                LoginSignUpActivity.start(MainActivity.this);
                 finish();
+                FarmersApp.getInstance().onUserLogOut();
             }
 
             @Override
