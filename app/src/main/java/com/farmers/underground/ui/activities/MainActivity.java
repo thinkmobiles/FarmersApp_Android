@@ -14,15 +14,23 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
+import com.farmers.underground.remote.RetrofitSingleton;
 import com.farmers.underground.remote.models.CropModel;
+import com.farmers.underground.remote.models.ErrorMsg;
 import com.farmers.underground.remote.models.SearchHint;
+import com.farmers.underground.remote.models.SuccessMsg;
+import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.ui.adapters.CropsListAdapter;
 import com.farmers.underground.ui.adapters.DrawerAdapter;
 import com.farmers.underground.ui.adapters.ProjectPagerAdapter;
@@ -43,7 +51,8 @@ import java.util.List;
 
 
 /**
- * Created by omar on 9/28/15.
+ * Created by omar
+ * on 9/28/15.
  */
 public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCallback, FragmentViewsCreatedCallback {
 
@@ -91,7 +100,9 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        if( getSupportActionBar()!=null)
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 
         setCropsListCallback();
@@ -303,10 +314,10 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     public void setDrawerList() {
         List<DrawerItem> drawerItemList = new ArrayList<>();
-        drawerItemList.add(new DrawerItem("", "אילן עדני"));
+        drawerItemList.add(new DrawerItem("", "אילן עדני")); // <- ??? TODO
         drawerItemList.add(new DrawerItem());
         drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_crops, R.string.drawer_content_0));
-        drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_marketer_price, R.string.drawer_content_1));
+       // drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_marketer_price, R.string.drawer_content_1));
         drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_invite_friends, R.string.drawer_content_2));
         drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_favourites, R.string.drawer_content_3));
         drawerItemList.add(new DrawerItem());
@@ -398,7 +409,14 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     @OnItemClick(R.id.lv_DrawerHolder_MainActivity)
     void onItemClick(int pos) {
-        NotYetHelper.notYetImplmented(this, "drawer items");
+        switch (pos){
+            case 6:
+                logOut();
+                break;
+            default:
+                NotYetHelper.notYetImplmented(this, "drawer items pos=" +pos);
+                break;
+        }
         mDrawerlayout.closeDrawers();
     }
 
@@ -424,6 +442,28 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
             forceHideSearchList();
         } else super.onBackPressed();
 
+    }
+
+    private void logOut(){
+        showProgressDialog();
+        RetrofitSingleton.getInstance().signOut(new ACallback<SuccessMsg, ErrorMsg>() {
+            @Override
+            public void onSuccess(SuccessMsg result) {
+                showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
+                LoginSignUpActivity.start(MainActivity.this);
+                finish();
+            }
+
+            @Override
+            public void onError(@NonNull ErrorMsg error) {
+                showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
+            }
+
+            @Override
+            public void anyway() {
+               hideProgressDialog();
+            }
+        });
     }
 
 

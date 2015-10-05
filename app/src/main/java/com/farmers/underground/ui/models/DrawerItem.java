@@ -4,7 +4,8 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 
 /**
- * Created by omar on 9/28/15.
+ * Created by omar
+ * on 9/28/15.
  */
 public class DrawerItem {
     public enum DRAWER_ITEM{

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.widget.Toast;
 
 import com.facebook.FacebookSdk;
 import com.farmers.underground.config.ProjectConstants;
@@ -16,9 +15,8 @@ import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.remote.util.ICallback;
 import com.farmers.underground.ui.activities.LoginSignUpActivity;
 import com.farmers.underground.ui.utils.TypefaceManager;
-
-import java.util.Map;
-import java.util.WeakHashMap;
+import com.vincentbrison.openlibraries.android.dualcache.lib.DualCacheContextUtils;
+import com.vincentbrison.openlibraries.android.dualcache.lib.DualCacheLogUtils;
 
 /**
  * Created by tZpace
@@ -30,32 +28,46 @@ public class FarmersApp extends Application {
 
     public synchronized static FarmersApp getInstance() {
         if (ourInstance == null) {
-            if (BuildConfig.DEBUG)
+            if (BuildConfig.DEBUG){
+                killAppProcess();
                 throw new Error("WTF! FarmersApp was not created!");
+            }
         }
         return ourInstance;
     }
 
     public FarmersApp() { /* do not modify */}
 
-    public void killAppProcess() {
+    public static void killAppProcess() {
         android.os.Process.killProcess(android.os.Process.myPid());
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        TypefaceManager.init(this);
         ourInstance = this;
+
+        TypefaceManager.init(this);
 
         // Initialize the SDK before executing any other operations,
         // especially, if you're using Facebook UI elements.
         FacebookSdk.sdkInitialize(getApplicationContext());
 
+
+        // Android dualcache
+        if (BuildConfig.DEBUG)
+            DualCacheLogUtils.enableLog();
+        DualCacheContextUtils.setContext(getApplicationContext());
+
         /**next*/
+    }
 
-        resetFirstLaunch();
+    public void onUserLogin(){
 
+    }
+
+    public void onUserLogOut(){
+        wipeUsrPreferences();
     }
 
     private UserProfile currentUser;
@@ -68,12 +80,12 @@ public class FarmersApp extends Application {
         this.currentUser = currentUser;
     }
 
-    public void getUserProfileAsync(@Nullable final ICallback<UserProfile, ErrorMsg> callback){
+    public void getUserProfileAsync(@Nullable final ICallback<UserProfile, ErrorMsg> callback) {
         RetrofitSingleton.getInstance().getUserProfileBySession(new ACallback<UserProfile, ErrorMsg>() {
             @Override
             public void onSuccess(UserProfile result) {
                 setCurrentUser(result);
-                if(callback!=null){
+                if (callback != null) {
                     callback.onSuccess(getCurrentUser());
                     callback.anyway();
                 }
@@ -82,7 +94,7 @@ public class FarmersApp extends Application {
             @Override
             public void onError(@NonNull ErrorMsg error) {
 
-                if(callback!=null){
+                if (callback != null) {
                     callback.onError(error);
                     callback.anyway();
                 } else {
@@ -95,27 +107,32 @@ public class FarmersApp extends Application {
     }
 
 
-
     public static SharedPreferences getAppPreferences() {
         return getInstance().getSharedPreferences(ProjectConstants.PREFERENCES_FILE_NAME_APP, MODE_PRIVATE);
     }
 
-    /** wipe on log-out */
+    /**
+     * User pass,login,cookies. wipe on log-out
+     */
     public static SharedPreferences getUsrPreferences() {
         return getInstance().getSharedPreferences(ProjectConstants.PREFERENCES_FILE_NAME_USR, MODE_PRIVATE);
     }
 
-    /** for testing */
+    /**
+     * wipe on log-out
+     */
     public static void wipeUsrPreferences() {
         getUsrPreferences().edit().clear().apply();
     }
 
-    /** for testing */
+    /**
+     * for testing
+     */
     public static void wipeAppPreferences() {
         getUsrPreferences().edit().clear().apply();
     }
 
-    public static boolean isFirstLaunch() {
+   /* public static boolean isFirstLaunch() {
         return !getAppPreferences().contains(ProjectConstants.KEY_APP_LAUNCHED_BEFORE);
     }
 
@@ -123,7 +140,7 @@ public class FarmersApp extends Application {
         getAppPreferences().edit()
                 .putBoolean(ProjectConstants.KEY_APP_LAUNCHED_BEFORE, true)
                 .apply();
-    }
+    }*/
 
     public static boolean showTutorial() {
         return !getAppPreferences().contains(ProjectConstants.KEY_APP_SHOW_SKIP_TUTORIAL)

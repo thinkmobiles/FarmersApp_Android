@@ -5,7 +5,8 @@ import android.content.res.AssetManager;
 import android.graphics.Typeface;
 
 /**
- * Created by omar on 10/1/15.
+ * Created by omar
+ * on 10/1/15.
  */
 public class TypefaceManager {
     private static TypefaceManager typefaceManager;
@@ -14,10 +15,9 @@ public class TypefaceManager {
     private final Typeface arialMTBold;
     private final Typeface arialMT ;
     private final Typeface avenir;
-    private  AssetManager am;
 
     public TypefaceManager(Context context) {
-        am = context.getAssets();
+        final AssetManager am = context.getAssets();
         arialMT =   Typeface.createFromAsset(am, fontDir + "ArialMT.ttf");
         arialMTBold = Typeface.createFromAsset(am, fontDir + "ArialMTBold.otf");
         avenir = Typeface.createFromAsset(am, fontDir + "Avenir.otf");
@@ -36,7 +36,6 @@ public class TypefaceManager {
     public Typeface getArial(){
         return arialMT;
     }
-
 
     public Typeface getArialBold(){
         return arialMTBold;
