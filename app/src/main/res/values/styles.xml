@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/aqua</item>
         <item name="colorPrimaryDark">@color/project_background_dark</item>
-        <item name="colorAccent">@color/aqua</item>
+        <item name="colorAccent">@color/text_white</item>
         <item name="android:textColorPrimary">@color/text_white</item>
         <item name="android:textColorSecondary">@color/text_white</item>
         <item name="actionModeStyle">@style/LStyled.ActionMode</item>
@@ -78,7 +78,7 @@
     </style>
 
     <style name="TV_SearchHintListItem">
-        <item name="android:textStyle">bold</item>
+        <item name="android:textStyle">normal</item>
         <item name="android:textSize">@dimen/search_hint_list_item_text_size</item>
         <item name="android:textColor">@color/text_dark_grey</item>
     </style>

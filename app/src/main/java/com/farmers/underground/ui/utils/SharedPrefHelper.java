@@ -2,11 +2,10 @@ package com.farmers.underground.ui.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-
 import com.farmers.underground.FarmersApp;
 import com.farmers.underground.config.ProjectConstants;
-import com.farmers.underground.ui.activities.MainActivity;
-import com.farmers.underground.ui.models.SearchHint;
+import com.farmers.underground.remote.models.SearchHint;
+import com.farmers.underground.ui.models.SearchHintCollection;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -19,12 +18,12 @@ public class SharedPrefHelper {
 
     public static final String SEARCH_HINTS = ProjectConstants.KEY_CURRENT_USER_SEARCH_HINTS;
 
-    public static void saveSearchHint(Context context, String query) {
+    public static void saveSearchHint(Context context, SearchHint query) {
         Gson gson = new GsonBuilder().create();
-        SearchHint hint;
+        SearchHintCollection hint;
         String hintsJson = getPrivatePrefs(context).getString(SEARCH_HINTS, new String());
-        if (!hintsJson.isEmpty()) hint = gson.fromJson(hintsJson, SearchHint.class);
-        else hint = new SearchHint();
+        if (!hintsJson.isEmpty()) hint = gson.fromJson(hintsJson, SearchHintCollection.class);
+        else hint = new SearchHintCollection();
         hint.add(query);
         hintsJson = gson.toJson(hint);
         SharedPreferences.Editor editor = getPrivatePrefs(context).edit();
@@ -32,12 +31,12 @@ public class SharedPrefHelper {
         editor.apply();
     }
 
-    public static List<String> getSearchHints(Context context) {
-        SearchHint hint;
+    public static List<SearchHint> getSearchHints(Context context) {
+        SearchHintCollection hint;
         Gson gson = new GsonBuilder().create();
         String hintsJson = getPrivatePrefs(context).getString(SEARCH_HINTS, new String());
-        if (!hintsJson.isEmpty()) hint = gson.fromJson(hintsJson, SearchHint.class);
-        else hint = new SearchHint();
+        if (!hintsJson.isEmpty()) hint = gson.fromJson(hintsJson, SearchHintCollection.class);
+        else hint = new SearchHintCollection();
         return hint.getHintsList();
     }
 
