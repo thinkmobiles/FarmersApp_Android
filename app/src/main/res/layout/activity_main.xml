@@ -8,14 +8,6 @@
         android:layout_height="match_parent"
         android:background="@color/white"
         tools:context=".MainActivity">
-    <ListView
-            android:id="@+id/lv_DrawerHolder_MainActivity"
-            android:layout_width="@dimen/drawer_width"
-            android:layout_height="match_parent"
-            android:layout_gravity="end"
-            android:divider="@android:color/transparent"
-            android:background="@color/white"/>
-
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -66,6 +58,57 @@
 
         </FrameLayout>
     </LinearLayout>
+    <FrameLayout android:layout_width="@dimen/drawer_width"
+                 android:layout_height="match_parent"
+                 android:layout_gravity="end"
+                 android:id="@+id/fl_DrawerHolder_MainActivity">
+        <ListView
+                android:id="@+id/lv_DrawerHolder_MainActivity"
+                android:layout_width="@dimen/drawer_width"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:divider="@android:color/transparent"
+                android:background="@color/white"/>
+        <LinearLayout
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical"
+                      android:layout_gravity="bottom">
+
+            <LinearLayout
+                    android:id="@+id/ll_logoutMainActivity"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/drawer_item_height"
+                    android:orientation="horizontal"
+                    android:gravity="right">
+
+                <TextView
+                        style="@style/TV_Drawer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="false"
+                        android:layout_alignParentTop="false"
+                        android:text="Log Out"
+                        android:layout_gravity="center_vertical"
+                        />
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:src="@drawable/user_oval"
+                        android:layout_gravity="center_vertical"
+                        android:paddingRight="@dimen/drawer_item_icon_padding"
+                        android:paddingLeft="@dimen/drawer_item_icon_padding"/>
+
+            </LinearLayout>
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/drawer_list_devider"/>
+        </LinearLayout>
+    </FrameLayout>
 </android.support.v4.widget.DrawerLayout>
 
 

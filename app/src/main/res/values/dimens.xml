@@ -73,7 +73,7 @@
     <dimen name="search_hint_list_item_text_size">18sp</dimen>
     <dimen name="crop_item_title_size">20sp</dimen>
     <dimen name="crop_item_text_small">10sp</dimen>
-    <dimen name="search_hint_offset">1000dp</dimen>
+    <dimen name="search_hint_offset">2000dp</dimen>
     <dimen name="search_hint_text_size">18sp</dimen>
 
     <!--margins-->

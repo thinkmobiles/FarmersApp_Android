@@ -40,7 +40,7 @@ abstract public class SearchController implements AdapterView.OnItemClickListene
         hitnContainer.setOnItemClickListener(this);
         lv_Container.setTranslationY(-ResourceRetriever.retrievePX(lv_Container.getContext(), R.dimen
                 .search_hint_offset));
-        lv_Container.setVisibility(View.VISIBLE);
+
     }
 
     public void setHinsList(List<SearchHint> hintList) {
@@ -57,7 +57,7 @@ abstract public class SearchController implements AdapterView.OnItemClickListene
     }
 
     public void show( ){
-
+        lv_Container.setVisibility(View.VISIBLE);
         isShowing = true;
         lv_Container.animate().translationYBy(-ResourceRetriever.retrievePX(lv_Container.getContext(), R.dimen
                 .search_hint_offset))

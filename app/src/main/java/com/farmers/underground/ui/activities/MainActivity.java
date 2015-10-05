@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -67,6 +68,12 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     @Bind(R.id.lv_SearchHint_MainActivity)
     protected ListView lv_SearchHint;
+
+    @Bind(R.id.fl_DrawerHolder_MainActivity)
+    protected FrameLayout fl_DrawerContainer;
+
+    @Bind(R.id.ll_logoutMainActivity)
+    View logoutView;
 
 
     private SearchManager searchManager;
@@ -280,10 +287,11 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                lvDrawerContainer.bringToFront();
+                /*lvDrawerContainer.bringToFront();*/
+
                 mDrawerlayout.requestLayout();
                 drawerOpened = true;
-                forceHideSearchList();
+                logoutView.bringToFront();
             }
 
             @Override
@@ -295,10 +303,10 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     }
 
     private void openDrawer() {
-        if (mDrawerlayout.isDrawerOpen(lvDrawerContainer)) {
-            mDrawerlayout.closeDrawer(lvDrawerContainer);
+        if (mDrawerlayout.isDrawerOpen(fl_DrawerContainer)) {
+            mDrawerlayout.closeDrawer(fl_DrawerContainer);
         }
-        mDrawerlayout.openDrawer(lvDrawerContainer);
+        mDrawerlayout.openDrawer(fl_DrawerContainer);
     }
 
     public void setDrawerList() {
@@ -306,13 +314,22 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         drawerItemList.add(new DrawerItem("", "אילן עדני"));
         drawerItemList.add(new DrawerItem());
         drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_crops, R.string.drawer_content_0));
-        drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_marketer_price, R.string.drawer_content_1));
         drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_invite_friends, R.string.drawer_content_2));
         drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_favourites, R.string.drawer_content_3));
         drawerItemList.add(new DrawerItem());
         lvDrawerContainer.setAdapter(new DrawerAdapter(drawerItemList, this));
     }
 
+
+
+
+    //tabs
+    private void setTabs() {
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
+
+    //view pager
     public void setViewPager() {
 
         pagerAdapter = new ProjectPagerAdapter<>(getSupportFragmentManager());
@@ -329,14 +346,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         }
     }
 
-
-    //tabs
-    private void setTabs() {
-        tabLayout.setupWithViewPager(viewPager);
-    }
-
-
-    //view pager
     private List<String> getTitlesList() {
         List<String> titles = new ArrayList<>();
         titles.add(getString(R.string.main_activity_tab_favourites));
@@ -396,6 +405,9 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     //click events
 
+    @OnClick(R.id.ll_logoutMainActivity)
+    protected void logOut(){}
+
     @OnItemClick(R.id.lv_DrawerHolder_MainActivity)
     void onItemClick(int pos) {
         NotYetHelper.notYetImplmented(this, "drawer items");
@@ -425,6 +437,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         } else super.onBackPressed();
 
     }
+
 
 
 }
