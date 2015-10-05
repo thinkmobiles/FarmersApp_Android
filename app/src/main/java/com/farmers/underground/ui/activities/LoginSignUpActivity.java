@@ -1,6 +1,8 @@
 package com.farmers.underground.ui.activities;
 
 import android.content.Context;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,13 +25,11 @@ import com.farmers.underground.remote.models.ErrorMsg;
 import com.farmers.underground.remote.models.SuccessMsg;
 import com.farmers.underground.remote.models.UserProfile;
 import com.farmers.underground.remote.models.UserSignUpFB;
-import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.remote.util.ICallback;
 import com.farmers.underground.ui.base.BaseActivity;
-import com.farmers.underground.ui.fragments.LoginAfterRegistrationAFragment;
+import com.farmers.underground.ui.fragments.SelectMarketerFragment;
 import com.farmers.underground.ui.fragments.LoginFragment;
 import com.farmers.underground.ui.fragments.SignUpFragment;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -186,7 +186,7 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
             @Override
             public void onSuccess(UserProfile result) {
                 if (result!=null && !result.hasMarketir()) {
-                    switchFragment(new LoginAfterRegistrationAFragment(),false);
+                    switchFragment(new SelectMarketerFragment(),false);
                 } else {
                     MainActivity.start(LoginSignUpActivity.this);
                 }
@@ -202,5 +202,28 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
                 hideProgressDialog();
             }
         });
+    }
+
+    public void showDialogConfirm(){
+        new AlertDialog.Builder(this)
+                .setCancelable(false)
+                .setMessage("Please check email and confirm of registation")
+                .setPositiveButton(getString(R.string.dialog_btn_ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        getSupportFragmentManager().popBackStackImmediate();
+                        dialog.dismiss();
+                    }
+                })
+                .create()
+                .show();
+    }
+
+    public void showDialogAboutAddMarketer(){
+        new AlertDialog.Builder(this)
+                .setMessage("Please select marketer for start or tap Skip button")
+                .setPositiveButton(getString(R.string.dialog_btn_ok), null)
+                .create()
+                .show();
     }
 }

@@ -49,6 +49,13 @@ public class CustomSearchView extends SearchView implements View.OnClickListener
                 .layout.search_hint,null);
         tv.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         tv.setTag("lalala");
+        tv.setClickable(true);
+        tv.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                findViewById(R.id.search_button).callOnClick();
+            }
+        });
         llSearchbar.addView(tv);
     }
 

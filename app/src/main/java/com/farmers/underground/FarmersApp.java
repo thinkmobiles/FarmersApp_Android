@@ -153,4 +153,13 @@ public class FarmersApp extends Application {
                 .apply();
     }
 
+    public static void setSkipMode(boolean isSkip){
+        getUsrPreferences().edit()
+                .putBoolean(ProjectConstants.KEY_CURRENT_USER_SKIP_MODE, isSkip)
+                .apply();
+    }
+
+    public static boolean isSkipMode(){
+        return getUsrPreferences().getBoolean(ProjectConstants.KEY_CURRENT_USER_SKIP_MODE, true);
+    }
 }

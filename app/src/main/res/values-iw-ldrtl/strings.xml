@@ -27,7 +27,7 @@
     <string name="login_email">\u200Fאימייל</string>
     <string name="login_password">\u200Fסיסמא</string>
 
-    <string name="login_password_confirm">חדשה סיסמה אשר</string>
+    <string name="login_password_confirm">סיסמה אשר</string>
     <string name="login_forgot_password">\u200Fשכחת את הסיסמא?</string>
     <string name="login_text_login">כניסה</string>
     <string name="login_or">או</string>

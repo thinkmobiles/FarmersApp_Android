@@ -63,7 +63,7 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> {
 
     @OnClick(R.id.tvRegister)
     protected void register() {
-        getHostActivity().switchFragment(SignUpFragment.class.getName(), true);
+        getHostActivity().addFragment(SignUpFragment.class.getName(), true);
     }
 
     @OnClick(R.id.btnLoginFB)
