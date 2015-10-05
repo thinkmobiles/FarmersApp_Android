@@ -53,7 +53,7 @@
             android:textSize="@dimen/login_text_size"
             style="@style/EditLoginScreen" />
 
-        <View
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/login_divider_height"
             android:background="@color/white"
@@ -89,7 +89,7 @@
 
         </LinearLayout>
 
-        <View
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/login_divider_height"
             android:background="@color/white"
