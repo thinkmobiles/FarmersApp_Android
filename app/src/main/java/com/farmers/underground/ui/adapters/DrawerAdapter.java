@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.farmers.underground.R;
 import com.farmers.underground.ui.models.DrawerItem;
+import com.squareup.picasso.Picasso;
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 import java.util.List;
 
@@ -54,9 +56,10 @@ public class DrawerAdapter extends BaseAdapter implements View.OnClickListener {
                 return createContentView(i, convertView, viewGroup);
             case HEADER:
                 return createHeaderView(i, convertView, viewGroup);
-            case DEVIDER:
+            case SPACER:
                 return createDeviderView(i, convertView, viewGroup);
-            default:  return null;
+            default:
+                return null;
         }
     }
 
@@ -80,9 +83,13 @@ public class DrawerAdapter extends BaseAdapter implements View.OnClickListener {
         viewHolder.ivUserIcon = (ImageView) view.findViewById(R.id.iv_DrawerUserIcon);
         viewHolder.tvUserName = (TextView) view.findViewById(R.id.tv_DrawerUserName);
         viewHolder.ivContentIcon = (ImageView) view.findViewById(R.id.iv_DrawerSettingIcon);
-        viewHolder.tvUserName.setText(mListItems.get(position).userName);
+        viewHolder.tvUserName.setText(getItem(position).userName);
         viewHolder.ivContentIcon.setTag(position);
         viewHolder.ivContentIcon.setOnClickListener(this);
+        Picasso.with(mContext)
+                .load(getItem(position).iconPath)
+                 .transform(new CropCircleTransformation())
+                .into(viewHolder.ivUserIcon);
         return view;
     }
 
