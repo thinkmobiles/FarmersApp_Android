@@ -1,6 +1,8 @@
 package com.farmers.underground.ui.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 import com.farmers.underground.R;
 import com.farmers.underground.ui.models.DrawerItem;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 import java.util.List;
@@ -22,6 +25,7 @@ public class DrawerAdapter extends BaseAdapter implements View.OnClickListener {
     private LayoutInflater inflater;
     private List<DrawerItem> mListItems;
     private DrawerCallback drawerCallback;
+
 
     public DrawerAdapter(List<DrawerItem> mListItems, Context mContext) {
         this.mContext = mContext;
@@ -76,7 +80,7 @@ public class DrawerAdapter extends BaseAdapter implements View.OnClickListener {
     }
 
     View createHeaderView(int position, View view, ViewGroup parent) {
-        ViewHolder viewHolder;
+        final ViewHolder viewHolder;
         view = inflater.inflate(R.layout.drawer_header, parent, false);
 
         viewHolder = new ViewHolder();
@@ -88,8 +92,23 @@ public class DrawerAdapter extends BaseAdapter implements View.OnClickListener {
         viewHolder.ivContentIcon.setOnClickListener(this);
         Picasso.with(mContext)
                 .load(getItem(position).iconPath)
-                 .transform(new CropCircleTransformation())
-                .into(viewHolder.ivUserIcon);
+                .transform(new CropCircleTransformation())
+                .into(new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        viewHolder.ivUserIcon.setImageBitmap(bitmap);
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable) {
+                        viewHolder.ivUserIcon.setImageResource(R.drawable.user_oval);
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                    }
+                });
         return view;
     }
 
