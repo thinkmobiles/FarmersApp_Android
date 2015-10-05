@@ -17,6 +17,11 @@ public class ReceivedCookiesInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Response originalResponse = chain.proceed(chain.request());
 
+        if(originalResponse.code() == 401){
+            FarmersApp.getInstance().onUserLogOut();
+            return originalResponse;
+        }
+
         if (!originalResponse.headers("Set-Cookie").isEmpty()) {
             HashSet<String> cookies = new HashSet<>();
 
