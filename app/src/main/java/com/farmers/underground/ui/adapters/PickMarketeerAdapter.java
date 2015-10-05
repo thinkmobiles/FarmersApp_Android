@@ -19,11 +19,13 @@ public class PickMarketeerAdapter extends BaseAdapter {
     private Context context;
     private List<String> list;
     private List<String> fullList;
+    private OnFindMarketerListener listener;
 
-    public PickMarketeerAdapter(Context context, List<String> list) {
+    public PickMarketeerAdapter(Context context, List<String> list, OnFindMarketerListener listener) {
         this.context = context;
         this.list = list;
         this.fullList = list;
+        this.listener = listener;
     }
 
     public void findMarketeer(String name){
@@ -34,7 +36,7 @@ public class PickMarketeerAdapter extends BaseAdapter {
                     tempList.add(marketeer);
                 }
             }
-            //tempList.add(context.getString(R.string.select_marketeer_add_name) + " \"" + name + "\"");
+            tempList.add(context.getString(R.string.select_marketeer_add_name) + " \"" + name + "\"");
             list = tempList;
         } else {
             list = fullList;
@@ -44,6 +46,7 @@ public class PickMarketeerAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
+        listener.onFind(list.size());
         return list.size();
     }
 
@@ -71,13 +74,17 @@ public class PickMarketeerAdapter extends BaseAdapter {
 
         holder.setData(getItem(position));
 
-//        if(position == list.size() - 1 && list.size() != fullList.size()){
-//            holder.select();
-//        } else {
-//            holder.diselect();
-//        }
+        if(isAddItem(position)){
+            holder.select();
+        } else {
+            holder.diselect();
+        }
 
         return convertView;
+    }
+
+    public boolean isAddItem(int position){
+        return position == list.size() - 1 && list.size() != fullList.size();
     }
 
     class ViewHolder{
@@ -98,5 +105,9 @@ public class PickMarketeerAdapter extends BaseAdapter {
         public void diselect(){
             tvNameMarketer.setTextColor(context.getResources().getColor(R.color.white));
         }
+    }
+
+    public interface OnFindMarketerListener{
+        public void onFind(int countMarketer);
     }
 }
