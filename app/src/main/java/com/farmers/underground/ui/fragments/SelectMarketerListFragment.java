@@ -5,13 +5,18 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnItemClick;
 import butterknife.OnTextChanged;
 
+import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
 import com.farmers.underground.ui.activities.LoginSignUpActivity;
+import com.farmers.underground.ui.activities.MainActivity;
 import com.farmers.underground.ui.adapters.PickMarketeerAdapter;
 import com.farmers.underground.ui.base.BaseFragment;
 
@@ -23,15 +28,15 @@ import java.util.List;
  * Created by tZpace
  * on 25-Sep-15.
  */
-public class LoginAfterRegistrationBFragment extends BaseFragment<LoginSignUpActivity> implements PickMarketeerAdapter.OnFindMarketerListener {
+public class SelectMarketerListFragment extends BaseFragment<LoginSignUpActivity> implements PickMarketeerAdapter.OnFindMarketerListener {
 
     @Bind(R.id.tvCounter)
     protected TextView tvCounter;
     @Bind(R.id.etMarketeer)
     protected EditText etMarketeer;
     @Bind(R.id.lvListMarketeers)
-
     protected ListView lvMarketeers;
+
     private PickMarketeerAdapter mAdapter;
 
     //test list of marketers
@@ -61,13 +66,35 @@ public class LoginAfterRegistrationBFragment extends BaseFragment<LoginSignUpAct
 
    @OnItemClick(R.id.lvListMarketeers)
     protected void onListItemClicked(int pos){
-       getHostActivity().setNameMarketeer(mAdapter.getItem(pos));
-       getHostActivity().switchFragment(LoginAfterRegistrationAFragment.class.getName(), false);
-       getHostActivity().hideSoftKeyboard();
-   }
+       int size = mAdapter.getCount();
+       if(pos == size - 1 && size != listMarketeers.size()){
+           sendRequestAddNewMarketer();
+       } else {
+           selectMarketer(pos);
+       }
+    }
+
+    private void sendRequestAddNewMarketer(){
+        // todo requst for create new marketer
+        getHostActivity().showToast("send new marketer", Toast.LENGTH_SHORT);
+    }
+
+    private void selectMarketer(int posMarketer){
+        getHostActivity().setNameMarketeer(mAdapter.getItem(posMarketer));
+        getHostActivity().popBackStackUpTo(getClass());
+        getHostActivity().switchFragment(SelectMarketerFragment.class.getName(), false);
+        getHostActivity().hideSoftKeyboard();
+    }
 
     @Override
     public void onFind(int countMarketer) {
         tvCounter.setText(String.valueOf(countMarketer + File.separator + listMarketeers.size()));
+    }
+
+    @OnClick(R.id.tvSkip_FLM)
+    protected void onSkip(){
+        FarmersApp.setSkipMode(true);
+        getHostActivity().finish();
+        MainActivity.start(getHostActivity());
     }
 }

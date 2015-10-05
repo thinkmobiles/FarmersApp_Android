@@ -7,7 +7,6 @@ import android.text.method.PasswordTransformationMethod;
 import android.text.method.TransformationMethod;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -121,7 +120,7 @@ public class SignUpFragment extends BaseFragment<LoginSignUpActivity>  {
             @Override
             public void onSuccess(SuccessMsg result) {
                 getHostActivity().showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
-                getHostActivity().getSupportFragmentManager().popBackStack();
+                getHostActivity().showDialogConfirm();
             }
 
             @Override
@@ -147,6 +146,6 @@ public class SignUpFragment extends BaseFragment<LoginSignUpActivity>  {
     @OnClick(R.id.rlIcon)
     protected void goToPickMarketer(){
         getHostActivity().popBackStackUpTo(getClass());
-        getHostActivity().switchFragment(LoginAfterRegistrationAFragment.class.getName(), false);
+        getHostActivity().switchFragment(SelectMarketerFragment.class.getName(), false);
     }
 }

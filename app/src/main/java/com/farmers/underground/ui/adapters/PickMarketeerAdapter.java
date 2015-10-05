@@ -36,7 +36,7 @@ public class PickMarketeerAdapter extends BaseAdapter {
                     tempList.add(marketeer);
                 }
             }
-            //tempList.add(context.getString(R.string.select_marketeer_add_name) + " \"" + name + "\"");
+            tempList.add(context.getString(R.string.select_marketeer_add_name) + " \"" + name + "\"");
             list = tempList;
         } else {
             list = fullList;
@@ -74,11 +74,11 @@ public class PickMarketeerAdapter extends BaseAdapter {
 
         holder.setData(getItem(position));
 
-//        if(position == list.size() - 1 && list.size() != fullList.size()){
-//            holder.select();
-//        } else {
-//            holder.diselect();
-//        }
+        if(position == list.size() - 1 && list.size() != fullList.size()){
+            holder.select();
+        } else {
+            holder.diselect();
+        }
 
         return convertView;
     }

@@ -44,6 +44,7 @@
             android:layout_width="match_parent"
             android:id="@+id/etEmail"
             android:hint="@string/login_email"
+            android:imeOptions="actionDone"
             android:textSize="@dimen/login_text_size"
             style="@style/EditLoginScreen" />
         
