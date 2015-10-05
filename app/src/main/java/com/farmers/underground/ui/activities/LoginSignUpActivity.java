@@ -1,5 +1,6 @@
 package com.farmers.underground.ui.activities;
 
+import android.content.Context;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -50,6 +51,11 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
     @Override
     public int getFragmentContainerId() {
         return R.id.fr_containrer_LSA;
+    }
+
+    public static void start(@NonNull Context context) {
+        Intent intent = new Intent(context, LoginSignUpActivity.class);
+        context.startActivity(intent);
     }
 
     @Override
