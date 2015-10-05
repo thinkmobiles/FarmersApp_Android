@@ -161,7 +161,7 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
         parameters.putString(FB.fields, FB.id + "," +
                 FB.name + "," +
                 FB.email + "," +
-                FB.picture);
+                FB.picture+".type(large)"); // for big pic
         request.setParameters(parameters);
         request.executeAsync();
     }

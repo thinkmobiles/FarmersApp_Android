@@ -67,13 +67,13 @@ public class FarmersApp extends Application {
 
         /**next*/
 
-        /** Hebrew LOCALE
+//        /** Hebrew LOCALE
         Locale locale = new Locale("iw");
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;
         getBaseContext().getResources().updateConfiguration(config,
-                getBaseContext().getResources().getDisplayMetrics());*/
+                getBaseContext().getResources().getDisplayMetrics());//*/
     }
 
     public void onUserLogin(){
