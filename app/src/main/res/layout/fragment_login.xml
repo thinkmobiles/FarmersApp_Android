@@ -43,6 +43,8 @@
         <EditText
             android:layout_width="match_parent"
             android:id="@+id/etEmail"
+
+            android:singleLine="true"
             android:hint="@string/login_email"
             android:imeOptions="actionNext"
             android:textSize="@dimen/login_text_size"
@@ -63,6 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:id="@+id/etPassword"
+                android:singleLine="true"
 
                 android:imeOptions="actionDone"
 

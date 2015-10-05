@@ -72,10 +72,7 @@ public class FarmersApp extends Application {
 
     public void onUserLogOut() {
         wipeUsrPreferences();
-        Intent intent = new Intent(getApplicationContext(), LoginSignUpActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        LoginSignUpActivity.startNew(this);
     }
 
     private UserProfile currentUser;

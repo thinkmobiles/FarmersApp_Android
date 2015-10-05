@@ -45,6 +45,8 @@
             android:id="@+id/etEmail"
             android:hint="@string/login_email"
 
+            android:singleLine="true"
+
             android:imeOptions="actionNext"
 
             android:gravity="right|center_vertical"
@@ -71,6 +73,8 @@
             <EditText
                 android:layout_width="match_parent"
                 android:id="@+id/etPassword"
+
+                android:singleLine="true"
                 android:hint="@string/login_password"
                 android:gravity="center_vertical|right"
 

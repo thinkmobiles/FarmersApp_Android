@@ -59,6 +59,14 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
         context.startActivity(intent);
     }
 
+    public static void startNew(@NonNull Context context) {
+        isChooseMarketier = false;
+        Intent intent = new Intent(context, LoginSignUpActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        context.startActivity(intent);
+    }
+
 
     private static boolean isChooseMarketier;
     public static void startChooseMarketier(@NonNull Context context) {
@@ -70,7 +78,6 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
         if(isChooseMarketier){
             switchFragment(new SelectMarketerFragment(),false);

@@ -3,9 +3,9 @@
           android:orientation="vertical"
           android:layout_width="wrap_content"
           android:layout_height="match_parent"
-          android:text="@string/search_label"
+
           android:textColor="@color/text_white"
           android:textSize="@dimen/search_hint_text_size"
 
-        />
+        /><!--android:text="@string/search_label"-->
 
