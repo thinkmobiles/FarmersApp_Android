@@ -4,15 +4,13 @@ import android.content.DialogInterface;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
+import android.app.AlertDialog;
 import android.text.method.PasswordTransformationMethod;
 import android.text.method.TransformationMethod;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.Bind;
@@ -95,11 +93,11 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> {
 
         final View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_edit_text_field, null);
 
-        AlertDialog dialog = new AlertDialog.Builder(getContext())
+        final AlertDialog dialog = new AlertDialog.Builder(getContext())
                 .setTitle(R.string.dialog_title_forgot_password)
                 .setView(view)
                 .setCancelable(true)
-                .setPositiveButton(R.string.dialog_btn_ok, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.dialog_btn_ok, null)/* new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -109,7 +107,7 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> {
 
                         apiCallForgotPass(email);
                     }
-                })
+                })*/
                 .setNegativeButton(R.string.dialog_btn_cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -117,6 +115,33 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> {
                     }
                 })
                 .create();
+
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+
+            @Override
+            public void onShow(DialogInterface d) {
+
+                Button b = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                b.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+
+                        EditText editText = (EditText) view.findViewById(R.id.et_dialog_field);
+
+                        String email = editText.getText().toString();
+
+                        if (checkMail(email)) {
+                            apiCallForgotPass(email);
+                            //Dismiss once everything is OK.
+                            dialog.dismiss();
+                        }
+
+                    }
+                });
+            }
+        });
+
         dialog.show();
     }
 
@@ -164,7 +189,7 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> {
             public void onSuccess(SuccessMsg result) {
                 getHostActivity().showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
 
-                FarmersApp.getInstance().saveUserCredentials(new UserCredentials(email,password));
+                FarmersApp.getInstance().saveUserCredentials(new UserCredentials(email, password));
 
                 getHostActivity().getUserProfileAsync();
 
@@ -183,15 +208,19 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> {
         });
     }
 
-    private void apiCallForgotPass(@NonNull String email) {
 
+    private boolean checkMail(@NonNull String email){
         if (isEmpty(email, "email")) {
-            return;
+            return false;
         }
+
         if (!ValidationUtil.isValidEmail(email)) {
             getHostActivity().showToast("Email is incorrect", Toast.LENGTH_SHORT);
-            return;
+            return false;
         }
+        return true;
+    }
+    private void apiCallForgotPass(@NonNull String email) {
 
         getHostActivity().showProgressDialog();
         RetrofitSingleton.getInstance().forgotPass(email, new ACallback<SuccessMsg, ErrorMsg>() {
