@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.farmers.underground.ui.utils.ResourceRetriever;
 
 import java.util.ArrayList;
 
@@ -42,7 +43,6 @@ public class CustomSearchView extends SearchView implements View.OnClickListener
         }
         llSearchholder.removeAllViews();
         for (int x = views.size() - 1; x >= 0; x--) {
-
             llSearchholder.addView(views.get(x));
         }
         TextView tv =  (TextView)LayoutInflater.from(llSearchbar.getContext()).inflate(com.farmers.underground.R
@@ -56,6 +56,7 @@ public class CustomSearchView extends SearchView implements View.OnClickListener
                 findViewById(R.id.search_button).callOnClick();
             }
         });
+        tv.setPadding(0,0,0, ResourceRetriever.dpToPx(this.getContext(),4));
         llSearchbar.addView(tv);
     }
 
@@ -68,7 +69,6 @@ public class CustomSearchView extends SearchView implements View.OnClickListener
             llSearchbar.findViewWithTag("lalala").setVisibility(GONE);
         }
         View  imgSearch = this.findViewById(R.id.search_src_text);
-        
         ((SearchAutoComplete) imgSearch).setGravity(Gravity.RIGHT);
         ((SearchAutoComplete) imgSearch).setHintTextColor(getResources().getColor(com.farmers.underground.R.color.text_white));
         imgSearch.setOnClickListener(this);

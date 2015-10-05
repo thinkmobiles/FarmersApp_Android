@@ -11,10 +11,10 @@ public class DrawerItem {
     public enum DRAWER_ITEM{
         HEADER,
         CONTENT_ITEM,
-        DEVIDER
+        SPACER
     }
 
-    // item constructor
+    // item Constructor
     public DrawerItem(int icon,int contentName) {
         this.item_type =  DRAWER_ITEM.CONTENT_ITEM;
         this.contentName = contentName;
@@ -29,9 +29,9 @@ public class DrawerItem {
         this.userName = userName;
     }
 
-    //devider construtor
+    //spacer Constructor
     public DrawerItem(){
-        this.item_type =  DRAWER_ITEM.DEVIDER;
+        this.item_type =  DRAWER_ITEM.SPACER;
     }
 
 

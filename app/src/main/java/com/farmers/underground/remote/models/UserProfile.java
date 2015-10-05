@@ -24,6 +24,13 @@ public class UserProfile {
          return !TextUtils.isEmpty(marketeer);
     }
 
+    public String getFullName() {
+        return fullName;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
     public String getEmail() {
         return email;
     }

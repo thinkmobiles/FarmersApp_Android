@@ -3,10 +3,10 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/llDrawerHeader"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/drawer_header_height"
+        android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:background="@color/drawer_bg_color"
-        android:clickable="true">
+        android:clickable="true" android:paddingBottom="8dp">
 
 
     <ImageView
@@ -20,24 +20,26 @@
             android:clickable="true"
             android:paddingLeft="20dp"
             android:paddingBottom="20dp"/>
-    <LinearLayout
+        <LinearLayout
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|top"
-            android:layout_centerInParent="true"
-            android:id="@+id/ll_DrawerUserContainer">
+            android:id="@+id/ll_DrawerUserContainer" android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp">
         <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/header_user_iconn_dimen"
+                android:layout_height="@dimen/header_user_iconn_dimen"
                 android:id="@+id/iv_DrawerUserIcon"
-                android:src="@drawable/test_user_icon"/>
+                android:src="@drawable/user_oval"
+                android:scaleType="fitCenter"/>
+        </LinearLayout>
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="New Text"
                 style="@style/TV_Drawer"
                 android:id="@+id/tv_DrawerUserName"
-                android:gravity="center_horizontal"/>
-    </LinearLayout>
+                android:gravity="center_horizontal" android:layout_below="@+id/ll_DrawerUserContainer"
+                android:layout_marginRight="16dp" android:layout_marginLeft="16dp" android:layout_marginTop="4dp"/>
 </RelativeLayout>

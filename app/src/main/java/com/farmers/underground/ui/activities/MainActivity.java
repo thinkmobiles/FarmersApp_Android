@@ -21,7 +21,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
-
+import com.farmers.underground.BuildConfig;
 import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
@@ -321,7 +321,12 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     public void setDrawerList() {
         List<DrawerItem> drawerItemList = new ArrayList<>();
-        drawerItemList.add(new DrawerItem("", "אילן עדני"));
+        if (BuildConfig.PRODUCTION) {
+            drawerItemList.add(new DrawerItem(FarmersApp.getInstance().getCurrentUser().getAvatar(), FarmersApp.getInstance().getCurrentUser().getFullName()));
+        } else
+            drawerItemList.add(new DrawerItem("http://s2.turbopic.org/img/2007_03/i4603058af2b30.jpg", "Bela  " +
+                    "Lugosie"
+                     ));
         drawerItemList.add(new DrawerItem());
         drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_crops, R.string.drawer_content_0));
         drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_invite_friends, R.string.drawer_content_2));
@@ -418,9 +423,15 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     @OnItemClick(R.id.lv_DrawerHolder_MainActivity)
     void onItemClick(int pos) {
-        switch (pos){
-            default:
-                NotYetHelper.notYetImplmented(this, "drawer items pos=" +pos);
+        switch (pos) {
+            case 2:
+                viewPager.setCurrentItem(1);
+                break;
+            case 3:
+                NotYetHelper.notYetImplmented(this, "drawer items pos=" + pos);
+                break;
+            case 4:
+                viewPager.setCurrentItem(0);
                 break;
         }
         mDrawerlayout.closeDrawers();
@@ -467,7 +478,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
             @Override
             public void anyway() {
-               hideProgressDialog();
+                hideProgressDialog();
             }
         });
     }
