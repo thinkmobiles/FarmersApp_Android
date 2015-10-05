@@ -104,6 +104,9 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) query = savedInstanceState.getString(ProjectConstants.KEY_DATA);
 
+        if(FarmersApp.isFirstLaunch())
+            FarmersApp.resetFirstLaunch();
+
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
 

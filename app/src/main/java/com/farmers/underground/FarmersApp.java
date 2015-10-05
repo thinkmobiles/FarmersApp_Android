@@ -3,6 +3,7 @@ package com.farmers.underground;
 import android.app.Application;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -21,6 +22,7 @@ import com.vincentbrison.openlibraries.android.dualcache.lib.DualCacheContextUti
 import com.vincentbrison.openlibraries.android.dualcache.lib.DualCacheLogUtils;
 
 import java.util.HashSet;
+import java.util.Locale;
 
 /**
  * Created by tZpace
@@ -64,6 +66,14 @@ public class FarmersApp extends Application {
         DualCacheContextUtils.setContext(getApplicationContext());
 
         /**next*/
+
+        /** Hebrew LOCALE
+        Locale locale = new Locale("iw");
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());*/
     }
 
     public void onUserLogin(){
@@ -151,7 +161,7 @@ public class FarmersApp extends Application {
         getUsrPreferences().edit().clear().apply();
     }
 
-   /* public static boolean isFirstLaunch() {
+    public static boolean isFirstLaunch() {
         return !getAppPreferences().contains(ProjectConstants.KEY_APP_LAUNCHED_BEFORE);
     }
 
@@ -159,7 +169,7 @@ public class FarmersApp extends Application {
         getAppPreferences().edit()
                 .putBoolean(ProjectConstants.KEY_APP_LAUNCHED_BEFORE, true)
                 .apply();
-    }*/
+    }
 
     public static boolean showTutorial() {
         return !getAppPreferences().contains(ProjectConstants.KEY_APP_SHOW_SKIP_TUTORIAL)
