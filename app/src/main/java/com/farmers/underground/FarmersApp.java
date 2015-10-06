@@ -1,13 +1,11 @@
 package com.farmers.underground;
 
 import android.app.Application;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 
+import com.crashlytics.android.Crashlytics;
 import com.facebook.FacebookSdk;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.RetrofitSingleton;
@@ -21,8 +19,8 @@ import com.farmers.underground.ui.utils.TypefaceManager;
 import com.vincentbrison.openlibraries.android.dualcache.lib.DualCacheContextUtils;
 import com.vincentbrison.openlibraries.android.dualcache.lib.DualCacheLogUtils;
 
+import io.fabric.sdk.android.Fabric;
 import java.util.HashSet;
-import java.util.Locale;
 
 /**
  * Created by tZpace
@@ -53,27 +51,29 @@ public class FarmersApp extends Application {
         super.onCreate();
         ourInstance = this;
 
+        //Crashlytics
+        if(BuildConfig.PRODUCTION)
+            Fabric.with(this, new Crashlytics());
+
         TypefaceManager.init(this);
 
         // Initialize the SDK before executing any other operations,
         // especially, if you're using Facebook UI elements.
         FacebookSdk.sdkInitialize(getApplicationContext());
 
-
         // Android dualcache
         if (BuildConfig.DEBUG)
             DualCacheLogUtils.enableLog();
         DualCacheContextUtils.setContext(getApplicationContext());
 
-        /**next*/
-
         /** Hebrew LOCALE
-        Locale locale = new Locale("iw");
-        Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
-        getBaseContext().getResources().updateConfiguration(config,
-                getBaseContext().getResources().getDisplayMetrics());*/
+          * Locale locale = new Locale("iw");
+          * Locale.setDefault(locale);
+          * Configuration config = new Configuration();
+          * config.locale = locale;
+          * getBaseContext().getResources().updateConfiguration(config,
+          *         getBaseContext().getResources().getDisplayMetrics());
+          */
     }
 
     public void onUserLogin(){
