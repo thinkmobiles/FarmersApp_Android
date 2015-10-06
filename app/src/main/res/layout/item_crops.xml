@@ -26,6 +26,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:clickable="true"
+                    android:background="@drawable/ic_drawer_crops"
                     android:scaleType="centerCrop"
                     custom:sriv_left_top_corner_radius="@dimen/crops_card_corner_radius"
                     custom:sriv_right_top_corner_radius="@dimen/crops_card_corner_radius"/>

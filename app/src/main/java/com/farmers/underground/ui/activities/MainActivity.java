@@ -97,8 +97,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     public static void start(@NonNull Context context) {
         Intent intent = new Intent(context, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         context.startActivity(intent);
     }
 

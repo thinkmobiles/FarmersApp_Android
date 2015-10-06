@@ -211,6 +211,7 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
                     if (result.hasMarketir() || result.isNewMarketeer() || FarmersApp.isSkipMode()) {
                         FarmersApp.setSkipMode(true);
                         MainActivity.start(LoginSignUpActivity.this);
+                        finish();
                     } else {
                         switchFragment(new SelectMarketerFragment(), false);
                     }
