@@ -1,6 +1,8 @@
 package com.farmers.underground.ui.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -15,12 +17,17 @@ import butterknife.OnTextChanged;
 
 import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
+import com.farmers.underground.remote.RetrofitSingleton;
+import com.farmers.underground.remote.models.ErrorMsg;
+import com.farmers.underground.remote.models.SuccessMsg;
+import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.ui.activities.LoginSignUpActivity;
 import com.farmers.underground.ui.activities.MainActivity;
 import com.farmers.underground.ui.adapters.PickMarketeerAdapter;
 import com.farmers.underground.ui.base.BaseFragment;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,7 +47,7 @@ public class SelectMarketerListFragment extends BaseFragment<LoginSignUpActivity
     private PickMarketeerAdapter mAdapter;
 
     //test list of marketers
-    List<String> listMarketeers = Arrays.asList("first", "second", "third", "forth", "fifth", "sixth", "seventh", "fiftieth");
+    List<String> listMarketeers = new ArrayList<String>(0); /*Arrays.asList("first", "second", "third", "forth", "fifth", "sixth", "seventh", "fiftieth");*/
 
     @Override
     protected int getLayoutResId() {
@@ -50,12 +57,35 @@ public class SelectMarketerListFragment extends BaseFragment<LoginSignUpActivity
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this,view);
-        setAdapter();
+        ButterKnife.bind(this, view);
+
+        getHostActivity().showProgressDialog();
+        RetrofitSingleton.getInstance().getMarketterList(
+                new ACallback<ArrayList<String>, ErrorMsg>() {
+                    @Override
+                    public void onSuccess(ArrayList<String> result) {
+                        if (result != null) {
+                            setAdapter(result);
+                        } else
+                            onError(new ErrorMsg("No marketeers fetched"));
+                    }
+
+                    @Override
+                    public void onError(@NonNull ErrorMsg error) {
+                        getHostActivity().showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
+                    }
+
+                    @Override
+                    public void anyway() {
+                        getHostActivity().hideProgressDialog();
+                    }
+                });
+
     }
 
-    private void setAdapter(){
-        mAdapter = new PickMarketeerAdapter(getHostActivity(), listMarketeers, this);
+    private void setAdapter(ArrayList<String> listMarketeers){
+        this.listMarketeers = listMarketeers;
+        mAdapter = new PickMarketeerAdapter(getHostActivity(), this.listMarketeers, this);
         lvMarketeers.setAdapter(mAdapter);
     }
 
@@ -74,8 +104,29 @@ public class SelectMarketerListFragment extends BaseFragment<LoginSignUpActivity
     }
 
     private void sendRequestAddNewMarketer(){
-        // todo request for create new marketer  etMarketeer.getText().toString()
-        getHostActivity().showToast("send new marketer", Toast.LENGTH_SHORT);
+        //   request for create new marketer
+
+        if (!TextUtils.isEmpty(etMarketeer.getText().toString())){
+            RetrofitSingleton.getInstance().addMarketeer(etMarketeer.getText().toString(), new ACallback<SuccessMsg, ErrorMsg>() {
+                @Override
+                public void onSuccess(SuccessMsg result) {
+
+                    FarmersApp.setSkipMode(true);
+                    getHostActivity().finish();
+                    MainActivity.start(getHostActivity());
+
+                    getHostActivity().showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
+                }
+
+                @Override
+                public void onError(@NonNull ErrorMsg error) {
+                    getHostActivity().showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
+                }
+            });
+        }
+
+
+      //  getHostActivity().showToast("send new marketer", Toast.LENGTH_SHORT);
     }
 
     private void selectMarketer(int posMarketer){

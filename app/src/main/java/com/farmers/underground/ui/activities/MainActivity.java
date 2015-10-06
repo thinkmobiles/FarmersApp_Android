@@ -341,7 +341,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
 
         //FarmersApp.getInstance().getCurrentUser()!=null todo remove later (user cant be null here)
-        if(FarmersApp.getInstance().getCurrentUser()!=null && !FarmersApp.getInstance().getCurrentUser().hasMarketir()){
+        if(FarmersApp.getInstance().getCurrentUser()!=null && (!FarmersApp.getInstance().getCurrentUser().hasMarketir() || !FarmersApp.getInstance().getCurrentUser().isNewMarketeer())){
             drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_marketer_price, R.string.drawer_content_5));
         } else {
             //remove maybe

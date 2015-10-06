@@ -22,6 +22,7 @@ import com.squareup.okhttp.ResponseBody;
 import retrofit.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by tZpace
@@ -72,7 +73,7 @@ public class RetrofitSingleton {
         marketeerService = retrofit.create(MarketeerService.class);
     }
 
-    public MarketeerService getMarketeerService() {
+    private MarketeerService getMarketeerService() {
         if (marketeerService == null)
             initMarketeerService(retrofit);
 
@@ -80,11 +81,44 @@ public class RetrofitSingleton {
     }
 
 
+    public void getMarketterList(final ACallback<ArrayList<String>,ErrorMsg> callback){
+        getMarketeerService().getMarketterList().enqueue(new Callback<ArrayList<String>>() {
+            @Override
+            public void onResponse(Response<ArrayList<String>> response, Retrofit retrofit) {
+                performCallback(callback,response);
+                callback.anyway();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                callback.onError(new ErrorMsg("Unknown Error"));
+                callback.anyway();
+            }
+        });
+    }
+
+    public void addMarketeer(@NonNull String fullName, final ACallback<SuccessMsg,ErrorMsg> callback){
+        getMarketeerService().addMarketeer(fullName).enqueue(new Callback<SuccessMsg>() {
+            @Override
+            public void onResponse(Response<SuccessMsg> response, Retrofit retrofit) {
+                performCallback(callback,response);
+                callback.anyway();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                callback.onError(new ErrorMsg("Unknown Error"));
+                callback.anyway();
+            }
+        });
+    }
+
+
     private void initAuthorizationService(Retrofit retrofit) {
         authorizationService = retrofit.create(AuthorizationService.class);
     }
 
-    public AuthorizationService getAuthorizationService() {
+    private AuthorizationService getAuthorizationService() {
         if (authorizationService == null)
             initAuthorizationService(retrofit);
 
@@ -94,7 +128,7 @@ public class RetrofitSingleton {
 
     public void registerViaEmail(@NonNull String fullName, @NonNull String email, @NonNull String pass, final ACallback<SuccessMsg, ErrorMsg> callback) {
 
-        getAuthorizationService().registerViaEmail(new UserRegistration(fullName, email, pass)).enqueue(new Callback<SuccessMsg>() {
+        getAuthorizationService().registerViaEmail(new UserRegistration(fullName, email.toLowerCase(), pass)).enqueue(new Callback<SuccessMsg>() {
 
             @Override
             public void onResponse(Response<SuccessMsg> response, Retrofit retrofit) {
@@ -113,7 +147,7 @@ public class RetrofitSingleton {
 
     public void loginViaEmail(@NonNull String email, @NonNull String pass, final ACallback<SuccessMsg, ErrorMsg> callback) {
 
-        getAuthorizationService().loginViaEmail(new UserCredentials(email, pass)).enqueue(new Callback<SuccessMsg>() {
+        getAuthorizationService().loginViaEmail(new UserCredentials(email.toLowerCase(), pass)).enqueue(new Callback<SuccessMsg>() {
             @Override
             public void onResponse(Response<SuccessMsg> response, Retrofit retrofit) {
                 performCallback(callback, response);
@@ -218,8 +252,6 @@ public class RetrofitSingleton {
                 }
             });
     }
-
-
 
 
     private static final Converter<ResponseBody, ?> errorConverter = GsonConverterFactory.create().fromResponseBody(ErrorMsg.class, null) ;
