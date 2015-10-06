@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import com.farmers.underground.R;
 import com.farmers.underground.ui.models.CropsListItemDH;
 import com.farmers.underground.ui.models.CropsListItemVH;
@@ -30,20 +29,20 @@ public class CropsListAdapter extends RecyclerView.Adapter<CropsListItemVH> {
     @Override
     public CropsListItemVH onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_crops, parent, false);
-        if (height == 0) view.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+         /*if (height == 0) view.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
                 if (height == 0) {
                     height = view.getMeasuredWidth();
-                    setHeight(view, height);
-                } else setHeight(view, height);
+                    setMinHeight(view, height);
+                } else setMinHeight(view, height);
                 view.getViewTreeObserver().removeOnPreDrawListener(this);
                 return false;
             }
         });
         else {
-            setHeight(view, height);
-        }
+            setMinHeight(view, height);
+        }*/
         return new CropsListItemVH(view);
     }
 
@@ -65,7 +64,7 @@ public class CropsListAdapter extends RecyclerView.Adapter<CropsListItemVH> {
 
         void onPriceRefreshClicked(int pos);
     }
-    private void setHeight(View view,int height){
-        view.getLayoutParams().height = height;
+    private void setMinHeight(View view, int height){
+        view.setMinimumHeight(height);
     }
 }

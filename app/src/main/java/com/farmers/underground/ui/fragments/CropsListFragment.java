@@ -16,8 +16,10 @@ import com.farmers.underground.remote.models.CropModel;
 import com.farmers.underground.ui.activities.FragmentViewsCreatedCallback;
 import com.farmers.underground.ui.adapters.CropsListAdapter;
 import com.farmers.underground.ui.base.BaseFragment;
+import com.farmers.underground.ui.custom_views.DividerItemDecoration;
 import com.farmers.underground.ui.models.CropsListFragmentModel;
 import com.farmers.underground.ui.models.CropsListItemDH;
+import com.farmers.underground.ui.utils.ResourceRetriever;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,6 +76,8 @@ public class CropsListFragment
         View v = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, v);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.addItemDecoration(new DividerItemDecoration(ResourceRetriever.retrievePX(getContext(),R.dimen
+                .crop_item_layout_margin)));
         return v;
     }
 
