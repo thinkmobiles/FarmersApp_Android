@@ -14,20 +14,22 @@
          של מחירי מועצת הצמחים, השוק\n
          הסיטונאי ומחירי המשווקים. </string>
     <string name="tutorial_content_2">
-        כל סוג גידול מתעדכן ברמה היומית\n
-        מול מועצת הצמחים,השוק הסיטונאי\n
-        ומחיר המשווק האישי שלך,\n
-        באפשרותך  לראות מחירי משווקים
-        נוספים שהוזנו על ידי\nחבריך החקלאים</string>
+        כל סוג גידול מתעדכן ברמה היומית מול\n
+    מועצת הצמחים,השוק הסיטונאי ומחיר\n
+    המשווק האישי שלך, באפשרותך לראות\n
+    מחירי משווקים נוספים שהוזנו על ידי\n
+    חבריך החקלאים</string>
+
+
     <string name="tutorial_next">הבא</string>
 
     <!--//login-->
     <string name="login_text_header">העיקר האיכר</string>
     <string name="login_text_subheader">מחירי גידולים בצורה נוחה</string>
-    <string name="login_email">\u200Fאימייל</string>
-    <string name="login_password">\u200Fסיסמא</string>
+    <string name="login_email">אימייל</string>
+    <string name="login_password">סיסמה</string>
 
-    <string name="login_password_confirm">סיסמה אשר</string>
+    <string name="login_password_confirm">אשר סיסמה</string>
     <string name="login_forgot_password">\u200Fשכחת את הסיסמא?</string>
     <string name="login_text_login">כניסה</string>
     <string name="login_or">או</string>
@@ -46,7 +48,7 @@
   <!--  //sign_up-->
     <string name="sign_up_full_name">שם מלא</string>
     <string name="sign_up_text_sign_up">הירשם</string>
-    <string name="sign_up_register_facebook">רישום עם פייסבוקהירשם</string>
+    <string name="sign_up_register_facebook">עם פייסבוקהירשם</string>
     <string name="sign_up_text_login">כניסה</string>
     <string name="sign_up_is_registred">רשומים כבר?</string>
 
@@ -80,7 +82,7 @@
  <!--   //main activity-->
     <string name="main_activity_tab_all_crops">כל הגידולים</string>
     <string name="main_activity_tab_favourites">המועדפים שלי</string>
-    <string name="search_label"><u>גידולי חיפושּ</u></string>
+    <string name="search_label"><u>חיפוש גידוליּ</u></string>
     <string name="no_crops_found">"לא מצאו גידולים \n"</string>
     <string name="all">" את כל"</string>
     <string name="tap_to_refresh_price">לחץ לעדכן מחיר</string>

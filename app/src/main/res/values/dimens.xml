@@ -8,18 +8,18 @@
     <dimen name="tutorial_dot_drawable_size">10dp</dimen>
     <dimen name="tutorial_bg_corners">0dp</dimen>
     <dimen name="tutorial_bg_item_offset">8dp</dimen>
-    <dimen name="tutorial_radio_top_margin">41dp</dimen>
-    <dimen name="tutorial_title_top_margin">40dp</dimen>
-    <dimen name="tutorial_title_text_size">20sp</dimen>
-    <dimen name="tutorial_content_text_size">16sp</dimen>
+    <dimen name="tutorial_radio_top_margin">33dp</dimen>
+    <dimen name="tutorial_title_top_margin">32dp</dimen>
+    <dimen name="tutorial_title_text_size">14sp</dimen>
+    <dimen name="tutorial_content_text_size">15sp</dimen>
     <dimen name="tutorial_next_text_size">20sp</dimen>
     <dimen name="tutorial_title_side_margin">32.5dp</dimen>
-    <dimen name="tutorial_next_btn_height">64dp</dimen>
+    <dimen name="tutorial_next_btn_height">60dp</dimen>
     <dimen name="tutorial_next_margin">10dp</dimen>
     <dimen name="tutorial_next_tv_padding">60dp</dimen>
     <dimen name="tutorial_arrow_size">22dp</dimen>
     <dimen name="tutorial_content_top_margin">40dp</dimen>
-    <dimen name="tutorial_content_side_margin">48.5dp</dimen>
+    <dimen name="tutorial_content_side_margin">45dp</dimen>
     <dimen name="tutorial_content_margin_top">113dp</dimen>
     <dimen name="tutorial_content_image_margin">37.5dp</dimen>
     //login
