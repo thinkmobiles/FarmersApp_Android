@@ -2,6 +2,7 @@ package com.farmers.underground;
 
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -21,6 +22,7 @@ import com.vincentbrison.openlibraries.android.dualcache.lib.DualCacheLogUtils;
 
 import io.fabric.sdk.android.Fabric;
 import java.util.HashSet;
+import java.util.Locale;
 
 /**
  * Created by tZpace
@@ -66,14 +68,14 @@ public class FarmersApp extends Application {
             DualCacheLogUtils.enableLog();
         DualCacheContextUtils.setContext(getApplicationContext());
 
-        /** Hebrew LOCALE
-          * Locale locale = new Locale("iw");
-          * Locale.setDefault(locale);
-          * Configuration config = new Configuration();
-          * config.locale = locale;
-          * getBaseContext().getResources().updateConfiguration(config,
-          *         getBaseContext().getResources().getDisplayMetrics());
-          */
+        /** Hebrew LOCALE */
+//           Locale locale = new Locale("iw");
+//           Locale.setDefault(locale);
+//           Configuration config = new Configuration();
+//           config.locale = locale;
+//           getBaseContext().getResources().updateConfiguration(config,
+//                   getBaseContext().getResources().getDisplayMetrics());
+
     }
 
     public void onUserLogin(){

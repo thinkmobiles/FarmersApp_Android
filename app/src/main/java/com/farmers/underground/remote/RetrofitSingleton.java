@@ -1,6 +1,8 @@
 package com.farmers.underground.remote;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.farmers.underground.BuildConfig;
 import com.farmers.underground.FarmersApp;
 import com.farmers.underground.config.ApiConstants;
@@ -91,7 +93,7 @@ public class RetrofitSingleton {
 
             @Override
             public void onFailure(Throwable t) {
-                callback.onError(new ErrorMsg("Unknown Error"));
+                callback.onError(new ErrorMsg("Network Error"));
                 callback.anyway();
             }
         });
@@ -138,7 +140,7 @@ public class RetrofitSingleton {
 
             @Override
             public void onFailure(Throwable t) {
-                callback.onError(new ErrorMsg("Unknown Error"));
+                callback.onError(new ErrorMsg("Network Error"));
                 callback.anyway();
             }
 
@@ -156,7 +158,7 @@ public class RetrofitSingleton {
 
             @Override
             public void onFailure(Throwable t) {
-                callback.onError(new ErrorMsg("Unknown Error"));
+                callback.onError(new ErrorMsg("Network Error"));
                 callback.anyway();
             }
         });
@@ -235,6 +237,7 @@ public class RetrofitSingleton {
             }
         });
     }
+
     /** this is just for testing*/
     public void dellAccountByEmail(final ACallback<SuccessMsg, ErrorMsg> callback) {
         if(BuildConfig.DEBUG)
@@ -247,7 +250,7 @@ public class RetrofitSingleton {
 
                 @Override
                 public void onFailure(Throwable t) {
-                    callback.onError(new ErrorMsg("Unknown Error"));
+                    callback.onError(new ErrorMsg("Network Error"));
                     callback.anyway();
                 }
             });
