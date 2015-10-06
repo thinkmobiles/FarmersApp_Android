@@ -208,7 +208,7 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
             @Override
             public void onSuccess(UserProfile result) {
                 if(result!=null){
-                    if ((!result.isNewMarketeer() || !result.hasMarketir()) || !FarmersApp.isSkipMode()) {
+                    if ((!result.hasMarketir() && !result.isNewMarketeer()) || result.isNewMarketeer() || !FarmersApp.isSkipMode()) {
                         switchFragment(new SelectMarketerFragment(),false);
                     } else {
                         MainActivity.start(LoginSignUpActivity.this);
