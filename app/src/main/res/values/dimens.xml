@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    //main dimens
+    <!--default-->
     <dimen name="main_text_size">16sp</dimen>
-    //tutorial
+    <dimen name="default_divider_height">1dp</dimen>
+    <!--tutorial-->
     <dimen name="tutorial_dot_size">30dp</dimen>
     <dimen name="tutorial_dot_drawable_size">10dp</dimen>
     <dimen name="tutorial_bg_corners">0dp</dimen>
@@ -22,7 +23,7 @@
     <dimen name="tutorial_content_side_margin">45dp</dimen>
     <dimen name="tutorial_content_margin_top">113dp</dimen>
     <dimen name="tutorial_content_image_margin">37.5dp</dimen>
-    //login
+    <!--login-->
     <dimen name="login_fragment_padding">18dp</dimen>
     <dimen name="login_divider_height">1dp</dimen>
     <dimen name="login_text_header_size">32sp</dimen>
@@ -39,42 +40,61 @@
     <dimen name="login_margin_btn_logins">8dp</dimen>
     <dimen name="login_margin_btn_login_edit">30dp</dimen>
     <dimen name="login_margin_top_header">15dp</dimen>
-    //sign up
+    <!--sign up-->
     <dimen name="sign_up_edit_text_margin_padding">15dp</dimen>
     <dimen name="sign_up_arrow_padding">5dp</dimen>
     <dimen name="sign_up_edit_text_height">48dp</dimen>
     <dimen name="sign_up_margin_register_login_fb">25dp</dimen>
-    //after sign
+    <!--after sign-->
     <dimen name="after_sign_header_text_size">24sp</dimen>
     <dimen name="after_sign_propose_skip_text_size">14sp</dimen>
     <dimen name="after_sign_margin_start_skip">45dp</dimen>
     <dimen name="after_sign_enter_marketeer_margin_top">60dp</dimen>
-    //after sign b/ selection marketeer
+    <!--after sign b/ selection marketeer-->
     <dimen name="select_marketeer_text_size">12sp</dimen>
     <dimen name="select_marketeer_name_height">40dp</dimen>
     <dimen name="select_marketeer_small_margin">5dp</dimen>
-    //drawer
+    <!--drawer-->
     <dimen name="drawer_item_icon_padding">18dp</dimen>
     <dimen name="drawer_item_text_size">16sp</dimen>
     <dimen name="drawer_devider_height">40dp</dimen>
     <dimen name="drawer_width">240dp</dimen>
     <dimen name="drawer_header_height">170dp</dimen>
     <dimen name="drawer_item_height">60dp</dimen>
-    //toolbar
+    <!--toolbar-->
     <dimen name="toolbar_text_size">20sp</dimen>
-    //main activity
+    <!-- progress dialog-->
+    <dimen name="progress_dialog_message_size">18sp</dimen>
+    <!--main activity-->
     <dimen name="fragment_crops_recycler_padding_x">10dp</dimen>
     <dimen name="tabs_text_size">18sp</dimen>
     <dimen name="search_hint_list_item_padding_x">20dp</dimen>
     <dimen name="search_hint_list_item_padding_y">10dp</dimen>
-    <dimen name="crops_item_fav_cb_margin">16dp</dimen>
-    <dimen name="crops_item_fav_cb_margin_small">8dp</dimen>
-    <dimen name="crops_card_corner_radius">6dip</dimen>
     <dimen name="search_hint_list_item_text_size">18sp</dimen>
-    <dimen name="crop_item_title_size">21sp</dimen>
-    <dimen name="crop_item_text_small">10sp</dimen>
     <dimen name="search_hint_offset">2000dp</dimen>
     <dimen name="search_hint_text_size">18sp</dimen>
+    <!--crop card-->
+    <dimen name="crops_card_fav_cb_margin">16dp</dimen>
+    <dimen name="crops_card_fav_cb_margin_small">8dp</dimen>
+    <dimen name="crops_card_corner_radius">6dip</dimen>
+    <dimen name="crops_card_elevation">4dp</dimen>
+    <dimen name="crops_card_padding_bottom">8dp</dimen>
+    <dimen name="crops_card_height">328dp</dimen>
+    <dimen name="crops_card_header_height">200dp</dimen>
+    <dimen name="crops_card_footer_height">120dp</dimen>
+    <dimen name="crops_card_layout_margin">16dp</dimen>
+    <dimen name="crops_card_layout_margin_top">-6dp</dimen>
+    <dimen name="crops_card_title_size">21sp</dimen>
+    <dimen name="crops_card_text_small">10sp</dimen>
+    <dimen name="crops_card_calendar_margin_right">16dp</dimen>
+    <dimen name="crops_card_calendar_date_text_size">40dp</dimen>
+    <dimen name="crops_card_calendar_month_year_text_size">12dp</dimen>
+    <!--crop price-->
+    <dimen name="crop_price_layout_height">42dp</dimen>
+    <dimen name="crop_price_icon_size">12dp</dimen>
+    <dimen name="crop_price_price_text_size">34sp</dimen>
+    <dimen name="crop_price_name_marketer_text_size">12sp</dimen>
+    <dimen name="crop_price_refresh_text_size">10sp</dimen>
 
     <!--margins-->
     <dimen name="margin_default_tiny">5dp</dimen>
@@ -83,14 +103,15 @@
     <dimen name="margin_default_normal">20dp</dimen>
     <dimen name="margin_default_large">30dp</dimen>
 
-    <!--paddings-->
-    <dimen name="padding_default_tiny">5dp</dimen>
-    <dimen name="padding_default_small">10dp</dimen>
-    <dimen name="padding_default_medium">15dp</dimen>
-    <dimen name="padding_default_normal">20dp</dimen>
-    <dimen name="padding_default_large">30dp</dimen>
-    <dimen name="header_user_iconn_dimen">80dp</dimen>
-    <dimen name="crop_item_layout_margin">16dp</dimen>
+    <!--paddings margin-->
+    <dimen name="padding_margin_default_tiny">4dp</dimen>
+    <dimen name="padding_margin_default_small">10dp</dimen>
+    <dimen name="padding_margin_default_medium">15dp</dimen>
+    <dimen name="padding_margin_default_normal">20dp</dimen>
+    <dimen name="padding_margin_default_large">30dp</dimen>
+
+    <dimen name="header_user_icon_dimen">80dp</dimen>
+    <dimen name="header_user_icon_margin_top">40dp</dimen>
 
 
 </resources>

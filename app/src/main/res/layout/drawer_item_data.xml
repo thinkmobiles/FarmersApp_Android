@@ -16,8 +16,6 @@
                 style="@style/TV_Drawer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="false"
-                android:layout_alignParentTop="false"
                 android:text="TextView"
                 android:layout_gravity="center_vertical"
                />
@@ -26,8 +24,6 @@
                 android:id="@+id/iv_DrawerItemIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
                 android:src="@drawable/ic_toolbar_forward"
                 android:layout_gravity="center_vertical"
                 android:paddingRight="@dimen/drawer_item_icon_padding"
@@ -36,6 +32,6 @@
     </LinearLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/default_divider_height"
         android:background="@color/drawer_list_devider"/>
 </LinearLayout>

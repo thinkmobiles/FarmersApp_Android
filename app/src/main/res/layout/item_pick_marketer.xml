@@ -9,9 +9,6 @@
         android:layout_height="match_parent"
         android:text="New Text"
         android:gravity="left|center_vertical"
-        android:textSize="@dimen/main_text_size"
-        android:textColor="@color/white"
-        android:layout_marginRight="@dimen/select_marketeer_small_margin"
-        android:layout_marginLeft="@dimen/select_marketeer_small_margin"
+        style="@style/TextPickMarketer"
         android:id="@+id/tvNameMarketer" />
 </LinearLayout>

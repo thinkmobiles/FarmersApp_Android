@@ -72,7 +72,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="@string/tutorial_next"
-                    android:padding="8dp"
+                    android:padding="@dimen/padding_margin_default_small"
                     />
         </LinearLayout>
     </FrameLayout>

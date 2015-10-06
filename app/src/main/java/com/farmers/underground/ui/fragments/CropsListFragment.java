@@ -77,7 +77,7 @@ public class CropsListFragment
         ButterKnife.bind(this, v);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         recyclerView.addItemDecoration(new DividerItemDecoration(ResourceRetriever.retrievePX(getContext(),R.dimen
-                .crop_item_layout_margin)));
+                .crops_card_layout_margin)));
         return v;
     }
 

@@ -86,8 +86,6 @@
                         style="@style/TV_Drawer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="false"
-                        android:layout_alignParentTop="false"
                         android:text="Log Out"
                         android:layout_gravity="center_vertical"
                         />
@@ -95,8 +93,6 @@
                 <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentTop="true"
                         android:src="@drawable/user_oval"
                         android:layout_gravity="center_vertical"
                         android:paddingRight="@dimen/drawer_item_icon_padding"
@@ -105,7 +101,7 @@
             </LinearLayout>
             <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="@dimen/default_divider_height"
                     android:background="@color/drawer_list_devider"/>
         </LinearLayout>
     </FrameLayout>

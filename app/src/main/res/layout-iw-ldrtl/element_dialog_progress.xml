@@ -15,7 +15,7 @@
 
         android:orientation="horizontal"
 
-        android:padding="@dimen/padding_default_medium">
+        android:padding="@dimen/padding_margin_default_medium">
 
         <TextView
             android:id="@+id/progressMessage"
@@ -27,7 +27,7 @@
             android:layout_marginRight="@dimen/margin_default_tiny"
             android:text="Some progress here"
 
-            android:textSize="18sp"
+            android:textSize="@dimen/progress_dialog_message_size"
             tools:ignore="HardcodedText" />
 
         <ProgressBar

@@ -6,15 +6,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         custom:cardCornerRadius="@dimen/crops_card_corner_radius"
-        custom:cardElevation="4dp"
-        android:layout_marginTop="-6dp"
-        android:layout_marginLeft="@dimen/crop_item_layout_margin"
-        android:layout_marginRight="@dimen/crop_item_layout_margin"
+        custom:cardElevation="@dimen/crops_card_elevation"
+        android:layout_marginTop="@dimen/crops_card_layout_margin_top"
+        android:layout_marginLeft="@dimen/crops_card_layout_margin"
+        android:layout_marginRight="@dimen/crops_card_layout_margin"
         custom:cardPreventCornerOverlap="false">
 
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="321dp"
+            android:layout_height="@dimen/crops_card_height"
             android:orientation="vertical">
 
         <FrameLayout
@@ -24,7 +24,7 @@
             <com.joooonho.SelectableRoundedImageView
                     android:id="@+id/iv_CropsItemImage"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="@dimen/crops_card_header_height"
                     android:clickable="true"
                     android:background="@drawable/ic_drawer_crops"
                     android:scaleType="centerCrop"
@@ -36,7 +36,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left|top"
-                    android:layout_margin="@dimen/crops_item_fav_cb_margin"
+                    android:layout_margin="@dimen/crops_card_fav_cb_margin"
                     android:background="@color/opaque"
                     android:button="@drawable/selector_crops_fav_checkbox"/>
 
@@ -44,10 +44,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right|top"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginRight="@dimen/crops_card_calendar_margin_right"
                     android:background="@drawable/bg_crops_calendar"
                     android:orientation="vertical"
-                    android:padding="4dp">
+                    android:padding="@dimen/padding_margin_default_tiny">
 
                 <com.farmers.underground.ui.custom_views.CustomTextView
                         android:id="@+id/tv_DayCropsItem"
@@ -57,7 +57,7 @@
                         android:layout_marginTop="8dp"
                         android:text="9"
                         android:textColor="@color/white"
-                        android:textSize="40sp"
+                        android:textSize="@dimen/crops_card_calendar_date_text_size"
                         custom:customFont="avenir"/>
 
                 <TextView
@@ -67,33 +67,33 @@
                         android:layout_gravity="center_horizontal"
                         android:text="New Text"
                         android:textColor="@color/white"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/crops_card_calendar_month_year_text_size"
                         android:textStyle="bold"/>
 
                 <View
                         android:layout_width="match_parent"
-                        android:layout_height="1px"
-                        android:layout_margin="4dp"
+                        android:layout_height="1dp"
+                        android:layout_margin="@dimen/padding_margin_default_tiny"
                         android:background="@color/white"/>
 
                 <TextView
                         android:id="@+id/tv_YearCropsItem"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
+                        android:layout_marginLeft="@dimen/crops_card_calendar_margin_right"
+                        android:layout_marginRight="@dimen/crops_card_calendar_margin_right"
                         android:text="New Text"
                         android:textColor="@color/white"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/crops_card_calendar_month_year_text_size"
                         android:textStyle="bold"/>
             </LinearLayout>
         </FrameLayout>
 
         <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="125dp"
-                android:layout_marginLeft="@dimen/crops_item_fav_cb_margin_small"
-                android:layout_marginRight="@dimen/crops_item_fav_cb_margin_small"
+                android:layout_height="@dimen/crops_card_footer_height"
+                android:layout_marginLeft="@dimen/crops_card_fav_cb_margin_small"
+                android:layout_marginRight="@dimen/crops_card_fav_cb_margin_small"
                 >
 
             <TextView
@@ -107,7 +107,7 @@
                     android:layout_gravity="right"
                     android:text="עגבניות שרי תמר"
                     android:textColor="@color/text_dark_grey"
-                    android:textSize="@dimen/crop_item_title_size"
+                    android:textSize="@dimen/crops_card_title_size"
                     android:textStyle="bold"/>
 
             <LinearLayout

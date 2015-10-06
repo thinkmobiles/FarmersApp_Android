@@ -24,7 +24,7 @@
             android:textColor="#fff"
             android:textStyle="bold"
             android:gravity="top"
-            android:paddingBottom="4dp"
+            android:paddingBottom="@dimen/padding_margin_default_tiny"
             />
 
 </android.support.v7.widget.Toolbar>
