@@ -24,7 +24,7 @@ public class UserProfile {
     private String[] favorites;
 
     public boolean hasMarketir(){
-         return !TextUtils.isEmpty(marketeer);
+         return !TextUtils.isEmpty(marketeer) && !newMarketeer;
     }
 
     public String getFullName() {

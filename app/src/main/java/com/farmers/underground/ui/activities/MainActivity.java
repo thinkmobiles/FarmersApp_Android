@@ -97,6 +97,8 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     public static void start(@NonNull Context context) {
         Intent intent = new Intent(context, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         context.startActivity(intent);
     }
 
@@ -344,7 +346,8 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         //FarmersApp.getInstance().getCurrentUser()!=null todo remove later (user cant be null here)
 
         final UserProfile user = FarmersApp.getInstance().getCurrentUser();
-        if(user!=null && (!user.hasMarketir() && !user.isNewMarketeer() || user.isNewMarketeer())){
+
+        if(user!=null && (!(user.hasMarketir() || user.isNewMarketeer()))){
             drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_marketer_price, R.string.drawer_content_5));
         } else {
             //remove maybe

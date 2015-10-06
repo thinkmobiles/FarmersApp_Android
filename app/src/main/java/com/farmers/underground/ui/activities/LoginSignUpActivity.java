@@ -208,10 +208,11 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
             @Override
             public void onSuccess(UserProfile result) {
                 if(result!=null){
-                    if ((!result.hasMarketir() && !result.isNewMarketeer()) || result.isNewMarketeer() || !FarmersApp.isSkipMode()) {
-                        switchFragment(new SelectMarketerFragment(),false);
-                    } else {
+                    if (result.hasMarketir() || result.isNewMarketeer() || FarmersApp.isSkipMode()) {
+                        FarmersApp.setSkipMode(true);
                         MainActivity.start(LoginSignUpActivity.this);
+                    } else {
+                        switchFragment(new SelectMarketerFragment(), false);
                     }
                 } else {
                     onError(new ErrorMsg("Profile is not fetched"));
