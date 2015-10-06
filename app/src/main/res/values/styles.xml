@@ -36,8 +36,7 @@
     </style>
 
     <style name="TV_Tutorial_Title">
-        <item name="android:textColor">@color/text_white</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/tutorial_title_text_size</item>
     </style>
 
@@ -46,6 +45,7 @@
     </style>
     <style name="TV_Tutorial_Next" parent="TV_Tutorial_Title">
         <item name="android:textSize">@dimen/tutorial_next_text_size</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="TextLoginScreen">

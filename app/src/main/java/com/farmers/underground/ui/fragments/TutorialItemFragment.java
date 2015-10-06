@@ -14,6 +14,7 @@ import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.ui.activities.TutorialActivity;
 import com.farmers.underground.ui.base.BaseFragment;
+import com.farmers.underground.ui.custom_views.CustomTextView;
 import com.farmers.underground.ui.models.TutorialItemDataHolder;
 
 /**
@@ -26,7 +27,7 @@ public class TutorialItemFragment extends BaseFragment<TutorialActivity> {
     protected ImageView iv_TutorialItemBG;
 
     @Bind(R.id.tv_TutorialText)
-    protected TextView tv_TutorialText;
+    protected CustomTextView tv_TutorialText;
 
     @Bind(R.id.fl_TutorialNext)
     protected FrameLayout fl_nextButton;
