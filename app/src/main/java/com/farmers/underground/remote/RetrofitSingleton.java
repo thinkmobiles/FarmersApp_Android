@@ -11,6 +11,7 @@ import com.farmers.underground.remote.models.UserProfile;
 import com.farmers.underground.remote.models.UserRegistration;
 import com.farmers.underground.remote.models.UserSignUpFB;
 import com.farmers.underground.remote.services.AuthorizationService;
+import com.farmers.underground.remote.services.MarketeerService;
 import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.remote.util.AddCookiesInterceptor;
 import com.farmers.underground.remote.util.ICallback;
@@ -33,6 +34,8 @@ import java.io.IOException;
 public class RetrofitSingleton {
 
     private final Retrofit retrofit;
+    private MarketeerService marketeerService;
+    private AuthorizationService authorizationService;
 
     private static RetrofitSingleton ourInstance = new RetrofitSingleton();
 
@@ -41,7 +44,6 @@ public class RetrofitSingleton {
     }
 
     private RetrofitSingleton() {
-
 
         final OkHttpClient client = new OkHttpClient();
 
@@ -54,20 +56,29 @@ public class RetrofitSingleton {
 
         client.interceptors().add(new AddCookiesInterceptor());
         client.interceptors().add(new ReceivedCookiesInterceptor());
-        //OR
-       /* CookieManager cookieManager = new CookieManager();
+        /*OR try this
+        CookieManager cookieManager = new CookieManager();
         cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
         client.setCookieHandler(cookieManager);*/
 
         retroBuilder.client(client);
-
         retroBuilder.addConverterFactory(GsonConverterFactory.create());
-
         retrofit = retroBuilder.build();
     }
 
 
-    private AuthorizationService authorizationService;
+
+    private void initMarketeerService(Retrofit retrofit) {
+        marketeerService = retrofit.create(MarketeerService.class);
+    }
+
+    public MarketeerService getMarketeerService() {
+        if (marketeerService == null)
+            initMarketeerService(retrofit);
+
+        return marketeerService;
+    }
+
 
     private void initAuthorizationService(Retrofit retrofit) {
         authorizationService = retrofit.create(AuthorizationService.class);
@@ -134,24 +145,6 @@ public class RetrofitSingleton {
         });
     }
 
-    //TODO this is just for testing
-    public void dellAccountByEmail(final ACallback<SuccessMsg, ErrorMsg> callback) {
-        getAuthorizationService().dellAccountByEmail().enqueue(new Callback<SuccessMsg>() {
-            @Override
-            public void onResponse(Response<SuccessMsg> response, Retrofit retrofit) {
-                performCallback(callback, response);
-                callback.anyway();
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                callback.onError(new ErrorMsg("Unknown Error"));
-                callback.anyway();
-            }
-        });
-    }
-
-
     public void signOut(final ACallback<SuccessMsg, ErrorMsg> callback) {
 
         getAuthorizationService().signOut().enqueue(new Callback<SuccessMsg>() {
@@ -208,6 +201,26 @@ public class RetrofitSingleton {
             }
         });
     }
+    /** this is just for testing*/
+    public void dellAccountByEmail(final ACallback<SuccessMsg, ErrorMsg> callback) {
+        if(BuildConfig.DEBUG)
+            getAuthorizationService().dellAccountByEmail().enqueue(new Callback<SuccessMsg>() {
+                @Override
+                public void onResponse(Response<SuccessMsg> response, Retrofit retrofit) {
+                    performCallback(callback, response);
+                    callback.anyway();
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    callback.onError(new ErrorMsg("Unknown Error"));
+                    callback.anyway();
+                }
+            });
+    }
+
+
+
 
     private static final Converter<ResponseBody, ?> errorConverter = GsonConverterFactory.create().fromResponseBody(ErrorMsg.class, null) ;
 
