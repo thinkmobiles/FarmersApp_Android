@@ -19,7 +19,7 @@ public class TypefaceManager {
     public TypefaceManager(Context context) {
         final AssetManager am = context.getAssets();
         arialMT =   Typeface.createFromAsset(am, fontDir + "ArialMT.ttf");
-        arialMTBold = Typeface.createFromAsset(am, fontDir + "ArialMTBold.otf");
+        arialMTBold = Typeface.createFromAsset(am, fontDir + "ArialMTBold.ttf");
         avenir = Typeface.createFromAsset(am, fontDir + "Avenir.otf");
 
     }
