@@ -9,20 +9,19 @@
             android:id="@+id/rv_FragmentCrops"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/fragment_crops_recycler_padding_x"
-            android:paddingRight="@dimen/fragment_crops_recycler_padding_x"
-            android:scrollbars="vertical"/>
+             android:scrollbars="vertical"
+            />
 
     <TextView layout="@layout/item_search_hint"
-             android:id="@+id/tv_NoItemsCropsFragment"
-             android:visibility="gone"
-             android:gravity="center_horizontal"
-             style="@style/TV_SearchHintListItem"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:paddingRight="@dimen/search_hint_list_item_padding_x"
-             android:paddingLeft="@dimen/search_hint_list_item_padding_x"
-             android:paddingBottom="@dimen/search_hint_list_item_padding_y"
-             android:paddingTop="@dimen/search_hint_list_item_padding_y"/>
+              android:id="@+id/tv_NoItemsCropsFragment"
+              android:visibility="gone"
+              android:gravity="center_horizontal"
+              style="@style/TV_SearchHintListItem"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:paddingRight="@dimen/search_hint_list_item_padding_x"
+              android:paddingLeft="@dimen/search_hint_list_item_padding_x"
+              android:paddingBottom="@dimen/search_hint_list_item_padding_y"
+              android:paddingTop="@dimen/search_hint_list_item_padding_y"/>
 </FrameLayout>
 

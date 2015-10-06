@@ -173,7 +173,7 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
 
     @Override
     public void onSuccess(SuccessMsg result) {
-        // TODO switch to add marketire screen A or MainActivity
+        //   switch to add marketire screen A or MainActivity
 
         getUserProfileAsync();
 
@@ -208,7 +208,7 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
             @Override
             public void onSuccess(UserProfile result) {
                 if(result!=null){
-                    if (!result.hasMarketir() && !FarmersApp.isSkipMode()) {
+                    if ((!result.isNewMarketeer() || !result.hasMarketir()) || !FarmersApp.isSkipMode()) {
                         switchFragment(new SelectMarketerFragment(),false);
                     } else {
                         MainActivity.start(LoginSignUpActivity.this);

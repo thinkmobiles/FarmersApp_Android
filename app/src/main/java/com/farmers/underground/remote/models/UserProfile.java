@@ -17,7 +17,10 @@ public class UserProfile {
 
     private String updatedAt; //"2015-10-02T09:32:53.979Z"
     private String createdAt; //"2015-10-02T09:32:53.979Z"
-    public String marketeer;
+    public String marketeer;  //"561270af9c8fd4643656abd2"  or null if user not select marketeer.  If (marketeer == null) AND (newMarketeer == false) SHOW ADD  marketeer screen
+
+    private boolean newMarketeer;
+
     private String[] favorites;
 
     public boolean hasMarketir(){
@@ -33,5 +36,11 @@ public class UserProfile {
     }
     public String getEmail() {
         return email;
+    }
+
+
+    /**  if true - don't show ADD  marketeer screen, marketeer is added but NOT approved */
+    public boolean isNewMarketeer() {
+        return newMarketeer;
     }
 }
