@@ -47,6 +47,8 @@
     <dimen name="sign_up_edit_text_height">48dp</dimen>
     <dimen name="sign_up_margin_register_login_fb">25dp</dimen>
     <!--after sign-->
+    <dimen name="after_sign_header_margin_top">20dp</dimen>
+    <dimen name="after_sign_header_margin_bottom">7dp</dimen>
     <dimen name="after_sign_header_text_size">24sp</dimen>
     <dimen name="after_sign_propose_skip_text_size">14sp</dimen>
     <dimen name="after_sign_margin_start_skip">45dp</dimen>
@@ -87,9 +89,10 @@
     <dimen name="crops_card_layout_margin_top">-6dp</dimen>
     <dimen name="crops_card_title_size">21sp</dimen>
     <dimen name="crops_card_text_small">10sp</dimen>
-    <dimen name="crops_card_calendar_margin_right">16dp</dimen>
+    <dimen name="crops_card_calendar_margin_right">8dp</dimen>
     <dimen name="crops_card_calendar_date_text_size">40dp</dimen>
-    <dimen name="crops_card_calendar_month_year_text_size">12dp</dimen>
+    <dimen name="crops_card_calendar_month_text_size">12dp</dimen>
+    <dimen name="crops_card_calendar_year_text_size">10dp</dimen>
     <!--crop price-->
     <dimen name="crop_price_layout_height">42dp</dimen>
     <dimen name="crop_price_icon_size">12dp</dimen>

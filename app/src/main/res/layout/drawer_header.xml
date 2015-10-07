@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:id="@+id/llDrawerHeader"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -38,7 +39,7 @@
             android:src="@drawable/user_oval" />
     </LinearLayout>
 
-    <TextView
+    <com.farmers.underground.ui.custom_views.CustomTextView
         android:id="@+id/tv_DrawerUserName"
         style="@style/TV_Drawer"
         android:layout_width="match_parent"
@@ -48,5 +49,6 @@
         android:layout_marginRight="@dimen/padding_margin_default_medium"
         android:layout_marginTop="@dimen/padding_margin_default_tiny"
         android:gravity="center_horizontal"
-        android:text="New Text" />
+        android:text="New Text"
+        custom:customFont="regular"  />
 </RelativeLayout>

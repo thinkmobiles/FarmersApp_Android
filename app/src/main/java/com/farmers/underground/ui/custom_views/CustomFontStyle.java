@@ -11,6 +11,7 @@ package com.farmers.underground.ui.custom_views;
 public enum CustomFontStyle {
     REGULAR,
     BOLD,
-    AVENIR
+    AVENIR,
+    ROBOTOLIGHT
 
 }

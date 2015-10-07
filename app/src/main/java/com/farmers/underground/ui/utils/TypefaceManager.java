@@ -15,12 +15,14 @@ public class TypefaceManager {
     private final Typeface arialMTBold;
     private final Typeface arialMT ;
     private final Typeface avenir;
+    private final Typeface robotoLight;
 
     public TypefaceManager(Context context) {
         final AssetManager am = context.getAssets();
         arialMT =   Typeface.createFromAsset(am, fontDir + "ArialMT.ttf");
         arialMTBold = Typeface.createFromAsset(am, fontDir + "ArialMTBold.ttf");
         avenir = Typeface.createFromAsset(am, fontDir + "Avenir.otf");
+        robotoLight = Typeface.createFromAsset(am, fontDir + "RobotoLight.ttf");
 
     }
 
@@ -43,5 +45,9 @@ public class TypefaceManager {
 
     public Typeface getAvenir(){
         return avenir;
+    }
+
+    public Typeface getRobotoLight(){
+        return robotoLight;
     }
  }

@@ -30,7 +30,7 @@
                         android:layout_height="wrap_content"
                         android:background="@color/drawer_bg_color"
                         android:paddingBottom="1dp">
-                    <android.support.design.widget.TabLayout
+                    <com.farmers.underground.ui.custom_views.CustomTabLayout
                             android:id="@+id/tabs_MainActivity"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

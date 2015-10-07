@@ -12,5 +12,6 @@
         <enum name="regular" value="0"/>
         <enum name="bold" value="1"/>
         <enum name="avenir" value="2"/>
+        <enum name="roboto_light" value="3"/>
     </attr>
 </resources>

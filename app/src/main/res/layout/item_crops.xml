@@ -41,7 +41,7 @@
                     android:button="@drawable/selector_crops_fav_checkbox"/>
 
             <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="75dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right|top"
                     android:layout_marginRight="@dimen/crops_card_calendar_margin_right"
@@ -54,38 +54,43 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="-8dp"
                         android:text="9"
                         android:textColor="@color/white"
                         android:textSize="@dimen/crops_card_calendar_date_text_size"
                         custom:customFont="avenir"/>
 
-                <TextView
+                    <com.farmers.underground.ui.custom_views.CustomTextView
                         android:id="@+id/tv_MonthCropsCalendar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="New Text"
+                        android:text="אוקטובר"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/crops_card_calendar_month_year_text_size"
-                        android:textStyle="bold"/>
+                        android:textSize="@dimen/crops_card_calendar_month_text_size"
+                        custom:customFont="bold"/>
 
                 <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_margin="@dimen/padding_margin_default_tiny"
+                        android:layout_height="0.5dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginLeft="@dimen/padding_margin_default_tiny"
+                        android:layout_marginRight="@dimen/padding_margin_default_tiny"
+                        android:layout_marginBottom="2dp"
                         android:background="@color/white"/>
 
-                <TextView
+                    <com.farmers.underground.ui.custom_views.CustomTextView
                         android:id="@+id/tv_YearCropsItem"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
                         android:layout_marginLeft="@dimen/crops_card_calendar_margin_right"
                         android:layout_marginRight="@dimen/crops_card_calendar_margin_right"
-                        android:text="New Text"
+                        android:text="2015"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/crops_card_calendar_month_year_text_size"
-                        android:textStyle="bold"/>
+                        android:textSize="@dimen/crops_card_calendar_year_text_size"
+                    custom:customFont="bold"/>
             </LinearLayout>
         </FrameLayout>
 
@@ -96,7 +101,7 @@
                 android:layout_marginRight="@dimen/crops_card_fav_cb_margin_small"
                 >
 
-            <TextView
+            <com.farmers.underground.ui.custom_views.CustomTextView
                     android:layout_marginTop="1dp"
                     android:layout_marginBottom="2dp"
                     android:id="@+id/tv_CropsNameCropItem"
@@ -108,7 +113,7 @@
                     android:text="עגבניות שרי תמר"
                     android:textColor="@color/text_dark_grey"
                     android:textSize="@dimen/crops_card_title_size"
-                    android:textStyle="bold"/>
+                custom:customFont="bold"/>
 
             <LinearLayout
                     android:id="@+id/ll_PricesContainer_CropItem"

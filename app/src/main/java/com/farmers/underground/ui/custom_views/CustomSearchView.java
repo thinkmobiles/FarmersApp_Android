@@ -1,9 +1,11 @@
 package com.farmers.underground.ui.custom_views;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.appcompat.R;
 import android.support.v7.widget.SearchView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,6 +73,7 @@ public class CustomSearchView extends SearchView implements View.OnClickListener
         View  imgSearch = this.findViewById(R.id.search_src_text);
         ((SearchAutoComplete) imgSearch).setGravity(Gravity.RIGHT);
         ((SearchAutoComplete) imgSearch).setHintTextColor(getResources().getColor(com.farmers.underground.R.color.text_white));
+        ((SearchAutoComplete) imgSearch).setTypeface(Typeface.createFromAsset(getContext().getAssets(), "Fonts/ArialMT.ttf"));
         imgSearch.setOnClickListener(this);
         return super.isIconified();
     }

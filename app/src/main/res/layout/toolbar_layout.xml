@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.Toolbar
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:custom="http://schemas.android.com/apk/res-auto"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
@@ -15,14 +16,14 @@
             android:id="@+id/searchView"
             />
 
-    <TextView
+        <com.farmers.underground.ui.custom_views.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:text="@string/app_name"
             android:textSize="@dimen/toolbar_text_size"
             android:textColor="#fff"
-            android:textStyle="bold"
+            custom:customFont="bold"
             android:gravity="top"
             android:paddingBottom="@dimen/padding_margin_default_tiny"
             />

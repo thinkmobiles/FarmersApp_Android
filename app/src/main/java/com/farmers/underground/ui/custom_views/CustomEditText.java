@@ -76,6 +76,9 @@ public class CustomEditText extends EditText {
             case 2:
                 typeface = TypefaceManager.getInstance().getAvenir();
                 break;
+            case 3:
+                typeface = TypefaceManager.getInstance().getRobotoLight();
+                break;
 
         }
         setTypeface(typeface);
