@@ -220,7 +220,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         searchController = new SearchController(lv_SearchHint) {
             @Override
             public void searchByHint(SearchHint query) {
-                SharedPrefHelper.saveSearchHint(MainActivity.this, query);
+                SharedPrefHelper.saveSearchHint(query);
                 searchView.setQuery(query.getName(), true);
                 forceHideSearchList();
                 searchController.setQuerry(query);
@@ -241,7 +241,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                 SearchHint hint = new SearchHint();
                 hint.setName(query);
                 searchController.setQuerry(hint);
-                SharedPrefHelper.saveSearchHint(MainActivity.this, hint);
+                SharedPrefHelper.saveSearchHint(hint);
                 forceHideSearchList();
                 return false;
             }
@@ -463,7 +463,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     @OnClick(R.id.searchView)
     protected void onSearchClicked() {
-        searchController.setHinsList(SharedPrefHelper.getSearchHints(MainActivity.this));
+        searchController.setHinsList(SharedPrefHelper.getSearchHints());
         searchController.show();
         invalidateOptionsMenu();
     }

@@ -13,13 +13,13 @@ public class TypefaceManager {
 
     private static final String fontDir = "Fonts/";
     private final Typeface arialMTBold;
-    private final Typeface arialMT ;
+    private final Typeface arialMT;
     private final Typeface avenir;
     private final Typeface robotoLight;
 
     public TypefaceManager(Context context) {
         final AssetManager am = context.getAssets();
-        arialMT =   Typeface.createFromAsset(am, fontDir + "ArialMT.ttf");
+        arialMT = Typeface.createFromAsset(am, fontDir + "ArialMT.ttf");
         arialMTBold = Typeface.createFromAsset(am, fontDir + "ArialMTBold.ttf");
         avenir = Typeface.createFromAsset(am, fontDir + "Avenir.otf");
         robotoLight = Typeface.createFromAsset(am, fontDir + "RobotoLight.ttf");
@@ -30,12 +30,13 @@ public class TypefaceManager {
 
         return typefaceManager;
     }
+
     public static TypefaceManager init(Context context) {
         typefaceManager = new TypefaceManager(context);
         return typefaceManager;
     }
 
-    public Typeface getArial(){
+    public Typeface getArial() {
         return arialMT;
     }
 
@@ -43,11 +44,11 @@ public class TypefaceManager {
         return arialMTBold;
     }
 
-    public Typeface getAvenir(){
+    public Typeface getAvenir() {
         return avenir;
     }
 
     public Typeface getRobotoLight(){
         return robotoLight;
     }
- }
+}

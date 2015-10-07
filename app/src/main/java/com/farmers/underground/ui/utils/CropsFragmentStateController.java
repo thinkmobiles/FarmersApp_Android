@@ -1,7 +1,8 @@
 package com.farmers.underground.ui.utils;
 
 /**
- * Created by omar on 10/2/15.
+ * Created by omar
+ * on 10/2/15.
  */
 public class CropsFragmentStateController {
     private int fragmentCount;

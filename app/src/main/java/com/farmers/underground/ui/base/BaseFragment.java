@@ -27,10 +27,10 @@ public abstract class BaseFragment<A extends BaseActivity> extends Fragment {
     @LayoutRes
     protected abstract int getLayoutResId();
 
-    @Deprecated
+    /*@Deprecated
     public static <F extends BaseFragment> F newInstance() {
         return null;
-    }
+    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,8 +46,8 @@ public abstract class BaseFragment<A extends BaseActivity> extends Fragment {
     }
 
     public void hideSoftKeyboard(){
-        InputMethodManager imm = (InputMethodManager)  getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow( getActivity().getCurrentFocus().getWindowToken(), 0);
-
+        InputMethodManager imm = (InputMethodManager)  getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm.isActive() && getHostActivity().getCurrentFocus()!= null)
+            imm.hideSoftInputFromWindow( getHostActivity().getCurrentFocus().getWindowToken(), 0);
     }
 }

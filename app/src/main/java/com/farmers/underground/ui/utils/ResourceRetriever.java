@@ -6,9 +6,11 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 
 /**
- * Created by omar on 23.06.15.
+ * Created by omar
+ * on 23.06.15.
  */
-public class ResourceRetriever {
+public final class ResourceRetriever {
+
     public static int retrieveDIP(Context context, int resource){
         Resources resources = context.getResources();
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, resources.getDimension(resource), resources.getDisplayMetrics());
@@ -26,7 +28,6 @@ public class ResourceRetriever {
 
     public static int dpToPx(Context context,int dp) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        int px = Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
-        return px;
+        return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
     }
 }
