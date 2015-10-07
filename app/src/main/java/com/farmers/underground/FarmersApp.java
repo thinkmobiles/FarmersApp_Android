@@ -57,6 +57,7 @@ public class FarmersApp extends Application {
         if(BuildConfig.PRODUCTION)
             Fabric.with(this, new Crashlytics());
 
+        //Fonts
         TypefaceManager.init(this);
 
         // Initialize the SDK before executing any other operations,
@@ -69,12 +70,12 @@ public class FarmersApp extends Application {
         DualCacheContextUtils.setContext(getApplicationContext());
 
         /** Hebrew LOCALE */
-//           Locale locale = new Locale("iw");
-//           Locale.setDefault(locale);
-//           Configuration config = new Configuration();
-//           config.locale = locale;
-//           getBaseContext().getResources().updateConfiguration(config,
-//                   getBaseContext().getResources().getDisplayMetrics());
+           Locale locale = new Locale("iw");
+           Locale.setDefault(locale);
+           Configuration config = new Configuration();
+           config.locale = locale;
+           getBaseContext().getResources().updateConfiguration(config,
+                   getBaseContext().getResources().getDisplayMetrics());
 
     }
 
