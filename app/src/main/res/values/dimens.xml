@@ -12,7 +12,7 @@
     <dimen name="tutorial_radio_top_margin">33dp</dimen>
     <dimen name="tutorial_title_top_margin">32dp</dimen>
     <dimen name="tutorial_title_text_size">14sp</dimen>
-    <dimen name="tutorial_content_text_size">15sp</dimen>
+    <dimen name="tutorial_content_text_size">18sp</dimen>
     <dimen name="tutorial_next_text_size">20sp</dimen>
     <dimen name="tutorial_title_side_margin">32.5dp</dimen>
     <dimen name="tutorial_next_btn_height">60dp</dimen>

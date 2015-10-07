@@ -28,7 +28,6 @@ import com.farmers.underground.ui.base.BaseFragment;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -39,8 +38,10 @@ public class SelectMarketerListFragment extends BaseFragment<LoginSignUpActivity
 
     @Bind(R.id.tvCounter)
     protected TextView tvCounter;
+
     @Bind(R.id.etMarketeer)
     protected EditText etMarketeer;
+
     @Bind(R.id.lvListMarketeers)
     protected ListView lvMarketeers;
 
@@ -91,7 +92,8 @@ public class SelectMarketerListFragment extends BaseFragment<LoginSignUpActivity
 
     @OnTextChanged(R.id.etMarketeer)
     protected void changeNameMarketer(){
-        mAdapter.findMarketeer(etMarketeer.getText().toString());
+        if (mAdapter!=null)
+            mAdapter.findMarketeer(etMarketeer.getText().toString());
     }
 
    @OnItemClick(R.id.lvListMarketeers)

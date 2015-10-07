@@ -12,7 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by samson on 29.09.15.
+ * Created by samson
+ * on 29.09.15.
  */
 public class PickMarketeerAdapter extends BaseAdapter {
 
