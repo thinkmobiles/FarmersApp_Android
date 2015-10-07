@@ -1,57 +1,63 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.farmers.underground">
+    package="com.farmers.underground">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-            android:name=".FarmersApp"
-            android:allowBackup="true"
-            android:icon="@mipmap/ic_launcher"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme">
+        android:name=".FarmersApp"
+        android:allowBackup="true"
+        android:fullBackupContent="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
 
-        <activity android:name=".ui.activities.TestActivity"
-                  android:screenOrientation="sensorPortrait"
-                  android:theme="@style/TestTheme">
-
+        <activity
+            android:name=".ui.activities.TestActivity"
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/TestTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activities.TutorialActivity"
-                  android:theme="@style/TutorialActivityTheme"
-                  android:screenOrientation="sensorPortrait"/>
-
-        <activity android:name=".ui.activities.LoginSignUpActivity"
-                  android:theme="@style/LoginSignUpActivityTheme"
-                  android:screenOrientation="sensorPortrait"/>
-
-        <activity android:name=".ui.activities.MainActivity"
-                  android:screenOrientation="sensorPortrait"
-                  android:launchMode="singleTop">
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH"/>
-            </intent-filter>
-            <meta-data
-                    android:name="android.app.searchable"
-                    android:resource="@xml/searchable"/>
-                </activity>
+        <activity
+            android:name=".ui.activities.TutorialActivity"
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/TutorialActivityTheme" />
 
         <activity
-                android:name="com.facebook.FacebookActivity"
-                android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-                android:label="@string/app_name"
-                android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            android:name=".ui.activities.LoginSignUpActivity"
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/LoginSignUpActivityTheme" />
+
+        <activity
+            android:name=".ui.activities.MainActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="sensorPortrait">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <meta-data
-                android:name="com.facebook.sdk.ApplicationId"
-                android:value="@string/facebook_app_id"/>
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="ba04084de2ee1304dbf733cb2e49654986aa4260" />
+
     </application>
 
 </manifest>

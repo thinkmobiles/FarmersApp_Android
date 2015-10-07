@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="tutorial_content_top_margin">40dp</dimen>
-    </resources>
+
+    <dimen name="login_btn_login_height">38dp</dimen>
+</resources>

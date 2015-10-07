@@ -2,13 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:padding="@dimen/login_fragment_padding"
     android:background="@drawable/bg_login">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:gravity="center_horizontal"
         android:layout_above="@+id/llLogin">
@@ -35,6 +34,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:padding="@dimen/login_fragment_padding"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

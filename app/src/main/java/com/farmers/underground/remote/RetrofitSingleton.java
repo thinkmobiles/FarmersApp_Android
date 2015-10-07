@@ -1,10 +1,8 @@
 package com.farmers.underground.remote;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.farmers.underground.BuildConfig;
-import com.farmers.underground.FarmersApp;
 import com.farmers.underground.config.ApiConstants;
 import com.farmers.underground.remote.models.ErrorMsg;
 import com.farmers.underground.remote.models.SuccessMsg;
@@ -19,6 +17,7 @@ import com.farmers.underground.remote.util.AddCookiesInterceptor;
 import com.farmers.underground.remote.util.ICallback;
 import com.farmers.underground.remote.util.Loger;
 import com.farmers.underground.remote.util.ReceivedCookiesInterceptor;
+import com.google.gson.JsonSyntaxException;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.ResponseBody;
 import retrofit.*;
@@ -283,6 +282,8 @@ public class RetrofitSingleton {
                 myError = new ErrorMsg(e.getMessage());
             else
                 myError = new ErrorMsg("Unknown Error");
+        } catch (JsonSyntaxException jsonSyntaxException){
+                myError = new ErrorMsg("Server Error");
         }
         return myError;
     }

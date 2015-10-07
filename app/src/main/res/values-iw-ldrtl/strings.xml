@@ -5,7 +5,7 @@
 
     <string name="facebook_app_id">889106887840848</string>
 
-   <!-- //tutorial-->
+    <!-- //tutorial-->
     <string name="tutorial_skip">דלג</string>
     <string name="tutorial_content_1">ברוכים הבאים להעיקר האיכר אפליקציה חברתית לחקלאי שחושפת ,משווה ועורכת סטטיסטיקות של מחירי מועצת הצמחים, השוק הסיטונאי ומחירי המשווקים. </string>
     <string name="tutorial_content_2">כל סוג גידול מתעדכן ברמה היומית מול מועצת הצמחים,השוק הסיטונאי ומחיר המשווק האישי שלך, באפשרותך לראות מחירי משווקים נוספים שהוזנו על ידי חבריך החקלאים</string>
@@ -25,6 +25,7 @@
     <string name="login_text_login_facebook">כניסה עם פייסבוק</string>
     <string name="login_register">רישום</string>
     <string name="login_is_not_register">לא חבר עדיין?</string>
+
     <string name="toolbar_item_menu">תפריט</string>
     <string name="toolbar_item_search">חיפוש</string>
 
@@ -34,7 +35,7 @@
     <string name="dialog_btn_cancel">לבטל</string>
     <string name="dialog_progress_message_default">המתן בבקשה…</string>
 
-  <!--  //sign_up-->
+    <!--  //sign_up-->
     <string name="sign_up_full_name">שם מלא</string>
     <string name="sign_up_text_sign_up">הירשם</string>
     <string name="sign_up_register_facebook">עם פייסבוקהירשם</string>
@@ -64,7 +65,7 @@
     <string name="drawer_content_5">להוסיף משווקים</string>
     <!--TODO-->
 
- <!--   //main activity-->
+    <!--   //main activity-->
     <string name="main_activity_tab_all_crops">כל הגידולים</string>
     <string name="main_activity_tab_favourites">המועדפים שלי</string>
     <string name="search_label"><u>חיפוש גידוליּ</u></string>
