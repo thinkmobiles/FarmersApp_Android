@@ -19,7 +19,7 @@
     <dimen name="tutorial_next_margin">10dp</dimen>
     <dimen name="tutorial_next_tv_padding">60dp</dimen>
     <dimen name="tutorial_arrow_size">22dp</dimen>
-    <dimen name="tutorial_content_top_margin">40dp</dimen>
+    <dimen name="tutorial_content_top_margin">20dp</dimen>
     <dimen name="tutorial_content_side_margin">45dp</dimen>
     <dimen name="tutorial_content_margin_top">113dp</dimen>
     <dimen name="tutorial_content_image_margin">37.5dp</dimen>

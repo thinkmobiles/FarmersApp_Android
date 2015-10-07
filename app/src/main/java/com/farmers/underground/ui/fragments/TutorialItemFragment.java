@@ -4,9 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.LinearLayout;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -29,8 +29,8 @@ public class TutorialItemFragment extends BaseFragment<TutorialActivity> {
     @Bind(R.id.tv_TutorialText)
     protected CustomTextView tv_TutorialText;
 
-    @Bind(R.id.fl_TutorialNext)
-    protected FrameLayout fl_nextButton;
+    @Bind(R.id.ll_TutorialNext)
+    protected LinearLayout fl_nextButton;
 
     private TutorialItemDataHolder tutorialItemDataHolder;
     private Callback callback;
@@ -71,7 +71,7 @@ public class TutorialItemFragment extends BaseFragment<TutorialActivity> {
         tv_TutorialText.setText(getString(tutorialItemDataHolder.getContentTextRes()));
     }
 
-    @OnClick(R.id.fl_TutorialNext)
+    @OnClick(R.id.ll_TutorialNext)
     protected void onNextClikcked() {
         callback.onNextClicked();
     }
