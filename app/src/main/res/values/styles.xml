@@ -45,7 +45,6 @@
     </style>
     <style name="TV_Tutorial_Next" parent="TV_Tutorial_Title">
         <item name="android:textSize">@dimen/tutorial_next_text_size</item>
-        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="TextLoginScreen">

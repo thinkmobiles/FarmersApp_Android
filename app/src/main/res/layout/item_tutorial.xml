@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/tutorial_bg">
 
-    <TextView
+    <com.farmers.underground.ui.custom_views.CustomTextView
         android:id="@+id/tv_TutorialTitle"
         style="@style/TV_Tutorial_Title"
         android:layout_width="wrap_content"
@@ -14,7 +14,8 @@
         android:layout_marginRight="@dimen/tutorial_title_side_margin"
         android:layout_marginTop="@dimen/tutorial_title_top_margin"
         android:text="@string/tutorial_skip"
-        android:textColor="@color/selector_tutorial_title" />
+        android:textColor="@color/selector_tutorial_title"
+        custom:customFont="regular" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -64,14 +65,15 @@
                 android:src="@drawable/ic_toolbar_forward_rtl"
                 android:contentDescription="@null"/>
 
-            <TextView
+            <com.farmers.underground.ui.custom_views.CustomTextView
                 android:id="@+id/tv_TutorialNext"
                 style="@style/TV_Tutorial_Next"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical|center_horizontal"
                 android:padding="@dimen/padding_margin_default_small"
-                android:text="@string/tutorial_next" />
+                android:text="@string/tutorial_next"
+                custom:customFont="bold"  />
         </LinearLayout>
 
 </RelativeLayout>

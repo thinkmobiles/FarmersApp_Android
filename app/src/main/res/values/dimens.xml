@@ -29,6 +29,7 @@
     <dimen name="login_text_header_size">32sp</dimen>
     <dimen name="login_text_subheader_size">18sp</dimen>
     <dimen name="login_text_size">16sp</dimen>
+    <dimen name="login_is_register_text_size">14sp</dimen>
     <dimen name="login_edit_text_height">40dp</dimen>
     <dimen name="login_btn_register_height">30dp</dimen>
     <dimen name="login_btn_register_width">110dp</dimen>
