@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:padding="@dimen/login_fragment_padding"
+    android:paddingTop="@dimen/login_fragment_padding"
     android:background="@drawable/bg_login"
     android:layout_height="match_parent">
 
@@ -18,10 +18,11 @@
             android:textColor="@color/white"
             android:text="@string/after_sign_header"
             android:textSize="@dimen/after_sign_header_text_size"
-            android:layout_margin="@dimen/login_fragment_padding"
+            android:layout_marginBottom="@dimen/login_fragment_padding"
             android:id="@+id/textView2" />
 
         <TextView
+            android:lines="4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/after_sign_text"
@@ -36,19 +37,23 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/select_marketeer_name_height"
             android:layout_marginTop="@dimen/after_sign_enter_marketeer_margin_top"
+            android:layout_marginRight="@dimen/login_fragment_padding"
+            android:layout_marginLeft="@dimen/login_fragment_padding"
             android:text="@string/after_sign_enter_marketeer"
             android:textColor="@color/white"
-            android:gravity="center_vertical"
+            android:gravity="right|center_vertical"
             android:id="@+id/tvEnterMarketeer"
             android:textSize="16sp" />
 
         <View
+            android:layout_marginLeft="@dimen/login_fragment_padding"    android:layout_marginRight="@dimen/login_fragment_padding"
             android:layout_width="match_parent"
             android:layout_height="@dimen/login_divider_height"
             android:background="@color/white"/>
     </LinearLayout>
 
     <LinearLayout
+        android:padding="@dimen/login_fragment_padding"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -82,9 +87,9 @@
             <TextView
                 android:layout_width="@dimen/login_btn_register_width"
                 android:layout_height="@dimen/login_btn_register_height"
-                android:gravity="center"
                 android:text="@string/after_sign_skip"
                 android:id="@+id/tvSkip"
+                android:gravity="center"
                 android:textStyle="bold"
                 android:textSize="16sp"
                 android:textColor="@color/white"
@@ -102,6 +107,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:textColor="@color/white"
+                android:lines="2"
                 android:layout_height="wrap_content"
                 android:text="@string/after_sign_propose_skip"
                 android:id="@+id/textView9" />
