@@ -240,7 +240,7 @@ public class RetrofitSingleton {
 
     /** this is just for testing*/
     public void dellAccountByEmail(final ACallback<SuccessMsg, ErrorMsg> callback) {
-        if(BuildConfig.DEBUG)
+        if(BuildConfig.DEBUG){
             getAuthorizationService().dellAccountByEmail().enqueue(new Callback<SuccessMsg>() {
                 @Override
                 public void onResponse(Response<SuccessMsg> response, Retrofit retrofit) {
@@ -254,8 +254,8 @@ public class RetrofitSingleton {
                     callback.anyway();
                 }
             });
+        }
     }
-
 
     private static final Converter<ResponseBody, ?> errorConverter = GsonConverterFactory.create().fromResponseBody(ErrorMsg.class, null) ;
 
