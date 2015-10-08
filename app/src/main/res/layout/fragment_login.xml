@@ -1,197 +1,201 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@drawable/bg_login">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/llLogin"
         android:layout_alignParentTop="true"
         android:gravity="center_horizontal"
-        android:layout_above="@+id/llLogin">
+        android:orientation="vertical">
 
         <com.farmers.underground.ui.custom_views.CustomTextView
+            android:id="@+id/tvHeader"
+            style="@style/TextLoginScreen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/login_text_header"
-            android:id="@+id/tvHeader"
-            android:textSize="@dimen/login_text_header_size"
-            android:gravity="center_horizontal"
             android:layout_marginTop="@dimen/login_margin_top_header"
-            style="@style/TextLoginScreen"
+            android:gravity="center_horizontal"
+            android:text="@string/login_text_header"
+            android:textSize="@dimen/login_text_header_size"
             custom:customFont="bold" />
 
         <com.farmers.underground.ui.custom_views.CustomTextView
+            android:id="@+id/tvSubheader"
+            style="@style/TextLoginScreen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login_text_subheader"
-            android:id="@+id/tvSubheader"
             android:textSize="@dimen/login_text_subheader_size"
-            style="@style/TextLoginScreen"
-            custom:customFont="regular"/>
+            custom:customFont="regular" />
     </LinearLayout>
 
     <LinearLayout
-        android:padding="@dimen/login_fragment_padding"
-        android:orientation="vertical"
+        android:id="@+id/llLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:id="@+id/llLogin"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="@dimen/login_fragment_padding">
 
         <com.farmers.underground.ui.custom_views.CustomEditText
-            android:layout_width="match_parent"
             android:id="@+id/etEmail"
+            style="@style/EditLoginScreen"
+            android:layout_width="match_parent"
+            android:gravity="right|center_vertical"
             android:hint="@string/login_email"
-            android:textColorHint="@color/white"
-            android:singleLine="true"
 
             android:imeOptions="actionNext"
+            android:inputType="textNoSuggestions"
 
-            android:gravity="right|center_vertical"
+            android:singleLine="true"
+            android:textColorHint="@color/white"
             android:textSize="@dimen/login_text_size"
-            style="@style/EditLoginScreen"
-            custom:customFont="regular"/>
+            custom:customFont="regular" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/login_divider_height"
-            android:background="@color/white"
-            android:layout_marginBottom="@dimen/login_margin_btn_logins" />
+            android:layout_marginBottom="@dimen/login_margin_btn_logins"
+            android:background="@color/white" />
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
             <ImageView
+                android:id="@+id/ivShowPass"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:id="@+id/ivShowPass"
-                android:src="@drawable/show_password_icon"/>
+                android:src="@drawable/show_password_icon" />
 
             <com.farmers.underground.ui.custom_views.CustomEditText
-                android:layout_width="match_parent"
                 android:id="@+id/etPassword"
+                style="@style/EditLoginScreen"
 
-                android:singleLine="true"
-                android:hint="@string/login_password"
-                android:textColorHint="@color/white"
+                android:layout_width="match_parent"
+                android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789"
                 android:gravity="center_vertical|right"
+                android:hint="@string/login_password"
 
                 android:imeOptions="actionDone"
-
                 android:inputType="textNoSuggestions"
 
-                android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789"
+                android:singleLine="true"
 
+                android:textColorHint="@color/white"
                 android:textSize="@dimen/login_text_size"
-                style="@style/EditLoginScreen"
-                custom:customFont="regular"/>
+                custom:customFont="regular" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/login_divider_height"
-            android:background="@color/white"
-            android:layout_marginBottom="@dimen/login_margin_btn_logins" />
+            android:layout_marginBottom="@dimen/login_margin_btn_logins"
+            android:background="@color/white" />
 
 
         <com.farmers.underground.ui.custom_views.CustomTextView
+            android:id="@+id/tvForgot"
+            style="@style/TextLoginScreen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:text="@string/login_forgot_password"
-            android:id="@+id/tvForgot"
-            style="@style/TextLoginScreen"
             android:layout_marginBottom="@dimen/login_margin_btn_login_edit"
+            android:text="@string/login_forgot_password"
             custom:customFont="regular" />
 
         <LinearLayout
+            android:id="@+id/btnLogin"
             android:layout_width="match_parent"
             android:layout_height="@dimen/login_btn_login_height"
-            android:gravity="center"
-            android:id="@+id/btnLogin"
+            android:background="@drawable/btn_login"
             android:clickable="true"
-            android:background="@drawable/btn_login">
+            android:gravity="center">
 
             <com.farmers.underground.ui.custom_views.CustomTextView
+                android:id="@+id/tvLogin"
+                style="@style/TextLoginScreen"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/login_btn_login_height"
                 android:text="@string/login_text_login"
-                android:id="@+id/tvLogin"
                 android:textSize="@dimen/login_text_size"
                 android:textStyle="bold"
-                style="@style/TextLoginScreen"
                 custom:customFont="bold" />
         </LinearLayout>
 
         <com.farmers.underground.ui.custom_views.CustomTextView
+            android:id="@+id/textView4"
+            style="@style/TextLoginScreen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/login_or"
-            android:id="@+id/textView4"
-            android:textSize="@dimen/login_text_size"
-            style="@style/TextLoginScreen"
-            android:layout_marginTop="@dimen/login_margin_btn_logins"
             android:layout_marginBottom="@dimen/login_margin_btn_logins"
+            android:layout_marginTop="@dimen/login_margin_btn_logins"
+            android:text="@string/login_or"
+            android:textSize="@dimen/login_text_size"
             custom:customFont="regular" />
 
         <LinearLayout
+            android:id="@+id/btnLoginFB"
             android:layout_width="match_parent"
             android:layout_height="@dimen/login_btn_login_height"
-            android:gravity="center"
-            android:id="@+id/btnLoginFB"
-            android:background="@drawable/btn_login_facebook">
+            android:background="@drawable/btn_login_facebook"
+            android:gravity="center">
+
             <com.farmers.underground.ui.custom_views.CustomTextView
+                android:id="@+id/tvLoginFB"
+                style="@style/TextLoginScreen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/login_small_padding_margin"
+                android:drawableRight="@drawable/icon_fb"
                 android:text="@string/login_text_login_facebook"
-                android:id="@+id/tvLoginFB"
                 android:textSize="@dimen/login_text_size"
                 android:textStyle="bold"
-                android:drawableRight="@drawable/icon_fb"
-                android:drawablePadding="@dimen/login_small_padding_margin"
-                style="@style/TextLoginScreen"
                 custom:customFont="bold" />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/login_margin_register_login_fb">
+            android:layout_marginTop="@dimen/login_margin_register_login_fb"
+            android:orientation="horizontal">
 
             <com.farmers.underground.ui.custom_views.CustomTextView
+                android:id="@+id/tvRegister"
+                style="@style/TextLoginScreen"
                 android:layout_width="@dimen/login_btn_register_width"
                 android:layout_height="@dimen/login_btn_register_height"
-                android:text="@string/login_register"
-                android:id="@+id/tvRegister"
-                android:gravity="center"
-                android:textSize="@dimen/login_text_size"
+                android:layout_marginRight="@dimen/login_small_padding_margin"
                 android:background="@drawable/btn_register"
+                android:gravity="center"
                 android:paddingBottom="@dimen/login_btn_register_padding_top_bottom"
-                android:paddingTop="@dimen/login_btn_register_padding_top_bottom"
                 android:paddingLeft="@dimen/login_btn_register_padding_left_right"
                 android:paddingRight="@dimen/login_btn_register_padding_left_right"
-                android:layout_marginRight="@dimen/login_small_padding_margin"
+                android:paddingTop="@dimen/login_btn_register_padding_top_bottom"
+                android:text="@string/login_register"
+                android:textSize="@dimen/login_text_size"
                 android:textStyle="bold"
-                style="@style/TextLoginScreen"
-                custom:customFont="bold"/>
+                custom:customFont="bold" />
 
-            <View android:layout_height="0dp" android:layout_width="6.5dp"/>
+            <View
+                android:layout_width="6.5dp"
+                android:layout_height="0dp" />
 
             <com.farmers.underground.ui.custom_views.CustomTextView
+                android:id="@+id/textView3"
+                style="@style/TextLoginScreen"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/login_btn_register_height"
                 android:text="@string/login_is_not_register"
-                android:id="@+id/textView3"
                 android:textSize="@dimen/login_is_register_text_size"
-                style="@style/TextLoginScreen"
                 custom:customFont="regular" />
         </LinearLayout>
     </LinearLayout>

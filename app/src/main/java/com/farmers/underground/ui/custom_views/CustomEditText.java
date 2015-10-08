@@ -41,7 +41,7 @@ public class CustomEditText extends EditText {
             return;
         }
 
-        setImeOptions(EditorInfo.IME_ACTION_DONE);
+        //setImeOptions(EditorInfo.IME_ACTION_DONE); <--WTF
 
         TypedArray a = context.getTheme().obtainStyledAttributes(
                 attrs,

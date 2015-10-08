@@ -81,9 +81,11 @@
 
                 android:singleLine="true"
                 android:imeOptions="actionNext"
+                android:inputType="textNoSuggestions"
                 android:nextFocusForward="@+id/etEmail_FSU"
 
                 android:paddingRight="@dimen/sign_up_edit_text_margin_padding"
+                android:paddingLeft="@dimen/sign_up_edit_text_margin_padding"
                 android:hint="@string/sign_up_full_name"
                 android:gravity="right|center_vertical"
                 android:textSize="@dimen/login_text_size"
@@ -101,6 +103,7 @@
 
                 android:singleLine="true"
                 android:imeOptions="actionNext"
+                android:inputType="textNoSuggestions"
                 android:nextFocusForward="@+id/etPassword_FSU"
 
                 android:paddingRight="@dimen/sign_up_edit_text_margin_padding"
@@ -135,13 +138,13 @@
 
                     android:singleLine="true"
                     android:imeOptions="actionNext"
+                    android:inputType="textNoSuggestions"
                     android:nextFocusForward="@+id/etConfirm_FSU"
 
                     android:paddingRight="@dimen/sign_up_edit_text_margin_padding"
                     android:gravity="right|center_vertical"
                     android:hint="@string/login_password"
                     android:textSize="@dimen/login_text_size"
-                    android:inputType="textNoSuggestions"
                     android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789"
                     style="@style/EditSignUpScreen"
                     custom:customFont="regular" />
@@ -161,11 +164,11 @@
 
                 android:singleLine="true"
                 android:imeOptions="actionDone"
+                android:inputType="textNoSuggestions"
 
                 android:hint="@string/login_password_confirm"
                 android:gravity="right|center_vertical"
                 android:textSize="@dimen/login_text_size"
-                android:inputType="textNoSuggestions"
                 android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789"
                 style="@style/EditSignUpScreen"
                 custom:customFont="regular" />
