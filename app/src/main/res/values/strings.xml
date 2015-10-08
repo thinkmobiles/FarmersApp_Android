@@ -3,6 +3,8 @@
 
     <string name="facebook_app_id">889106887840848</string>
 
+    <string name="digits">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789</string>
+
     <!--//tutorial-->
     <string name="tutorial_skip">Skip</string>
     <string name="tutorial_content_1">
