@@ -120,8 +120,8 @@ public class TestActivity extends BaseActivity {
 
     }
     @OnClick(R.id.tv_dellAccountByEmail)
-    void testdellAccountByEmail() {
-        RetrofitSingleton.getInstance().dellAccountByEmail(new ACallback<SuccessMsg, ErrorMsg>() {
+    void dellAccountBySession() {
+        RetrofitSingleton.getInstance().dellAccountBySession(new ACallback<SuccessMsg, ErrorMsg>() {
             @Override
             public void onSuccess(SuccessMsg result) {
                 showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);

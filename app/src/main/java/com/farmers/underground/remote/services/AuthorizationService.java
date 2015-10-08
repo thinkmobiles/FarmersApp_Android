@@ -40,7 +40,7 @@ public interface AuthorizationService {
     @GET("users/profile")
     Call<UserProfile> getUserProfileBySession();
 
-    @DELETE ("users/dellAccountByEmail")
-    Call<SuccessMsg> dellAccountByEmail();
+    @DELETE ("users/dellAccountBySession")
+    Call<SuccessMsg> dellAccountBySession();
 
 }

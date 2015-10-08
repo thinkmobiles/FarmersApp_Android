@@ -471,6 +471,24 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     @Override
     public void onSettingsClicked() {
         NotYetHelper.notYetImplmented(this, "drawer settings");
+
+        //todo remove IT later
+
+        showToast("Your Account will be DELETED, TEST",Toast.LENGTH_SHORT);
+        RetrofitSingleton.getInstance().dellAccountBySession(new ACallback<SuccessMsg, ErrorMsg>() {
+            @Override
+            public void onSuccess(SuccessMsg result) {
+                showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
+
+                logOut();
+            }
+
+            @Override
+            public void onError(@NonNull ErrorMsg error) {
+                showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
+            }
+        });
+
         mDrawerlayout.closeDrawers();
     }
 
