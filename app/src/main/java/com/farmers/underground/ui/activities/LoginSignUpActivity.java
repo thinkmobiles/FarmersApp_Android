@@ -174,7 +174,7 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
     @Override
     public void onSuccess(SuccessMsg result) {
         //   switch to add marketire screen A or MainActivity
-
+        FarmersApp.getInstance().onUserLogin();
         getUserProfileAsync();
 
         showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
