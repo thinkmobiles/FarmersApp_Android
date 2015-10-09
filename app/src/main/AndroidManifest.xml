@@ -44,6 +44,12 @@
                 android:resource="@xml/searchable" />
         </activity>
 
+        <activity android:name=".ui.activities.TransparentActivity"
+            android:theme="@style/Theme.AppCompat.Translucent"
+            android:launchMode="singleTop"
+            android:screenOrientation="sensorPortrait">
+        </activity>
+
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
