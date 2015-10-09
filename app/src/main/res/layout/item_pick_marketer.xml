@@ -11,6 +11,5 @@
         android:text="New Text"
         android:gravity="right|center_vertical"
         style="@style/TextPickMarketer"
-        android:id="@+id/tvNameMarketer"
-        custom:customFont="regular" />
+        android:id="@+id/tvNameMarketer" />
 </LinearLayout>

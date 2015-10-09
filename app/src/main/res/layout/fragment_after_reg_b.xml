@@ -11,23 +11,19 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:layout_marginTop="@dimen/login_fragment_padding"
-        android:textSize="@dimen/select_marketeer_text_size"
-        android:textColor="@color/white"
+        style="@style/WhiteSmallRegularText"
         android:text="@string/select_marketeer_text_name"
-        android:id="@+id/textView6"
-        custom:customFont="regular" />
+        android:id="@+id/textView6" />
 
     <com.farmers.underground.ui.custom_views.CustomEditText
         android:layout_width="match_parent"
         android:layout_height="@dimen/select_marketeer_name_height"
-        android:textSize="@dimen/main_text_size"
-        android:textColor="@color/white"
+        style="@style/WhiteNormalRegularText"
         android:gravity="right|center_vertical"
         android:background="@null"
         android:singleLine="true"
         android:imeOptions="actionDone"
-        android:id="@+id/etMarketeer"
-        custom:customFont="regular"  />
+        android:id="@+id/etMarketeer" />
 
     <View
         android:layout_width="match_parent"
@@ -39,8 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="31 / 50"
-        android:textSize="@dimen/select_marketeer_text_size"
-        android:textColor="@color/white"
+        style="@style/WhiteSmallRegularText"
         android:id="@+id/tvCounter"
         android:layout_marginBottom="@dimen/select_marketeer_small_margin"
         android:gravity="left" />
@@ -49,6 +44,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:scrollbars="none"
+        android:divider="@drawable/divider_marketer_list"
         android:id="@+id/lvListMarketeers" />
 
     <LinearLayout
@@ -65,33 +62,17 @@
             android:layout_height="match_parent">
 
             <com.farmers.underground.ui.custom_views.CustomTextView
-                android:layout_width="@dimen/login_btn_register_width"
-                android:layout_height="@dimen/login_btn_register_height"
                 android:text="@string/after_sign_skip"
                 android:id="@+id/tvSkip_FLM"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textColor="@color/white"
                 android:layout_gravity="bottom"
-                android:background="@drawable/btn_register"
-                android:paddingBottom="@dimen/login_btn_register_padding_top_bottom"
-                android:paddingTop="@dimen/login_btn_register_padding_top_bottom"
-                android:paddingLeft="@dimen/login_btn_register_padding_left_right"
-                android:paddingRight="@dimen/login_btn_register_padding_left_right"
-                custom:customFont="bold"/>
-
-            <View
-                android:layout_width="30dp"
-                android:layout_height="0dp"/>
+                style="@style/ButtonAqua"/>
 
             <com.farmers.underground.ui.custom_views.CustomTextView
                 android:layout_width="match_parent"
-                android:textColor="@color/white"
+                style="@style/WhiteNormalRegularText"
                 android:layout_height="wrap_content"
                 android:text="@string/after_sign_propose_skip"
-                android:id="@+id/textView9"
-                custom:customFont="regular"/>
+                android:id="@+id/textView9"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

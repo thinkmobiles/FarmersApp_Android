@@ -9,11 +9,20 @@
         android:background="@color/aqua"
         >
     <com.farmers.underground.ui.custom_views.CustomSearchView
+            android:id="@+id/searchView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:visibility="gone"
-            android:id="@+id/searchView"
+            />
+    <ImageView
+            android:id="@+id/action_calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="?actionBarSize"
+            android:src="@drawable/ic_toolbar_calendar"
+            android:layout_gravity="left"
+            android:clickable="true"
+            android:visibility="gone"
             />
 
     <com.farmers.underground.ui.custom_views.CustomTextView
@@ -27,5 +36,6 @@
             android:gravity="top"
             android:paddingBottom="@dimen/padding_margin_default_tiny"
             />
+
 
 </android.support.v7.widget.Toolbar>

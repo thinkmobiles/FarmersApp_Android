@@ -8,8 +8,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import com.farmers.underground.R;
 import com.farmers.underground.remote.models.CropModel;
-import com.farmers.underground.ui.models.CropsListItemDH;
-import com.farmers.underground.ui.models.CropsListItemVH;
+import com.farmers.underground.ui.models.AllPricesDH;
+import com.farmers.underground.ui.models.AllPricesVH;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,28 +17,30 @@ import java.util.List;
 /**
  * Created by omar on 10/2/15.
  */
-public class CropsListAdapter extends RecyclerView.Adapter<CropsListItemVH> {
-    private List<CropsListItemDH> dataList;
+public class AllPricesAdapter extends RecyclerView.Adapter<AllPricesVH> {
+
+    private List<AllPricesDH> dataList;
     private int lastPosition;
 
-    public CropsListAdapter() {
+    public AllPricesAdapter() {
         dataList = new ArrayList<>();
     }
 
-    public void setDataList(List<CropsListItemDH> dataList) {
+    public void setDataList(List<AllPricesDH> dataList) {
         this.dataList = dataList;
     }
 
     @Override
-    public CropsListItemVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_crops, parent, false);
-        return new CropsListItemVH(view);
+    public AllPricesVH onCreateViewHolder(ViewGroup parent, int viewType) {
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_all_prices, parent, false);
+        return new AllPricesVH(view);
     }
 
     @Override
-    public void onBindViewHolder(CropsListItemVH holder, int position) {
-        holder.bindData(dataList.get(position));
-        setAnimation(holder.getContainer(), position);
+    public void onBindViewHolder(AllPricesVH holder, int position) {
+        boolean hideDevider = position == getItemCount()-1;
+        holder.bindData(dataList.get(position), hideDevider);
+        setAnimation(   holder.getContainer(), position);
     }
 
     @Override
@@ -46,12 +48,9 @@ public class CropsListAdapter extends RecyclerView.Adapter<CropsListItemVH> {
         return dataList.size();
     }
 
-    public interface CropsAdapterCallback {
-        void onItemClicked(CropModel cropModel);
-
-        void onFavChecked(CropModel cropModel, boolean isChecked);
-
-        void onPriceRefreshClicked(CropModel cropModel);
+    public interface AllPricesCallback {
+        void onAllPricesItemClicked(CropModel cropModel);
+        void onAllPricesMorePricesClicked(CropModel cropModel);
     }
 
     private void setAnimation(View viewToAnimate, int position) {

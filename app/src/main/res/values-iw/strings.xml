@@ -5,6 +5,8 @@
 
     <string name="facebook_app_id">889106887840848</string>
 
+    <string name="digits">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789</string>
+
     <!-- //tutorial-->
     <string name="tutorial_skip">דלג</string>
     <string name="tutorial_content_1">ברוכים הבאים להעיקר האיכר אפליקציה חברתית לחקלאי שחושפת ,משווה ועורכת סטטיסטיקות של מחירי מועצת הצמחים, השוק הסיטונאי ומחירי המשווקים. </string>
@@ -16,9 +18,9 @@
     <string name="login_text_header">העיקר האיכר</string>
     <string name="login_text_subheader">מחירי גידולים בצורה נוחה</string>
     <string name="login_email">אימייל</string>
-    <string name="login_password">סיסמה</string>
+    <string name="login_password">סיסמא</string>
 
-    <string name="login_password_confirm">אשר סיסמה</string>
+    <string name="login_password_confirm">אשר סיסמא</string>
     <string name="login_forgot_password">\u200Fשכחת את הסיסמא?</string>
     <string name="login_text_login">כניסה</string>
     <string name="login_or">או</string>
@@ -51,7 +53,7 @@
     <string name="after_sign_enter_marketeer">הזן את שם המשווק שלך</string>
     <string name="after_sign_start">בוא נתחיל</string>
     <string name="after_sign_skip">דלג</string>
-    <string name="after_sign_propose_skip">אתה יכול לדלג, אבל אז לא\n תיחשף למחירי משווקים אחרים</string>
+    <string name="after_sign_propose_skip">אתה יכול לדלג, אבל אז לא\nתיחשף למחירי משווקים אחרים</string>
 
     <!--//after sign b/ selection marketeer-->
     <string name="select_marketeer_text_name">שם המשווק</string>
@@ -76,7 +78,18 @@
     <string name="all">" את כל"</string>
     <string name="tap_to_refresh_price">לחץ לעדכן מחיר</string>
 
+    <!-- add price-->
+    <string name="add_price_bottom_text">*התאריך מעודכן יומיים אחורנית מכיוון שאין את המחיר היומי של המשווקים</string>
+    <string name="add_price_change_date">שינוי תאריך</string>
+    <string name="add_price_hint_price">מחיר?</string>
+    <string name="add_price_hint_type">‫סוג‬?</string>
+    <string name="add_price_incorrect_price">מחיר לא תקין</string>
     <!--prices activity-->
+    <string name="prices_activity_tab1">סטטיסטיקות</string>
+    <string name="prices_activity_tab2">מחירי משווקים</string>
+    <string name="prices_activity_tab3">כל המחירים</string>
+
+    <string name="all_prices_more_price">לחץ לעדכן מחיר</string>
     <string name="tab1">סטטיסטיקות</string>
     <string name="tab2">מחירי משווקים</string>
     <string name="tab3">כל המחירים</string>

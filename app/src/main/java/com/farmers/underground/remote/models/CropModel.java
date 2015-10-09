@@ -10,7 +10,15 @@ public class CropModel {
     private String imgLink;
     private String ID;
     private List<PriceModel> priceList;
+    private String date;
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public String getID() {
         return ID;

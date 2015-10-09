@@ -10,10 +10,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.view.*;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -205,7 +207,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
             @Override
             public void onPriceRefreshClicked(CropModel cropModel) {
-
             }
         };
     }
@@ -426,6 +427,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
+
         if (searchController.isShowing()) {
             menu.findItem(R.id.action_burger).setVisible(false);
             menu.findItem(R.id.action_back).setVisible(true);
@@ -523,21 +525,5 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     }
 
 
-    private void changeTabsFont() {
-
-        ViewGroup vg = (ViewGroup) tabLayout.getChildAt(0);
-        int tabsCount = vg.getChildCount();
-        for (int j = 0; j < tabsCount; j++) {
-            ViewGroup vgTab = (ViewGroup) vg.getChildAt(j);
-            int tabChildsCount = vgTab.getChildCount();
-            for (int i = 0; i < tabChildsCount; i++) {
-                View tabViewChild = vgTab.getChildAt(i);
-                if (tabViewChild instanceof TextView) {
-                    String text = ((TextView) tabViewChild).getText().toString();
-
-                }
-            }
-        }
-    }
 
 }

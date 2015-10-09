@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:paddingLeft="@dimen/add_price_layout_padding_left"
+        android:paddingRight="@dimen/add_price_layout_padding_right"
+        android:paddingTop="@dimen/add_price_layout_padding_top">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/add_price_normal_margin"
+            android:gravity="right">
+
+            <com.farmers.underground.ui.custom_views.CustomTextView
+                style="@style/DarkGreyMainRegularText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin_default_small"
+                android:text="כרמל יבולים"
+                android:id="@+id/tvNameMarketer_FAP" />
+
+            <com.farmers.underground.ui.custom_views.CustomTextView
+                style="@style/LogoMarketer"
+                android:text="כי "
+                android:id="@+id/tvLogo_FAP" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ivIcon_FAP" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.farmers.underground.ui.custom_views.CustomTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/BlueMainRegularText"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text="@string/add_price_change_date"
+                android:id="@+id/tvChangeDate_FAP" />
+
+            <com.farmers.underground.ui.custom_views.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/LightGreyMainRegularText"
+                android:text="יום שני 12.2.15"
+                android:id="@+id/tvDate_FAP" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/default_divider_height"
+            android:layout_marginBottom="@dimen/add_price_big_margin"
+            android:layout_marginTop="@dimen/margin_default_small"
+            android:background="@color/grey"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/add_price_normal_margin">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingRight="20dp">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="17dp"
+                        android:layout_height="22dp"
+                        android:layout_gravity="bottom"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_crop_marketer_price"
+                        android:id="@+id/imageView6"
+                        android:paddingBottom="6dp"/>
+
+                    <com.farmers.underground.ui.custom_views.CustomEditText
+                        style="@style/EditTextAddPrice"
+                        android:digits="1234567890."
+                        android:inputType="number"
+                        android:hint="@string/add_price_hint_price"
+                        android:id="@+id/etPrice_FAP" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/default_divider_height"
+                    android:layout_marginBottom="@dimen/margin_default_tiny"
+                    android:layout_marginTop="@dimen/margin_default_tiny"
+                    android:background="@color/grey"/>
+
+                <com.farmers.underground.ui.custom_views.CustomTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/WhiteSmallRegularText"
+                    android:textColor="@color/text_red"
+                    android:gravity="right"
+                    android:visibility="invisible"
+                    android:drawableLeft="@drawable/ic_error_price"
+                    android:text="@string/add_price_incorrect_price"
+                    android:id="@+id/tvPriceError_FAP" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <com.farmers.underground.ui.custom_views.CustomEditText
+                    style="@style/EditTextAddPrice"
+                    android:hint="@string/add_price_hint_type"
+                    android:textSize="@dimen/main_text_size"
+                    android:id="@+id/etQuality_FAP" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/default_divider_height"
+                    android:layout_marginBottom="@dimen/margin_default_tiny"
+                    android:layout_marginTop="@dimen/margin_default_tiny"
+                    android:background="@color/grey"/>
+
+                <com.farmers.underground.ui.custom_views.CustomTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/WhiteSmallRegularText"
+                    android:textColor="@color/text_light_grey"
+                    android:gravity="right"
+                    android:text="New Text"
+                    android:id="@+id/tvHintQuality_FAP" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <com.farmers.underground.ui.custom_views.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/BlueMainRegularText"
+            android:text="Add quality"
+            android:id="@+id/tvAddQuality_FAP" />
+    </LinearLayout>
+
+    <com.farmers.underground.ui.custom_views.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/add_price_bottom_text"
+        android:textSize="@dimen/add_price_bottom_text_size"
+        android:textColor="@color/grey"
+        android:layout_marginBottom="@dimen/margin_default_small"
+        android:id="@+id/textView10" />
+
+</LinearLayout>

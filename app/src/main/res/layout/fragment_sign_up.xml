@@ -23,8 +23,7 @@
                 android:text="@string/login_register"
                 android:id="@+id/textView"
                 android:layout_centerInParent="true"
-                style="@style/TextLoginScreen"
-                custom:customFont="regular"/>
+                style="@style/WhiteMainRegularText"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -75,13 +74,12 @@
             <com.farmers.underground.ui.custom_views.CustomEditText
                 style="@style/EditSignUpScreen"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/sign_up_edit_text_height"
                 android:id="@+id/etName_FSU"
+                android:hint="@string/sign_up_full_name"
 
-                android:singleLine="true"
                 android:imeOptions="actionNext"
-                android:inputType="textNoSuggestions"
                 android:nextFocusForward="@+id/etEmail_FSU"
+/>
 
                 android:paddingRight="@dimen/sign_up_edit_text_margin_padding"
                 android:paddingLeft="@dimen/sign_up_edit_text_margin_padding"
@@ -97,17 +95,15 @@
 
             <com.farmers.underground.ui.custom_views.CustomEditText
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/sign_up_edit_text_height"
                 android:id="@id/etEmail_FSU"
 
-                android:singleLine="true"
                 android:imeOptions="actionNext"
-                android:inputType="textNoSuggestions"
                 android:nextFocusForward="@+id/etPassword_FSU"
 
                 android:paddingRight="@dimen/sign_up_edit_text_margin_padding"
                 android:paddingLeft="@dimen/sign_up_edit_text_margin_padding"
                 android:hint="@string/login_email"
+                style="@style/EditSignUpScreen"/>
                 android:gravity="start|center_vertical"
                 android:textSize="@dimen/login_text_size"
                 style="@style/EditSignUpScreen"
@@ -131,24 +127,19 @@
                     android:layout_marginLeft="@dimen/sign_up_edit_text_margin_padding"/>
 
                 <com.farmers.underground.ui.custom_views.CustomEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/sign_up_edit_text_height"
+                    android:layout_width="0dp"
                     android:layout_weight="1"
                     android:id="@id/etPassword_FSU"
 
-                    android:singleLine="true"
                     android:imeOptions="actionNext"
-                    android:inputType="textNoSuggestions"
                     android:nextFocusForward="@+id/etConfirm_FSU"
 
                     android:paddingRight="@dimen/sign_up_edit_text_margin_padding"
                     android:paddingLeft="@dimen/sign_up_edit_text_margin_padding"
                     android:gravity="right|center_vertical"
                     android:hint="@string/login_password"
-                    android:textSize="@dimen/login_text_size"
-                    android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789"
-                    style="@style/EditSignUpScreen"
-                    custom:customFont="regular" />
+                    android:digits="@string/digits"
+                    style="@style/EditSignUpScreen" />
 
             </LinearLayout>
 
@@ -159,22 +150,16 @@
 
             <com.farmers.underground.ui.custom_views.CustomEditText
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/sign_up_edit_text_height"
                 android:id="@id/etConfirm_FSU"
 
                 android:paddingLeft="@dimen/sign_up_edit_text_margin_padding"
                 android:paddingRight="@dimen/sign_up_edit_text_margin_padding"
 
-                android:singleLine="true"
                 android:imeOptions="actionDone"
-                android:inputType="textNoSuggestions"
 
                 android:hint="@string/login_password_confirm"
-                android:gravity="right|center_vertical"
-                android:textSize="@dimen/login_text_size"
-                android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789"
-                style="@style/EditSignUpScreen"
-                custom:customFont="regular" />
+                android:digits="@string/digits"
+                style="@style/EditSignUpScreen"/>
         </LinearLayout>
 
         <LinearLayout
@@ -185,13 +170,9 @@
             android:background="@drawable/btn_login">
 
             <com.farmers.underground.ui.custom_views.CustomTextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/login_btn_login_height"
                 android:text="@string/sign_up_text_sign_up"
                 android:id="@+id/tvSignUp_FSU"
-                android:textSize="@dimen/login_text_size"
-                style="@style/TextLoginScreen"
-                custom:customFont="bold" />
+                style="@style/ButtonSignScreens"/>
         </LinearLayout>
 
         <com.farmers.underground.ui.custom_views.CustomTextView
@@ -199,15 +180,11 @@
             android:layout_height="wrap_content"
             android:text="@string/login_or"
             android:id="@+id/textView4"
-            android:textSize="@dimen/login_text_size"
-            custom:customFont="regular"
-            style="@style/TextLoginScreen"
+            style="@style/WhiteMainRegularText"
             android:layout_margin="@dimen/login_margin_btn_logins"/>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/login_btn_login_height"
-            android:gravity="center"
+            style="@style/ButtonSignScreens"
             android:id="@+id/btnSignUpFB_FSU"
             android:background="@drawable/btn_login_facebook">
 
@@ -216,11 +193,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/sign_up_register_facebook"
                 android:id="@+id/tvSignUpFB_FSU"
-                android:textSize="@dimen/login_text_size"
                 android:drawableRight="@drawable/icon_fb"
                 android:drawablePadding="@dimen/login_small_padding_margin"
-                style="@style/TextLoginScreen"
-                custom:customFont="bold" />
+                style="@style/ButtonSignScreens" />
         </LinearLayout>
 
         <LinearLayout
@@ -230,20 +205,9 @@
             android:layout_marginTop="@dimen/sign_up_margin_register_login_fb">
 
             <com.farmers.underground.ui.custom_views.CustomTextView
-                android:layout_width="@dimen/login_btn_register_width"
-                android:layout_height="@dimen/login_btn_register_height"
                 android:text="@string/sign_up_text_login"
                 android:id="@+id/tvLogin_FSU"
-                android:gravity="center"
-                android:textSize="@dimen/login_text_size"
-                android:background="@drawable/btn_register"
-                android:paddingBottom="@dimen/login_btn_register_padding_top_bottom"
-                android:paddingTop="@dimen/login_btn_register_padding_top_bottom"
-                android:paddingLeft="@dimen/login_btn_register_padding_left_right"
-                android:paddingRight="@dimen/login_btn_register_padding_left_right"
-                android:layout_marginRight="@dimen/login_small_padding_margin"
-                style="@style/TextLoginScreen"
-                custom:customFont="bold"/>
+                style="@style/ButtonAqua"/>
 
             <View android:layout_height="0dp" android:layout_width="6.5dp"/>
 
@@ -251,9 +215,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/login_btn_register_height"
                 android:text="@string/sign_up_is_registred"
-                android:textSize="@dimen/login_is_register_text_size"
                 custom:customFont="regular"
-                style="@style/TextLoginScreen" />
+                style="@style/WhiteNormalRegularText" />
         </LinearLayout>
 
     </LinearLayout>
