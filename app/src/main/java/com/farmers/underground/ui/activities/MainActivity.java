@@ -10,12 +10,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -26,11 +24,7 @@ import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.RetrofitSingleton;
-import com.farmers.underground.remote.models.CropModel;
-import com.farmers.underground.remote.models.ErrorMsg;
-import com.farmers.underground.remote.models.SearchHint;
-import com.farmers.underground.remote.models.SuccessMsg;
-import com.farmers.underground.remote.models.UserProfile;
+import com.farmers.underground.remote.models.*;
 import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.ui.adapters.CropsListAdapter;
 import com.farmers.underground.ui.adapters.DrawerAdapter;
@@ -154,7 +148,8 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
 
         for (int i = 0; i < 100; i++) {
-            CropModel basquiatCropModel = new CropModel(i);
+            CropModel basquiatCropModel = new CropModel();
+            basquiatCropModel.setID(String.valueOf(i));
             basquiatCropModel.setImgLink("http://www.potomitan.info/ki_nov/images/basquiat_brownspots.jpg");
             cropsList.add(basquiatCropModel);
         }
@@ -197,18 +192,19 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     private void setCropsListCallback() {
         cropsListCallback = new CropsListAdapter.CropsAdapterCallback() {
+
             @Override
-            public void onItemClicked(int pos) {
+            public void  onItemClicked(CropModel cropModel) {
+                    PricesActivity.start(MainActivity.this,cropModel);
+            }
+
+            @Override
+            public void onFavChecked(CropModel cropModel, boolean isChecked) {
 
             }
 
             @Override
-            public void onFavChecked(int pos, boolean isChecked) {
-
-            }
-
-            @Override
-            public void onPriceRefreshClicked(int pos) {
+            public void onPriceRefreshClicked(CropModel cropModel) {
 
             }
         };
@@ -288,6 +284,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     }
 
     private void forceHideSearchList() {
+
         hideSoftKeyboard();
         searchController.hide();
         invalidateOptionsMenu();
@@ -422,6 +419,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                 return true;
             case R.id.action_back:
                 forceHideSearchList();
+                searchView.setIconified(true);
                 return true;
         }
         return false;
@@ -525,5 +523,22 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         });
     }
 
+
+    private void changeTabsFont() {
+
+        ViewGroup vg = (ViewGroup) tabLayout.getChildAt(0);
+        int tabsCount = vg.getChildCount();
+        for (int j = 0; j < tabsCount; j++) {
+            ViewGroup vgTab = (ViewGroup) vg.getChildAt(j);
+            int tabChildsCount = vgTab.getChildCount();
+            for (int i = 0; i < tabChildsCount; i++) {
+                View tabViewChild = vgTab.getChildAt(i);
+                if (tabViewChild instanceof TextView) {
+                    String text = ((TextView) tabViewChild).getText().toString();
+
+                }
+            }
+        }
+    }
 
 }

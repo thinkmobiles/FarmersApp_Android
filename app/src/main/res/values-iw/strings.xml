@@ -73,5 +73,9 @@
     <string name="all">" את כל"</string>
     <string name="tap_to_refresh_price">לחץ לעדכן מחיר</string>
 
+    <!--prices activity-->
+    <string name="tab1">סטטיסטיקות</string>
+    <string name="tab2">מחירי משווקים</string>
+    <string name="tab3">כל המחירים</string>
 
 </resources>

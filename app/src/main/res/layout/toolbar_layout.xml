@@ -16,7 +16,7 @@
             android:id="@+id/searchView"
             />
 
-        <com.farmers.underground.ui.custom_views.CustomTextView
+    <com.farmers.underground.ui.custom_views.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"

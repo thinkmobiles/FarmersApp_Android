@@ -10,6 +10,7 @@ import com.farmers.underground.BuildConfig;
 import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
 import com.farmers.underground.remote.RetrofitSingleton;
+import com.farmers.underground.remote.models.CropModel;
 import com.farmers.underground.remote.models.ErrorMsg;
 import com.farmers.underground.remote.models.SuccessMsg;
 import com.farmers.underground.remote.models.UserProfile;
@@ -103,7 +104,6 @@ public class TestActivity extends BaseActivity {
         FarmersApp.wipeUsrPreferences();
     }
 
-
     @OnClick(R.id.tv_log_Out)
     void testLogout() {
         RetrofitSingleton.getInstance().signOut(new ACallback<SuccessMsg, ErrorMsg>() {
@@ -134,6 +134,14 @@ public class TestActivity extends BaseActivity {
             }
         });
 
+    }
+
+    @OnClick(R.id.tv_Prices_Activity)
+    void startPricesActivity(){
+        CropModel basquiatCropModel = new CropModel();
+        basquiatCropModel.setID("some id");
+        basquiatCropModel.setImgLink("http://www.potomitan.info/ki_nov/images/basquiat_brownspots.jpg");
+        PricesActivity.start(this,basquiatCropModel);
     }
 
     @OnClick(R.id.tv_transp_Activity)

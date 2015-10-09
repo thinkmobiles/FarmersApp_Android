@@ -63,6 +63,14 @@
             android:layout_margin="10dp"/>
 
     <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_Prices_Activity"
+            android:text="Prices Ativity"
+            android:layout_margin="10dp"
+            android:padding="20dp"/>
+
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tv_dellAccountByEmail"
@@ -77,6 +85,8 @@
         android:text="Log out"
         android:layout_margin="10dp"
         android:padding="20dp"/>
+
+
 
     <Button
         android:layout_width="wrap_content"
