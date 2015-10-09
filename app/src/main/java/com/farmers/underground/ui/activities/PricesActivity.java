@@ -13,6 +13,7 @@ import butterknife.ButterKnife;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.CropModel;
+import com.farmers.underground.ui.adapters.AllPricesAdapter;
 import com.farmers.underground.ui.adapters.ProjectPagerAdapter;
 import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.base.BaseFragment;
@@ -27,7 +28,9 @@ import java.util.List;
 /**
  * Created by omar on 10/9/15.
  */
-public class PricesActivity extends BaseActivity {
+public class PricesActivity
+        extends BaseActivity
+        implements AllPricesAdapter.AllPricesCallback  {
 
     @Bind(R.id.drawer_conainer_MainActivity)
     protected FrameLayout mainCOntainer;
@@ -119,6 +122,19 @@ public class PricesActivity extends BaseActivity {
 
     private void setTabs() {
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+
+
+    // all prices fragment callbacks
+    @Override
+    public void onAllPricesItemClicked(CropModel cropModel) {
+
+    }
+
+    @Override
+    public void onAllPricesMorePricesClicked(CropModel cropModel) {
+
     }
 
 

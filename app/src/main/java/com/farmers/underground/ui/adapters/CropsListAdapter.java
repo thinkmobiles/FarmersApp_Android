@@ -29,14 +29,12 @@ public class CropsListAdapter extends RecyclerView.Adapter<CropsListItemVH> {
     @Override
     public CropsListItemVH onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_crops, parent, false);
-
         return new CropsListItemVH(view);
     }
 
     @Override
     public void onBindViewHolder(CropsListItemVH holder, int position) {
         holder.bindData(dataList.get(position));
-
     }
 
     @Override

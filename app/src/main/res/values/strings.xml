@@ -89,4 +89,5 @@
     <string name="prices_activity_tab1">Statistics</string>
     <string name="prices_activity_tab2">Marketeer prices</string>
     <string name="prices_activity_tab3">All prices</string>
+    <string name="all_prices_more_price">More prices</string>
 </resources>

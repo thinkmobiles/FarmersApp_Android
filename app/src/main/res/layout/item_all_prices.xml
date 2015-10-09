@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:custom="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/all_prices_item_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        >
+
+    <LinearLayout
+            android:layout_width="57dp"
+            android:layout_height="59dp"
+            android:background="@drawable/bg_all_prices_calendar"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="@dimen/padding_margin_default_tiny"
+            android:paddingRight="@dimen/padding_margin_default_tiny"
+            android:layout_marginLeft="@dimen/padding_margin_default_medium"
+            android:layout_marginRight="@dimen/padding_margin_default_medium" android:id="@+id/ll_DateHolder_AllPrices"
+            android:layout_alignParentRight="true">
+
+        <com.farmers.underground.ui.custom_views.CustomTextView
+                android:id="@+id/tv_DayAllPrices"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="9"
+                android:textColor="@color/text_dark_grey"
+                android:textSize="@dimen/all_prices_calendar_day_text_size"
+                custom:customFont="avenir"
+                android:layout_marginBottom="-5dp"/>
+
+        <com.farmers.underground.ui.custom_views.CustomTextView
+                android:id="@+id/tv_MonthCalendarAllPrices"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="אוקטובר"
+                android:textColor="@color/text_dark_grey"
+                android:textSize="@dimen/all_prices_calendar_month_text_size"
+                custom:customFont="bold"/>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginLeft="@dimen/padding_margin_default_tiny"
+                android:layout_marginRight="@dimen/padding_margin_default_tiny"
+                android:layout_marginBottom="1dp"
+                android:background="@color/text_dark_grey"/>
+
+        <com.farmers.underground.ui.custom_views.CustomTextView
+                android:id="@+id/tv_YearAllPrices"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|top"
+                android:layout_marginLeft="@dimen/crops_card_calendar_margin_right"
+                android:layout_marginRight="@dimen/crops_card_calendar_margin_right"
+                android:text="2015"
+                android:layout_marginBottom="4dp"
+                android:textColor="@color/text_dark_grey"
+                android:textSize="@dimen/all_prices_calendar_year_text_size"
+                custom:customFont="bold"/>
+    </LinearLayout>
+    <LinearLayout
+            android:id="@+id/ll_PricesContainer_CropItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_toLeftOf="@+id/ll_DateHolder_AllPrices">
+
+        <include layout="@layout/item_all_prices_price"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:layout_marginLeft="@dimen/margin_default_normal"
+                />
+
+        <include layout="@layout/item_all_prices_price"/>
+
+        <include layout="@layout/item_all_prices_price"/>
+
+    </LinearLayout>
+    <View
+            android:layout_marginTop="@dimen/margin_default_normal"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/bg_grey_opaque"
+            android:layout_gravity="center_vertical" android:id="@+id/v_Devider_AllPrices"
+            android:layout_alignRight="@+id/ll_PricesContainer_CropItem"
+            android:layout_below="@+id/ll_DateHolder_AllPrices"/>
+</RelativeLayout>

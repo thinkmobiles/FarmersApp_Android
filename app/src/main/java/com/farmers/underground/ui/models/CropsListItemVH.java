@@ -68,7 +68,7 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
 
             if(i != 0 ){
                 tv_refreshDate.setVisibility(View.INVISIBLE);
-                tv_refreshDate.setOnClickListener(null);
+                tv_refresh.setOnClickListener(null);
                 tv_refresh.setVisibility(View.INVISIBLE);
             }
 
@@ -82,7 +82,7 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
         dateHolder.getCallback().onFavChecked(dateHolder.getModel(), cb_Fav.isChecked());
     }
 
-    @OnClick(R.id.crops_item_view)
+    @OnClick(R.id.iv_CropsItemImage)
     protected void onImageCLicked(){
         dateHolder.getCallback().onItemClicked(dateHolder.getModel());
     }

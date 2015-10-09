@@ -78,4 +78,6 @@
     <string name="prices_activity_tab2">מחירי משווקים</string>
     <string name="prices_activity_tab3">כל המחירים</string>
 
+    <string name="all_prices_more_price">לחץ לעדכן מחיר</string>
+
 </resources>
