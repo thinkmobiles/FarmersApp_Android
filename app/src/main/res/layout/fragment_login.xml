@@ -74,7 +74,6 @@
                 android:id="@+id/etPassword"
                 style="@style/EditLoginScreen"
                 android:layout_width="match_parent"
-                android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789"
                 android:gravity="right|center_vertical"
                 android:hint="@string/login_password"
                 android:digits="@string/digits"
@@ -93,7 +92,6 @@
         <com.farmers.underground.ui.custom_views.CustomTextView
             android:id="@+id/tvForgot"
             style="@style/WhiteMainRegularText"
-            android:layout_width="wrap_content"
             android:textColor="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
