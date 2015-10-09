@@ -41,6 +41,8 @@ android {
             debuggable true
             minifyEnabled false
 
+            versionNameSuffix 'debug = ' + getDate()
+
             //noinspection GroovyAssignabilityCheck
             signingConfig signingConfigs.debug
 
@@ -50,6 +52,8 @@ android {
         debug_release_en {
             debuggable true
             minifyEnabled false
+
+            versionNameSuffix 'db-release-en = ' + getDate()
 
             //noinspection GroovyAssignabilityCheck
             signingConfig signingConfigs.release
@@ -61,6 +65,8 @@ android {
             debuggable true
             minifyEnabled false
 
+            versionNameSuffix 'db-release-iw = ' + getDate()
+
             //noinspection GroovyAssignabilityCheck
             signingConfig signingConfigs.release
 
@@ -71,7 +77,7 @@ android {
         release {
             debuggable false
             minifyEnabled false
-
+            versionNameSuffix 'release = ' + getDate()
             //noinspection GroovyAssignabilityCheck
             signingConfig signingConfigs.release
 
@@ -126,4 +132,10 @@ dependencies {
         transitive = true;
     }
 
+
+}
+
+// Utilities
+def getDate() {
+    return new Date().format('dd/MM/yyyy')
 }

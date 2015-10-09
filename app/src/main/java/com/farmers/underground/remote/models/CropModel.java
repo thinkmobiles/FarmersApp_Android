@@ -1,17 +1,26 @@
 package com.farmers.underground.remote.models;
 
+import java.util.List;
+
 /**
  * Created by omar on 10/2/15.
  */
 public class CropModel {
-    private String imgLink;
-    private int ID;
 
-    public CropModel(int ID) {
-        this.ID = ID;
+    private String imgLink;
+    private String ID;
+    private List<PriceModel> priceList;
+    private String date;
+
+    public String getDate() {
+        return date;
     }
 
-    public int getID() {
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getID() {
         return ID;
     }
 
@@ -21,5 +30,17 @@ public class CropModel {
 
     public void setImgLink(String imgLink) {
         this.imgLink = imgLink;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
+    public List<PriceModel> getPriceList() {
+        return priceList;
+    }
+
+    public void setPriceList(List<PriceModel> priceList) {
+        this.priceList = priceList;
     }
 }

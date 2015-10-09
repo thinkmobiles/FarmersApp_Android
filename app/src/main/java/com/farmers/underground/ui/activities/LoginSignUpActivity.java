@@ -140,7 +140,7 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
                                        /* ignore */
                                     }
                                 }
-                                if (TextUtils.isEmpty(id)||TextUtils.isEmpty(accessToken.getToken())){
+                                if (TextUtils.isEmpty(id) || TextUtils.isEmpty(accessToken.getToken())){
                                     onError(new ErrorMsg("No facebook id")); //<--TODO
                                 } else {
                                     final UserSignUpFB userSignUpFB = new UserSignUpFB(id, accessToken.getToken(), picture, name, email);
@@ -151,7 +151,7 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
                             }
 
                         } else {
-                            onError(new ErrorMsg(response.getError().toString()));
+                            onError(new ErrorMsg(response.getError().getErrorUserMessage()));
                         }
 
                     }
@@ -174,7 +174,7 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
     @Override
     public void onSuccess(SuccessMsg result) {
         //   switch to add marketire screen A or MainActivity
-
+        FarmersApp.getInstance().onUserLogin();
         getUserProfileAsync();
 
         showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);

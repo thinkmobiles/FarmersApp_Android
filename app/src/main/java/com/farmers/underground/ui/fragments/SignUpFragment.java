@@ -13,10 +13,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import com.facebook.login.LoginManager;
+import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
 import com.farmers.underground.remote.RetrofitSingleton;
 import com.farmers.underground.remote.models.ErrorMsg;
 import com.farmers.underground.remote.models.SuccessMsg;
+import com.farmers.underground.remote.models.UserCredentials;
 import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.ui.activities.LoginSignUpActivity;
 import com.farmers.underground.ui.base.BaseFragment;
@@ -43,7 +45,7 @@ public class SignUpFragment extends BaseFragment<LoginSignUpActivity>  {
     @Bind(R.id.etConfirm_FSU)
     protected EditText etConfirm;
 
-    private boolean isVisiablePass = false;
+    private boolean isVisiblePass = false;
 
     @Override
     protected int getLayoutResId() {
@@ -75,7 +77,7 @@ public class SignUpFragment extends BaseFragment<LoginSignUpActivity>  {
 
     @OnClick(R.id.ivShowPass_FSU)
     protected void showHidePass() {
-        if (isVisiablePass) {
+        if (isVisiblePass) {
             etPassword.setTransformationMethod(new PasswordTransformationMethod());
         } else {
             etPassword.setTransformationMethod(new TransformationMethod() {
@@ -90,15 +92,15 @@ public class SignUpFragment extends BaseFragment<LoginSignUpActivity>  {
                 }
             });
         }
-        isVisiablePass = !isVisiablePass;
+        isVisiblePass = !isVisiblePass;
         etPassword.setSelection(etPassword.getText().length());
     }
 
     @OnClick(R.id.btnSignUp_FSU)
     protected void signUp() {
         String name = etName.getText().toString();
-        String email = etEmail.getText().toString();
-        String password = etPassword.getText().toString();
+        final String email = etEmail.getText().toString();
+        final String password = etPassword.getText().toString();
         if (isEmpty(name, "name") || isEmpty(email, "email") || isEmpty(password, "password")) {
             return;
         }
@@ -119,6 +121,9 @@ public class SignUpFragment extends BaseFragment<LoginSignUpActivity>  {
         RetrofitSingleton.getInstance().registerViaEmail(name, email, password, new ACallback<SuccessMsg, ErrorMsg>() {
             @Override
             public void onSuccess(SuccessMsg result) {
+
+                FarmersApp.getInstance().saveUserCredentials(new UserCredentials(email,password));
+
                 getHostActivity().showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
                 getHostActivity().showDialogConfirm();
             }

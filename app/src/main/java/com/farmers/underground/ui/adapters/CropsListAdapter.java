@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.farmers.underground.R;
+import com.farmers.underground.remote.models.CropModel;
 import com.farmers.underground.ui.models.CropsListItemDH;
 import com.farmers.underground.ui.models.CropsListItemVH;
 
@@ -15,7 +16,6 @@ import java.util.List;
  * Created by omar on 10/2/15.
  */
 public class CropsListAdapter extends RecyclerView.Adapter<CropsListItemVH> {
-    private int height = 0;
     private List<CropsListItemDH> dataList;
 
     public CropsListAdapter() {
@@ -29,27 +29,12 @@ public class CropsListAdapter extends RecyclerView.Adapter<CropsListItemVH> {
     @Override
     public CropsListItemVH onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_crops, parent, false);
-         /*if (height == 0) view.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                if (height == 0) {
-                    height = view.getMeasuredWidth();
-                    setMinHeight(view, height);
-                } else setMinHeight(view, height);
-                view.getViewTreeObserver().removeOnPreDrawListener(this);
-                return false;
-            }
-        });
-        else {
-            setMinHeight(view, height);
-        }*/
         return new CropsListItemVH(view);
     }
 
     @Override
     public void onBindViewHolder(CropsListItemVH holder, int position) {
         holder.bindData(dataList.get(position));
-
     }
 
     @Override
@@ -58,13 +43,15 @@ public class CropsListAdapter extends RecyclerView.Adapter<CropsListItemVH> {
     }
 
     public interface CropsAdapterCallback {
-        void onItemClicked(int pos);
+        void onItemClicked(CropModel cropModel);
 
-        void onFavChecked(int pos, boolean isChecked);
+        void onFavChecked(CropModel cropModel, boolean isChecked);
 
-        void onPriceRefreshClicked(int pos);
+        void onPriceRefreshClicked(CropModel cropModel);
     }
     private void setMinHeight(View view, int height){
         view.setMinimumHeight(height);
     }
+
+
 }

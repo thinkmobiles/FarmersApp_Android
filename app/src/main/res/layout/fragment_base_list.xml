@@ -6,14 +6,14 @@
         >
 
     <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_FragmentCrops"
+            android:id="@+id/rv_BaseListFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
              android:scrollbars="vertical"
             />
 
     <TextView layout="@layout/item_search_hint"
-              android:id="@+id/tv_NoItemsCropsFragment"
+              android:id="@+id/tv_NoItemsBaseListFragment"
               android:visibility="gone"
               android:gravity="center_horizontal"
               style="@style/TV_SearchHintListItem"

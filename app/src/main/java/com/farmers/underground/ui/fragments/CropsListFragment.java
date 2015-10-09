@@ -16,7 +16,7 @@ import com.farmers.underground.remote.models.CropModel;
 import com.farmers.underground.ui.activities.FragmentViewsCreatedCallback;
 import com.farmers.underground.ui.adapters.CropsListAdapter;
 import com.farmers.underground.ui.base.BaseFragment;
-import com.farmers.underground.ui.custom_views.DividerItemDecoration;
+import com.farmers.underground.ui.custom_views.CropsItemDivider;
 import com.farmers.underground.ui.models.CropsListFragmentModel;
 import com.farmers.underground.ui.models.CropsListItemDH;
 import com.farmers.underground.ui.utils.ResourceRetriever;
@@ -31,10 +31,10 @@ public class CropsListFragment
         extends BaseFragment
         implements SearchQueryFragmentCallback {
 
-    @Bind(R.id.rv_FragmentCrops)
+    @Bind(R.id.rv_BaseListFragment)
     protected RecyclerView recyclerView;
 
-    @Bind(R.id.tv_NoItemsCropsFragment)
+    @Bind(R.id.tv_NoItemsBaseListFragment)
     protected TextView tv_NoItems;
 
     private CropsListFragmentModel thisModel;
@@ -68,7 +68,7 @@ public class CropsListFragment
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.fragment_crops_list;
+        return R.layout.fragment_base_list;
     }
 
     @Override
@@ -76,7 +76,7 @@ public class CropsListFragment
         View v = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, v);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.addItemDecoration(new DividerItemDecoration(ResourceRetriever.retrievePX(getContext(),R.dimen
+        recyclerView.addItemDecoration(new CropsItemDivider(ResourceRetriever.retrievePX(getContext(),R.dimen
                 .crops_card_layout_margin)));
         return v;
     }

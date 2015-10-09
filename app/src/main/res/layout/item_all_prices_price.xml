@@ -9,8 +9,8 @@
 
     <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/crop_price_layout_height"
-            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
             android:orientation="horizontal">
 
         <ImageView
@@ -19,7 +19,7 @@
                 android:layout_height="@dimen/crop_price_icon_size"
                 android:layout_gravity="bottom"
                 android:scaleType="fitXY"
-                android:src="@drawable/ic_crop_marketer_price"/>
+                android:src="@drawable/ic_crop_marketer_price" android:layout_marginBottom="6dp"/>
 
         <com.farmers.underground.ui.custom_views.CustomTextView
                 android:id="@+id/tv_Price"
@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:text="4.50"
                 android:textColor="@color/text_dark_grey"
-                android:textSize="@dimen/crop_price_price_text_size"
+                android:textSize="@dimen/all_prices_price_text_size"
             custom:customFont="roboto_light"/>
     </LinearLayout>
 
@@ -36,28 +36,20 @@
             style="@style/TV_Small_CropsItem"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:gravity="right"
             android:text="גידולים חיפוש"
             android:textColor="@color/text_light_grey"
             android:textSize="@dimen/crop_price_name_marketer_text_size"
             custom:customFont="regular"/>
 
-        <com.farmers.underground.ui.custom_views.CustomTextView
-            android:id="@+id/tv_PriceDate_CropItem"
-            style="@style/TV_Small_CropsItem"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:text="(15.4.11)"
-            android:textColor="@color/text_light_grey"
-            android:textSize="@dimen/crop_price_name_marketer_text_size"
-            custom:customFont="regular" android:visibility="visible"/>
-
-        <com.farmers.underground.ui.custom_views.CustomTextView
+    <com.farmers.underground.ui.custom_views.CustomTextView
             android:id="@+id/tv_RefresPrice_CropsItem"
             style="@style/TV_Small_CropsItem"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:gravity="right"
             android:clickable="true"
-            android:text="@string/tap_to_refresh_price"
+            android:text="@string/all_prices_more_price"
             android:textColor="@color/selector_tap_to_refresh"
             android:textSize="@dimen/crop_price_refresh_text_size"
             custom:customFont="regular"/>

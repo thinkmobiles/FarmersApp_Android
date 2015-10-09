@@ -59,4 +59,8 @@
 
     //crops
     <color name="crops_calendar_color">#59000000</color>
+
+    <color name="bg_transparent_activity">#cc000000</color>
+    <color name="bg_transparent_activity_container_default">#cc000000</color>
+
 </resources>

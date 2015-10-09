@@ -4,10 +4,10 @@ import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-public class DividerItemDecoration extends RecyclerView.ItemDecoration {
+public class CropsItemDivider extends RecyclerView.ItemDecoration {
     private final int mVerticalSpaceHeight;
 
-    public DividerItemDecoration(int mVerticalSpaceHeight) {
+    public CropsItemDivider(int mVerticalSpaceHeight) {
         this.mVerticalSpaceHeight = mVerticalSpaceHeight;
     }
 

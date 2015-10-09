@@ -80,7 +80,7 @@ public class FarmersApp extends Application {
     }
 
     public void onUserLogin(){
-
+        setLogedInBefore();
     }
 
     public void onUserLogOut() {
@@ -137,6 +137,13 @@ public class FarmersApp extends Application {
         if (getUsrPreferences().contains(ProjectConstants.KEY_CURRENT_USER_LOGIN) && getUsrPreferences().contains(ProjectConstants.KEY_CURRENT_USER_PASSWORD)){
             return new UserCredentials(getUsrPreferences().getString(ProjectConstants.KEY_CURRENT_USER_LOGIN,""),getUsrPreferences().getString(ProjectConstants.KEY_CURRENT_USER_PASSWORD,""));
         } else return null;
+    }
+
+    public boolean wasLogedInBefore(){
+      return FarmersApp.getUsrPreferences().contains(ProjectConstants.KEY_CURRENT_USER_LOGIN_SUCCESFUL) && FarmersApp.getUsrPreferences().getBoolean(ProjectConstants.KEY_CURRENT_USER_LOGIN_SUCCESFUL,false);
+    }
+    public void setLogedInBefore(){
+       FarmersApp.getUsrPreferences().edit().putBoolean(ProjectConstants.KEY_CURRENT_USER_LOGIN_SUCCESFUL,true).apply();
     }
 
     public static SharedPreferences getAppPreferences() {

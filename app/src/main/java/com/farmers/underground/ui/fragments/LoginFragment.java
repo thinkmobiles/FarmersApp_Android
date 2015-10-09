@@ -69,7 +69,7 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> {
             //etPassword.setText(userCredentials.getPass());
         }
 
-        if (FarmersApp.getInstance().isUserAuthenticated()){
+        if (FarmersApp.getInstance().isUserAuthenticated() &&  FarmersApp.getInstance().wasLogedInBefore()){
             getHostActivity().getUserProfileAsync();
         }
     }
@@ -188,7 +188,7 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> {
             @Override
             public void onSuccess(SuccessMsg result) {
                 getHostActivity().showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
-
+                FarmersApp.getInstance().onUserLogin();
                 FarmersApp.getInstance().saveUserCredentials(new UserCredentials(email, password));
 
                 getHostActivity().getUserProfileAsync();
