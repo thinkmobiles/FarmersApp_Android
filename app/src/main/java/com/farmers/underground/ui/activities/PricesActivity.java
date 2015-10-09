@@ -13,9 +13,16 @@ import butterknife.ButterKnife;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.CropModel;
+import com.farmers.underground.ui.adapters.ProjectPagerAdapter;
 import com.farmers.underground.ui.base.BaseActivity;
+import com.farmers.underground.ui.base.BaseFragment;
+import com.farmers.underground.ui.fragments.AllPricesFragment;
+import com.farmers.underground.ui.models.DateRange;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by omar on 10/9/15.
@@ -34,7 +41,8 @@ public class PricesActivity extends BaseActivity {
     @Bind(R.id.vp_PricesActivity)
     protected ViewPager viewPager;
 
-    private CropModel cropModel;
+    private CropModel mCropModel;
+    private ProjectPagerAdapter<BaseFragment> pagerAdapter;
 
     public static void start(@NonNull Context context, CropModel cropModel) {
         Gson gson = new GsonBuilder().create();
@@ -49,10 +57,12 @@ public class PricesActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         getDataOnStart(getIntent());
         ButterKnife.bind(this);
-        setSupportActionBar(mToolbar);
-        if( getSupportActionBar()!=null)
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        setSupportActionBar(mToolbar);
+        if (getSupportActionBar() != null) getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        setViewPager();
+        setTabs();
     }
 
     @Override
@@ -67,8 +77,52 @@ public class PricesActivity extends BaseActivity {
 
     private void getDataOnStart(Intent intent) {
         Gson gson = new GsonBuilder().create();
-        cropModel = gson.fromJson(intent.getStringExtra(ProjectConstants.KEY_DATA), CropModel.class);
-        if (cropModel == null)
+        mCropModel = gson.fromJson(intent.getStringExtra(ProjectConstants.KEY_DATA), CropModel.class);
+        if (mCropModel == null)
             throw new IllegalAccessError("Create this activity with start(Context, CropModel) " + "method only!");
+    }
+
+
+    //ViewPager
+
+    public void setViewPager() {
+
+        pagerAdapter = new ProjectPagerAdapter<>(getSupportFragmentManager());
+        viewPager.setAdapter(pagerAdapter);
+        pagerAdapter.setFragments(getFragmentList());
+        pagerAdapter.setTitles(getTitlesList());
+        pagerAdapter.notifyDataSetChanged();
+        viewPager.setCurrentItem(pagerAdapter.getCount() - 1);
+    }
+
+    private List<String> getTitlesList() {
+        List<String> titles = new ArrayList<>();
+        titles.add(getString(R.string.prices_activity_tab1));
+        titles.add(getString(R.string.prices_activity_tab2));
+        titles.add(getString(R.string.prices_activity_tab3));
+        return titles;
+    }
+
+    private List<BaseFragment> getFragmentList() {
+        List<BaseFragment> fragmentList = new ArrayList<>();
+
+        fragmentList.add(createAlLPricesFragemnt(mCropModel));
+        fragmentList.add(createAlLPricesFragemnt(mCropModel));
+        fragmentList.add(createAlLPricesFragemnt(mCropModel));
+
+        return fragmentList;
+    }
+
+    private BaseFragment createAlLPricesFragemnt(CropModel cropModel) {
+        return AllPricesFragment.getInstance(cropModel);
+    }
+
+    private void setTabs() {
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
+
+    public interface DateRangeSetter {
+        void setDateRange(DateRange dateRange);
     }
 }

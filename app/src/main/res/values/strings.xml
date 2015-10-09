@@ -86,7 +86,7 @@
     <string name="tap_to_refresh_price">Tap to refresh price</string>
 
     <!--prices activity-->
-    <string name="tab1">Statistics</string>
-    <string name="tab2">Marketeer prices</string>
-    <string name="tab3">All prices</string>
+    <string name="prices_activity_tab1">Statistics</string>
+    <string name="prices_activity_tab2">Marketeer prices</string>
+    <string name="prices_activity_tab3">All prices</string>
 </resources>

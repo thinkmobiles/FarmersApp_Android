@@ -70,7 +70,7 @@
     <dimen name="progress_dialog_message_size">18sp</dimen>
     <!--main activity-->
     <dimen name="fragment_crops_recycler_padding_x">10dp</dimen>
-    <dimen name="tabs_text_size">18sp</dimen>
+    <dimen name="tabs_text_size">15sp</dimen>
     <dimen name="search_hint_list_item_padding_x">20dp</dimen>
     <dimen name="search_hint_list_item_padding_y">10dp</dimen>
     <dimen name="search_hint_list_item_text_size">18sp</dimen>

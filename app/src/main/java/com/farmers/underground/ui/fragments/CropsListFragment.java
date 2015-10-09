@@ -31,10 +31,10 @@ public class CropsListFragment
         extends BaseFragment
         implements SearchQueryFragmentCallback {
 
-    @Bind(R.id.rv_FragmentCrops)
+    @Bind(R.id.rv_BaseListFragment)
     protected RecyclerView recyclerView;
 
-    @Bind(R.id.tv_NoItemsCropsFragment)
+    @Bind(R.id.tv_NoItemsBaseListFragment)
     protected TextView tv_NoItems;
 
     private CropsListFragmentModel thisModel;
@@ -68,7 +68,7 @@ public class CropsListFragment
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.fragment_crops_list;
+        return R.layout.fragment_base_list;
     }
 
     @Override

@@ -6,8 +6,6 @@ package com.farmers.underground.remote.models;
 public class PriceModel {
     private String price;
     private String marketeerName;
-    private String date;
-
 
     public String getPrice() {
         return price;
@@ -25,11 +23,5 @@ public class PriceModel {
         this.marketeerName = marketeerName;
     }
 
-    public String getDate() {
-        return date;
-    }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
 }
