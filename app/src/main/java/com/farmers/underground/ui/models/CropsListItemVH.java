@@ -17,6 +17,7 @@ import com.squareup.picasso.Picasso;
  * Created by omar on 10/2/15.
  */
 public class CropsListItemVH extends RecyclerView.ViewHolder {
+
     @Bind(R.id.iv_CropsItemImage)
     protected ImageView  iv_CropsImage;
 
@@ -37,6 +38,9 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
 
     @Bind(R.id.ll_PricesContainer_CropItem)
     protected LinearLayout ll_PriceContainer;
+
+
+
     private CropsListItemDH dateHolder;
 
     float radius;
@@ -75,17 +79,17 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
 
     @OnClick(R.id.cb_FavouriteCropsItem)
     protected void onFaveChecked(){
-        dateHolder.getCallback().onFavChecked(dateHolder.getModel().getID(), cb_Fav.isChecked());
+        dateHolder.getCallback().onFavChecked(dateHolder.getModel(), cb_Fav.isChecked());
     }
 
-    @OnClick(R.id.iv_CropsItemImage)
+    @OnClick(R.id.crops_item_view)
     protected void onImageCLicked(){
-        dateHolder.getCallback().onItemClicked(dateHolder.getModel().getID());
+        dateHolder.getCallback().onItemClicked(dateHolder.getModel());
     }
 
     @OnClick(R.id.tv_RefresPrice_CropsItem)
     protected void onRefreshClicked(){
-        dateHolder.getCallback().onPriceRefreshClicked(dateHolder.getModel().getID());
+        dateHolder.getCallback().onPriceRefreshClicked(dateHolder.getModel());
     }
 
 }

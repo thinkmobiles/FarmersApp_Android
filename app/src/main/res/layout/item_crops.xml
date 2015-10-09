@@ -10,7 +10,8 @@
         android:layout_marginTop="@dimen/crops_card_layout_margin_top"
         android:layout_marginLeft="@dimen/crops_card_layout_margin"
         android:layout_marginRight="@dimen/crops_card_layout_margin"
-        custom:cardPreventCornerOverlap="false">
+        custom:cardPreventCornerOverlap="false"
+        android:clickable="true">
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -25,8 +26,7 @@
                     android:id="@+id/iv_CropsItemImage"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/crops_card_header_height"
-                    android:clickable="true"
-                    android:background="@drawable/ic_drawer_crops"
+                     android:background="@drawable/ic_drawer_crops"
                     android:scaleType="centerCrop"
                     custom:sriv_left_top_corner_radius="@dimen/crops_card_corner_radius"
                     custom:sriv_right_top_corner_radius="@dimen/crops_card_corner_radius"/>
