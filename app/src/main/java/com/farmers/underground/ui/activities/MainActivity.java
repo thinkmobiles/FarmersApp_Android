@@ -429,6 +429,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
+
         if (searchController.isShowing()) {
             menu.findItem(R.id.action_burger).setVisible(false);
             menu.findItem(R.id.action_back).setVisible(true);

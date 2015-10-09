@@ -52,6 +52,6 @@
             android:text="@string/all_prices_more_price"
             android:textColor="@color/selector_tap_to_refresh"
             android:textSize="@dimen/crop_price_refresh_text_size"
-            custom:customFont="regular"/>
+            custom:customFont="bold"/>
 
 </LinearLayout>

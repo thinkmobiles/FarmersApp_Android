@@ -39,7 +39,12 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
     @Bind(R.id.ll_PricesContainer_CropItem)
     protected LinearLayout ll_PriceContainer;
 
+    @Bind (R.id.crops_item_view)
+    protected CardView container;
 
+    public CardView getContainer() {
+        return container;
+    }
 
     private CropsListItemDH dateHolder;
 
@@ -82,7 +87,7 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
         dateHolder.getCallback().onFavChecked(dateHolder.getModel(), cb_Fav.isChecked());
     }
 
-    @OnClick(R.id.iv_CropsItemImage)
+    @OnClick(R.id.crops_item_view)
     protected void onImageCLicked(){
         dateHolder.getCallback().onItemClicked(dateHolder.getModel());
     }

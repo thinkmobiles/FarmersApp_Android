@@ -29,6 +29,13 @@ public class AllPricesVH extends RecyclerView.ViewHolder {
     @Bind(R.id.v_Devider_AllPrices)
     View devider;
 
+    @Bind (R.id.all_prices_item_view)
+    protected View container;
+
+    public View getContainer() {
+        return container;
+    }
+
     private AllPricesDH dateHolder;
 
     public AllPricesVH(final View itemView) {
