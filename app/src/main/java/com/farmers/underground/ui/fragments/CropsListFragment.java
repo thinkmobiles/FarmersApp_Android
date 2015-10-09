@@ -101,10 +101,13 @@ public class CropsListFragment
 
     private void showNoItems() {
         tv_NoItems.setVisibility(View.VISIBLE);
-        if (!thisModel.getQuerry().isEmpty())
-            tv_NoItems.setText(getActivity().getString(R.string.no_crops_found) + thisModel.getQuerry());
-        else
-            tv_NoItems.setText(getActivity().getString(R.string.no_crops_found) + getActivity().getString(R.string.all));
+        String itemsText;
+        if (!thisModel.getQuery().isEmpty()){
+            itemsText = getActivity().getString(R.string.no_crops_found) + thisModel.getQuery();
+        } else {
+            itemsText = getActivity().getString(R.string.no_crops_found) + getActivity().getString(R.string.all);
+        }
+        tv_NoItems.setText(itemsText);
     }
 
     @Override
@@ -120,8 +123,8 @@ public class CropsListFragment
     }
 
     @Override
-    public void onReceiveStringQuerry(String querry) {
-        thisModel.setQuerry(querry);
+    public void onReceiveStringQuery(String query) {
+        thisModel.setQuery(query);
        // showNoItems();
     }
 

@@ -32,8 +32,7 @@
                 android:padding="@dimen/sign_up_arrow_padding"
                 android:id="@+id/ivBack_FSU"
                 android:src="@drawable/arrow_back"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentLeft="false" />
+                android:layout_alignParentRight="true" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -87,7 +86,7 @@
                 android:paddingRight="@dimen/sign_up_edit_text_margin_padding"
                 android:paddingLeft="@dimen/sign_up_edit_text_margin_padding"
                 android:hint="@string/sign_up_full_name"
-                android:gravity="right|center_vertical"
+                android:gravity="start|center_vertical"
                 android:textSize="@dimen/login_text_size"
                 custom:customFont="regular" />
 
@@ -107,8 +106,9 @@
                 android:nextFocusForward="@+id/etPassword_FSU"
 
                 android:paddingRight="@dimen/sign_up_edit_text_margin_padding"
+                android:paddingLeft="@dimen/sign_up_edit_text_margin_padding"
                 android:hint="@string/login_email"
-                android:gravity="right|center_vertical"
+                android:gravity="start|center_vertical"
                 android:textSize="@dimen/login_text_size"
                 style="@style/EditSignUpScreen"
                 custom:customFont="regular"/>
@@ -142,6 +142,7 @@
                     android:nextFocusForward="@+id/etConfirm_FSU"
 
                     android:paddingRight="@dimen/sign_up_edit_text_margin_padding"
+                    android:paddingLeft="@dimen/sign_up_edit_text_margin_padding"
                     android:gravity="right|center_vertical"
                     android:hint="@string/login_password"
                     android:textSize="@dimen/login_text_size"
@@ -160,6 +161,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/sign_up_edit_text_height"
                 android:id="@id/etConfirm_FSU"
+
+                android:paddingLeft="@dimen/sign_up_edit_text_margin_padding"
                 android:paddingRight="@dimen/sign_up_edit_text_margin_padding"
 
                 android:singleLine="true"

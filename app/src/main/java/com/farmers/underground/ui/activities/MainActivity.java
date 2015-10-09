@@ -343,11 +343,10 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         final UserProfile user = FarmersApp.getInstance().getCurrentUser();
 
         if(user!=null && (!(user.hasMarketir() || user.isNewMarketeer()))){
-            drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_marketer_price, R.string.drawer_content_5));
+            drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_invite_friends, R.string.drawer_content_5));
         } else {
-            //remove maybe
+              /* add/change Marketer = משווק החלף /הוסף*/ //    todo
         }
-
 
         drawerItemList.add(new DrawerItem());
         lvDrawerContainer.setAdapter(new DrawerAdapter(drawerItemList, this));
@@ -375,7 +374,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     private void updateFragments() {
         for (BaseFragment f : pagerAdapter.getFragmentList()) {
-            ((SearchQueryFragmentCallback) f).onReceiveStringQuerry(query);
+            ((SearchQueryFragmentCallback) f).onReceiveStringQuery(query);
         }
     }
 
@@ -394,7 +393,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     }
 
     private BaseFragment createFavFragemnt() {
-        return CropsListFragment.getInstance(CropsListFragmentModel.TYPE.FAVORITIES, query);
+        return CropsListFragment.getInstance(CropsListFragmentModel.TYPE.FAVOURITES, query);
     }
 
     private BaseFragment createCropFragemnt() {
@@ -472,7 +471,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
         //todo remove IT later
 
-        showToast("Your Account will be DELETED, TEST",Toast.LENGTH_SHORT);
+        showToast("Your Account will be DELETED, TEST", Toast.LENGTH_SHORT);
         RetrofitSingleton.getInstance().dellAccountBySession(new ACallback<SuccessMsg, ErrorMsg>() {
             @Override
             public void onSuccess(SuccessMsg result) {

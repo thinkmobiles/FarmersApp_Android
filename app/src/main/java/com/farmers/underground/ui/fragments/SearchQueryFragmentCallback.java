@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface SearchQueryFragmentCallback {
     void setListCallback(CropsListAdapter.CropsAdapterCallback callback);
-    void onReceiveStringQuerry(String query);
+    void onReceiveStringQuery(String query);
     void onReceiveCrops(List<CropModel> cropsList);
     void notifyFavsRefresh();
 }

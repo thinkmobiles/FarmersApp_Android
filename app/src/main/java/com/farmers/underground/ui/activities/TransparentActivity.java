@@ -2,6 +2,7 @@ package com.farmers.underground.ui.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.farmers.underground.R;
@@ -26,6 +27,11 @@ public class TransparentActivity extends BaseActivity {
     public static void start(@NonNull Context context) {
         Intent intent = new Intent(context, TransparentActivity.class);
         context.startActivity(intent);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
 }

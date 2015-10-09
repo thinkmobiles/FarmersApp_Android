@@ -67,6 +67,7 @@
                 android:layout_width="@dimen/drawer_width"
                 android:layout_height="match_parent"
                 android:layout_gravity="end"
+                android:paddingBottom="@dimen/drawer_item_height"
                 android:divider="@android:color/transparent"
                 android:background="@color/white"/>
         <LinearLayout
@@ -86,7 +87,7 @@
                         style="@style/TV_Drawer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Log Out"
+                        android:text="@string/log_out"
                         android:layout_gravity="center_vertical"
                         />
 

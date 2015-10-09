@@ -5,7 +5,6 @@ import android.graphics.Typeface;
 import android.support.v7.appcompat.R;
 import android.support.v7.widget.SearchView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,38 +16,40 @@ import com.farmers.underground.ui.utils.ResourceRetriever;
 import java.util.ArrayList;
 
 /**
- * Created by omar on 9/30/15.
+ * Created by omar
+ * on 9/30/15.
  */
 public class CustomSearchView extends SearchView implements View.OnClickListener {
-    LinearLayout llSearchbar = (LinearLayout) this.findViewById(R.id.search_bar);
+
+    LinearLayout llSearchBar = (LinearLayout) this.findViewById(R.id.search_bar);
 
     public CustomSearchView(Context context) {
         super(context);
-        reverseOrderEditArea();
+        reverseOrderEditArea(context);
     }
 
     public CustomSearchView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        reverseOrderEditArea();
+        reverseOrderEditArea(context);
     }
 
     public CustomSearchView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        reverseOrderEditArea();
+        reverseOrderEditArea(context);
     }
 
-    private void reverseOrderEditArea() {
-        LinearLayout llSearchholder = (LinearLayout) this.findViewById(R.id.search_plate);
+    private void reverseOrderEditArea(Context context) {
+        LinearLayout llSearchHolder = (LinearLayout) this.findViewById(R.id.search_plate);
         ArrayList<View> views = new ArrayList<>();
-        for (int x = 0; x < llSearchholder.getChildCount(); x++) {
-            views.add(llSearchholder.getChildAt(x));
+        for (int x = 0; x < llSearchHolder.getChildCount(); x++) {
+            views.add(llSearchHolder.getChildAt(x));
         }
-        llSearchholder.removeAllViews();
+        llSearchHolder.removeAllViews();
         for (int x = views.size() - 1; x >= 0; x--) {
-            llSearchholder.addView(views.get(x));
+            llSearchHolder.addView(views.get(x));
         }
-        TextView tv =  (TextView)LayoutInflater.from(llSearchbar.getContext()).inflate(com.farmers.underground.R
-                .layout.search_hint,null);
+        TextView tv = (TextView) LayoutInflater.from(context).inflate(com.farmers.underground.R
+                .layout.search_hint, null);
         tv.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         tv.setTag("lalala");
         tv.setClickable(true);
@@ -59,21 +60,21 @@ public class CustomSearchView extends SearchView implements View.OnClickListener
             }
         });
         tv.setPadding(0,0,0, ResourceRetriever.dpToPx(this.getContext(),4));
-        llSearchbar.addView(tv);
+        llSearchBar.addView(tv);
     }
 
 
     @Override
     public boolean isIconified() {
         if (super.isIconified()) {
-            llSearchbar.findViewWithTag("lalala").setVisibility(VISIBLE);
+            llSearchBar.findViewWithTag("lalala").setVisibility(VISIBLE);
         } else {
-            llSearchbar.findViewWithTag("lalala").setVisibility(GONE);
+            llSearchBar.findViewWithTag("lalala").setVisibility(GONE);
         }
-        View  imgSearch = this.findViewById(R.id.search_src_text);
-        ((SearchAutoComplete) imgSearch).setGravity(Gravity.RIGHT);
-        ((SearchAutoComplete) imgSearch).setHintTextColor(getResources().getColor(com.farmers.underground.R.color.text_white));
-        ((SearchAutoComplete) imgSearch).setTypeface(Typeface.createFromAsset(getContext().getAssets(), "Fonts/ArialMT.ttf"));
+        SearchAutoComplete  imgSearch = (SearchAutoComplete) this.findViewById(R.id.search_src_text);
+        imgSearch.setGravity(Gravity.RIGHT);
+        imgSearch.setHintTextColor(getResources().getColor(com.farmers.underground.R.color.text_white));
+        imgSearch.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "Fonts/ArialMT.ttf"));
         imgSearch.setOnClickListener(this);
         return super.isIconified();
     }
