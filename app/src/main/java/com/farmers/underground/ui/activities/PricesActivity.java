@@ -134,7 +134,7 @@ public class PricesActivity
 
     @Override
     public void onAllPricesMorePricesClicked(CropModel cropModel) {
-
+        startActivity(new Intent(getBaseContext(), AddPriceActivity.class));
     }
 
 

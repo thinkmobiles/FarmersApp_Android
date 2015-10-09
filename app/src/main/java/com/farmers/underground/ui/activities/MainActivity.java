@@ -206,8 +206,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
             }
 
             @Override
-            public void onPriceRefreshClicked(int pos) {
-                startActivity(new Intent(getBaseContext(), AddPriceActivity.class));
+            public void onPriceRefreshClicked(CropModel cropModel) {
             }
         };
     }

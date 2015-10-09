@@ -59,7 +59,7 @@ public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements 
 
     private void setHints(){
         etPrice.setHint(Html.fromHtml("<small><small><small>" + getHostActivity().getString(R.string.add_price_hint_price) + "</small></small></small>"));
-        etQuality.setHint(Html.fromHtml("<small><small><small>" + getHostActivity().getString(R.string.add_price_hint_type) + "</small></small></small>"));
+//        etQuality.setHint(Html.fromHtml("<small><small><small>" + getHostActivity().getString(R.string.add_price_hint_type) + "</small></small></small>"));
     }
 
     @OnClick(R.id.tvChangeDate_FAP)
