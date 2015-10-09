@@ -155,7 +155,7 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
 
     @Override
     public void onAllPricesMorePricesClicked(CropModel cropModel) {
-
+        startActivity(new Intent(getBaseContext(), AddPriceActivity.class));
     }
 
 

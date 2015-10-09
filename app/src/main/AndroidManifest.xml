@@ -61,6 +61,9 @@
                 android:label="@string/app_name"
                 android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 
+        <activity android:name=".ui.activities.AddPriceActivity"
+            android:screenOrientation="sensorPortrait"/>
+
         <meta-data
                 android:name="com.facebook.sdk.ApplicationId"
                 android:value="@string/facebook_app_id"/>

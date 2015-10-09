@@ -3,6 +3,8 @@
 
     <string name="facebook_app_id">889106887840848</string>
 
+    <string name="digits">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789</string>
+
     <!--//tutorial-->
     <string name="tutorial_skip">Skip</string>
     <string name="tutorial_content_1">
@@ -84,6 +86,13 @@
     <string name="no_crops_found">"No crops found:\n"</string>
     <string name="all">" all"</string>
     <string name="tap_to_refresh_price">Tap to refresh price</string>
+
+    <!-- add price-->
+    <string name="add_price_bottom_text">*Get the latest date back two days because there is no daily product marketing</string>
+    <string name="add_price_change_date">Change Date</string>
+    <string name="add_price_hint_price">Price?</string>
+    <string name="add_price_hint_type">Type?</string>
+    <string name="add_price_incorrect_price">Price is not right</string>
 
     <!--prices activity-->
     <string name="prices_activity_tab1">Statistics</string>
