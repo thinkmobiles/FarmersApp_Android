@@ -144,4 +144,9 @@ public class TestActivity extends BaseActivity {
         PricesActivity.start(this,basquiatCropModel);
     }
 
+    @OnClick(R.id.tv_transp_Activity)
+    void startTransparentActivity() {
+        TransparentActivity.start(this);
+    }
+
 }

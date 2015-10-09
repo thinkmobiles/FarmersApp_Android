@@ -11,6 +11,14 @@
         <item name="actionModeStyle">@style/LStyled.ActionMode</item>
     </style>
 
+    <style name="Theme.AppCompat.Translucent" parent="AppTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
+    </style>
+
     <style name="LStyled.ActionMode" parent="@style/Widget.AppCompat.ActionMode">
         <item name="background">@color/light_blue</item>
         <item name="height">?attr/actionBarSize</item>

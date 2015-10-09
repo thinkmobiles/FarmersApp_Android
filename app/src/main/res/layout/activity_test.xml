@@ -87,5 +87,13 @@
         android:padding="20dp"/>
 
 
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_transp_Activity"
+        android:text="test Tasparent Activity"
+        android:layout_margin="10dp"
+        android:padding="20dp"/>
 </LinearLayout>
 </ScrollView>
