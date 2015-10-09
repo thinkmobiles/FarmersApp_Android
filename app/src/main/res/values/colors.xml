@@ -11,6 +11,7 @@
     <color name="aqua">#009688</color>
     <color name="light_blue">#00b9e6</color>
     <color name="white_opague">#44ffffff</color>
+    <color name="grey">#979797</color>
 
     //tutorial
     <color name="tutorial_next_bg_color">#dd009688</color>
@@ -25,7 +26,6 @@
     <color name="bg_btn_facebook">#36599a</color>
     <color name="bg_light_grey">#eeeeee</color>
     <color name="bg_grey_opaque">#59000000</color>
-    <color name="bg_grey">#979797</color>
     <color name="shadow_dialog">#aa000000</color>
     <color name="bg_calendar">#fafafa</color>
     <color name="bg_graph_golden">#d8c171</color>
@@ -45,7 +45,9 @@
     <color name="text_light_blue">#4a90e2</color>
     <color name="hint_login_color">#546979</color>
     <color name="text_dark_grey">#333333</color>
+    <color name="price_dark_grey">#4a4a4a</color>
     <color name="text_black">#df000000</color>
+    <color name="text_red">#f44336</color>
     <color name="text_selected_month">#b1dfdb</color>
     <color name="text_top_statistic">#0a89a7</color>
 

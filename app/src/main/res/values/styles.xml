@@ -76,6 +76,33 @@
         <item name="android:textSize">@dimen/tiny_text_size</item>
     </style>
 
+    <style name="TextPriceInList">
+        <item name="customFont">roboto_light</item>
+        <item name="android:textSize">@dimen/add_price_edit_text_text_size</item>
+        <item name="android:textColor">@color/price_dark_grey</item>
+        <item name="android:textColorHint">@color/text_light_grey</item>
+    </style>
+
+    <style name="BlueMainRegularText">
+        <item name="android:textColor">@color/text_light_blue</item>
+        <item name="customFont">regular</item>
+        <item name="android:textSize">@dimen/main_text_size</item>
+    </style>
+
+    <style name="DarkGreyMainRegularText">
+        <item name="android:textColor">@color/text_dark_grey</item>
+        <item name="customFont">regular</item>
+        <item name="android:textSize">@dimen/main_text_size</item>
+    </style>
+
+    <style name="LightGreyMainRegularText">
+        <item name="android:textColor">@color/text_light_grey</item>
+        <item name="customFont">regular</item>
+        <item name="android:textSize">@dimen/main_text_size</item>
+    </style>
+
+
+
     <style name="ButtonAqua" parent="ButtonSignScreens">
         <item name="android:layout_width">@dimen/login_btn_register_width</item>
         <item name="android:layout_height">@dimen/login_btn_register_height</item>
@@ -151,6 +178,12 @@
         <item name="android:layout_marginRight">@dimen/select_marketeer_small_margin</item>
     </style>
 
+    <style name="EditTextAddPrice" parent="TextPriceInList">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/add_price_edit_text_height</item>
+        <item name="android:layout_gravity">bottom</item>
+        <item name="android:background">@null</item>
+    </style>
 
 </resources>
 

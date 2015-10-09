@@ -75,5 +75,11 @@
     <string name="all">" את כל"</string>
     <string name="tap_to_refresh_price">לחץ לעדכן מחיר</string>
 
+    <!-- add price-->
+    <string name="add_price_bottom_text">*התאריך מעודכן יומיים אחורנית מכיוון שאין את המחיר היומי של המשווקים</string>
+    <string name="add_price_change_date">שינוי תאריך</string>
+    <string name="add_price_hint_price">מחיר?</string>
+    <string name="add_price_hint_type">‫סוג‬?</string>
+    <string name="add_price_incorrect_price">מחיר לא תקין</string>
 
 </resources>
