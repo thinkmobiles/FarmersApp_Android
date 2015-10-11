@@ -6,12 +6,8 @@ import android.support.v7.appcompat.R;
 import android.support.v7.widget.SearchView;
 import android.util.AttributeSet;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import com.farmers.underground.ui.utils.ResourceRetriever;
 
 import java.util.ArrayList;
 
@@ -22,6 +18,8 @@ import java.util.ArrayList;
 public class CustomSearchView extends SearchView implements View.OnClickListener {
 
     LinearLayout llSearchBar = (LinearLayout) this.findViewById(R.id.search_bar);
+    SearchAutoComplete searchEditArea;
+
 
     public CustomSearchView(Context context) {
         super(context);
@@ -48,39 +46,23 @@ public class CustomSearchView extends SearchView implements View.OnClickListener
         for (int x = views.size() - 1; x >= 0; x--) {
             llSearchHolder.addView(views.get(x));
         }
-        TextView tv = (TextView) LayoutInflater.from(context).inflate(com.farmers.underground.R
-                .layout.search_hint, null);
-        tv.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        tv.setTag("lalala");
-        tv.setClickable(true);
-        tv.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                findViewById(R.id.search_button).callOnClick();
-            }
-        });
-        tv.setPadding(0,0,0, ResourceRetriever.dpToPx(this.getContext(),4));
-        llSearchBar.addView(tv);
-    }
 
 
-    @Override
-    public boolean isIconified() {
-        if (super.isIconified()) {
-            llSearchBar.findViewWithTag("lalala").setVisibility(VISIBLE);
-        } else {
-            llSearchBar.findViewWithTag("lalala").setVisibility(GONE);
-        }
-        SearchAutoComplete  imgSearch = (SearchAutoComplete) this.findViewById(R.id.search_src_text);
-        imgSearch.setGravity(Gravity.RIGHT);
-        imgSearch.setHintTextColor(getResources().getColor(com.farmers.underground.R.color.text_white));
-        imgSearch.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "Fonts/ArialMT.ttf"));
-        imgSearch.setOnClickListener(this);
-        return super.isIconified();
+        searchEditArea = (SearchAutoComplete) this.findViewById(R.id.search_src_text);
+        searchEditArea.setGravity(Gravity.RIGHT);
+        searchEditArea.setHintTextColor(getResources().getColor(com.farmers.underground.R.color.text_white));
+        searchEditArea.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "Fonts/ArialMT.ttf"));
+        searchEditArea.setOnClickListener(this);
+
+
     }
 
     @Override
     public void onClick(View view) {
         this.callOnClick();
+    }
+
+    public SearchAutoComplete getSearchEditArea() {
+        return searchEditArea;
     }
 }

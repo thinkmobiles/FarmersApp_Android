@@ -68,6 +68,7 @@ public class AllPricesVH extends RecyclerView.ViewHolder {
     @OnClick(R.id.tv_RefresPrice_CropsItem)
     protected void onRefreshClicked(){
         dateHolder.getCallback().onAllPricesMorePricesClicked(dateHolder.getModel());
+       // container.getContext().startActivity(new Intent( container.getContext(), AddPriceActivity.class));
     }
 
 }

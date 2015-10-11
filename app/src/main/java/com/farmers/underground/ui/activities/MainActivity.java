@@ -101,14 +101,12 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) query = savedInstanceState.getString(ProjectConstants.KEY_DATA);
 
-        if(FarmersApp.isFirstLaunch())
-            FarmersApp.resetFirstLaunch();
+        if (FarmersApp.isFirstLaunch()) FarmersApp.resetFirstLaunch();
 
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
 
-        if( getSupportActionBar()!=null)
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        if (getSupportActionBar() != null) getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 
         setCropsListCallback();
@@ -196,8 +194,8 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         cropsListCallback = new CropsListAdapter.CropsAdapterCallback() {
 
             @Override
-            public void  onItemClicked(CropModel cropModel) {
-                    PricesActivity.start(MainActivity.this,cropModel);
+            public void onItemClicked(CropModel cropModel) {
+                PricesActivity.start(MainActivity.this, cropModel);
             }
 
             @Override
@@ -245,6 +243,8 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
             @Override
             public boolean onQueryTextChange(final String newText) {
+               searchView.getSearchEditArea().setSelection(0);
+
                 String newQuerry = "";
                 if (newText.length() > 0) newQuerry = newText.trim();
                 if (newQuerry.isEmpty()) {
@@ -291,10 +291,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         invalidateOptionsMenu();
     }
 
-    private void forceHideSearch() {
-        searchView.setQuery(searchController.getQuerry().getName(), true);
-        hideSoftKeyboard();
-    }
+
 
 
     //drawer
@@ -330,9 +327,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         if (BuildConfig.PRODUCTION) {
             drawerItemList.add(new DrawerItem(FarmersApp.getInstance().getCurrentUser().getAvatar(), FarmersApp.getInstance().getCurrentUser().getFullName()));
         } else
-            drawerItemList.add(new DrawerItem("http://s2.turbopic.org/img/2007_03/i4603058af2b30.jpg", "Bela  " +
-                    "Lugosie"
-                     ));
+            drawerItemList.add(new DrawerItem("http://s2.turbopic.org/img/2007_03/i4603058af2b30.jpg", "Bela  " + "Lugosie"));
         drawerItemList.add(new DrawerItem());
         drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_crops, R.string.drawer_content_0));
         drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_invite_friends, R.string.drawer_content_2));
@@ -343,7 +338,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
         final UserProfile user = FarmersApp.getInstance().getCurrentUser();
 
-        if(user!=null && (!(user.hasMarketir() || user.isNewMarketeer()))){
+        if (user != null && (!(user.hasMarketir() || user.isNewMarketeer()))) {
             drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_invite_friends, R.string.drawer_content_5));
         } else {
               /* add/change Marketer = משווק החלף /הוסף*/ //    todo
@@ -352,8 +347,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         drawerItemList.add(new DrawerItem());
         lvDrawerContainer.setAdapter(new DrawerAdapter(drawerItemList, this));
     }
-
-
 
 
     //tabs
@@ -418,8 +411,9 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                 openDrawer();
                 return true;
             case R.id.action_back:
-                forceHideSearchList();
-                searchView.setIconified(true);
+                hideSoftKeyboard();
+                searchController.hide();
+
                 return true;
         }
         return false;
@@ -497,12 +491,14 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
 
         else if (searchController.isShowing()) {
-            forceHideSearchList();
+            hideSoftKeyboard();
+            searchController.hide();
         } else super.onBackPressed();
 
     }
+
     @OnClick(R.id.ll_logoutMainActivity)
-    protected void logOut(){
+    protected void logOut() {
         showProgressDialog();
         RetrofitSingleton.getInstance().signOut(new ACallback<SuccessMsg, ErrorMsg>() {
             @Override
@@ -523,7 +519,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
             }
         });
     }
-
 
 
 }
