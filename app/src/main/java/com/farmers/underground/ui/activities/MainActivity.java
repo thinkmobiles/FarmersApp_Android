@@ -243,7 +243,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
             @Override
             public boolean onQueryTextChange(final String newText) {
-               searchView.getSearchEditArea().setSelection(0);
+               if(isRTL())searchView.getSearchEditArea().setSelection(0);
 
                 String newQuerry = "";
                 if (newText.length() > 0) newQuerry = newText.trim();
