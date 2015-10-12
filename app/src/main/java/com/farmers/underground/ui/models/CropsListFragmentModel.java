@@ -3,25 +3,25 @@ package com.farmers.underground.ui.models;
 import java.io.Serializable;
 
 /**
- * Created by omar on 9/30/15.
+ * Created by omar
+ * on 9/30/15.
  */
 public class CropsListFragmentModel implements Serializable {
+
     public enum TYPE {
         ALL_CROPS,
-        FAVORITIES
+        FAVOURITES
     }
 
-    private  TYPE type;
-    private String querry;
+    private TYPE type;
+    private String query;
     private int pageCount = 0;
     private int itemRange = 10;
 
-
-    public CropsListFragmentModel( TYPE type, String querry) {
+    public CropsListFragmentModel(TYPE type, String query) {
         this.type = type;
-        this.querry = querry;
+        this.query = query;
     }
-
 
     public int getPageCount() {
         return pageCount;
@@ -39,20 +39,19 @@ public class CropsListFragmentModel implements Serializable {
         this.itemRange = itemRange;
     }
 
-    public  TYPE getType() {
+    public TYPE getType() {
         return type;
     }
 
-    public void setType( TYPE type) {
+    public void setType(TYPE type) {
         this.type = type;
     }
 
-    public String getQuerry() {
-        return querry;
+    public String getQuery() {
+        return query;
     }
 
-    public void setQuerry(String querry) {
-
-          this.querry = querry;
+    public void setQuery(String query) {
+        this.query = query;
     }
 }

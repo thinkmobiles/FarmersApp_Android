@@ -31,6 +31,8 @@
     <string name="toolbar_item_menu">תפריט</string>
     <string name="toolbar_item_search">חיפוש</string>
 
+    <string name="log_out">להתנתק</string>
+
     <!--//dialogs-->
     <string name="dialog_title_forgot_password">אנא, הכנס את הדוא"ל שלך</string>
     <string name="dialog_btn_ok">אוקיי</string>
@@ -40,7 +42,8 @@
     <!--  //sign_up-->
     <string name="sign_up_full_name">שם מלא</string>
     <string name="sign_up_text_sign_up">הירשם</string>
-    <string name="sign_up_register_facebook">עם פייסבוקהירשם</string>
+    <string name="sign_up_register_facebook">דרך הירשם
+פייסבוק</string>
     <string name="sign_up_text_login">כניסה</string>
     <string name="sign_up_is_registred">רשומים כבר?</string>
 
@@ -64,7 +67,7 @@
     <string name="drawer_content_2">הזמן חברים</string>
     <string name="drawer_content_3">המעודפים שלי</string>
     <string name="drawer_content_4">להתנתק</string>
-    <string name="drawer_content_5">להוסיף משווקים</string>
+    <string name="drawer_content_5">משווק שם הוסף</string>
     <!--TODO-->
 
     <!--   //main activity-->
@@ -90,5 +93,10 @@
 
     <string name="all_prices_more_price">לחץ לעדכן מחיר</string>
     <string name="date_picker_to">ועד</string>
+    <string name="tab1">סטטיסטיקות</string>
+    <string name="tab2">מחירי משווקים</string>
+    <string name="tab3">כל המחירים</string>
+    <string name="alert_message_after_registration_check_mail">הכנס אנא
+לתיבת הדואר שלך ואשר את הרישום</string>
 
 </resources>

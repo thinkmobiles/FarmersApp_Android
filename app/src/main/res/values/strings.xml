@@ -44,6 +44,8 @@
     <string name="toolbar_item_menu">menu</string>
     <string name="toolbar_item_search">Search</string>
 
+    <string name="log_out">Log Out</string>
+
     <!--//dialogs-->
     <string name="dialog_title_forgot_password">Please, enter your email</string>
     <string name="dialog_btn_ok">OK</string>
@@ -105,4 +107,8 @@
 
 
     <string name="date_picker_to">to</string>
+    <string name="tab1">Statistics</string>
+    <string name="tab2">Marketeer prices</string>
+    <string name="tab3">All prices</string>
+    <string name="alert_message_after_registration_check_mail">Please check email and confirm of recitation</string>
 </resources>

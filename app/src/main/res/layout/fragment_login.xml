@@ -47,6 +47,7 @@
             android:id="@+id/etEmail"
             style="@style/EditLoginScreen"
             android:layout_width="match_parent"
+            android:gravity="start|center_vertical"
             android:hint="@string/login_email"
 
             android:imeOptions="actionNext"/>
@@ -63,6 +64,7 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:contentDescription="@null"
                 android:id="@+id/ivShowPass"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -72,6 +74,7 @@
                 android:id="@+id/etPassword"
                 style="@style/EditLoginScreen"
                 android:layout_width="match_parent"
+                android:gravity="right|center_vertical"
                 android:hint="@string/login_password"
                 android:digits="@string/digits"
 
@@ -89,9 +92,10 @@
         <com.farmers.underground.ui.custom_views.CustomTextView
             android:id="@+id/tvForgot"
             style="@style/WhiteMainRegularText"
-            android:layout_width="wrap_content"
+            android:textColor="@color/white"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
+            android:layout_gravity="start"
             android:layout_marginBottom="@dimen/login_margin_btn_login_edit"
             android:text="@string/login_forgot_password"
             custom:customFont="regular" />

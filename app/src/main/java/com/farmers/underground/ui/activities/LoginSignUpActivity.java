@@ -235,7 +235,7 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
     public void showDialogConfirm(){
         new AlertDialog.Builder(this)
                 .setCancelable(false)
-                .setMessage("Please check email and confirm of registation")
+                .setMessage(R.string.alert_message_after_registration_check_mail)
                 .setPositiveButton(getString(R.string.dialog_btn_ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
