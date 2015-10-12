@@ -35,6 +35,7 @@ import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.custom_views.CustomSearchView;
 import com.farmers.underground.ui.fragments.CropsListFragment;
+import com.farmers.underground.ui.fragments.PeriodPickerFragment;
 import com.farmers.underground.ui.fragments.SearchQueryFragmentCallback;
 import com.farmers.underground.ui.models.CropsListFragmentModel;
 import com.farmers.underground.ui.models.DrawerItem;
@@ -205,6 +206,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
             @Override
             public void onPriceRefreshClicked(CropModel cropModel) {
+                TransparentActivity.startWithFragment(MainActivity.this, new PeriodPickerFragment());
             }
         };
     }
@@ -243,8 +245,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
             @Override
             public boolean onQueryTextChange(final String newText) {
-               if(isRTL())searchView.getSearchEditArea().setSelection(0);
-
+ 
                 String newQuerry = "";
                 if (newText.length() > 0) newQuerry = newText.trim();
                 if (newQuerry.isEmpty()) {
@@ -413,6 +414,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
             case R.id.action_back:
                 hideSoftKeyboard();
                 searchController.hide();
+                invalidateOptionsMenu();
 
                 return true;
         }

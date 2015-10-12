@@ -109,6 +109,13 @@
         <item name="android:textSize">@dimen/main_text_size</item>
     </style>
 
+    <style name="BlackMainRegularText">
+        <item name="android:textColor">@color/text_black</item>
+        <item name="customFont">regular</item>
+        <item name="android:textSize">@dimen/main_text_size</item>
+    </style>
+
+
 
 
     <style name="ButtonAqua" parent="ButtonSignScreens">

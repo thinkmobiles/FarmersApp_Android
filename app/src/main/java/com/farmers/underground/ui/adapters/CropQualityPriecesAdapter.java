@@ -6,9 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
 import com.farmers.underground.R;
 import com.farmers.underground.remote.models.PriceModel;
+
 import java.util.List;
 
 
@@ -65,9 +65,9 @@ public class CropQualityPriecesAdapter extends BaseAdapter  {
 
         //set data here
 
-        holder.tvPrice.setText(mListItems.get(i).getPrice());
-        holder.tvTitle.setText(mListItems.get(i).getMarketeerName());
-        holder.tvSubitle.setText(mListItems.get(i).getQualityName());
+        holder.tvPrice.setText(String.valueOf(mListItems.get(i).getPrice()));
+        holder.tvTitle.setText(mListItems.get(i).getSource().getName());
+        holder.tvSubitle.setText(mListItems.get(i).getSource().getType());
 
 
         return convertView;

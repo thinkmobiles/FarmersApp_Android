@@ -10,6 +10,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
              android:scrollbars="vertical"
+            android:overScrollMode="never"
             />
 
     <TextView layout="@layout/item_search_hint"

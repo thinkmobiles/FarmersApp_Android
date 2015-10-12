@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@null"
+    android:gravity="center">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/period_picker_date_text_size"
+            style="@style/WhiteRegularText"
+            android:drawableLeft="@drawable/ic_arrow_drop_down_3_copy"
+            android:id="@+id/tvPeriodFrom" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/default_divider_height"
+            android:background="@color/white"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/date_picker_to"
+            android:textSize="@dimen/period_picker_text_to_size"
+            style="@style/WhiteRegularText"
+            android:layout_marginTop="@dimen/margin_default_large"
+            android:layout_marginBottom="@dimen/margin_default_large"
+            android:id="@+id/textView12" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:textSize="@dimen/period_picker_date_text_size"
+            style="@style/WhiteRegularText"
+            android:gravity="center_horizontal"
+            android:drawableLeft="@drawable/ic_arrow_drop_down_3_copy"
+            android:id="@+id/tvPeriodTo" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/default_divider_height"
+            android:background="@color/white"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"/>
+</LinearLayout>
