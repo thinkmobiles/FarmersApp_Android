@@ -106,4 +106,11 @@
     <string name="tab2">Marketeer prices</string>
     <string name="tab3">All prices</string>
     <string name="alert_message_after_registration_check_mail">Please check email and confirm of recitation</string>
+
+
+    <!--Dialog Fragments-->
+    <string name="title">‏\u200Ftitle</string>
+    <string name="subtilte">\u200F‏subtitle</string>
+    <string name="foot">\u200Ffdfhdh2345678907423</string>
+
 </resources>

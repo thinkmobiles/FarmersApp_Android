@@ -96,4 +96,10 @@
     <string name="alert_message_after_registration_check_mail">הכנס אנא
 לתיבת הדואר שלך ואשר את הרישום</string>
 
+    <!--Dialog Fragments--><!--TODO-->
+    <string name="title">‏\u200Ftitle</string>
+    <string name="subtilte">\u200F‏subtitle</string>
+    <string name="foot">\u200Ffdfhdh2345678907423</string>
+
+
 </resources>
