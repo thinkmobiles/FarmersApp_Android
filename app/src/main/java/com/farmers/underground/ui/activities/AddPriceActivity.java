@@ -1,10 +1,9 @@
 package com.farmers.underground.ui.activities;
 
 import android.app.DatePickerDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.DatePicker;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.farmers.underground.R;
@@ -13,13 +12,22 @@ import com.farmers.underground.ui.fragments.AddPriceFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by samson on 09.10.15.
  */
 public class AddPriceActivity extends BaseActivity implements DatePickerDialog.OnDateSetListener {
+
+    public static final String KEY_ID_CROP = "id_crop";
+
+    @Bind(R.id.tvNameCrop_tool)
+    protected TextView tvNameCrop;
+
+    @Bind(R.id.ivCrop_tool)
+    protected TextView ivCrop;
 
     private Calendar today = Calendar.getInstance();
     private OnChangeDateListener onChangeDateListener;
@@ -37,9 +45,13 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        ButterKnife.bind(this);
         switchFragment(new AddPriceFragment(), false);
+        setData();
+    }
 
+    private void setData(){
+        String idCrop = getIntent().getStringExtra(KEY_ID_CROP);
     }
 
     public void setOnChangeDateListener(OnChangeDateListener onChangeDateListener) {

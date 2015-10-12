@@ -81,11 +81,14 @@
     <string name="add_price_hint_price">מחיר?</string>
     <string name="add_price_hint_type">‫סוג‬?</string>
     <string name="add_price_incorrect_price">מחיר לא תקין</string>
+    <string name="add_price_example_type">‫‫ייצוא‬ ‫איכות‬ :‫לדוגמה‬</string>
+    <string name="add_price_add_button">‫הוסף‬</string>
     <!--prices activity-->
     <string name="prices_activity_tab1">סטטיסטיקות</string>
     <string name="prices_activity_tab2">מחירי משווקים</string>
     <string name="prices_activity_tab3">כל המחירים</string>
 
     <string name="all_prices_more_price">לחץ לעדכן מחיר</string>
+    <string name="date_picker_to">ועד</string>
 
 </resources>

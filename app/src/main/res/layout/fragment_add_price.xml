@@ -147,7 +147,7 @@
                     style="@style/WhiteSmallRegularText"
                     android:textColor="@color/text_light_grey"
                     android:gravity="right"
-                    android:text="New Text"
+                    android:text="@string/add_price_example_type"
                     android:id="@+id/tvHintQuality_FAP" />
             </LinearLayout>
 
@@ -170,5 +170,15 @@
         android:textColor="@color/grey"
         android:layout_marginBottom="@dimen/margin_default_small"
         android:id="@+id/textView10" />
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/tvAddPrice_FAP"
+        android:background="@color/aqua"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:text="@string/add_price_add_button"
+        style="@style/WhiteRegularText"/>
 
 </LinearLayout>

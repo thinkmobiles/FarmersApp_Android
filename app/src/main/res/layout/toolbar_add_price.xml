@@ -8,31 +8,26 @@
     android:background="@color/aqua">
 
     <ImageView
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_default_small"
         android:layout_marginRight="@dimen/margin_default_normal"
+        android:id="@+id/ivBack_tool"
         android:layout_gravity="end"
+        android:padding="@dimen/padding_margin_default_small"
         android:src="@drawable/ic_toolbar_forward"/>
-
-    <com.farmers.underground.ui.custom_views.CustomTextView
-        style="@style/LogoMarketer"
-        android:layout_gravity="end"
-        android:id="@+id/tvLogo_tool"
-        android:text="כי" />
 
     <ImageView
         android:layout_width="@dimen/add_price_icon_marketer_size"
         android:layout_height="@dimen/add_price_icon_marketer_size"
         android:layout_gravity="end"
-        android:id="@+id/ivLogo_tool"
-        android:visibility="gone"/>
+        android:id="@+id/ivCrop_tool"/>
 
     <com.farmers.underground.ui.custom_views.CustomTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:id="@+id/tvNameMarketer_tool"
+        android:id="@+id/tvNameCrop_tool"
         style="@style/WhiteRegularText"
         android:textSize="19sp"
         android:layout_marginRight="@dimen/margin_default_small"

@@ -93,6 +93,8 @@
     <string name="add_price_hint_price">Price?</string>
     <string name="add_price_hint_type">Type?</string>
     <string name="add_price_incorrect_price">Price is not right</string>
+    <string name="add_price_example_type">example: export‬</string>
+    <string name="add_price_add_button">Add‫‬</string>
 
     <!--prices activity-->
     <string name="prices_activity_tab1">Statistics</string>
@@ -100,4 +102,7 @@
     <string name="prices_activity_tab3">All prices</string>
     <string name="all_prices_more_price">More prices</string>
     <string name="icon">icon</string>
+
+
+    <string name="date_picker_to">to</string>
 </resources>
