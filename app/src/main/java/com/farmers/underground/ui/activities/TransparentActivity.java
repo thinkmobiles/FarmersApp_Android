@@ -9,6 +9,7 @@ import com.farmers.underground.R;
 import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.dialogs.CropQualitiesDialogFragment;
+import com.farmers.underground.ui.dialogs.WhyCanISeeThisPriceDialogFragment;
 
 /**
  * Created by tZpace
@@ -33,7 +34,7 @@ public class TransparentActivity extends BaseActivity {
         context.startActivity(intent);
     }
 
-    public static void startWithFragment(@NonNull Context context, CropQualitiesDialogFragment fragment) {
+    public static  <F extends BaseFragment<TransparentActivity>> void startWithFragment(@NonNull Context context, F fragment) {
         temp = fragment;
         Intent intent = new Intent(context, TransparentActivity.class);
         context.startActivity(intent);
@@ -44,7 +45,8 @@ public class TransparentActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         //for test todo
-        startWithFragment(this, new CropQualitiesDialogFragment());
+        //startWithFragment(this, new CropQualitiesDialogFragment());
+        startWithFragment(this, new WhyCanISeeThisPriceDialogFragment());
     }
 
     @Override

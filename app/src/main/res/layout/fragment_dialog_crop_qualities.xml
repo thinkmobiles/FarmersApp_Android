@@ -1,68 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="30dp" >
+    android:background="@drawable/bg_fr_dialog_rounded"
+    >
 
     <RelativeLayout
-        android:id="@+id/rl_head"
-        android:background="#ff2222"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
+        android:id="@+id/rl_head_dialog_crop_qualities"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp">
 
         <LinearLayout
-            android:layout_toLeftOf="@+id/im_Logo"
-            android:orientation="vertical"
-            android:layout_margin="12dp"
-            android:gravity="center_vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_toLeftOf="@+id/im_logo_dialog_crop_qualities"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
 
-            <TextView
+            <com.farmers.underground.ui.custom_views.CustomTextView
+                android:id="@+id/tv_title_dialog_crop_qualities"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
                 android:text="@string/title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                custom:customFont="bold" />
 
-            <TextView
-                android:text="@string/subtilte"
+            <com.farmers.underground.ui.custom_views.CustomTextView
+                android:id="@+id/tv_subtitle_dialog_crop_qualities"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="@string/subtilte"
+                custom:customFont="regular" />
 
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/im_Logo"
-            android:layout_margin="12dp"
-            android:src="@android:drawable/ic_dialog_info"
-            android:layout_centerVertical="true"
+            android:contentDescription="@null"
+            android:id="@+id/im_logo_dialog_crop_qualities"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_centerVertical="true"
+            android:layout_margin="4dp"
+            android:src="@android:drawable/ic_dialog_info" />
 
     </RelativeLayout>
 
     <ImageView
-        android:src="@android:drawable/ic_menu_close_clear_cancel"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
+        android:id="@+id/im_close_dialog_crop_qualities"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@android:drawable/ic_menu_close_clear_cancel" />
 
-
-    <ListView
-        android:id="@+id/lv_items"
-        android:layout_below="@+id/rl_head"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="240dp"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_head_dialog_crop_qualities"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_foot"
-        android:text="@string/foot"
-        android:layout_below="@+id/lv_items"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey" />
+
+        <ListView
+            android:id="@+id/lv_items_dialog_crop_qualities"
+
+            android:layout_width="match_parent"
+            android:layout_height="240dp" />
+
+        <View
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey" />
+
+        <TextView
+            android:id="@+id/tv_foot_dialog_crop_qualities"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:text="@string/foot" />
+
+    </LinearLayout>
+
 
 </RelativeLayout>
