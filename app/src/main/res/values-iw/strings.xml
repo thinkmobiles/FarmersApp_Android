@@ -97,4 +97,10 @@
 לתיבת הדואר שלך ואשר את הרישום</string>
     <string name="why_c_no_prices">מדוע אני לא\n רואה מחיר?</string>
 
+    <!--Dialog Fragments--><!--TODO-->
+    <string name="title">‏\u200Ftitle</string>
+    <string name="subtilte">\u200F‏subtitle</string>
+    <string name="foot">\u200F  text date</string>
+
+
 </resources>

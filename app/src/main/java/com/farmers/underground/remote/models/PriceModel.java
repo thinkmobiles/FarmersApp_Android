@@ -1,11 +1,13 @@
 package com.farmers.underground.remote.models;
 
 /**
- * Created by omar on 10/9/15.
+ * Created by omar
+ * on 10/9/15.
  */
 public class PriceModel {
     private String price;
     private String marketeerName;
+    private String qualityName;
 
     public String getPrice() {
         return price;
@@ -24,4 +26,11 @@ public class PriceModel {
     }
 
 
+    public String getQualityName() {
+        return qualityName;
+    }
+
+    public void setQualityName(String qualityName) {
+        this.qualityName = qualityName;
+    }
 }
