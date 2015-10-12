@@ -27,6 +27,8 @@ import com.farmers.underground.ui.adapters.ProjectPagerAdapter;
 import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.custom_views.CustomSearchView;
+import com.farmers.underground.ui.dialogs.CropQualitiesDialogFragment;
+import com.farmers.underground.ui.dialogs.WhyCanISeeThisPriceDialogFragment;
 import com.farmers.underground.ui.fragments.AllPricesFragment;
 import com.farmers.underground.ui.models.DateRange;
 import com.google.gson.Gson;
@@ -150,7 +152,7 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
     // all prices fragment callbacks
     @Override
     public void onAllPricesItemClicked(CropModel cropModel) {
-
+        TransparentActivity.startWithFragment(this, new CropQualitiesDialogFragment());
     }
 
     @Override
@@ -214,5 +216,10 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
 
     //clicke events
     @OnClick(R.id.action_calendar)
-    protected void onCalendarClick(){}
+    protected void onCalendarClick(){
+
+        //todo test
+        TransparentActivity.startWithFragment(this, new WhyCanISeeThisPriceDialogFragment());
+
+    }
 }

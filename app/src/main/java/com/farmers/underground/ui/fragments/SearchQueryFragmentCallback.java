@@ -6,7 +6,8 @@ import com.farmers.underground.ui.adapters.CropsListAdapter;
 import java.util.List;
 
 /**
- * Created by omar on 10/1/15.
+ * Created by omar
+ * on 10/1/15.
  */
 public interface SearchQueryFragmentCallback {
     void setListCallback(CropsListAdapter.CropsAdapterCallback callback);
