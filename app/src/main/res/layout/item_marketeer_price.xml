@@ -2,6 +2,7 @@
 <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:custom="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/rv_container_price_item_MP"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -62,7 +63,7 @@
             android:layout_toRightOf="@+id/price_conainer"
             android:layout_toLeftOf="@+id/logo_container">
         <com.farmers.underground.ui.custom_views.CustomTextView
-                android:id="@+id/tv_CropName_MP"
+                android:id="@+id/tv_MarketeerName_MP"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/marketeer_price_crop_text_size"
@@ -72,7 +73,7 @@
                 android:text="תלמים שיווק תוצרת חקלאית"/>
 
         <com.farmers.underground.ui.custom_views.CustomTextView
-                android:id="@+id/tv_MarketeerName_MP"
+                android:id="@+id/tv_MarketeerArea_MP"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/marketeer_price_marketeer_text_size"

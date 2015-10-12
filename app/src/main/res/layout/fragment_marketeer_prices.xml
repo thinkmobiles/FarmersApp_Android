@@ -1,50 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:custom="http://schemas.android.com/tools"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         >
-    <LinearLayout
-            android:id="@+id/header_MP"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-        <include
-                layout="@layout/item_marketeer_price"
-                android:id="@+id/include"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/margin_default_small"
-                android:layout_marginTop="@dimen/margin_default_normal"
-                />
-        <com.farmers.underground.ui.custom_views.CustomTextView
-                android:id="@+id/tv_Date_MP"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/selector_date_btn_marketeer_prices"
-                android:paddingLeft="@dimen/padding_margin_default_normal"
-                android:paddingRight="@dimen/padding_margin_default_normal"
-                android:paddingTop="@dimen/padding_margin_default_tiny"
-                android:paddingBottom="@dimen/padding_margin_default_tiny"
-                android:layout_marginBottom="@dimen/margin_default_tiny"
-                android:clickable="true"
-                app:customFont="regular"
-                android:textColor="@color/text_white"
-                android:textSize="@dimen/small_text_size"
-                android:text="lalal"
-                />
-    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_BaseListFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="vertical"
-            android:layout_below="@+id/header_MP"
-            android:overScrollMode="never"
-            />
+             android:overScrollMode="never"
+            android:layout_above="@+id/ll_TutorialNext"/>
 
+    <LinearLayout
+            android:background="@color/aqua"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/ll_AddPrice_MP"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/tutorial_next_btn_height"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:clickable="true">
+
+        <com.farmers.underground.ui.custom_views.CustomTextView
+                android:id="@+id/tv_AddPrice_MP"
+                style="@style/TV_Tutorial_Next"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|center_horizontal"
+                android:padding="@dimen/padding_margin_default_small"
+                android:text="@string/add_price"
+                custom:customFont="bold"  />
+    </LinearLayout>
     <TextView layout="@layout/item_search_hint"
               android:id="@+id/tv_NoItemsBaseListFragment"
               android:visibility="gone"

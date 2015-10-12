@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -55,7 +54,7 @@ public class TutorialItemFragment extends BaseFragment<TutorialActivity> {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.item_tutorial;
+        return R.layout.fragment_tutorial;
     }
 
     @Override

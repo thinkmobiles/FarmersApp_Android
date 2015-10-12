@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -15,11 +14,12 @@ import butterknife.OnClick;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.CropModel;
+import com.farmers.underground.remote.models.MarketeerPriceModel;
 import com.farmers.underground.ui.activities.PricesActivity;
-import com.farmers.underground.ui.adapters.AllPricesAdapter;
+import com.farmers.underground.ui.adapters.MarketeerPricesAdapter;
 import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.custom_views.CropsItemDivider;
-import com.farmers.underground.ui.models.AllPricesDH;
+import com.farmers.underground.ui.models.BaseMarketeerPricesDH;
 import com.farmers.underground.ui.models.DateRange;
 import com.farmers.underground.ui.utils.ResourceRetriever;
 import com.google.gson.Gson;
@@ -38,27 +38,7 @@ public class MarketeerPricesFragment extends BaseFragment implements PricesActiv
     @Bind(R.id.tv_NoItemsBaseListFragment)
     protected TextView tv_NoItems;
 
-    @Bind(R.id.tv_Date_MP)
-    protected TextView tv_Date;
-
-    @Bind(R.id.tv_Price)
-    protected TextView tv_Price;
-
-    @Bind(R.id.tv_CropName_MP)
-    protected TextView tv_CropName;
-
-    @Bind(R.id.tv_MarketeerName_MP)
-    protected TextView tv_MarketeerName;
-
-    @Bind(R.id.tv_MarketeerLogoText_MP)
-    protected TextView tv_MarketeerLogoText;
-
-    @Bind(R.id.iv_MarketeerLogoImage_MP)
-    protected ImageView iv_MarketeerLogoImage;
-
-
-    private AllPricesAdapter.AllPricesCallback allPricesCallback;
-    private AllPricesAdapter adapter;
+    private MarketeerPricesAdapter adapter;
     private CropModel mCropModel;
     private DateRange mDateRange;
 
@@ -88,7 +68,7 @@ public class MarketeerPricesFragment extends BaseFragment implements PricesActiv
         ButterKnife.bind(this, v);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         recyclerView.addItemDecoration(new CropsItemDivider(ResourceRetriever.retrievePX(getContext(), R.dimen.margin_default_normal)));
-        adapter = new AllPricesAdapter();
+        adapter = new MarketeerPricesAdapter();
         recyclerView.setAdapter(adapter);
         return v;
     }
@@ -99,17 +79,19 @@ public class MarketeerPricesFragment extends BaseFragment implements PricesActiv
         setAdapterData(generateTestCropsList());
     }
 
+    private List<MarketeerPriceModel> generateTestCropsList() {
+
+        return new ArrayList<MarketeerPriceModel>();
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        allPricesCallback = ((AllPricesAdapter.AllPricesCallback) context);
-
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        allPricesCallback = null;
     }
 
     @Override
@@ -117,49 +99,23 @@ public class MarketeerPricesFragment extends BaseFragment implements PricesActiv
         return R.layout.fragment_marketeer_prices;
     }
 
-
     @Override
     public void setDateRange(DateRange dateRange) {
         mDateRange = dateRange;
     }
 
-    private List<AllPricesDH> generateDH(List<CropModel> cropModelList) {
-        List<AllPricesDH> allPricesDHs = new ArrayList<>();
-        for (CropModel item : cropModelList) {
-            AllPricesDH allPricesDH = new AllPricesDH(item, allPricesCallback);
-            allPricesDHs.add(allPricesDH);
-        }
+    private List<BaseMarketeerPricesDH> generateDH(List<MarketeerPriceModel> cropModelList) {
+        List<BaseMarketeerPricesDH> allPricesDHs = new ArrayList<>();
+
         return allPricesDHs;
     }
 
-    private void setAdapterData( List<CropModel> cropModels){
+    private void setAdapterData( List<MarketeerPriceModel> cropModels){
             adapter.setDataList(generateDH(cropModels));
     }
 
-    //dev test methods
-    private  List<CropModel>  generateTestCropsList(){
-        List<CropModel> cropsList = new ArrayList<>();
 
-
-        for (int i = 0; i < 100; i++) {
-            CropModel basquiatCropModel = new CropModel();
-            basquiatCropModel.setID(String.valueOf(i));
-            basquiatCropModel.setImgLink("http://www.potomitan.info/ki_nov/images/basquiat_brownspots.jpg");
-            cropsList.add(basquiatCropModel);
-        }
-         return cropsList;
-    }
-
-    @OnClick(R.id.tv_Date_MP)
-    protected void onDateClicked(){}
-
-    private void setDateLabel(String label){}
-    private void setMarketeerLabel(String label){}
-    private void setCropLabel(String label){}
-    private void setLogoLabel(String label){}
-    private void setLogo(String imgSrc){}
-    private void setPriceLabel(String label){}
-
-
+    @OnClick(R.id.ll_AddPrice_MP)
+    protected void addPriceClicked(){}
 
 }
