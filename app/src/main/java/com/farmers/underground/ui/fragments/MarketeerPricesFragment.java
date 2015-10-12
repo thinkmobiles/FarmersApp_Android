@@ -79,7 +79,7 @@ public class MarketeerPricesFragment extends BaseFragment implements PricesActiv
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setAdapterData(generateTestCropsList());
+        setAdapterData(generateTestPriceList());
     }
 
     @Override
@@ -139,7 +139,7 @@ public class MarketeerPricesFragment extends BaseFragment implements PricesActiv
     }
 
 
-    private List<MarketeerPriceModel> generateTestCropsList() {
+    private List<MarketeerPriceModel> generateTestPriceList() {
         List<MarketeerPriceModel> priceModelList = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             MarketeerPriceModel model = new MarketeerPriceModel();

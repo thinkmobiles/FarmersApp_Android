@@ -73,7 +73,7 @@ public class StatisticsFragment extends BaseFragment implements PricesActivity.D
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setAdapterData(generateTestCropsList());
+
     }
 
     @Override
