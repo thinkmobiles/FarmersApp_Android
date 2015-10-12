@@ -29,7 +29,7 @@ public class AllPricesVH extends RecyclerView.ViewHolder {
     @Bind(R.id.v_Devider_AllPrices)
     View devider;
 
-    @Bind (R.id.all_prices_item_view)
+    @Bind(R.id.all_prices_item_view)
     protected View container;
 
     public View getContainer() {
@@ -40,35 +40,34 @@ public class AllPricesVH extends RecyclerView.ViewHolder {
 
     public AllPricesVH(final View itemView) {
         super(itemView);
-        ButterKnife.bind(this,itemView);
+        ButterKnife.bind(this, itemView);
 
     }
 
     public void bindData(AllPricesDH dateHolder, boolean hideDevider) {
         this.dateHolder = dateHolder;
-        for ( int  i = 0 ; i  < ll_PriceContainer.getChildCount(); i ++)
-        {
-             TextView tv_refresh = (TextView) ll_PriceContainer.getChildAt(i).findViewById(R.id
-                     .tv_RefresPrice_CropsItem);
-            if(i != 0 && tv_refresh != null ){
+        for (int i = 0; i < ll_PriceContainer.getChildCount(); i++) {
+            TextView tv_refresh = (TextView) ll_PriceContainer.getChildAt(i)
+                    .findViewById(R.id.tv_RefresPrice_CropsItem);
+            if (Math.random() > 0.5f && tv_refresh != null) {
                 tv_refresh.setVisibility(View.GONE);
-            }
+            } else if (tv_refresh != null) tv_refresh.setVisibility(View.VISIBLE);
         }
-        if(hideDevider) devider.setVisibility(View.GONE);
+        if (hideDevider) devider.setVisibility(View.GONE);
         else devider.setVisibility(View.VISIBLE);
 
     }
 
 
     @OnClick(R.id.ll_PricesContainer_CropItem)
-    protected void onImageCLicked(){
+    protected void onImageCLicked() {
         dateHolder.getCallback().onAllPricesItemClicked(dateHolder.getModel());
     }
 
     @OnClick(R.id.tv_RefresPrice_CropsItem)
-    protected void onRefreshClicked(){
+    protected void onRefreshClicked() {
         dateHolder.getCallback().onAllPricesMorePricesClicked(dateHolder.getModel());
-       // container.getContext().startActivity(new Intent( container.getContext(), AddPriceActivity.class));
+        // container.getContext().startActivity(new Intent( container.getContext(), AddPriceActivity.class));
     }
 
 }
