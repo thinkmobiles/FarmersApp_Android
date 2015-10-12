@@ -28,6 +28,7 @@ import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.custom_views.CustomSearchView;
 import com.farmers.underground.ui.fragments.AllPricesFragment;
+import com.farmers.underground.ui.fragments.MarketeerPricesFragment;
 import com.farmers.underground.ui.models.DateRange;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -132,7 +133,7 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
         List<BaseFragment> fragmentList = new ArrayList<>();
 
         fragmentList.add(createAlLPricesFragemnt(mCropModel));
-        fragmentList.add(createAlLPricesFragemnt(mCropModel));
+        fragmentList.add(createMarketeerPricesFragemnt(mCropModel));
         fragmentList.add(createAlLPricesFragemnt(mCropModel));
 
         return fragmentList;
@@ -140,6 +141,10 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
 
     private BaseFragment createAlLPricesFragemnt(CropModel cropModel) {
         return AllPricesFragment.getInstance(cropModel);
+    }
+
+    private BaseFragment createMarketeerPricesFragemnt(CropModel cropModel) {
+        return MarketeerPricesFragment.getInstance(cropModel);
     }
 
     private void setTabs() {

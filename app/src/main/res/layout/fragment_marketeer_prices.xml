@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        >
+    <LinearLayout
+            android:id="@+id/header_MP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <include
+                layout="@layout/item_marketeer_price"
+                android:id="@+id/include"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_default_small"
+                android:layout_marginTop="@dimen/margin_default_normal"
+                />
+        <com.farmers.underground.ui.custom_views.CustomTextView
+                android:id="@+id/tv_Date_MP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/selector_date_btn_marketeer_prices"
+                android:paddingLeft="@dimen/padding_margin_default_normal"
+                android:paddingRight="@dimen/padding_margin_default_normal"
+                android:paddingTop="@dimen/padding_margin_default_tiny"
+                android:paddingBottom="@dimen/padding_margin_default_tiny"
+                android:layout_marginBottom="@dimen/margin_default_tiny"
+                android:clickable="true"
+                app:customFont="regular"
+                android:textColor="@color/text_white"
+                android:textSize="@dimen/small_text_size"
+                android:text="lalal"
+                />
+    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_BaseListFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            android:layout_below="@+id/header_MP"
+            android:overScrollMode="never"
+            />
+
+    <TextView layout="@layout/item_search_hint"
+              android:id="@+id/tv_NoItemsBaseListFragment"
+              android:visibility="gone"
+              android:gravity="center_horizontal"
+              style="@style/TV_SearchHintListItem"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:paddingRight="@dimen/search_hint_list_item_padding_x"
+              android:paddingLeft="@dimen/search_hint_list_item_padding_x"
+              android:paddingBottom="@dimen/search_hint_list_item_padding_y"
+              android:paddingTop="@dimen/search_hint_list_item_padding_y"/>
+</RelativeLayout>
+

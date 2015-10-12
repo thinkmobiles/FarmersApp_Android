@@ -137,10 +137,12 @@
     <dimen name="all_prices_calendar_month_text_size">8sp</dimen>
     <dimen name="all_prices_calendar_year_text_size">7sp</dimen>
     <dimen name="all_prices_price_text_size">26sp</dimen>
-
-
-
-
+    <!--marketeer prices-->
+    <dimen name="marketeer_price_price_text_size">26sp</dimen>
+    <dimen name="marketeer_price_crop_text_size">16sp</dimen>
+    <dimen name="marketeer_price_marketeer_text_size">14sp</dimen>
+    <dimen name="marketeer_price_marketeer_logo_bg_size">33dp</dimen>
+    <dimen name="marketeer_price_date_corners">40dp</dimen>
 
 
 </resources>
