@@ -2,14 +2,11 @@ package com.farmers.underground.ui.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.farmers.underground.R;
 import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.base.BaseFragment;
-import com.farmers.underground.ui.dialogs.CropQualitiesDialogFragment;
-import com.farmers.underground.ui.dialogs.WhyCanISeeThisPriceDialogFragment;
 
 /**
  * Created by tZpace
