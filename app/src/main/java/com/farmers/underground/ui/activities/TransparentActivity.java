@@ -45,8 +45,8 @@ public class TransparentActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         //for test todo
-        //startWithFragment(this, new CropQualitiesDialogFragment());
-        startWithFragment(this, new WhyCanISeeThisPriceDialogFragment());
+        startWithFragment(this, new CropQualitiesDialogFragment());
+        //startWithFragment(this, new WhyCanISeeThisPriceDialogFragment());
     }
 
     @Override
