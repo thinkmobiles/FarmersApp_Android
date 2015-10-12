@@ -21,7 +21,7 @@ public class CropModel {
     @SerializedName("englishName")
     private String englishName;
 
-    @SerializedName("englishName")
+    @SerializedName("displayName")
     private String displayName;
 
     @SerializedName("prices")
