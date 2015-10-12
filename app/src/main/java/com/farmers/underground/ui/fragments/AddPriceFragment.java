@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.farmers.underground.R;
 import com.farmers.underground.ui.activities.AddPriceActivity;
 import com.farmers.underground.ui.base.BaseFragment;
+import com.farmers.underground.ui.utils.ValidationUtil;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -20,7 +21,7 @@ import butterknife.OnClick;
  */
 public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements AddPriceActivity.OnChangeDateListener {
 
-    private static final String KEY_MARKETER = "marketer";
+    private static final String KEY_ID_MARKETER = "id_marketer";
 
     @Bind(R.id.etPrice_FAP)
     protected EditText etPrice;
@@ -31,15 +32,18 @@ public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements 
     @Bind(R.id.tvDate_FAP)
     protected TextView tvDate;
 
+    @Bind(R.id.tvPriceError_FAP)
+    protected TextView tvError;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_add_price;
     }
 
-    public static AddPriceFragment newInstance(String name){
+    public static AddPriceFragment newInstance(String idMarketer){
         AddPriceFragment fragment = new AddPriceFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(KEY_MARKETER, name);
+        bundle.putString(KEY_ID_MARKETER, idMarketer);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -59,7 +63,6 @@ public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements 
 
     private void setHints(){
         etPrice.setHint(Html.fromHtml("<small><small><small>" + getHostActivity().getString(R.string.add_price_hint_price) + "</small></small></small>"));
-//        etQuality.setHint(Html.fromHtml("<small><small><small>" + getHostActivity().getString(R.string.add_price_hint_type) + "</small></small></small>"));
     }
 
     @OnClick(R.id.tvChangeDate_FAP)
@@ -70,6 +73,16 @@ public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements 
     @OnClick(R.id.tvAddQuality_FAP)
     protected void addNewQuality(){
 
+    }
+
+    @OnClick(R.id.tvAddPrice_FAP)
+    protected void addPrice(){
+        if(ValidationUtil.isValidPrice(etPrice.getText().toString())){
+            //todo add_price request
+            tvError.setVisibility(View.INVISIBLE);
+        } else {
+            tvError.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

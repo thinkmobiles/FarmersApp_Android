@@ -3,7 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/toolbar_add_price"/>
+    <include layout="@layout/toolbar_layout"/>
 
     <FrameLayout
         android:id="@+id/containerAddPrice"

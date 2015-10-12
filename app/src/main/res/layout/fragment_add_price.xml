@@ -56,7 +56,9 @@
             <com.farmers.underground.ui.custom_views.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/LightGreyMainRegularText"
+                style="@style/BlackMainRegularText"
+                android:drawableLeft="@drawable/ic_arrow_drop_down_3_copy"
+                android:drawablePadding="@dimen/padding_margin_default_tiny"
                 android:text="יום שני 12.2.15"
                 android:id="@+id/tvDate_FAP" />
         </LinearLayout>
@@ -147,7 +149,7 @@
                     style="@style/WhiteSmallRegularText"
                     android:textColor="@color/text_light_grey"
                     android:gravity="right"
-                    android:text="New Text"
+                    android:text="@string/add_price_example_type"
                     android:id="@+id/tvHintQuality_FAP" />
             </LinearLayout>
 
@@ -156,19 +158,20 @@
         <com.farmers.underground.ui.custom_views.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end"
             style="@style/BlueMainRegularText"
-            android:text="Add quality"
+            android:text="@string/add_price_add_type"
             android:id="@+id/tvAddQuality_FAP" />
     </LinearLayout>
-
-    <com.farmers.underground.ui.custom_views.CustomTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/add_price_bottom_text"
-        android:textSize="@dimen/add_price_bottom_text_size"
-        android:textColor="@color/grey"
-        android:layout_marginBottom="@dimen/margin_default_small"
-        android:id="@+id/textView10" />
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/tvAddPrice_FAP"
+        android:background="@color/aqua"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:text="@string/add_price_add_button"
+        style="@style/WhiteRegularText"/>
 
 </LinearLayout>

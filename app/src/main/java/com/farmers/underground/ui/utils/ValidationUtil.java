@@ -26,4 +26,9 @@ public class ValidationUtil {
         return passwordString.matches(passwordPattern) && passwordString.length() > 5 && passwordString.length() < 36;
     }
 
+    public static boolean isValidPrice(String price){
+        String pricePattern = "[0-9]+\\.[0-9]{2}";
+        return price.matches(pricePattern);
+    }
+
 }

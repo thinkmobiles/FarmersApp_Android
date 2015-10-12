@@ -79,17 +79,20 @@
     <string name="tap_to_refresh_price">לחץ לעדכן מחיר</string>
 
     <!-- add price-->
-    <string name="add_price_bottom_text">*התאריך מעודכן יומיים אחורנית מכיוון שאין את המחיר היומי של המשווקים</string>
     <string name="add_price_change_date">שינוי תאריך</string>
     <string name="add_price_hint_price">מחיר?</string>
     <string name="add_price_hint_type">‫סוג‬?</string>
     <string name="add_price_incorrect_price">מחיר לא תקין</string>
+    <string name="add_price_example_type">‫‫ייצוא‬ ‫איכות‬ :‫לדוגמה‬</string>
+    <string name="add_price_add_button">‫הוסף‬</string>
+    <string name="add_price_add_type">קטגוריה עוד להוסיף כדי כאן לחץ + </string>
     <!--prices activity-->
     <string name="prices_activity_tab1">סטטיסטיקות</string>
     <string name="prices_activity_tab2">מחירי משווקים</string>
     <string name="prices_activity_tab3">כל המחירים</string>
 
     <string name="all_prices_more_price">לחץ לעדכן מחיר</string>
+    <string name="date_picker_to">ועד</string>
     <string name="tab1">סטטיסטיקות</string>
     <string name="tab2">מחירי משווקים</string>
     <string name="tab3">כל המחירים</string>
