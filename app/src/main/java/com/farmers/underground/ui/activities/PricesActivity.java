@@ -30,6 +30,8 @@ import com.farmers.underground.ui.custom_views.CustomSearchView;
 import com.farmers.underground.ui.dialogs.CropQualitiesDialogFragment;
 import com.farmers.underground.ui.dialogs.WhyCanISeeThisPriceDialogFragment;
 import com.farmers.underground.ui.fragments.AllPricesFragment;
+import com.farmers.underground.ui.fragments.MarketeerPricesFragment;
+import com.farmers.underground.ui.fragments.StatisticsFragment;
 import com.farmers.underground.ui.models.DateRange;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -133,8 +135,8 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
     private List<BaseFragment> getFragmentList() {
         List<BaseFragment> fragmentList = new ArrayList<>();
 
-        fragmentList.add(createAlLPricesFragemnt(mCropModel));
-        fragmentList.add(createAlLPricesFragemnt(mCropModel));
+        fragmentList.add(createStatisticsPricesFragemnt(mCropModel));
+        fragmentList.add(createMarketeerPricesFragemnt(mCropModel));
         fragmentList.add(createAlLPricesFragemnt(mCropModel));
 
         return fragmentList;
@@ -142,6 +144,14 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
 
     private BaseFragment createAlLPricesFragemnt(CropModel cropModel) {
         return AllPricesFragment.getInstance(cropModel);
+    }
+
+    private BaseFragment createMarketeerPricesFragemnt(CropModel cropModel) {
+        return MarketeerPricesFragment.getInstance(cropModel);
+    }
+
+    private BaseFragment createStatisticsPricesFragemnt(CropModel cropModel) {
+        return StatisticsFragment.getInstance(cropModel);
     }
 
     private void setTabs() {

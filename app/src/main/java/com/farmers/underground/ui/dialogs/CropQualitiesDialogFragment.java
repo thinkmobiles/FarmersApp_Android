@@ -6,9 +6,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.farmers.underground.R;
 import com.farmers.underground.remote.models.PriceModel;
+import com.farmers.underground.remote.models.SourceModel;
 import com.farmers.underground.ui.activities.TransparentActivity;
 import com.farmers.underground.ui.adapters.CropQualityPriecesAdapter;
 import com.farmers.underground.ui.base.BaseFragment;
@@ -16,10 +19,6 @@ import com.farmers.underground.ui.custom_views.CustomTextView;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by tZpace
@@ -68,10 +67,11 @@ public class CropQualitiesDialogFragment extends BaseFragment<TransparentActivit
     private CropQualityPriecesAdapter initListAdapterTest(){
 
         PriceModel priceModel = new PriceModel();
-        priceModel.setPrice("4.50");
-        priceModel.setMarketeerName("MarketeerName");
-        priceModel.setQualityName("QualityName");
-
+        priceModel.setPrice(4.50f);
+        SourceModel sourceModel = new SourceModel();
+        sourceModel.setName("MarketeerName");
+        sourceModel.setType("QualityName (Type)");
+        priceModel.setSource(sourceModel);
         List<PriceModel> mListItems =new ArrayList<>(0);
         mListItems.add(priceModel);
         mListItems.add(priceModel);

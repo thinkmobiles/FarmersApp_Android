@@ -245,8 +245,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
             @Override
             public boolean onQueryTextChange(final String newText) {
-               if(isRTL())searchView.getSearchEditArea().setSelection(0);
-
+ 
                 String newQuerry = "";
                 if (newText.length() > 0) newQuerry = newText.trim();
                 if (newQuerry.isEmpty()) {
@@ -415,6 +414,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
             case R.id.action_back:
                 hideSoftKeyboard();
                 searchController.hide();
+                invalidateOptionsMenu();
 
                 return true;
         }

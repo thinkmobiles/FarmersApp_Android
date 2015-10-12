@@ -118,4 +118,6 @@
     <string name="subtilte">\u200F‏subtitle</string>
     <string name="foot">\u200F text date</string>
 
+    <string name="why_c_no_prices">Why i can see\nno prices?</string>
+    <string name="add_price">Add price</string>
 </resources>
