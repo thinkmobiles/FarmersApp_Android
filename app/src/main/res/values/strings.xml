@@ -90,13 +90,13 @@
     <string name="tap_to_refresh_price">Tap to refresh price</string>
 
     <!-- add price-->
-    <string name="add_price_bottom_text">*Get the latest date back two days because there is no daily product marketing</string>
     <string name="add_price_change_date">Change Date</string>
     <string name="add_price_hint_price">Price?</string>
     <string name="add_price_hint_type">Type?</string>
     <string name="add_price_incorrect_price">Price is not right</string>
     <string name="add_price_example_type">example: export‬</string>
     <string name="add_price_add_button">Add‫‬</string>
+    <string name="add_price_add_type">+ Click here to add another category</string>
 
     <!--prices activity-->
     <string name="prices_activity_tab1">Statistics</string>

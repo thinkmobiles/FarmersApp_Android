@@ -24,6 +24,15 @@
             android:clickable="true"
             android:visibility="gone"
             />
+    <ImageView
+            android:id="@+id/action_done"
+            android:layout_width="wrap_content"
+            android:layout_height="?actionBarSize"
+            android:src="@drawable/ic_error_price"
+            android:layout_gravity="left"
+            android:clickable="true"
+            android:visibility="gone"
+            />
 
     <com.farmers.underground.ui.custom_views.CustomTextView
             android:layout_width="wrap_content"
