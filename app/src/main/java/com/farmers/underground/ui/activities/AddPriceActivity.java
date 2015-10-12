@@ -98,8 +98,8 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
 
     public void showDatePicker() {
         Calendar today = Calendar.getInstance();
-        DatePickerDialog datePicker = new DatePickerDialog(this, this, today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH));
-        datePicker.show();
+        new DatePickerDialog(this, this, today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH))
+                .show();
     }
 
     @Override
@@ -118,7 +118,7 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
     }
 
     public String getDate(){
-        return new SimpleDateFormat("ccc dd.L.yy").format(today.getTime());
+        return new SimpleDateFormat("ccc dd.M.yy").format(today.getTime());
     }
 
     public interface OnChangeDateListener{
