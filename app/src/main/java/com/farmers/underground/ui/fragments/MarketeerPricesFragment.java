@@ -20,7 +20,9 @@ import com.farmers.underground.ui.adapters.MarketeerPricesAdapter;
 import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.custom_views.CropsItemDivider;
 import com.farmers.underground.ui.models.BaseMarketeerPricesDH;
+import com.farmers.underground.ui.models.DateMarketeerPricesDH;
 import com.farmers.underground.ui.models.DateRange;
+import com.farmers.underground.ui.models.PriceMarketeerPricesDH;
 import com.farmers.underground.ui.utils.ResourceRetriever;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -41,7 +43,7 @@ public class MarketeerPricesFragment extends BaseFragment implements PricesActiv
     private MarketeerPricesAdapter adapter;
     private CropModel mCropModel;
     private DateRange mDateRange;
-
+    private MarketeerPricesAdapter.Callback adapterCallback;
 
 
     public static BaseFragment getInstance(CropModel cropModel) {
@@ -60,6 +62,7 @@ public class MarketeerPricesFragment extends BaseFragment implements PricesActiv
         super.onCreate(savedInstanceState);
         Gson gson = new GsonBuilder().create();
         mCropModel = gson.fromJson(getArguments().getString(ProjectConstants.KEY_DATA), CropModel.class);
+        generateAdapterCB();
     }
 
     @Override
@@ -79,11 +82,6 @@ public class MarketeerPricesFragment extends BaseFragment implements PricesActiv
         setAdapterData(generateTestCropsList());
     }
 
-    private List<MarketeerPriceModel> generateTestCropsList() {
-
-        return new ArrayList<MarketeerPriceModel>();
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -99,23 +97,81 @@ public class MarketeerPricesFragment extends BaseFragment implements PricesActiv
         return R.layout.fragment_marketeer_prices;
     }
 
+
     @Override
     public void setDateRange(DateRange dateRange) {
         mDateRange = dateRange;
     }
 
+
     private List<BaseMarketeerPricesDH> generateDH(List<MarketeerPriceModel> cropModelList) {
-        List<BaseMarketeerPricesDH> allPricesDHs = new ArrayList<>();
+        List<BaseMarketeerPricesDH> holders = new ArrayList<>();
+        for (int i = 0; i < cropModelList.size(); i++) {
+            if (i == 0) holders.add(generateDateDH(cropModelList.get(i)));
 
-        return allPricesDHs;
+            holders.add(generatePriceDH(cropModelList.get(i)));
+
+            if (i > 0 && !equalsDate(cropModelList.get(i), cropModelList.get(i - 1)))
+                holders.add(generateDateDH(cropModelList.get(i)));
+        }
+        return holders;
     }
 
-    private void setAdapterData( List<MarketeerPriceModel> cropModels){
-            adapter.setDataList(generateDH(cropModels));
+    private DateMarketeerPricesDH generateDateDH(MarketeerPriceModel model) {
+        DateMarketeerPricesDH dataHolder =  new DateMarketeerPricesDH();
+        dataHolder.setDate(model.getDate());
+        return dataHolder;
     }
 
+    private PriceMarketeerPricesDH generatePriceDH(MarketeerPriceModel model) {
+        PriceMarketeerPricesDH dataHolder = new PriceMarketeerPricesDH();
+        dataHolder.setModel(model);
+        dataHolder.setCallback(adapterCallback);
+        return dataHolder;
+    }
+
+    private boolean equalsDate(MarketeerPriceModel first, MarketeerPriceModel second) {
+        return first.getDate().equalsIgnoreCase(second.getDate());
+    }
+
+    private void setAdapterData(List<MarketeerPriceModel> cropModels) {
+        adapter.setDataList(generateDH(cropModels));
+    }
+
+
+    private List<MarketeerPriceModel> generateTestCropsList() {
+        List<MarketeerPriceModel> priceModelList = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            MarketeerPriceModel model = new MarketeerPriceModel();
+            model.setDate("21.05.15");
+            priceModelList.add(model);
+        }
+        for (int i = 0; i < 5; i++) {
+            MarketeerPriceModel model = new MarketeerPriceModel();
+            model.setDate("20.05.15");
+            priceModelList.add(model);
+        }
+        for (int i = 0; i < 5; i++) {
+            MarketeerPriceModel model = new MarketeerPriceModel();
+            model.setDate("19.05.15");
+            priceModelList.add(model);
+        }
+        return priceModelList;
+    }
+
+
+    private void generateAdapterCB(){
+        adapterCallback = new MarketeerPricesAdapter.Callback() {
+            @Override
+            public void onMorePricesClicked(MarketeerPriceModel marketeerPriceModel) {
+
+            }
+        };
+    }
 
     @OnClick(R.id.ll_AddPrice_MP)
-    protected void addPriceClicked(){}
+    protected void addPriceClicked() {
+
+    }
 
 }

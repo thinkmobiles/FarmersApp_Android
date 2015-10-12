@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.Bind;
+import butterknife.OnClick;
 import com.farmers.underground.R;
 
 /**
@@ -30,29 +31,29 @@ public class PriceMarketeerPricesVH extends BaseMarketeerPricesVH {
     @Bind(R.id.rv_container_price_item_MP)
     protected View container;
 
+    @Bind(R.id.tv_why_c_no_price_MP)
+    protected TextView tv_why_c_no_price_MP;
+
     @Bind(R.id.v_Devider_MP)
     protected View devider;
 
+    private PriceMarketeerPricesDH dataHolder;
 
     public PriceMarketeerPricesVH(final View itemView) {
         super(itemView);
-
-
     }
 
     @Override
     public void bindData(BaseMarketeerPricesDH dataHolder, boolean hideDevider) {
         devider.setVisibility(hideDevider ? View.GONE : View.VISIBLE);
-
-        ((PriceMarketeerPricesDH) dataHolder).getModel();
+        this.dataHolder = ((PriceMarketeerPricesDH) dataHolder);
     }
-
-
 
     @Override
     public View getContainer() {
         return container;
     }
 
-
+    @OnClick(R.id.tv_why_c_no_price_MP)
+    protected void onMorePriceClick(){dataHolder.getCallback().onMorePricesClicked(dataHolder.getModel());}
 }

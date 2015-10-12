@@ -9,7 +9,7 @@ import butterknife.ButterKnife;
  */
 abstract public class BaseMarketeerPricesVH extends RecyclerView.ViewHolder {
 
-    protected PriceMarketeerPricesDH dataHolder;
+
 
     public BaseMarketeerPricesVH(final View itemView) {
         super(itemView);

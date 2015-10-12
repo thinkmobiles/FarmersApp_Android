@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import com.farmers.underground.R;
+import com.farmers.underground.remote.models.MarketeerPriceModel;
 import com.farmers.underground.ui.models.*;
 
 import java.util.ArrayList;
@@ -20,7 +21,8 @@ public class MarketeerPricesAdapter extends RecyclerView.Adapter<BaseMarketeerPr
     private List<BaseMarketeerPricesDH> dataList;
     private int lastPosition;
 
-    public MarketeerPricesAdapter() {
+
+    public MarketeerPricesAdapter( ) {
         dataList = new ArrayList<>();
     }
 
@@ -71,6 +73,10 @@ public class MarketeerPricesAdapter extends RecyclerView.Adapter<BaseMarketeerPr
             return 0;
         else
             return 1;
+    }
+
+    public interface Callback{
+        void onMorePricesClicked(MarketeerPriceModel marketeerPriceModel);
     }
 
 }
