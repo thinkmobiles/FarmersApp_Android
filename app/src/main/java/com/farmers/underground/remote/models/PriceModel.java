@@ -1,36 +1,57 @@
 package com.farmers.underground.remote.models;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 /**
  * Created by omar
  * on 10/9/15.
  */
 public class PriceModel {
-    private String price;
-    private String marketeerName;
-    private String qualityName;
 
-    public String getPrice() {
+    @SerializedName("value")
+    private float price;
+
+    @SerializedName("data")
+    private String date;
+
+    @SerializedName("source")
+    private SourceModel source;
+
+    @SerializedName("more")
+    private List<MorePriceModel> morePicesList;
+
+
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 
-    public String getMarketeerName() {
-        return marketeerName;
+    public String getDate() {
+        return date;
     }
 
-    public void setMarketeerName(String marketeerName) {
-        this.marketeerName = marketeerName;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-
-    public String getQualityName() {
-        return qualityName;
+    public SourceModel getSource() {
+        return source;
     }
 
-    public void setQualityName(String qualityName) {
-        this.qualityName = qualityName;
+    public void setSource(SourceModel source) {
+        this.source = source;
+    }
+
+    public List<MorePriceModel> getMorePicesList() {
+        return morePicesList;
+    }
+
+    public void setMorePicesList(List<MorePriceModel> morePicesList) {
+        this.morePicesList = morePicesList;
     }
 }

@@ -1,5 +1,7 @@
 package com.farmers.underground.remote.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -7,22 +9,25 @@ import java.util.List;
  */
 public class CropModel {
 
+    @SerializedName("image")
     private String imgLink;
+
+    @SerializedName("_crop")
     private String ID;
+
+    @SerializedName("isInFavorites")
+    private boolean isInFavorites;
+
+    @SerializedName("englishName")
+    private String englishName;
+
+    @SerializedName("englishName")
+    private String displayName;
+
+    @SerializedName("prices")
     private List<PriceModel> priceList;
-    private String date;
 
-    public String getDate() {
-        return date;
-    }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getID() {
-        return ID;
-    }
 
     public String getImgLink() {
         return imgLink;
@@ -32,8 +37,36 @@ public class CropModel {
         this.imgLink = imgLink;
     }
 
+    public String getID() {
+        return ID;
+    }
+
     public void setID(String ID) {
         this.ID = ID;
+    }
+
+    public boolean isInFavorites() {
+        return isInFavorites;
+    }
+
+    public void setIsInFavorites(boolean isInFavorites) {
+        this.isInFavorites = isInFavorites;
+    }
+
+    public String getEnglishName() {
+        return englishName;
+    }
+
+    public void setEnglishName(String englishName) {
+        this.englishName = englishName;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     public List<PriceModel> getPriceList() {
