@@ -47,8 +47,7 @@ public class SelectMarketerListFragment extends BaseFragment<LoginSignUpActivity
 
     private PickMarketeerAdapter mAdapter;
 
-    //test list of marketers
-    List<String> listMarketeers = new ArrayList<String>(0); /*Arrays.asList("first", "second", "third", "forth", "fifth", "sixth", "seventh", "fiftieth");*/
+    List<String> listMarketeers = new ArrayList<String>(0);
 
     @Override
     protected int getLayoutResId() {
@@ -60,7 +59,9 @@ public class SelectMarketerListFragment extends BaseFragment<LoginSignUpActivity
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
-        getHostActivity().showProgressDialog();
+        etMarketeer.requestFocus();
+        getHostActivity().showSoftKeyboard(etMarketeer);
+//        getHostActivity().showProgressDialog();
         RetrofitSingleton.getInstance().getMarketterList(
                 new ACallback<ArrayList<String>, ErrorMsg>() {
                     @Override
@@ -78,9 +79,10 @@ public class SelectMarketerListFragment extends BaseFragment<LoginSignUpActivity
 
                     @Override
                     public void anyway() {
-                        getHostActivity().hideProgressDialog();
+//                        getHostActivity().hideProgressDialog();
                     }
                 });
+
 
     }
 

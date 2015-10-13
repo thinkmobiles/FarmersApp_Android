@@ -21,15 +21,18 @@ public class PickMarketeerAdapter extends BaseAdapter {
     private List<String> list;
     private List<String> fullList;
     private OnFindMarketerListener listener;
+    private boolean isFirst;
 
     public PickMarketeerAdapter(Context context, List<String> list, OnFindMarketerListener listener) {
         this.context = context;
-        this.list = list;
         this.fullList = list;
         this.listener = listener;
+        this.list = fullList.subList(0, 10);
+        this.isFirst = true;
     }
 
     public void findMarketeer(String name){
+        isFirst = false;
         if(name.length() != 0){
             List<String> tempList = new ArrayList<>();
             for(String marketeer : fullList){
@@ -40,14 +43,19 @@ public class PickMarketeerAdapter extends BaseAdapter {
             tempList.add(context.getString(R.string.select_marketeer_add_name) + " \"" + name + "\"");
             list = tempList;
         } else {
-            list = fullList;
+            list = fullList.subList(0, 10);
+            isFirst = true;
         }
         notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-        listener.onFind(list.size());
+        if(isFirst) {
+            listener.onFind(list.size() + 1);
+        } else {
+            listener.onFind(list.size());
+        }
         return list.size();
     }
 
@@ -85,7 +93,7 @@ public class PickMarketeerAdapter extends BaseAdapter {
     }
 
     public boolean isAddItem(int position){
-        return position == list.size() - 1 && list.size() != fullList.size();
+        return position == list.size() - 1 && list.size() != fullList.size() && !isFirst;
     }
 
     class ViewHolder{
