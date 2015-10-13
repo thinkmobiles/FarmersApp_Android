@@ -10,14 +10,12 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -30,9 +28,7 @@ import com.farmers.underground.ui.adapters.ProjectPagerAdapter;
 import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.custom_views.CustomSearchView;
-import com.farmers.underground.ui.dialogs.CropQualitiesDialogFragment;
 import com.farmers.underground.ui.dialogs.MorePriecesDialogFragment;
-import com.farmers.underground.ui.dialogs.WhyCanISeeThisPriceDialogFragment;
 import com.farmers.underground.ui.fragments.AllPricesFragment;
 import com.farmers.underground.ui.fragments.MarketeerPricesFragment;
 import com.farmers.underground.ui.fragments.PeriodPickerFragment;
@@ -53,7 +49,8 @@ import java.util.List;
  */
 public class PricesActivity extends BaseActivity implements AllPricesAdapter.AllPricesCallback {
 
-    public static final int REQUEST_CODE = 5;
+    public static final int REQUEST_CODE_PERIOD_PICKER  = 5;
+    public static final int REQUEST_CODE_DIALOG_WHY     = 2;
 
     @Bind(R.id.drawer_conainer_MainActivity)
     protected FrameLayout mainContainer;
@@ -241,17 +238,22 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
     @OnClick(R.id.action_calendar)
     protected void onCalendarClick(){
 
-        TransparentActivity.startWithFragmentForResult(this, new PeriodPickerFragment(), REQUEST_CODE);
+        TransparentActivity.startWithFragmentForResult(this, new PeriodPickerFragment(), REQUEST_CODE_PERIOD_PICKER);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == RESULT_OK){
-            if(requestCode == REQUEST_CODE){
-                Bundle bundle = data.getExtras();
-                Calendar dateFrom = (Calendar) bundle.getSerializable(PeriodPickerFragment.KEY_DATE_FROM);
-                Calendar dateTo = (Calendar) bundle.getSerializable(PeriodPickerFragment.KEY_DATE_TO);
-                //todo search request
+            switch (requestCode){
+                case REQUEST_CODE_PERIOD_PICKER:
+                    Bundle bundle = data.getExtras();
+                    Calendar dateFrom = (Calendar) bundle.getSerializable(PeriodPickerFragment.KEY_DATE_FROM);
+                    Calendar dateTo = (Calendar) bundle.getSerializable(PeriodPickerFragment.KEY_DATE_TO);
+                    //todo search request
+                    break;
+                case REQUEST_CODE_DIALOG_WHY:
+                    onAddPricesClicked(mCropModel);
+                    break;
             }
         }
         super.onActivityResult(requestCode, resultCode, data);

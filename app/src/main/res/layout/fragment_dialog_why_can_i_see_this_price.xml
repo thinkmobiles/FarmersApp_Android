@@ -90,30 +90,26 @@
 
             <com.farmers.underground.ui.custom_views.CustomTextView
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="2dp"
                 android:id="@+id/tv_TitCropsNameCropItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:text="שיתוף מחירי משווקים"
-                android:textSize="16sp"
-                custom:customFont="bold"/>
+                style="@style/BlackMainRegularText"/>
 
             <com.farmers.underground.ui.custom_views.CustomTextView
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
+                android:layout_marginBottom="@dimen/margin_default_medium"
                 android:id="@+id/tv_SubCropsNameCropItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:lines="2"
                 android:text="ככל שתשתף את מחירי המשווק שלך ברמה היומית כך תיחשף ליותר מחירי משווקים שאחרים שיתפו!"
-                android:textColor="@color/text_dark_grey"
-                android:textSize="14sp"
-                custom:customFont="regular"/>
+                style="@style/LightGreyMainRegularText"
+                android:textSize="@dimen/normal_text_size"/>
             <View
-                android:layout_marginRight="15dp"
-                android:layout_marginLeft="15dp"
+                android:layout_marginRight="@dimen/margin_default_medium"
+                android:layout_marginLeft="@dimen/margin_default_medium"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/grey" />
@@ -123,19 +119,23 @@
                 android:layout_margin="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="45dp">
-                <TextView
+                <com.farmers.underground.ui.custom_views.CustomTextView
                     android:drawableLeft="@drawable/rectangle_220"
                     android:drawablePadding="4dp"
+                    android:id="@+id/tvAddPrice_WhyDiag"
                     android:text="עדכן מחיר"
-                    android:textColor="#009688"
-                    android:textSize="14sp"
+                    android:textColor="@color/aqua"
+                    android:textSize="@dimen/normal_text_size"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <TextView
+                <com.farmers.underground.ui.custom_views.CustomTextView
                     android:layout_marginLeft="8dp"
+                    android:id="@+id/tvCancel_WhyDiag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/BlackMainRegularText"
+                    android:textSize="@dimen/normal_text_size"
                     android:text="ביטול"/>
 
 

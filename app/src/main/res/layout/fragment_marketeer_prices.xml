@@ -10,8 +10,8 @@
             android:id="@+id/rv_BaseListFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="vertical"
-             android:overScrollMode="never"
+            android:scrollbars="none"
+            android:overScrollMode="never"
             android:layout_above="@+id/ll_AddPrice_MP"/>
 
     <LinearLayout
