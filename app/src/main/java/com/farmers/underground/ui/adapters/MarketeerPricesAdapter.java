@@ -77,6 +77,8 @@ public class MarketeerPricesAdapter extends RecyclerView.Adapter<BaseMarketeerPr
 
     public interface Callback{
         void onMorePricesClicked(MarketeerPriceModel marketeerPriceModel);
+
+        void onNoPricesClicked(MarketeerPriceModel model);
     }
 
 }

@@ -9,51 +9,71 @@
     <FrameLayout
             android:id="@+id/price_conainer"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingRight="@dimen/padding_margin_default_normal"
-            android:layout_alignBottom="@+id/marketeer_container"
+            android:layout_height="match_parent"
+            android:paddingRight="@dimen/padding_margin_default_tiny"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="@dimen/margin_default_normal">
+            android:layout_marginLeft="@dimen/margin_default_medium" android:visibility="visible">
 
 
         <LinearLayout
                 android:id="@+id/ll_price_text_conainer_MP"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center">
+                android:orientation="vertical"
+                android:layout_gravity="center" android:visibility="visible">
 
-            <ImageView
-                    android:id="@+id/imageView4"
-                    android:layout_width="@dimen/crop_price_icon_size"
-                    android:layout_height="@dimen/crop_price_icon_size"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_crop_marketer_price"
-                    android:layout_gravity="bottom"
-                    android:layout_marginBottom="@dimen/margin_default_tiny"/>
-
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+                <ImageView
+                        android:layout_width="@dimen/crop_price_icon_size"
+                        android:layout_height="@dimen/crop_price_icon_size"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_clock_search"
+                        android:layout_gravity="bottom"
+                        android:layout_marginRight="@dimen/margin_default_tiny"
+                        android:layout_marginBottom="@dimen/margin_default_tiny"/>
+                <ImageView
+                        android:layout_width="@dimen/crop_price_icon_size"
+                        android:layout_height="@dimen/crop_price_icon_size"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_crop_marketer_price"
+                        android:layout_gravity="bottom"
+                        android:layout_marginBottom="@dimen/margin_default_tiny"/>
+                <com.farmers.underground.ui.custom_views.CustomTextView
+                        android:id="@+id/tv_Price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_dark_grey"
+                        android:textSize="@dimen/marketeer_price_price_text_size"
+                        custom:customFont="roboto_light"
+                        android:text="14.50"/>
+            </LinearLayout>
             <com.farmers.underground.ui.custom_views.CustomTextView
-                    android:id="@+id/tv_Price"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tv_MorePrice_MP"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/text_dark_grey"
-                    android:textSize="@dimen/marketeer_price_price_text_size"
-                    custom:customFont="roboto_light"
-                    android:text="4.50"/>
+                    android:text="@string/more_prices"
+                    android:textColor="@color/selector_tap_to_refresh"
+                    android:textSize="10sp"
+                    custom:customFont="bold"
+                    android:layout_gravity="left|center_vertical"
+                    android:gravity="left"/>
 
         </LinearLayout>
-            <com.farmers.underground.ui.custom_views.CustomTextView
-                    android:id="@+id/tv_why_c_no_price_MP"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/why_c_no_prices"
-                    android:lines="2"
-                    android:layout_gravity="center_horizontal|center_vertical"
-                    custom:customFont="regular"
-                    android:textColor="@color/text_light_blue"
-                    android:textSize="@dimen/tiny_text_size"
-                    android:visibility="gone"
-                    />
+        <com.farmers.underground.ui.custom_views.CustomTextView
+                android:id="@+id/tv_why_c_no_price_MP"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/why_c_no_prices"
+                android:lines="2"
+                android:layout_gravity="center"
+                android:textColor="@color/selector_tap_to_refresh"
+                android:textSize="10sp"
+                custom:customFont="bold"
+                android:visibility="gone"
+                android:gravity="center_vertical|right"/>
     </FrameLayout>
     <LinearLayout
             android:id="@+id/marketeer_container"
@@ -68,9 +88,8 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/marketeer_price_crop_text_size"
                 android:textColor="@color/text_black"
-                android:gravity="right"
                 custom:customFont="regular"
-                android:text="תלמים שיווק תוצרת חקלאית"/>
+                android:text="תלמים שיווק תוצרת חקלאית" android:singleLine="true" android:gravity="right"/>
 
         <com.farmers.underground.ui.custom_views.CustomTextView
                 android:id="@+id/tv_MarketeerArea_MP"
@@ -104,12 +123,12 @@
                 android:textColor="@color/text_white"
                 custom:customFont="regular"
                 android:text="La"/>
-            <ImageView
-                    android:id="@+id/iv_MarketeerLogoImage_MP"
-                    android:layout_width="@dimen/marketeer_price_marketeer_logo_bg_size"
-                    android:layout_height="@dimen/marketeer_price_marketeer_logo_bg_size"
-                    android:layout_gravity="center"
-                    android:visibility="gone"/>
+        <ImageView
+                android:id="@+id/iv_MarketeerLogoImage_MP"
+                android:layout_width="@dimen/marketeer_price_marketeer_logo_bg_size"
+                android:layout_height="@dimen/marketeer_price_marketeer_logo_bg_size"
+                android:layout_gravity="center"
+                android:visibility="gone"/>
     </FrameLayout>
     <View
             android:id="@+id/v_Devider_MP"

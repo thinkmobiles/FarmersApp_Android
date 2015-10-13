@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_fr_dialog_rounded"
+    >
+
+    <RelativeLayout
+        android:id="@+id/rl_head_dialog_more_prieces"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_toLeftOf="@+id/im_logo_dialog_more_prieces"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <com.farmers.underground.ui.custom_views.CustomTextView
+                android:id="@+id/tv_title_dialog_more_prieces"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="@string/title"
+                custom:customFont="bold" />
+
+            <com.farmers.underground.ui.custom_views.CustomTextView
+                android:id="@+id/tv_subtitle_dialog_more_prieces"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="@string/subtilte"
+                custom:customFont="regular" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:contentDescription="@null"
+            android:id="@+id/im_logo_dialog_more_prieces"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="4dp"
+            android:src="@android:drawable/ic_dialog_info" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/im_close_dialog_more_prieces"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@android:drawable/ic_menu_close_clear_cancel" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_head_dialog_more_prieces"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey" />
+
+        <ListView
+            android:id="@+id/lv_items_dialog_more_prieces"
+
+            android:layout_width="match_parent"
+            android:layout_height="240dp" />
+
+        <View
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey" />
+
+        <TextView
+            android:id="@+id/tv_foot_dialog_more_prieces"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:text="@string/foot" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

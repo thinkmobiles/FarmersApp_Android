@@ -3,9 +3,13 @@ package com.farmers.underground.ui.models;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import butterknife.Bind;
 import butterknife.OnClick;
+
 import com.farmers.underground.R;
+import com.farmers.underground.ui.activities.TransparentActivity;
+import com.farmers.underground.ui.dialogs.WhyCanISeeThisPriceDialogFragment;
 
 /**
  * Created by omar on 10/2/15.
@@ -34,8 +38,14 @@ public class PriceMarketeerPricesVH extends BaseMarketeerPricesVH {
     @Bind(R.id.tv_why_c_no_price_MP)
     protected TextView tv_why_c_no_price_MP;
 
+    @Bind(R.id.ll_price_text_conainer_MP)
+    protected View v_PriceContainer;
+
     @Bind(R.id.v_Devider_MP)
     protected View devider;
+
+    @Bind(R.id.tv_MorePrice_MP)
+    protected TextView tv_MorePrice;
 
     private PriceMarketeerPricesDH dataHolder;
 
@@ -47,6 +57,7 @@ public class PriceMarketeerPricesVH extends BaseMarketeerPricesVH {
     public void bindData(BaseMarketeerPricesDH dataHolder, boolean hideDevider) {
         devider.setVisibility(hideDevider ? View.GONE : View.VISIBLE);
         this.dataHolder = ((PriceMarketeerPricesDH) dataHolder);
+        showRandom();
     }
 
     @Override
@@ -55,5 +66,22 @@ public class PriceMarketeerPricesVH extends BaseMarketeerPricesVH {
     }
 
     @OnClick(R.id.tv_why_c_no_price_MP)
-    protected void onMorePriceClick(){dataHolder.getCallback().onMorePricesClicked(dataHolder.getModel());}
+    protected void onNoPriceClick() {
+        dataHolder.getCallback().onNoPricesClicked(dataHolder.getModel());
+    }
+
+
+    @OnClick(R.id.tv_MorePrice_MP)
+    protected void onMorePriceClick() {
+        dataHolder.getCallback().onMorePricesClicked(dataHolder.getModel());
+    }
+
+    private void showRandom() {
+        boolean isShow = Math.random() > 0.5f;
+        v_PriceContainer.setVisibility(!isShow ? View.VISIBLE : View.GONE);
+        tv_why_c_no_price_MP.setVisibility(isShow ? View.VISIBLE : View.GONE);
+        tv_MorePrice.setVisibility(Math.random() > 0.5f ? View.VISIBLE : View.GONE);
+    }
+
+
 }
