@@ -1,5 +1,7 @@
 package com.farmers.underground.ui.dialogs;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -9,6 +11,7 @@ import com.farmers.underground.ui.activities.TransparentActivity;
 import com.farmers.underground.ui.base.BaseFragment;
 
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by tZpace
@@ -26,5 +29,16 @@ public class WhyCanISeeThisPriceDialogFragment extends BaseFragment<TransparentA
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
+    }
+
+    @OnClick(R.id.tvCancel_WhyDiag)
+    protected void onCancel(){
+        getHostActivity().finish();
+    }
+
+    @OnClick(R.id.tvAddPrice_WhyDiag)
+    protected void addPrice(){
+        getHostActivity().setResult(Activity.RESULT_OK, new Intent());
+        getHostActivity().finish();
     }
 }

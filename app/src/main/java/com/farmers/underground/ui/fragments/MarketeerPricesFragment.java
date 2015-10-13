@@ -37,7 +37,7 @@ import java.util.List;
 /**
  * Created by omar on 10/9/15.
  */
-public class MarketeerPricesFragment extends BaseFragment implements PricesActivity.DateRangeSetter {
+public class MarketeerPricesFragment extends BaseFragment<PricesActivity> implements PricesActivity.DateRangeSetter {
     @Bind(R.id.rv_BaseListFragment)
     protected RecyclerView recyclerView;
 
@@ -173,7 +173,7 @@ public class MarketeerPricesFragment extends BaseFragment implements PricesActiv
 
             @Override
             public void onNoPricesClicked(MarketeerPriceModel model) {
-                TransparentActivity.startWithFragment(getHostActivity(), new WhyCanISeeThisPriceDialogFragment());
+                TransparentActivity.startWithFragmentForResult(getHostActivity(), new WhyCanISeeThisPriceDialogFragment(), PricesActivity.REQUEST_CODE_DIALOG_WHY);
             }
         };
     }

@@ -9,6 +9,8 @@
     <dimen name="small_text_size">10sp</dimen>
     <dimen name="tiny_text_size">8sp</dimen>
     <dimen name="crop_price_price_text_size">30sp</dimen>
+    <!--toolbar-->
+    <dimen name="toolbar_text_size">18sp</dimen>
 
     <!--margins-->
     <dimen name="margin_default_tiny">2dp</dimen>
