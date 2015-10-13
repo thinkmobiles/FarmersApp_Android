@@ -83,9 +83,9 @@
     <string name="add_price_hint_price">מחיר?</string>
     <string name="add_price_hint_type">‫סוג‬?</string>
     <string name="add_price_incorrect_price">מחיר לא תקין</string>
-    <string name="add_price_example_type">‫‫ייצוא‬ ‫איכות‬ :‫לדוגמה‬</string>
+    <string name="add_price_example_type">דוגמה: איכות יצוא‬</string>
     <string name="add_price_add_button">‫הוסף‬</string>
-    <string name="add_price_add_type">קטגוריה עוד להוסיף כדי כאן לחץ + </string>
+    <string name="add_price_add_type">+ לחץ כאן כדי להוסיף עוד קטגוריה</string>
     <!--prices activity-->
     <string name="prices_activity_tab1">סטטיסטיקות</string>
     <string name="prices_activity_tab2">מחירי משווקים</string>
@@ -99,6 +99,9 @@
     <string name="alert_message_after_registration_check_mail">הכנס אנא
 לתיבת הדואר שלך ואשר את הרישום</string>
     <string name="why_c_no_prices">מדוע אני לא\n רואה מחיר?</string>
+
+    <!-- period picker-->
+    <string name="period_picker_choose">בחר תאריך</string>
 
     <!--Dialog Fragments--><!--TODO-->
     <string name="title">‏\u200Ftitle</string>

@@ -5,17 +5,14 @@
     android:background="@null"
     android:gravity="center">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"/>
-
     <LinearLayout
         android:orientation="vertical"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_marginRight="45dp"
+        android:layout_marginLeft="45dp"
+        >
 
         <TextView
             android:layout_width="match_parent"
@@ -45,7 +42,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="New Text"
+            android:text="@string/period_picker_choose"
             android:textSize="@dimen/period_picker_date_text_size"
             style="@style/WhiteRegularText"
             android:gravity="center_horizontal"
@@ -59,8 +56,4 @@
 
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"/>
 </LinearLayout>

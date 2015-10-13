@@ -113,6 +113,9 @@
     <string name="alert_message_after_registration_check_mail">Please check email and confirm of recitation</string>
 
 
+    <!-- period picker-->
+    <string name="period_picker_choose">Choose date</string>
+
     <!--Dialog Fragments-->
     <string name="title">‏\u200Ftitle</string>
     <string name="subtilte">\u200F‏subtitle</string>
