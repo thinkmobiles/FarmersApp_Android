@@ -4,7 +4,8 @@ import com.farmers.underground.remote.models.CropModel;
 import com.farmers.underground.ui.adapters.AllPricesAdapter;
 
 /**
- * Created by omar on 10/2/15.
+ * Created by omar
+ * on 10/2/15.
  */
 public class AllPricesDH {
 
@@ -13,8 +14,7 @@ public class AllPricesDH {
     private AllPricesAdapter.AllPricesCallback callback;
 
 
-
-    public AllPricesDH(CropModel model, AllPricesAdapter.AllPricesCallback  callback) {
+    public AllPricesDH(CropModel model, AllPricesAdapter.AllPricesCallback callback) {
         this.model = model;
         this.callback = callback;
     }

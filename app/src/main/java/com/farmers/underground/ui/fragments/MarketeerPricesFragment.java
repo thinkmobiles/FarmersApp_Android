@@ -16,9 +16,13 @@ import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.CropModel;
 import com.farmers.underground.remote.models.MarketeerPriceModel;
 import com.farmers.underground.ui.activities.PricesActivity;
+import com.farmers.underground.ui.activities.TransparentActivity;
 import com.farmers.underground.ui.adapters.MarketeerPricesAdapter;
 import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.custom_views.CropsItemDivider;
+import com.farmers.underground.ui.dialogs.CropQualitiesDialogFragment;
+import com.farmers.underground.ui.dialogs.MorePriecesDialogFragment;
+import com.farmers.underground.ui.dialogs.WhyCanISeeThisPriceDialogFragment;
 import com.farmers.underground.ui.models.BaseMarketeerPricesDH;
 import com.farmers.underground.ui.models.DateMarketeerPricesDH;
 import com.farmers.underground.ui.models.DateRange;
@@ -164,12 +168,12 @@ public class MarketeerPricesFragment extends BaseFragment implements PricesActiv
         adapterCallback = new MarketeerPricesAdapter.Callback() {
             @Override
             public void onMorePricesClicked(MarketeerPriceModel marketeerPriceModel) {
-
+                TransparentActivity.startWithFragment(getHostActivity(), new CropQualitiesDialogFragment());
             }
 
             @Override
             public void onNoPricesClicked(MarketeerPriceModel model) {
-
+                TransparentActivity.startWithFragment(getHostActivity(), new WhyCanISeeThisPriceDialogFragment());
             }
         };
     }

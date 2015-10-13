@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/llPriceItem_more_prieces_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:contentDescription="@null"
+            android:layout_width="@dimen/crop_price_icon_size"
+            android:layout_height="@dimen/crop_price_icon_size"
+            android:layout_gravity="bottom"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_crop_marketer_price" android:layout_marginBottom="6dp"/>
+
+        <com.farmers.underground.ui.custom_views.CustomTextView
+            android:id="@+id/tv_Price_more_prieces_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4.50"
+            android:textColor="@color/text_dark_grey"
+            android:textSize="@dimen/all_prices_price_text_size"
+            custom:customFont="roboto_light"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_toRightOf="@id/llPriceItem_more_prieces_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <com.farmers.underground.ui.custom_views.CustomTextView
+            android:id="@+id/tv_title_more_prieces_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:gravity="right"
+            android:text="title"
+            custom:customFont="bold" />
+
+        <com.farmers.underground.ui.custom_views.CustomTextView
+            android:id="@+id/tv_subtitle_more_prieces_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:gravity="right"
+            android:text="@string/subtilte"
+            custom:customFont="regular" />
+
+    </LinearLayout>
+
+</RelativeLayout>

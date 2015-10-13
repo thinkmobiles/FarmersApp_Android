@@ -27,7 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by omar on 10/9/15.
+ * Created by omar
+ * on 10/9/15.
  */
 public class AllPricesFragment extends BaseFragment implements PricesActivity.DateRangeSetter {
     @Bind(R.id.rv_BaseListFragment)
@@ -116,7 +117,6 @@ public class AllPricesFragment extends BaseFragment implements PricesActivity.Da
     //dev test methods
     private  List<CropModel>  generateTestCropsList(){
         List<CropModel> cropsList = new ArrayList<>();
-
 
         for (int i = 0; i < 100; i++) {
             CropModel basquiatCropModel = new CropModel();

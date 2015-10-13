@@ -15,7 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by omar on 10/2/15.
+ * Created by omar
+ * on 10/2/15.
  */
 public class AllPricesAdapter extends RecyclerView.Adapter<AllPricesVH> {
 
@@ -49,8 +50,9 @@ public class AllPricesAdapter extends RecyclerView.Adapter<AllPricesVH> {
     }
 
     public interface AllPricesCallback {
-        void onAllPricesItemClicked(CropModel cropModel);
-        void onAllPricesMorePricesClicked(CropModel cropModel);
+        void onAllPricesItemClicked(CropModel cropModel); // -> ?
+        void onAddPricesClicked(CropModel cropModel);
+        void onMorePricesClicked(CropModel cropModel);
     }
 
     private void setAnimation(View viewToAnimate, int position) {

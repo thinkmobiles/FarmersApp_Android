@@ -10,7 +10,8 @@ import butterknife.OnClick;
 import com.farmers.underground.R;
 
 /**
- * Created by omar on 10/2/15.
+ * Created by omar
+ * on 10/2/15.
  */
 public class AllPricesVH extends RecyclerView.ViewHolder {
 
@@ -22,6 +23,15 @@ public class AllPricesVH extends RecyclerView.ViewHolder {
 
     @Bind(R.id.tv_YearAllPrices)
     protected TextView tv_YearText;
+
+    @Bind(R.id.layout_marketer)
+    protected LinearLayout layout_marketer;
+
+    @Bind(R.id.layout_market_one)
+    protected LinearLayout layout_market_one;
+
+    @Bind(R.id.layout_market_two)
+    protected LinearLayout layout_market_two;
 
     @Bind(R.id.ll_PricesContainer_CropItem)
     protected LinearLayout ll_PriceContainer;
@@ -44,17 +54,39 @@ public class AllPricesVH extends RecyclerView.ViewHolder {
 
     }
 
-    public void bindData(AllPricesDH dateHolder, boolean hideDevider) {
+    public void bindData(final AllPricesDH dateHolder, boolean hideDevider) {
         this.dateHolder = dateHolder;
         for (int i = 0; i < ll_PriceContainer.getChildCount(); i++) {
             TextView tv_refresh = (TextView) ll_PriceContainer.getChildAt(i)
                     .findViewById(R.id.tv_RefresPrice_CropsItem);
             if (Math.random() > 0.5f && tv_refresh != null) {
                 tv_refresh.setVisibility(View.GONE);
-            } else if (tv_refresh != null) tv_refresh.setVisibility(View.VISIBLE);
+            } else if (tv_refresh != null) {
+                tv_refresh.setVisibility(View.VISIBLE);
+            }
         }
         if (hideDevider) devider.setVisibility(View.GONE);
         else devider.setVisibility(View.VISIBLE);
+
+        layout_marketer.findViewById(R.id.tv_RefresPrice_CropsItem).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dateHolder.getCallback().onAddPricesClicked(dateHolder.getModel());
+            }
+        });
+        layout_market_one.findViewById(R.id.tv_RefresPrice_CropsItem).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dateHolder.getCallback().onMorePricesClicked(dateHolder.getModel());
+            }
+        });
+        layout_market_two.findViewById(R.id.tv_RefresPrice_CropsItem).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dateHolder.getCallback().onMorePricesClicked(dateHolder.getModel());
+            }
+        });
+
 
     }
 
@@ -66,8 +98,11 @@ public class AllPricesVH extends RecyclerView.ViewHolder {
 
     @OnClick(R.id.tv_RefresPrice_CropsItem)
     protected void onRefreshClicked() {
-        dateHolder.getCallback().onAllPricesMorePricesClicked(dateHolder.getModel());
-        // container.getContext().startActivity(new Intent( container.getContext(), AddPriceActivity.class));
+//        if( true){
+//            dateHolder.getCallback().onAddPricesClicked(dateHolder.getModel());
+//        } else  {
+//            dateHolder.getCallback().onMorePricesClicked(dateHolder.getModel());
+//        }
     }
 
 }

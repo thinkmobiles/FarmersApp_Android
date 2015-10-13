@@ -5,7 +5,8 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
- * Created by omar on 10/2/15.
+ * Created by omar
+ * on 10/2/15.
  */
 public class CropModel {
 
