@@ -206,7 +206,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
             @Override
             public void onPriceRefreshClicked(CropModel cropModel) {
-                TransparentActivity.startWithFragment(MainActivity.this, new PeriodPickerFragment());
+
             }
         };
     }

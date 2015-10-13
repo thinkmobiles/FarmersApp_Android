@@ -35,8 +35,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:tabIndicatorColor="@color/white"
-                            app:tabTextColor="@color/white"
-                            app:tabSelectedTextColor="@color/text_cyan"
+                            app:tabTextColor="@color/text_cyan"
+                            app:tabSelectedTextColor="@color/white"
                             android:background="@color/aqua"
                             app:tabTextAppearance="@style/TV_TABS"
                             />

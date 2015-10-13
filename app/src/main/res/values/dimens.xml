@@ -9,6 +9,7 @@
     <dimen name="small_text_size">12sp</dimen>
     <dimen name="tiny_text_size">10sp</dimen>
     <dimen name="default_divider_height">0.5dp</dimen>
+    <dimen name="tab_text_size">8sp</dimen>
 
     <!--margins-->
     <dimen name="margin_default_tiny">5dp</dimen>
@@ -120,7 +121,7 @@
     <!--crop price-->
     <dimen name="crop_price_layout_height">42dp</dimen>
     <dimen name="crop_price_icon_size">12dp</dimen>
-    <dimen name="crop_price_price_text_size">34sp</dimen>
+    <dimen name="crop_price_price_text_size">32sp</dimen>
     <dimen name="crop_price_name_marketer_text_size">12sp</dimen>
     <dimen name="crop_price_refresh_text_size">10sp</dimen>
     <!-- add price-->

@@ -9,7 +9,7 @@
 
     <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/crop_price_layout_height"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:orientation="horizontal">
 
@@ -19,6 +19,7 @@
                 android:layout_width="@dimen/crop_price_icon_size"
                 android:layout_height="@dimen/crop_price_icon_size"
                 android:layout_gravity="bottom"
+                android:layout_marginBottom="6dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_crop_marketer_price"/>
 
@@ -50,7 +51,8 @@
             android:text="(15.4.11)"
             android:textColor="@color/text_light_grey"
             android:textSize="@dimen/small_text_size"
-            custom:customFont="regular" android:visibility="visible"/>
+            custom:customFont="regular"
+            android:visibility="visible"/>
 
         <com.farmers.underground.ui.custom_views.CustomTextView
             android:id="@+id/tv_RefresPrice_CropsItem"

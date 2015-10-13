@@ -9,6 +9,8 @@ import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 
+import com.farmers.underground.R;
+
 /**
  * Created by samson on 07.10.15.
  */
@@ -38,6 +40,7 @@ public class CustomTabLayout extends TabLayout {
             this.addTab(tab.setText(adapter.getPageTitle(i)));
             AppCompatTextView view = (AppCompatTextView) ((ViewGroup)slidingTabStrip.getChildAt(i)).getChildAt(1);
             view.setTypeface(typeface);
+            view.setTextSize(getResources().getDimension(R.dimen.tab_text_size));
         }
     }
 }

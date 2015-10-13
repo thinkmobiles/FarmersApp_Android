@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="tutorial_content_top_margin">20dp</dimen>
+    <!-- text sizes-->
     <dimen name="price_text_size">24sp</dimen>
     <dimen name="medium_text_size">16sp</dimen>
     <dimen name="main_text_size">14sp</dimen>
     <dimen name="normal_text_size">12sp</dimen>
     <dimen name="small_text_size">10sp</dimen>
     <dimen name="tiny_text_size">8sp</dimen>
-    <dimen name="crop_price_price_text_size">32sp</dimen>
+    <dimen name="crop_price_price_text_size">30sp</dimen>
 
+    <!--margins-->
+    <dimen name="margin_default_tiny">2dp</dimen>
+    <dimen name="margin_default_small">5dp</dimen>
+    <dimen name="margin_default_medium">10dp</dimen>
+    <dimen name="margin_default_normal">15dp</dimen>
+    <dimen name="margin_default_large">25dp</dimen>
+
+    <!--paddings margin-->
+    <dimen name="padding_margin_default_tiny">4dp</dimen>
+    <dimen name="padding_margin_default_small">10dp</dimen>
+    <dimen name="padding_margin_default_medium">15dp</dimen>
+    <dimen name="padding_margin_default_normal">20dp</dimen>
+    <dimen name="padding_margin_default_large">30dp</dimen>
 
     <!-- period picker-->
     <dimen name="period_picker_date_text_size">23sp</dimen>
