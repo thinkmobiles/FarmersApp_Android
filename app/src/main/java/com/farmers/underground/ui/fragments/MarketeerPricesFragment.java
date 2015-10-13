@@ -166,6 +166,11 @@ public class MarketeerPricesFragment extends BaseFragment implements PricesActiv
             public void onMorePricesClicked(MarketeerPriceModel marketeerPriceModel) {
 
             }
+
+            @Override
+            public void onNoPricesClicked(MarketeerPriceModel model) {
+
+            }
         };
     }
 
