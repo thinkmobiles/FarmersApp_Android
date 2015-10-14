@@ -22,5 +22,7 @@ public class ProjectConstants {
     public static final String KEY_APP_SHOW_SKIP_TUTORIAL           = "application::TutorialShowSkip";
     public static final String KEY_APP_LAUNCHED_BEFORE              = "application::LaunchedBefore";
 
+    public static final String SERVER_DATE_FORMAT                   = "yyyy-MM-dd'T'hh:mm:ss.SSS'Z'";
+
     private ProjectConstants(){/*prevent creation*/}
 }

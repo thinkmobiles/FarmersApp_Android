@@ -16,13 +16,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
-import com.farmers.underground.remote.models.CropModel;
+import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.ui.adapters.AllPricesAdapter;
 import com.farmers.underground.ui.adapters.ProjectPagerAdapter;
 import com.farmers.underground.ui.base.BaseActivity;
@@ -72,10 +71,10 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
 
     private Target target;
 
-    private CropModel mCropModel;
+    private LastCropPricesModel mCropModel;
     private ProjectPagerAdapter<BaseFragment> pagerAdapter;
 
-    public static void start(@NonNull Context context, CropModel cropModel) {
+    public static void start(@NonNull Context context, LastCropPricesModel cropModel) {
         Gson gson = new GsonBuilder().create();
         String s = gson.toJson(cropModel);
         Intent intent = new Intent(context, PricesActivity.class);
@@ -111,7 +110,7 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
 
     private void getDataOnStart(Intent intent) {
         Gson gson = new GsonBuilder().create();
-        mCropModel = gson.fromJson(intent.getStringExtra(ProjectConstants.KEY_DATA), CropModel.class);
+        mCropModel = gson.fromJson(intent.getStringExtra(ProjectConstants.KEY_DATA), LastCropPricesModel.class);
         if (mCropModel == null)
             throw new IllegalAccessError("Create this activity with start(Context, CropModel) " + "method only!");
     }
@@ -147,15 +146,15 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
         return fragmentList;
     }
 
-    private BaseFragment createAlLPricesFragemnt(CropModel cropModel) {
+    private BaseFragment createAlLPricesFragemnt(LastCropPricesModel cropModel) {
         return AllPricesFragment.getInstance(cropModel);
     }
 
-    private BaseFragment createMarketeerPricesFragemnt(CropModel cropModel) {
+    private BaseFragment createMarketeerPricesFragemnt(LastCropPricesModel cropModel) {
         return MarketeerPricesFragment.getInstance(cropModel);
     }
 
-    private BaseFragment createStatisticsPricesFragemnt(CropModel cropModel) {
+    private BaseFragment createStatisticsPricesFragemnt(LastCropPricesModel cropModel) {
         return StatisticsFragment.getInstance(cropModel);
     }
 
@@ -166,17 +165,17 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
 
     // all prices fragment callbacks
     @Override
-    public void onAllPricesItemClicked(CropModel cropModel) {
+    public void onAllPricesItemClicked(LastCropPricesModel cropModel) {
         //hz
     }
 
     @Override
-    public void onAddPricesClicked(CropModel cropModel) {
+    public void onAddPricesClicked(LastCropPricesModel cropModel) {
         AddPriceActivity.start(this, mCropModel);
     }
 
     @Override
-    public void onMorePricesClicked(CropModel cropModel) {
+    public void onMorePricesClicked(LastCropPricesModel cropModel) {
         TransparentActivity.startWithFragment(this, new MorePriecesDialogFragment());
     }
 
@@ -212,7 +211,7 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
 
             }
         };
-        Picasso.with(this).load(mCropModel.getImgLink()).transform(new CropCircleTransformation()).into(target);
+        Picasso.with(this).load(mCropModel.image).transform(new CropCircleTransformation()).into(target);
         return super.onPrepareOptionsMenu(menu);
     }
 

@@ -16,10 +16,11 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.Toast;
-
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
-import com.farmers.underground.remote.models.CropModel;
+import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.fragments.AddPriceFragment;
 import com.farmers.underground.ui.utils.DateFormaterUtil;
@@ -27,13 +28,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 /**
  *
@@ -51,10 +49,10 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
 
     private Calendar today = Calendar.getInstance();
     private OnChangeDateListener onChangeDateListener;
-    private CropModel mCropModel;
+    private LastCropPricesModel mCropModel;
 
 
-    public static void start(@NonNull Context context, CropModel cropModel) {
+    public static void start(@NonNull Context context, LastCropPricesModel cropModel) {
         Gson gson = new GsonBuilder().create();
         String s = gson.toJson(cropModel);
         Intent intent = new Intent(context, AddPriceActivity.class);
@@ -88,7 +86,7 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
 
     private void setData(){
         Gson gson = new GsonBuilder().create();
-        mCropModel = gson.fromJson(getIntent().getStringExtra(ProjectConstants.KEY_DATA), CropModel.class);
+        mCropModel = gson.fromJson(getIntent().getStringExtra(ProjectConstants.KEY_DATA), LastCropPricesModel.class);
         if (mCropModel == null)
             throw new IllegalAccessError("Create this activity with start(Context, CropModel) " + "method only!");
     }
@@ -151,7 +149,7 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
 
             }
         };
-        Picasso.with(this).load(mCropModel.getImgLink()).transform(new CropCircleTransformation()).into(target);
+        Picasso.with(this).load(mCropModel.image).transform(new CropCircleTransformation()).into(target);
         return super.onPrepareOptionsMenu(menu);
     }
 

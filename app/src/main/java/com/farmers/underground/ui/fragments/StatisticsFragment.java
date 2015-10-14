@@ -13,6 +13,7 @@ import butterknife.ButterKnife;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.CropModel;
+import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.ui.activities.PricesActivity;
 import com.farmers.underground.ui.adapters.AllPricesAdapter;
 import com.farmers.underground.ui.base.BaseFragment;
@@ -38,10 +39,10 @@ public class StatisticsFragment extends BaseFragment implements PricesActivity.D
 
     private AllPricesAdapter.AllPricesCallback allPricesCallback;
     private AllPricesAdapter adapter;
-    private CropModel mCropModel;
+    private LastCropPricesModel mCropModel;
     private DateRange mDateRange;
 
-    public static BaseFragment getInstance(CropModel cropModel) {
+    public static BaseFragment getInstance(LastCropPricesModel cropModel) {
         Bundle args = new Bundle();
         Gson gson = new GsonBuilder().create();
         args.putString(ProjectConstants.KEY_DATA, gson.toJson(cropModel));
@@ -56,7 +57,7 @@ public class StatisticsFragment extends BaseFragment implements PricesActivity.D
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Gson gson = new GsonBuilder().create();
-        mCropModel = gson.fromJson(getArguments().getString(ProjectConstants.KEY_DATA), CropModel.class);
+        mCropModel = gson.fromJson(getArguments().getString(ProjectConstants.KEY_DATA), LastCropPricesModel.class);
     }
 
     @Override
@@ -100,16 +101,16 @@ public class StatisticsFragment extends BaseFragment implements PricesActivity.D
         mDateRange = dateRange;
     }
 
-    private List<AllPricesDH> generateDH(List<CropModel> cropModelList) {
+    private List<AllPricesDH> generateDH(List<LastCropPricesModel> cropModelList) {
         List<AllPricesDH> allPricesDHs = new ArrayList<>();
-        for (CropModel item : cropModelList) {
+        for (LastCropPricesModel item : cropModelList) {
             AllPricesDH allPricesDH = new AllPricesDH(item, allPricesCallback);
             allPricesDHs.add(allPricesDH);
         }
         return allPricesDHs;
     }
 
-    private void setAdapterData( List<CropModel> cropModels){
+    private void setAdapterData( List<LastCropPricesModel> cropModels){
             adapter.setDataList(generateDH(cropModels));
     }
 

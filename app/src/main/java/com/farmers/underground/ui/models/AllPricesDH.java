@@ -1,6 +1,6 @@
 package com.farmers.underground.ui.models;
 
-import com.farmers.underground.remote.models.CropModel;
+import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.ui.adapters.AllPricesAdapter;
 
 /**
@@ -9,21 +9,21 @@ import com.farmers.underground.ui.adapters.AllPricesAdapter;
  */
 public class AllPricesDH {
 
-    private CropModel model;
+    private LastCropPricesModel model;
 
     private AllPricesAdapter.AllPricesCallback callback;
 
 
-    public AllPricesDH(CropModel model, AllPricesAdapter.AllPricesCallback callback) {
+    public AllPricesDH(LastCropPricesModel model, AllPricesAdapter.AllPricesCallback callback) {
         this.model = model;
         this.callback = callback;
     }
 
-    public CropModel getModel() {
+    public LastCropPricesModel getModel() {
         return model;
     }
 
-    public void setModel(CropModel model) {
+    public void setModel(LastCropPricesModel model) {
         this.model = model;
     }
 

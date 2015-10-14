@@ -12,7 +12,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
-import com.farmers.underground.remote.models.CropModel;
+import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.ui.activities.FragmentViewsCreatedCallback;
 import com.farmers.underground.ui.adapters.CropsListAdapter;
 import com.farmers.underground.ui.base.BaseFragment;
@@ -129,7 +129,7 @@ public class CropsListFragment
     }
 
     @Override
-    public void onReceiveCrops(List<CropModel> cropsList) {
+    public void onReceiveCrops(List<LastCropPricesModel> cropsList) {
         adapter.setDataList(generateCropsDataHolders(cropsList));
         adapter.notifyDataSetChanged();
     }
@@ -139,10 +139,18 @@ public class CropsListFragment
         adapter.notifyDataSetChanged();
     }
 
-    private List<CropsListItemDH> generateCropsDataHolders(List<CropModel> cropsList) {
+    private List<CropsListItemDH> generateCropsDataHolders(List<LastCropPricesModel> cropsList) {
         List<CropsListItemDH> dhList = new ArrayList<>();
-        for (CropModel model : cropsList) {
-            dhList.add(new CropsListItemDH(model, thisModel.getType(), listCallback));
+        for (LastCropPricesModel model : cropsList) {
+            switch (thisModel.getType()){
+                case ALL_CROPS:
+                    dhList.add(new CropsListItemDH(model, thisModel.getType(), listCallback));
+                    break;
+                case FAVOURITES:
+                   if(model.isInFavorites) dhList.add(new CropsListItemDH(model, thisModel.getType(), listCallback));
+                    break;
+            }
+
         }
         return dhList;
     }
