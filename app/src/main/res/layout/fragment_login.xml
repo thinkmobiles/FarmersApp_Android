@@ -47,7 +47,7 @@
             android:id="@+id/etEmail"
             style="@style/EditLoginScreen"
             android:layout_width="match_parent"
-            android:gravity="start|center_vertical"
+            android:gravity="right|center_vertical"
             android:hint="@string/login_email"
 
             android:imeOptions="actionNext"/>

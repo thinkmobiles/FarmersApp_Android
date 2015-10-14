@@ -78,15 +78,7 @@
                 android:hint="@string/sign_up_full_name"
 
                 android:imeOptions="actionNext"
-                android:nextFocusForward="@+id/etEmail_FSU"
-/>
-
-                android:paddingRight="@dimen/sign_up_edit_text_margin_padding"
-                android:paddingLeft="@dimen/sign_up_edit_text_margin_padding"
-                android:hint="@string/sign_up_full_name"
-                android:gravity="start|center_vertical"
-                android:textSize="@dimen/login_text_size"
-                custom:customFont="regular" />
+                android:nextFocusForward="@+id/etEmail_FSU" />
 
             <View
                 android:layout_width="match_parent"
@@ -104,10 +96,6 @@
                 android:paddingLeft="@dimen/sign_up_edit_text_margin_padding"
                 android:hint="@string/login_email"
                 style="@style/EditSignUpScreen"/>
-                android:gravity="start|center_vertical"
-                android:textSize="@dimen/login_text_size"
-                style="@style/EditSignUpScreen"
-                custom:customFont="regular"/>
 
             <View
                 android:layout_width="match_parent"

@@ -110,8 +110,8 @@
             android:layout_centerHorizontal="true"
             android:layout_alignParentRight="true"
             android:layout_above="@+id/v_Devider_MP"
-            android:layout_marginLeft="@dimen/margin_default_normal"
-            android:layout_marginRight="@dimen/margin_default_normal">
+            android:layout_marginLeft="@dimen/margin_default_medium"
+            android:layout_marginRight="@dimen/margin_default_medium">
         <com.farmers.underground.ui.custom_views.CustomTextView
                 android:id="@+id/tv_MarketeerLogoText_MP"
                 android:layout_width="@dimen/marketeer_price_marketeer_logo_bg_size"
