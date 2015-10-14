@@ -12,10 +12,13 @@ import com.farmers.underground.R;
 import com.farmers.underground.remote.RetrofitSingleton;
 import com.farmers.underground.remote.models.CropModel;
 import com.farmers.underground.remote.models.ErrorMsg;
+import com.farmers.underground.remote.models.LastCropPriecesModel;
 import com.farmers.underground.remote.models.SuccessMsg;
 import com.farmers.underground.remote.models.UserProfile;
 import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.ui.base.BaseActivity;
+
+import java.util.ArrayList;
 
 /**
  * Created by tZpace
@@ -76,20 +79,15 @@ public class TestActivity extends BaseActivity {
     @OnClick(R.id.btn_api_call_test)
     void testApiCallsReg() {
         showProgressDialog();
-        RetrofitSingleton.getInstance().getUserProfileBySession(new ACallback<UserProfile, ErrorMsg>() {
+        RetrofitSingleton.getInstance().getLastCropPricesList(new ACallback<ArrayList<LastCropPriecesModel>, ErrorMsg>() {
             @Override
-            public void onSuccess(UserProfile result) {
+            public void onSuccess(ArrayList<LastCropPriecesModel> result) {
                 showToast("OK", Toast.LENGTH_SHORT);
             }
 
             @Override
             public void onError(@NonNull ErrorMsg error) {
-                showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
-            }
-
-            @Override
-            public void anyway() {
-                hideProgressDialog();
+                showToast("BAD", Toast.LENGTH_SHORT);
             }
         });
     }

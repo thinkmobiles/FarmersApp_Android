@@ -1,5 +1,6 @@
 package com.farmers.underground.remote.services;
 
+import com.farmers.underground.remote.models.base.MarketeerBase;
 import com.farmers.underground.remote.models.SuccessMsg;
 
 import java.util.ArrayList;
@@ -19,7 +20,11 @@ public interface MarketeerService {
     @GET("marketeers")
     Call<ArrayList<String>> getMarketterList();
 
+    @GET("marketeers")
+    Call<MarketeerBase> getMarketeerBySession(); //todo
+
     @FormUrlEncoded
     @POST("marketeers")
     Call<SuccessMsg> addMarketeer(@Field("fullName") String fullName);
+
 }

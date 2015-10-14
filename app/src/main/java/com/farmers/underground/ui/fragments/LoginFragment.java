@@ -69,7 +69,7 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> {
             //etPassword.setText(userCredentials.getPass());
         }
 
-        if (FarmersApp.getInstance().isUserAuthenticated() &&  FarmersApp.getInstance().wasLogedInBefore()){
+        if (FarmersApp.getInstance().isUserAuthenticated() &&  FarmersApp.getInstance().wasLoggedInBefore()){
             getHostActivity().getUserProfileAsync();
         }
     }

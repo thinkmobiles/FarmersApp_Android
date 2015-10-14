@@ -53,23 +53,23 @@ public class FarmersApp extends Application {
         super.onCreate();
         ourInstance = this;
 
-        //Crashlytics
+        // Init Crashlytics
         if(BuildConfig.PRODUCTION)
             Fabric.with(this, new Crashlytics());
 
-        //Fonts
+        // Init Fonts
         TypefaceManager.init(this);
 
-        // Initialize the SDK before executing any other operations,
+        // Init the SDK before executing any other operations,
         // especially, if you're using Facebook UI elements.
         FacebookSdk.sdkInitialize(getApplicationContext());
 
-        // Android dualcache
+        // Android DualCache
         if (BuildConfig.DEBUG)
             DualCacheLogUtils.enableLog();
         DualCacheContextUtils.setContext(getApplicationContext());
 
-        /** Hebrew LOCALE */
+        /**Set Hebrew LOCALE */
            Locale locale = new Locale("iw");
            Locale.setDefault(locale);
            Configuration config = new Configuration();
@@ -80,7 +80,7 @@ public class FarmersApp extends Application {
     }
 
     public void onUserLogin(){
-        setLogedInBefore();
+        setLoggedInBefore();
     }
 
     public void onUserLogOut() {
@@ -139,11 +139,11 @@ public class FarmersApp extends Application {
         } else return null;
     }
 
-    public boolean wasLogedInBefore(){
-      return FarmersApp.getUsrPreferences().contains(ProjectConstants.KEY_CURRENT_USER_LOGIN_SUCCESFUL) && FarmersApp.getUsrPreferences().getBoolean(ProjectConstants.KEY_CURRENT_USER_LOGIN_SUCCESFUL,false);
+    public boolean wasLoggedInBefore(){
+      return FarmersApp.getUsrPreferences().contains(ProjectConstants.KEY_CURRENT_USER_LOGIN_SUCCESSFUL) && FarmersApp.getUsrPreferences().getBoolean(ProjectConstants.KEY_CURRENT_USER_LOGIN_SUCCESSFUL,false);
     }
-    public void setLogedInBefore(){
-       FarmersApp.getUsrPreferences().edit().putBoolean(ProjectConstants.KEY_CURRENT_USER_LOGIN_SUCCESFUL,true).apply();
+    public void setLoggedInBefore(){
+       FarmersApp.getUsrPreferences().edit().putBoolean(ProjectConstants.KEY_CURRENT_USER_LOGIN_SUCCESSFUL,true).apply();
     }
 
     public static SharedPreferences getAppPreferences() {

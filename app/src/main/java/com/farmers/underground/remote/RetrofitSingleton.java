@@ -5,13 +5,16 @@ import android.support.annotation.NonNull;
 import com.farmers.underground.BuildConfig;
 import com.farmers.underground.config.ApiConstants;
 import com.farmers.underground.remote.models.ErrorMsg;
+import com.farmers.underground.remote.models.LastCropPriecesModel;
 import com.farmers.underground.remote.models.SuccessMsg;
 import com.farmers.underground.remote.models.UserCredentials;
 import com.farmers.underground.remote.models.UserProfile;
 import com.farmers.underground.remote.models.UserRegistration;
 import com.farmers.underground.remote.models.UserSignUpFB;
 import com.farmers.underground.remote.services.AuthorizationService;
+import com.farmers.underground.remote.services.CropsService;
 import com.farmers.underground.remote.services.MarketeerService;
+import com.farmers.underground.remote.services.PricesService;
 import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.remote.util.AddCookiesInterceptor;
 import com.farmers.underground.remote.util.ICallback;
@@ -38,6 +41,9 @@ public class RetrofitSingleton {
     private final Retrofit retrofit;
     private MarketeerService marketeerService;
     private AuthorizationService authorizationService;
+
+    private CropsService cropsService;
+    private PricesService pricesService;
 
     private static RetrofitSingleton ourInstance = new RetrofitSingleton();
 
@@ -68,6 +74,44 @@ public class RetrofitSingleton {
         retrofit = retroBuilder.build();
     }
 
+
+    private void initCropsService(Retrofit retrofit) {
+        cropsService = retrofit.create(CropsService.class);
+    }
+
+    private CropsService getCropsService() {
+        if (cropsService == null)
+            initCropsService(retrofit);
+
+        return cropsService;
+    }
+
+    private void initPricesService(Retrofit retrofit) {
+        pricesService = retrofit.create(PricesService.class);
+    }
+
+    private PricesService getPricesService() {
+        if (pricesService == null)
+            initPricesService(retrofit);
+
+        return pricesService;
+    }
+
+    public void getLastCropPricesList(final ACallback<ArrayList<LastCropPriecesModel>,ErrorMsg> callback){
+        getPricesService().getLast().enqueue(new Callback<ArrayList<LastCropPriecesModel>>() {
+            @Override
+            public void onResponse(Response<ArrayList<LastCropPriecesModel>> response, Retrofit retrofit) {
+                performCallback(callback,response);
+                callback.anyway();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                callback.onError(new ErrorMsg("Network Error"));
+                callback.anyway();
+            }
+        });
+    }
 
 
     private void initMarketeerService(Retrofit retrofit) {
