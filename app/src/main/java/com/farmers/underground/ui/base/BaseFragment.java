@@ -1,13 +1,16 @@
 package com.farmers.underground.ui.base;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
+import android.content.Context;
+
 import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
+import android.support.annotation.LayoutRes;
+
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.LayoutInflater;
 import android.view.inputmethod.InputMethodManager;
+
 import com.farmers.underground.R;
 
 /**
@@ -15,22 +18,18 @@ import com.farmers.underground.R;
  * on 24-Sep-15.
  */
 public abstract class BaseFragment<A extends BaseActivity> extends Fragment {
+
     protected BaseFragment() {
         /* nothing to do */
     }
 
+    @SuppressWarnings("noinspection unchecked")
     protected A getHostActivity() {
-        //noinspection unchecked
         return (A) getActivity();
     }
 
     @LayoutRes
     protected abstract int getLayoutResId();
-
-    /*@Deprecated
-    public static <F extends BaseFragment> F newInstance() {
-        return null;
-    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,13 +40,14 @@ public abstract class BaseFragment<A extends BaseActivity> extends Fragment {
 
         return inflater.inflate(getLayoutResId(), container, false);
     }
-    protected final boolean isRTL(){
+
+    protected final boolean isRTL() {
         return getResources().getBoolean(R.bool.isRTL);
     }
 
-    public void hideSoftKeyboard(){
-        InputMethodManager imm = (InputMethodManager)  getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm.isActive() && getHostActivity().getCurrentFocus()!= null)
-            imm.hideSoftInputFromWindow( getHostActivity().getCurrentFocus().getWindowToken(), 0);
+    protected void hideSoftKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm.isActive() && getHostActivity().getCurrentFocus() != null)
+            imm.hideSoftInputFromWindow(getHostActivity().getCurrentFocus().getWindowToken(), 0);
     }
 }
