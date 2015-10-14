@@ -14,6 +14,7 @@ import com.farmers.underground.ui.utils.ValidationUtil;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 
 /**
  *
@@ -88,5 +89,14 @@ public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements 
     @Override
     public void onChangeDate() {
         setDate();
+    }
+
+    @OnTextChanged(R.id.etPrice_FAP)
+    protected void checkValidPrice(){
+        if(ValidationUtil.isValidPrice(etPrice.getText().toString())){
+            tvError.setVisibility(View.INVISIBLE);
+        } else {
+            tvError.setVisibility(View.VISIBLE);
+        }
     }
 }
