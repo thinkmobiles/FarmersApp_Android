@@ -35,7 +35,6 @@ import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.custom_views.CustomSearchView;
 import com.farmers.underground.ui.fragments.CropsListFragment;
-import com.farmers.underground.ui.fragments.PeriodPickerFragment;
 import com.farmers.underground.ui.fragments.SearchQueryFragmentCallback;
 import com.farmers.underground.ui.models.CropsListFragmentModel;
 import com.farmers.underground.ui.models.DrawerItem;
@@ -148,7 +147,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         List<CropModel> cropsList = new ArrayList<>();
 
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 20; i++) {
             CropModel basquiatCropModel = new CropModel();
             basquiatCropModel.setID(String.valueOf(i));
             basquiatCropModel.setImgLink("http://www.potomitan.info/ki_nov/images/basquiat_brownspots.jpg");
@@ -165,9 +164,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     private void initCropFragmentAdapters() {
         for (BaseFragment f : pagerAdapter.getFragmentList()) {
             ((SearchQueryFragmentCallback) f).setListCallback(cropsListCallback);
-
         }
-
     }
 
     private void setFragmentStateController() {
@@ -339,10 +336,17 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
         final UserProfile user = FarmersApp.getInstance().getCurrentUser();
 
-        if (user != null && (!(user.hasMarketir() || user.isNewMarketeer()))) {
+        /*if (user != null && (!(user.hasMarketir() || user.isNewMarketeer()))) {
             drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_invite_friends, R.string.drawer_content_5));
         } else {
-              /* add/change Marketer = משווק החלף /הוסף*/ //    todo
+
+        }*/
+
+
+        if (user != null && (!(user.hasMarketir() || user.isNewMarketeer()))) {
+            drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_plus, R.string.drawer_content_5));
+        } else {
+            drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_plus, R.string.drawer_content_6));
         }
 
         drawerItemList.add(new DrawerItem());
