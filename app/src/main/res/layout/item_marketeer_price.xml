@@ -30,7 +30,7 @@
                         android:layout_width="@dimen/crop_price_icon_size"
                         android:layout_height="@dimen/crop_price_icon_size"
                         android:scaleType="fitXY"
-                        android:src="@drawable/ic_clock_search"
+                        android:src="@drawable/ic_info"
                         android:layout_gravity="bottom"
                         android:layout_marginRight="@dimen/margin_default_tiny"
                         android:layout_marginBottom="@dimen/margin_default_tiny"/>

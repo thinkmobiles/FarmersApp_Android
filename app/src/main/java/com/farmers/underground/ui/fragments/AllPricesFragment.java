@@ -118,7 +118,7 @@ public class AllPricesFragment extends BaseFragment implements PricesActivity.Da
     private  List<CropModel>  generateTestCropsList(){
         List<CropModel> cropsList = new ArrayList<>();
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 20; i++) {
             CropModel basquiatCropModel = new CropModel();
             basquiatCropModel.setID(String.valueOf(i));
             basquiatCropModel.setImgLink("http://www.potomitan.info/ki_nov/images/basquiat_brownspots.jpg");
