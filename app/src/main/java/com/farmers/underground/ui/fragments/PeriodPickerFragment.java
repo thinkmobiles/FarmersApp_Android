@@ -13,6 +13,7 @@ import com.farmers.underground.R;
 import com.farmers.underground.ui.activities.PricesActivity;
 import com.farmers.underground.ui.activities.TransparentActivity;
 import com.farmers.underground.ui.base.BaseFragment;
+import com.farmers.underground.ui.utils.DateFormaterUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -54,8 +55,7 @@ public class PeriodPickerFragment extends BaseFragment<TransparentActivity> impl
 
     private void setData(){
         dayFromTo = Period.From;
-        dateFrom = Calendar.getInstance();
-        tvPeriodFrom.setText(convertDate(dateFrom));
+        setDate(Calendar.getInstance());
     }
 
     @OnClick(R.id.tvPeriodFrom)
@@ -74,28 +74,25 @@ public class PeriodPickerFragment extends BaseFragment<TransparentActivity> impl
     }
 
     public void onPickDate(Calendar date) {
-        if(selectedDay == null){
-            selectedDay = date;
-            setDate();
-        } else{
-            if((dayFromTo == Period.To && selectedDay.before(date))
-                    || (dayFromTo == Period.From && selectedDay.after(date))){
-                selectedDay = date;
-                setDate();
+        if(dayFromTo == Period.To) {
+            if (dateFrom.before(date)) {
+                setDate(date);
                 sendPeriod();
             } else {
                 getHostActivity().showToast("Incorrect period", Toast.LENGTH_SHORT);
             }
+        } else {
+            setDate(date);
         }
     }
 
-    private void setDate(){
+    private void setDate(Calendar date){
         if(dayFromTo == Period.From) {
-            tvPeriodFrom.setText(convertDate(selectedDay));
-            dateFrom = selectedDay;
+            tvPeriodFrom.setText(DateFormaterUtil.convertDate(date));
+            dateFrom = date;
         } else {
-            tvPeriodTo.setText(convertDate(selectedDay));
-            dateTo = selectedDay;
+            tvPeriodTo.setText(DateFormaterUtil.convertDate(date));
+            dateTo = date;
         }
     }
 
@@ -107,10 +104,6 @@ public class PeriodPickerFragment extends BaseFragment<TransparentActivity> impl
         intent.putExtras(bundle);
         getHostActivity().setResult(Activity.RESULT_OK, intent);
         getHostActivity().finish();
-    }
-
-    private String convertDate(Calendar date){
-        return new SimpleDateFormat("ccc dd.M.yy").format(date.getTime());
     }
 
     public void showDatePicker(){

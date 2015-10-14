@@ -4,5 +4,5 @@
 
     <dimen name="login_btn_login_height">38dp</dimen>
 
-    <dimen name="tab_text_size">5sp</dimen>
+    <dimen name="drawer_item_height">55dp</dimen>
 </resources>

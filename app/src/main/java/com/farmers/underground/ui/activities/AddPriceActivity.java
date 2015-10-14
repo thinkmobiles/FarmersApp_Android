@@ -23,6 +23,7 @@ import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.fragments.AddPriceFragment;
+import com.farmers.underground.ui.utils.DateFormaterUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
@@ -116,7 +117,7 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
     }
 
     public String getDate(){
-        return new SimpleDateFormat("ccc dd.M.yy").format(today.getTime());
+        return DateFormaterUtil.convertDate(today);
     }
 
     public interface OnChangeDateListener{

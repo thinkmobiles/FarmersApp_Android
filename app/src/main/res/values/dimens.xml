@@ -9,7 +9,7 @@
     <dimen name="small_text_size">12sp</dimen>
     <dimen name="tiny_text_size">10sp</dimen>
     <dimen name="default_divider_height">0.5dp</dimen>
-    <dimen name="tab_text_size">8sp</dimen>
+    <dimen name="tab_text_size">15sp</dimen>
 
     <!--margins-->
     <dimen name="margin_default_tiny">5dp</dimen>

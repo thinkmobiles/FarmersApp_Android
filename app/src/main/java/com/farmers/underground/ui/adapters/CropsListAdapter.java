@@ -39,7 +39,7 @@ public class CropsListAdapter extends RecyclerView.Adapter<CropsListItemVH> {
     @Override
     public void onBindViewHolder(CropsListItemVH holder, int position) {
         holder.bindData(dataList.get(position));
-        setAnimation(holder.getContainer(), position);
+//        setAnimation(holder.getContainer(), position);
     }
 
     @Override
