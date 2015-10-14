@@ -171,12 +171,12 @@
 
     <style name="TV_Drawer">
         <item name="android:textColor">@color/drawer_text_color</item>
-        <item name="android:textSize">@dimen/drawer_item_text_size</item>
+        <item name="android:textSize">@dimen/main_text_size</item>
     </style>
 
     <style name="TV_TABS">
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">@dimen/tabs_text_size</item>
+        <item name="android:textSize">@dimen/tab_text_size</item>
     </style>
 
     <style name="TV_SearchHintListItem">

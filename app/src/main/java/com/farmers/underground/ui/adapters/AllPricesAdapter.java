@@ -41,7 +41,7 @@ public class AllPricesAdapter extends RecyclerView.Adapter<AllPricesVH> {
     public void onBindViewHolder(AllPricesVH holder, int position) {
         boolean hideDevider = position == getItemCount()-1;
         holder.bindData(dataList.get(position), hideDevider);
-        setAnimation(   holder.getContainer(), position);
+//        setAnimation(   holder.getContainer(), position);
     }
 
     @Override

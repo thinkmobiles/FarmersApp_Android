@@ -40,7 +40,7 @@ public class CustomTabLayout extends TabLayout {
             this.addTab(tab.setText(adapter.getPageTitle(i)));
             AppCompatTextView view = (AppCompatTextView) ((ViewGroup)slidingTabStrip.getChildAt(i)).getChildAt(1);
             view.setTypeface(typeface);
-            view.setTextSize(getResources().getDimension(R.dimen.tab_text_size));
+//            view.setTextSize(getResources().getDimension(R.dimen.tab_text_size));
         }
     }
 }
