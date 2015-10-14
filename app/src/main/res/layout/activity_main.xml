@@ -83,12 +83,14 @@
                     android:orientation="horizontal"
                     android:gravity="right">
 
-                <TextView
+                <com.farmers.underground.ui.custom_views.CustomTextView
+                        xmlns:custom="http://schemas.android.com/apk/res-auto"
                         style="@style/TV_Drawer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/log_out"
                         android:layout_gravity="center_vertical"
+                        custom:customFont="regular"
                         />
 
                 <ImageView
