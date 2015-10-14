@@ -13,7 +13,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
-import com.farmers.underground.remote.models.CropModel;
+import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.remote.models.MarketeerPriceModel;
 import com.farmers.underground.ui.activities.PricesActivity;
 import com.farmers.underground.ui.activities.TransparentActivity;
@@ -21,7 +21,6 @@ import com.farmers.underground.ui.adapters.MarketeerPricesAdapter;
 import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.custom_views.CropsItemDivider;
 import com.farmers.underground.ui.dialogs.CropQualitiesDialogFragment;
-import com.farmers.underground.ui.dialogs.MorePriecesDialogFragment;
 import com.farmers.underground.ui.dialogs.WhyCanISeeThisPriceDialogFragment;
 import com.farmers.underground.ui.models.BaseMarketeerPricesDH;
 import com.farmers.underground.ui.models.DateMarketeerPricesDH;
@@ -45,12 +44,12 @@ public class MarketeerPricesFragment extends BaseFragment<PricesActivity> implem
     protected TextView tv_NoItems;
 
     private MarketeerPricesAdapter adapter;
-    private CropModel mCropModel;
+    private LastCropPricesModel mCropModel;
     private DateRange mDateRange;
     private MarketeerPricesAdapter.Callback adapterCallback;
 
 
-    public static BaseFragment getInstance(CropModel cropModel) {
+    public static BaseFragment getInstance(LastCropPricesModel cropModel) {
         Bundle args = new Bundle();
         Gson gson = new GsonBuilder().create();
         args.putString(ProjectConstants.KEY_DATA, gson.toJson(cropModel));
@@ -65,7 +64,7 @@ public class MarketeerPricesFragment extends BaseFragment<PricesActivity> implem
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Gson gson = new GsonBuilder().create();
-        mCropModel = gson.fromJson(getArguments().getString(ProjectConstants.KEY_DATA), CropModel.class);
+        mCropModel = gson.fromJson(getArguments().getString(ProjectConstants.KEY_DATA), LastCropPricesModel.class);
         generateAdapterCB();
     }
 

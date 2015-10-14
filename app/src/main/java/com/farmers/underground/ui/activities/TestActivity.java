@@ -10,11 +10,9 @@ import com.farmers.underground.BuildConfig;
 import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
 import com.farmers.underground.remote.RetrofitSingleton;
-import com.farmers.underground.remote.models.CropModel;
 import com.farmers.underground.remote.models.ErrorMsg;
-import com.farmers.underground.remote.models.LastCropPriecesModel;
+import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.remote.models.SuccessMsg;
-import com.farmers.underground.remote.models.UserProfile;
 import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.ui.base.BaseActivity;
 
@@ -79,9 +77,9 @@ public class TestActivity extends BaseActivity {
     @OnClick(R.id.btn_api_call_test)
     void testApiCallsReg() {
         showProgressDialog();
-        RetrofitSingleton.getInstance().getLastCropPricesList(new ACallback<ArrayList<LastCropPriecesModel>, ErrorMsg>() {
+        RetrofitSingleton.getInstance().getLastCropPricesList(new ACallback<ArrayList<LastCropPricesModel>, ErrorMsg>() {
             @Override
-            public void onSuccess(ArrayList<LastCropPriecesModel> result) {
+            public void onSuccess(ArrayList<LastCropPricesModel> result) {
                 showToast("OK", Toast.LENGTH_SHORT);
             }
 
@@ -136,9 +134,9 @@ public class TestActivity extends BaseActivity {
 
     @OnClick(R.id.tv_Prices_Activity)
     void startPricesActivity(){
-        CropModel basquiatCropModel = new CropModel();
-        basquiatCropModel.setID("some id");
-        basquiatCropModel.setImgLink("http://www.potomitan.info/ki_nov/images/basquiat_brownspots.jpg");
+        LastCropPricesModel basquiatCropModel = new LastCropPricesModel();
+        basquiatCropModel._crop = "some id";
+        basquiatCropModel.image = "http://www.potomitan.info/ki_nov/images/basquiat_brownspots.jpg";
         PricesActivity.start(this,basquiatCropModel);
     }
 

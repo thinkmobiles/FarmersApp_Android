@@ -13,7 +13,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 import com.farmers.underground.R;
 import com.farmers.underground.ui.dialogs.ProgressDialog;
-
 import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.NotNull;
 
@@ -99,7 +98,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         ft.commit();
     }
 
-    protected final boolean isRTL(){
+    public final boolean isRTL(){
         return getResources().getBoolean(R.bool.isRTL);
     }
 

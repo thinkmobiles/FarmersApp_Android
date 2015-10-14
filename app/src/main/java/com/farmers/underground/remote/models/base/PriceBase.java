@@ -6,19 +6,19 @@ import java.util.ArrayList;
  * Created by tZpace
  * on 14-Oct-15.
  */
-public class PieceBase {
+public class PriceBase {
 
     public Source source;
     public String value;
     public String data;
     public ArrayList<More> more;
 
-    private class Source {
+    public class Source {
         public String type;
         public String name;
     }
 
-    private class More {
+    public class More {
          public String minPrice ;
          public String maxPrice ;
          public String avgPrice ;

@@ -1,11 +1,10 @@
 package com.farmers.underground.remote.services;
 
-import com.farmers.underground.remote.models.LastCropPriecesModel;
-
-import java.util.ArrayList;
-
+import com.farmers.underground.remote.models.LastCropPricesModel;
 import retrofit.Call;
 import retrofit.http.GET;
+
+import java.util.ArrayList;
 
 /**
  * Created by tZpace
@@ -14,6 +13,6 @@ import retrofit.http.GET;
 public interface PricesService {
 
     @GET("prices/getLast")
-    Call<ArrayList<LastCropPriecesModel>> getLast(); //todo
+    Call<ArrayList<LastCropPricesModel>> getLast(); //todo
 
 }

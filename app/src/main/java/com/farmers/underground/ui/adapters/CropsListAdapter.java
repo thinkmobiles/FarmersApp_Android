@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import com.farmers.underground.R;
-import com.farmers.underground.remote.models.CropModel;
+import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.ui.models.CropsListItemDH;
 import com.farmers.underground.ui.models.CropsListItemVH;
 
@@ -26,8 +26,9 @@ public class CropsListAdapter extends RecyclerView.Adapter<CropsListItemVH> {
     }
 
     public void setDataList(List<CropsListItemDH> dataList) {
-        this.dataList = dataList;
+        this.dataList .addAll(dataList);
     }
+
 
     @Override
     public CropsListItemVH onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -47,11 +48,11 @@ public class CropsListAdapter extends RecyclerView.Adapter<CropsListItemVH> {
     }
 
     public interface CropsAdapterCallback {
-        void onItemClicked(CropModel cropModel);
+        void onItemClicked(LastCropPricesModel cropModel);
 
-        void onFavChecked(CropModel cropModel, boolean isChecked);
+        void onFavChecked(LastCropPricesModel cropModel, boolean isChecked);
 
-        void onPriceRefreshClicked(CropModel cropModel);
+        void onPriceRefreshClicked(LastCropPricesModel cropModel);
     }
 
     private void setAnimation(View viewToAnimate, int position) {

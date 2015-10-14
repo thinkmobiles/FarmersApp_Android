@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import com.farmers.underground.R;
-import com.farmers.underground.remote.models.CropModel;
+import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.ui.models.AllPricesDH;
 import com.farmers.underground.ui.models.AllPricesVH;
 
@@ -50,9 +50,9 @@ public class AllPricesAdapter extends RecyclerView.Adapter<AllPricesVH> {
     }
 
     public interface AllPricesCallback {
-        void onAllPricesItemClicked(CropModel cropModel); // -> ?
-        void onAddPricesClicked(CropModel cropModel);
-        void onMorePricesClicked(CropModel cropModel);
+        void onAllPricesItemClicked(LastCropPricesModel cropModel); // -> ?
+        void onAddPricesClicked(LastCropPricesModel cropModel);
+        void onMorePricesClicked(LastCropPricesModel cropModel);
     }
 
     private void setAnimation(View viewToAnimate, int position) {

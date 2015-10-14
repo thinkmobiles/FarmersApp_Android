@@ -143,21 +143,20 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
 
     //crops list control
-    private void showTestCropItems() {
-        List<CropModel> cropsList = new ArrayList<>();
+    private void getLastCrops() {
+        RetrofitSingleton.getInstance().getLastCropPricesList(new ACallback<ArrayList<LastCropPricesModel>, ErrorMsg>() {
+            @Override
+            public void onSuccess(ArrayList<LastCropPricesModel> result) {
+                for (BaseFragment f : pagerAdapter.getFragmentList()) {
+                    ((SearchQueryFragmentCallback) f).onReceiveCrops(result);
+                }
+            }
 
-
-        for (int i = 0; i < 20; i++) {
-            CropModel basquiatCropModel = new CropModel();
-            basquiatCropModel.setID(String.valueOf(i));
-            basquiatCropModel.setImgLink("http://www.potomitan.info/ki_nov/images/basquiat_brownspots.jpg");
-            cropsList.add(basquiatCropModel);
-        }
-
-        for (BaseFragment f : pagerAdapter.getFragmentList()) {
-            ((SearchQueryFragmentCallback) f).onReceiveCrops(cropsList);
-        }
-
+            @Override
+            public void onError(@NonNull ErrorMsg error) {
+                showToast("BAD", Toast.LENGTH_SHORT);
+            }
+        });
     }
 
 
@@ -177,7 +176,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         cropsFragmentStateController.addCreated();
         if (cropsFragmentStateController.isAllCreated()) {
             initCropFragmentAdapters();
-            showTestCropItems();
+            getLastCrops();
         }
 
     }
@@ -192,17 +191,17 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         cropsListCallback = new CropsListAdapter.CropsAdapterCallback() {
 
             @Override
-            public void onItemClicked(CropModel cropModel) {
+            public void onItemClicked(LastCropPricesModel cropModel) {
                 PricesActivity.start(MainActivity.this, cropModel);
             }
 
             @Override
-            public void onFavChecked(CropModel cropModel, boolean isChecked) {
+            public void onFavChecked(LastCropPricesModel cropModel, boolean isChecked) {
 
             }
 
             @Override
-            public void onPriceRefreshClicked(CropModel cropModel) {
+            public void onPriceRefreshClicked(LastCropPricesModel cropModel) {
 
             }
         };

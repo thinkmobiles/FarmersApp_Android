@@ -1,25 +1,14 @@
 package com.farmers.underground.remote;
 
 import android.support.annotation.NonNull;
-
 import com.farmers.underground.BuildConfig;
 import com.farmers.underground.config.ApiConstants;
-import com.farmers.underground.remote.models.ErrorMsg;
-import com.farmers.underground.remote.models.LastCropPriecesModel;
-import com.farmers.underground.remote.models.SuccessMsg;
-import com.farmers.underground.remote.models.UserCredentials;
-import com.farmers.underground.remote.models.UserProfile;
-import com.farmers.underground.remote.models.UserRegistration;
-import com.farmers.underground.remote.models.UserSignUpFB;
+import com.farmers.underground.remote.models.*;
 import com.farmers.underground.remote.services.AuthorizationService;
 import com.farmers.underground.remote.services.CropsService;
 import com.farmers.underground.remote.services.MarketeerService;
 import com.farmers.underground.remote.services.PricesService;
-import com.farmers.underground.remote.util.ACallback;
-import com.farmers.underground.remote.util.AddCookiesInterceptor;
-import com.farmers.underground.remote.util.ICallback;
-import com.farmers.underground.remote.util.Loger;
-import com.farmers.underground.remote.util.ReceivedCookiesInterceptor;
+import com.farmers.underground.remote.util.*;
 import com.google.gson.JsonSyntaxException;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.ResponseBody;
@@ -97,10 +86,10 @@ public class RetrofitSingleton {
         return pricesService;
     }
 
-    public void getLastCropPricesList(final ACallback<ArrayList<LastCropPriecesModel>,ErrorMsg> callback){
-        getPricesService().getLast().enqueue(new Callback<ArrayList<LastCropPriecesModel>>() {
+    public void getLastCropPricesList(final ACallback<ArrayList<LastCropPricesModel>,ErrorMsg> callback){
+        getPricesService().getLast().enqueue(new Callback<ArrayList<LastCropPricesModel>>() {
             @Override
-            public void onResponse(Response<ArrayList<LastCropPriecesModel>> response, Retrofit retrofit) {
+            public void onResponse(Response<ArrayList<LastCropPricesModel>> response, Retrofit retrofit) {
                 performCallback(callback,response);
                 callback.anyway();
             }
@@ -331,5 +320,6 @@ public class RetrofitSingleton {
         }
         return myError;
     }
+
 
 }
