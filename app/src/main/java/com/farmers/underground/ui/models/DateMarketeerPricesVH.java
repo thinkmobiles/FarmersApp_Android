@@ -21,7 +21,7 @@ import com.farmers.underground.R;
 
     @Override
     public void bindData(BaseMarketeerPricesDH dataHolder, boolean hideDevider) {
-        tv_Date.setText(((DateMarketeerPricesDH) dataHolder).getDate());
+        tv_Date.setText(((PriceMarketeerPricesDH) dataHolder).getModel().getDate());
     }
 
 

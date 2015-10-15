@@ -4,7 +4,9 @@
         xmlns:custom="http://schemas.android.com/apk/res-auto"
         android:id="@+id/rv_container_price_item_MP"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/margin_default_normal"
+        >
 
     <FrameLayout
             android:id="@+id/price_conainer"
@@ -111,7 +113,8 @@
             android:layout_alignParentRight="true"
             android:layout_above="@+id/v_Devider_MP"
             android:layout_marginLeft="@dimen/margin_default_medium"
-            android:layout_marginRight="@dimen/margin_default_medium">
+            android:layout_marginRight="@dimen/margin_default_medium"
+            >
         <com.farmers.underground.ui.custom_views.CustomTextView
                 android:id="@+id/tv_MarketeerLogoText_MP"
                 android:layout_width="@dimen/marketeer_price_marketeer_logo_bg_size"
@@ -137,5 +140,6 @@
             android:layout_marginTop="@dimen/margin_default_normal"
             android:background="@color/text_light_grey"
             android:layout_below="@+id/marketeer_container"
-            android:layout_toLeftOf="@+id/logo_container"/>
+            android:layout_toLeftOf="@+id/logo_container"
+            />
 </RelativeLayout>

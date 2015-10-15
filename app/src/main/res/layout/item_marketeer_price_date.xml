@@ -4,7 +4,9 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/dateConainer_MP"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:padding="10dp">
     <com.farmers.underground.ui.custom_views.CustomTextView
 
             android:id="@+id/tv_Date_MP"

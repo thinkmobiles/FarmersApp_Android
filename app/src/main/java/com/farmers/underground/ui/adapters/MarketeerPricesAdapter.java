@@ -4,11 +4,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import com.farmers.underground.R;
 import com.farmers.underground.remote.models.MarketeerPriceModel;
-import com.farmers.underground.ui.models.*;
+import com.farmers.underground.ui.models.DateMarketeerPricesVH;
+import com.farmers.underground.ui.models.PriceMarketeerPricesDH;
+import com.farmers.underground.ui.models.PriceMarketeerPricesVH;
+import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,40 +17,52 @@ import java.util.List;
 /**
  * Created by omar on 10/2/15.
  */
-public class MarketeerPricesAdapter extends RecyclerView.Adapter<BaseMarketeerPricesVH> {
+public class MarketeerPricesAdapter extends RecyclerView.Adapter<PriceMarketeerPricesVH> implements StickyRecyclerHeadersAdapter<DateMarketeerPricesVH> {
 
-    private List<BaseMarketeerPricesDH> dataList;
+    private List<PriceMarketeerPricesDH> dataList;
     private int lastPosition;
 
 
-    public MarketeerPricesAdapter( ) {
+    public MarketeerPricesAdapter() {
         dataList = new ArrayList<>();
     }
 
-    public void setDataList(List<BaseMarketeerPricesDH> dataList) {
+    public void setDataList(List<PriceMarketeerPricesDH> dataList) {
         this.dataList = dataList;
     }
 
     @Override
-    public BaseMarketeerPricesVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view;
-        switch (viewType) {
-            case 0:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_marketeer_price, parent, false);
-                return new PriceMarketeerPricesVH(view);
-            case 1:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_marketeer_price_date, parent, false);
-                return new DateMarketeerPricesVH(view);
+    public PriceMarketeerPricesVH onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_marketeer_price, parent, false);
+        return new PriceMarketeerPricesVH(view);
 
-        }
-        return null;
     }
 
     @Override
-    public void onBindViewHolder(BaseMarketeerPricesVH holder, int position) {
+    public void onBindViewHolder(PriceMarketeerPricesVH holder, int position) {
         boolean hideDevider = position == getItemCount() - 1;
+
+        if(position < getItemCount() -1 && getHeaderId(position) != getHeaderId(position +1))
+            hideDevider = true;
         holder.bindData(dataList.get(position), hideDevider);
-        setAnimation(holder.getContainer(), position);
+    }
+
+    @Override
+    public long getHeaderId(int position) {
+        long hash = Math.abs(dataList.get(position).getDateHashCode());
+        return hash;
+
+    }
+
+    @Override
+    public DateMarketeerPricesVH onCreateHeaderViewHolder(ViewGroup parent) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_marketeer_price_date, parent, false);
+        return new DateMarketeerPricesVH(view);
+    }
+
+    @Override
+    public void onBindHeaderViewHolder(DateMarketeerPricesVH holder, int position) {
+        holder.bindData(dataList.get(position), false);
     }
 
     @Override
@@ -58,24 +71,7 @@ public class MarketeerPricesAdapter extends RecyclerView.Adapter<BaseMarketeerPr
     }
 
 
-    private void setAnimation(View viewToAnimate, int position) {
-        if (position > lastPosition) {
-            Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), R.anim.slide_in_bottom);
-            viewToAnimate.startAnimation(animation);
-            lastPosition = position;
-        }
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-
-        if( dataList.get(position) instanceof PriceMarketeerPricesDH)
-            return 0;
-        else
-            return 1;
-    }
-
-    public interface Callback{
+    public interface Callback {
         void onMorePricesClicked(MarketeerPriceModel marketeerPriceModel);
 
         void onNoPricesClicked(MarketeerPriceModel model);

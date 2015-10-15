@@ -19,16 +19,14 @@ import com.farmers.underground.ui.activities.PricesActivity;
 import com.farmers.underground.ui.activities.TransparentActivity;
 import com.farmers.underground.ui.adapters.MarketeerPricesAdapter;
 import com.farmers.underground.ui.base.BaseFragment;
-import com.farmers.underground.ui.custom_views.CropsItemDivider;
 import com.farmers.underground.ui.dialogs.CropQualitiesDialogFragment;
 import com.farmers.underground.ui.dialogs.WhyCanISeeThisPriceDialogFragment;
-import com.farmers.underground.ui.models.BaseMarketeerPricesDH;
 import com.farmers.underground.ui.models.DateMarketeerPricesDH;
 import com.farmers.underground.ui.models.DateRange;
 import com.farmers.underground.ui.models.PriceMarketeerPricesDH;
-import com.farmers.underground.ui.utils.ResourceRetriever;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,9 +71,18 @@ public class MarketeerPricesFragment extends BaseFragment<PricesActivity> implem
         View v = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, v);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.addItemDecoration(new CropsItemDivider(ResourceRetriever.retrievePX(getContext(), R.dimen.margin_default_normal)));
+        /**/
         adapter = new MarketeerPricesAdapter();
         recyclerView.setAdapter(adapter);
+
+        final StickyRecyclerHeadersDecoration headersDecor = new StickyRecyclerHeadersDecoration(adapter);
+        recyclerView.addItemDecoration(headersDecor);
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                headersDecor.invalidateHeaders();
+            }
+        });
         return v;
     }
 
@@ -107,15 +114,15 @@ public class MarketeerPricesFragment extends BaseFragment<PricesActivity> implem
     }
 
 
-    private List<BaseMarketeerPricesDH> generateDH(List<MarketeerPriceModel> cropModelList) {
-        List<BaseMarketeerPricesDH> holders = new ArrayList<>();
+    private List<PriceMarketeerPricesDH> generateDH(List<MarketeerPriceModel> cropModelList) {
+        List<PriceMarketeerPricesDH> holders = new ArrayList<>();
         for (int i = 0; i < cropModelList.size(); i++) {
-            if (i == 0) holders.add(generateDateDH(cropModelList.get(i)));
+           /* if (i == 0) holders.add(generateDateDH(cropModelList.get(i)));*/
 
             holders.add(generatePriceDH(cropModelList.get(i)));
 
-            if (i > 0 && !equalsDate(cropModelList.get(i), cropModelList.get(i - 1)))
-                holders.add(generateDateDH(cropModelList.get(i)));
+         /*   if (i > 0 && !equalsDate(cropModelList.get(i), cropModelList.get(i - 1)))
+                holders.add(generateDateDH(cropModelList.get(i)));*/
         }
         return holders;
     }

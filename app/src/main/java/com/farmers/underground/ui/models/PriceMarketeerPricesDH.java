@@ -26,4 +26,8 @@ public class PriceMarketeerPricesDH extends BaseMarketeerPricesDH {
     public void setCallback(MarketeerPricesAdapter.Callback callback) {
         this.callback = callback;
     }
+
+    public int getDateHashCode(){
+        return model.getDate().hashCode();
+    }
 }
