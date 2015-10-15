@@ -133,6 +133,7 @@
                 <com.farmers.underground.ui.custom_views.CustomEditText
                     style="@style/EditTextAddPrice"
                     android:hint="@string/add_price_hint_type"
+                    android:layout_gravity="bottom|right"
                     android:textSize="@dimen/main_text_size"
                     android:id="@+id/etQuality_FAP" />
 

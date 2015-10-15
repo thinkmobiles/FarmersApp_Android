@@ -239,7 +239,7 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
         new AlertDialog.Builder(this)
                 .setCancelable(false)
                 .setMessage(R.string.alert_message_after_registration_check_mail)
-                .setPositiveButton(getString(R.string.dialog_btn_ok), new DialogInterface.OnClickListener() {
+                .setPositiveButton(getString(R.string.dialog_btn_understood), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         getSupportFragmentManager().popBackStackImmediate();

@@ -37,6 +37,7 @@
     <string name="dialog_title_forgot_password">אנא, הכנס את הדוא"ל שלך</string>
     <string name="dialog_btn_ok">אוקיי</string>
     <string name="dialog_btn_cancel">לבטל</string>
+    <string name="dialog_btn_understood">הבנתי</string>
     <string name="dialog_progress_message_default">המתן בבקשה…</string>
 
     <!--  //sign_up-->
@@ -67,7 +68,7 @@
     <string name="drawer_content_2">הזמן חברים</string>
     <string name="drawer_content_3">המעודפים שלי</string>
     <string name="drawer_content_4">להתנתק</string>
-    <string name="drawer_content_5">משווק שם הוסף</string>
+    <string name="drawer_content_5">הוסף שם משווק</string>
     <string name="drawer_content_6">שווקה שם מוטציה</string>
 
     <!--TODO-->
