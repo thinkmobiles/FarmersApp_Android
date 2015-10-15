@@ -16,7 +16,7 @@ abstract public class BaseMarketeerPricesVH extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
-    abstract public void bindData(BaseMarketeerPricesDH dataHolder, boolean hideDevider);
+    abstract public <T extends  BaseMarketeerPricesDH>void  bindData( T dataHolder, boolean hideDevider);
 
     abstract public View getContainer();
 
