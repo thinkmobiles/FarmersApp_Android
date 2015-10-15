@@ -141,4 +141,7 @@
     <string name="month11">November</string>
     <string name="month12">December</string>
 
+    <!--Statistics-->
+    <string name="statistics_description_1">Average prices under 3 years</string>
+
 </resources>

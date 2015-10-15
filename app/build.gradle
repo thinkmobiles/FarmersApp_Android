@@ -1,6 +1,7 @@
 buildscript {
     repositories {
         maven { url 'https://maven.fabric.io/public' }
+
     }
 
     dependencies {
@@ -102,6 +103,7 @@ android {
 repositories {
     mavenCentral()
     maven { url 'https://maven.fabric.io/public' }
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
@@ -134,7 +136,7 @@ dependencies {
 
     compile 'com.timehop.stickyheadersrecyclerview:library:0.4.2@aar'
 
-
+    compile 'com.github.PhilJay:MPAndroidChart:v2.1.5'
 }
 
 // Utilities

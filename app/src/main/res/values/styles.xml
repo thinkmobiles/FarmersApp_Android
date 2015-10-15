@@ -207,6 +207,11 @@
         <item name="android:background">@drawable/bg_blue_circle</item>
         <item name="android:gravity">center</item>
     </style>
+    <style name="Radio_Statistics">
+        <item name="android:textSize">@dimen/small_text_size</item>
+        <item name="android:textColor">@color/bg_graph_year</item>
+        <item name="android:background">@color/opaque</item>
+     </style>
 
 </resources>
 
