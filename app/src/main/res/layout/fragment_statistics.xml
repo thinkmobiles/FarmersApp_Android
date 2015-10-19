@@ -12,6 +12,79 @@
         android:layout_height="0dp"
         android:layout_weight="2">
 
+        <RelativeLayout
+            android:id="@+id/llTopDataContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <com.farmers.underground.ui.custom_views.CustomTextView
+                android:layout_alignParentTop="true"
+                android:id="@+id/tv_HeadTitle_SF"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:maxLines="2"
+                android:text="@string/page_head_one_statistics_fragment"
+                android:textColor="#0a89a7"
+                android:textSize="18sp"
+                app:customFont="bold" />
+
+            <LinearLayout
+                android:id="@+id/ll_Month_pick_Container_SF"
+                android:layout_below="@id/tv_HeadTitle_SF"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+            <com.farmers.underground.ui.custom_views.CustomTextView
+                android:id="@+id/tv_Month_SF" 
+                android:drawableLeft="@drawable/ic_arrow_drop_down_3_copy"
+                android:drawablePadding="13dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:lineSpacingExtra="-4dp"
+                android:text="אוקטובר"
+                android:minHeight="41.2dp"
+                android:textColor="#0a89a7"
+                android:textSize="36sp"
+                app:customFont="regular" />
+           <View
+                android:layout_marginLeft="13dp"
+                android:background="#0a89a7"
+                android:layout_width="120dp"
+                android:layout_height="1.5dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:id="@+id/ll_PricesContainer_SF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <include android:id="@+id/layout_marketer_SF" layout="@layout/item_all_prices_price" />
+
+                <View
+                    android:layout_width="15dp"
+                    android:layout_height="0dp"/>
+                <include android:id="@+id/layout_market_one_SF" layout="@layout/item_all_prices_price" />
+
+
+                <View
+                    android:layout_width="15dp"
+                    android:layout_height="0dp"/>
+
+                <include android:id="@+id/layout_market_two_SF" layout="@layout/item_all_prices_price" />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
     </FrameLayout>
 
     <RelativeLayout
@@ -82,11 +155,11 @@
         android:layout_weight="1">
 
         <TextView
-            android:textSize="10sp"
-            android:text="* לחיצה על אחת משלושת קבוצת הגרפים תראה את מחירי הגרף"
-            android:gravity="top"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:text="* לחיצה על אחת משלושת קבוצת הגרפים תראה את מחירי הגרף"
+            android:textSize="10sp" />
 
         <LinearLayout
             android:id="@+id/llPageSwitcherContainer"
@@ -102,15 +175,15 @@
                 android:src="@drawable/line_left_not_active" />
 
             <LinearLayout
-                android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:orientation="vertical">
 
                 <RelativeLayout
-                    android:gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
 
                     <ImageView
                         android:id="@+id/im_dot_one"
@@ -132,9 +205,9 @@
 
                 <TextView
                     android:id="@+id/tv_page_number_title"
-                    android:gravity="center_horizontal"
                     android:layout_width="98dp"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
                     android:singleLine="true"
                     android:text="@string/page_number_one_statistics_fragment"
                     android:textSize="9sp" />

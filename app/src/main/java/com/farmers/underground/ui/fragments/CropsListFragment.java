@@ -146,7 +146,8 @@ public class CropsListFragment
         for (LastCropPricesModel model : cropsList) {
             switch (thisModel.getType()){
                 case ALL_CROPS:
-                    dhList.add(new CropsListItemDH(model, thisModel.getType(), listCallback));
+                    CropsListItemDH dh = new CropsListItemDH(model, thisModel.getType(), listCallback);
+                    dhList.add(dh);
                     break;
                 case FAVOURITES:
                    if(model.isInFavorites) dhList.add(new CropsListItemDH(model, thisModel.getType(), listCallback));

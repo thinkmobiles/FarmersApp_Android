@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.LayoutInflater;
 import android.view.inputmethod.InputMethodManager;
 
+import com.farmers.underground.BuildConfig;
 import com.farmers.underground.R;
 
 /**
@@ -35,13 +36,13 @@ public abstract class BaseFragment<A extends BaseActivity> extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         //TODO: maybe use some default layout for fragment
-        if (getLayoutResId() == 0)
+        if (BuildConfig.DEBUG && getLayoutResId() == 0)
             throw new Error("WTF! add/override getLayoutResId.");
 
         return inflater.inflate(getLayoutResId(), container, false);
     }
 
-    protected final boolean isRTL() {
+   /* protected final boolean isRTL() {
         return getResources().getBoolean(R.bool.isRTL);
     }
 
@@ -49,5 +50,5 @@ public abstract class BaseFragment<A extends BaseActivity> extends Fragment {
         InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm.isActive() && getHostActivity().getCurrentFocus() != null)
             imm.hideSoftInputFromWindow(getHostActivity().getCurrentFocus().getWindowToken(), 0);
-    }
+    }*/
 }

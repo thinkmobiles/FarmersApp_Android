@@ -3,6 +3,7 @@ package com.farmers.underground.ui.activities;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -43,6 +44,8 @@ import com.farmers.underground.ui.utils.NotYetHelper;
 import com.farmers.underground.ui.utils.SearchController;
 import com.farmers.underground.ui.utils.SharedPrefHelper;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -148,6 +151,20 @@ public class MainActivity extends BaseActivity
         RetrofitSingleton.getInstance().getLastCropPricesList(new ACallback<ArrayList<LastCropPricesModel>, ErrorMsg>() {
             @Override
             public void onSuccess(ArrayList<LastCropPricesModel> result) {
+
+                for (int i = 0; i < result.size(); i++) {
+                    if(i==0)
+                    result.get(i).image = "file:///android_asset/test_apple_gala.jpg";
+//                    if(i==1)
+//                    result.get(i).image = "file:///android_asset/test_apple_gold.jpg";
+                    if(i==2)
+                    result.get(i).image = "file:///android_asset/test_avocado.png";
+                    if(i==3)
+                    result.get(i).image = "file:///android_asset/test_corn.png";
+                    if(i>4)
+                        break;
+                }
+
                 for (BaseFragment f : pagerAdapter.getFragmentList()) {
                     ((SearchQueryFragmentCallback) f).onReceiveCrops(result);
                 }

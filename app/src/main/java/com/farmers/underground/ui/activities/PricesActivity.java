@@ -184,6 +184,14 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
         void setDateRange(DateRange dateRange);
     }
 
+
+    /** for
+     * StatisticsFragment -  has two pages;
+     * */
+    public interface PageListener {
+        void onPageSelected(int page);
+    }
+
     // options menu
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {

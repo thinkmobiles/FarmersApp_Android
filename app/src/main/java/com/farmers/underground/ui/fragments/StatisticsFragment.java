@@ -1,7 +1,6 @@
 package com.farmers.underground.ui.fragments;
 
 import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,8 +13,6 @@ import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
-import com.farmers.underground.BuildConfig;
-import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.LastCropPricesModel;
@@ -45,19 +42,27 @@ import java.util.List;
  * on 10/9/15.
  */
 public class StatisticsFragment extends BaseFragment<PricesActivity>
-        implements PricesActivity.DateRangeSetter, OnChartValueSelectedListener{
+        implements PricesActivity.DateRangeSetter, OnChartValueSelectedListener, PricesActivity.PageListener {
 
 
+    //head block
+    @Bind(R.id.tv_HeadTitle_SF)
+    protected TextView tv_HeadTitle_SF;
+    @Bind(R.id.tv_Month_SF)
+    protected TextView tv_Month_SF; //picker
+    @Bind(R.id.ll_Month_pick_Container_SF)
+    protected LinearLayout ll_Month_pick_Container_SF;
+
+    //chart views
     @Bind(R.id.chart_SF)
     protected BarChart mChart;
     @Bind (R.id.tv_GraphDescription_SF)
     protected TextView tv_GraphDescription_SF;
-
     @Bind({R.id.rb0_SF, R.id.rb1_SF, R.id.rb2_SF})
     protected List<RadioButton> mRadioButtons;
 
     //bottom switcher
-    private int defaultPage = 1; // 0 - not used
+    private static final int defaultPage = 1; // 0 - not used
     private int currentPage;
     @Bind (R.id.llPageSwitcherContainer)
     protected LinearLayout llPageSwitcherContainer;
@@ -91,6 +96,7 @@ public class StatisticsFragment extends BaseFragment<PricesActivity>
             tvPageNumberTitle.setText(res.getString(R.string.page_number_two_statistics_fragment));
         }
         currentPage = pageNumber;
+        onPageSelected(currentPage);
         llPageSwitcherContainer.requestLayout();
     }
 
@@ -275,6 +281,18 @@ public class StatisticsFragment extends BaseFragment<PricesActivity>
 
     @Override
     public void onNothingSelected() {
+
+    }
+
+    @Override
+    public void onPageSelected(int page) {
+        if (page == 1){
+            tv_HeadTitle_SF.setText(getString(R.string.page_head_one_statistics_fragment));
+            ll_Month_pick_Container_SF.setVisibility(View.GONE);
+        } else if (page == 2){
+            tv_HeadTitle_SF.setText(getString(R.string.page_head_two_statistics_fragment));
+            ll_Month_pick_Container_SF.setVisibility(View.VISIBLE);
+        }
 
     }
 }
