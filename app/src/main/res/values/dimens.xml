@@ -152,6 +152,8 @@
     <dimen name="marketeer_price_marketeer_text_size">14sp</dimen>
     <dimen name="marketeer_price_marketeer_logo_bg_size">33dp</dimen>
     <dimen name="marketeer_price_date_corners">40dp</dimen>
+    <dimen name="popup_height">50dp</dimen>
+    <dimen name="popup_width">50dp</dimen>
 
 
 </resources>
