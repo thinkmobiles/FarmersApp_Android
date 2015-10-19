@@ -1,13 +1,21 @@
 package com.farmers.underground.ui.fragments;
 
+import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
+import butterknife.OnClick;
+
+import com.farmers.underground.BuildConfig;
+import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.LastCropPricesModel;
@@ -15,6 +23,7 @@ import com.farmers.underground.ui.activities.PricesActivity;
 import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.models.ChartDataModel;
 import com.farmers.underground.ui.models.DateRange;
+import com.farmers.underground.ui.utils.ResUtil;
 import com.farmers.underground.ui.utils.TypefaceManager;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -32,9 +41,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by omar on 10/9/15.
+ * Created by omar
+ * on 10/9/15.
  */
-public class StatisticsFragment extends BaseFragment implements PricesActivity.DateRangeSetter, OnChartValueSelectedListener{
+public class StatisticsFragment extends BaseFragment<PricesActivity>
+        implements PricesActivity.DateRangeSetter, OnChartValueSelectedListener{
 
 
     @Bind(R.id.chart_SF)
@@ -45,12 +56,65 @@ public class StatisticsFragment extends BaseFragment implements PricesActivity.D
     @Bind({R.id.rb0_SF, R.id.rb1_SF, R.id.rb2_SF})
     protected List<RadioButton> mRadioButtons;
 
+    //bottom switcher
+    private int defaultPage = 1; // 0 - not used
+    private int currentPage;
+    @Bind (R.id.llPageSwitcherContainer)
+    protected LinearLayout llPageSwitcherContainer;
+    @Bind (R.id.im_arrow_left)
+    protected ImageView imArrowLeft;
+    @Bind (R.id.im_arrow_right)
+    protected ImageView imArrowRight;
+    @Bind (R.id.im_dot_one)
+    protected ImageView imDotOne;
+    @Bind (R.id.im_dot_two)
+    protected ImageView imDotTwo;
+    @Bind (R.id.tv_page_number_title)
+    protected TextView tvPageNumberTitle;
 
     private LastCropPricesModel mCropModel;
     private DateRange mDateRange;
 
+    private void initPageToShow(int pageNumber){
+        final Resources res = getResources();
+        if (pageNumber == 1) { //1
+            imArrowLeft.setImageDrawable(ResUtil.getDrawable(res,R.drawable.line_left_not_active));
+            imArrowRight.setImageDrawable(ResUtil.getDrawable(res,R.drawable.line_rigth_active));
+            imDotOne.setImageDrawable(ResUtil.getDrawable(res,R.drawable.dot_blue));
+            imDotTwo.setImageDrawable(ResUtil.getDrawable(res,R.drawable.dot_gray));
+            tvPageNumberTitle.setText(res.getString(R.string.page_number_one_statistics_fragment));
+        } else if(pageNumber == 2){ //2
+            imArrowLeft.setImageDrawable(ResUtil.getDrawable(res,R.drawable.line_left_active));
+            imArrowRight.setImageDrawable(ResUtil.getDrawable(res,R.drawable.line_right_not_active));
+            imDotOne.setImageDrawable(ResUtil.getDrawable(res,R.drawable.dot_gray));
+            imDotTwo.setImageDrawable(ResUtil.getDrawable(res,R.drawable.dot_blue));
+            tvPageNumberTitle.setText(res.getString(R.string.page_number_two_statistics_fragment));
+        }
+        currentPage = pageNumber;
+        llPageSwitcherContainer.requestLayout();
+    }
 
-    public static BaseFragment getInstance(LastCropPricesModel cropModel) {
+    @OnClick(R.id.im_arrow_left)
+    protected void leftArrowClicked(){
+        if(currentPage != 1){
+            initPageToShow(1);
+        }
+    }
+
+    @OnClick(R.id.im_arrow_right)
+    protected void rightArrowClicked(){
+        if(currentPage != 2){
+            initPageToShow(2);
+        }
+    }
+
+    private void setupDefaultPage(){
+        initPageToShow(defaultPage);
+        //set click listeners maybe ;
+    }
+
+
+    public static StatisticsFragment getInstance(LastCropPricesModel cropModel) {
         Bundle args = new Bundle();
         Gson gson = new GsonBuilder().create();
         args.putString(ProjectConstants.KEY_DATA, gson.toJson(cropModel));
@@ -60,7 +124,6 @@ public class StatisticsFragment extends BaseFragment implements PricesActivity.D
         return fragment;
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,26 +132,26 @@ public class StatisticsFragment extends BaseFragment implements PricesActivity.D
 
     }
 
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.fragment_statistics;
+    }
+
 
     @Override
     public void onViewCreated(View v, Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
         ButterKnife.bind(this, v);
 
+        setupDefaultPage();
+        //use currentPage int;
+
         defChart();
         defRadioButtons();
         tv_GraphDescription_SF.setText(getContext().getString(R.string.statistics_description_1));
 
         setChartData(generateChartData());
-
     }
-
-
-    @Override
-    protected int getLayoutResId() {
-        return R.layout.fragment_statistics;
-    }
-
 
     @Override
     public void setDateRange(DateRange dateRange) {
@@ -113,12 +176,13 @@ public class StatisticsFragment extends BaseFragment implements PricesActivity.D
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setSpaceBetweenLabels(0);
         xAxis.setDrawGridLines(false);
+        final Resources res = getContext().getResources();
 
         YAxis y = mChart.getAxisLeft();
         y.setTypeface(TypefaceManager.getInstance().getArialBold());
-        y.setTextColor(getContext().getResources().getColor(R.color.bg_graph_year));
         y.setTextSize(12f);
-        y.setAxisLineColor(getContext().getResources().getColor(R.color.bg_graph_devider));
+        y.setTextColor(ResUtil.getColor(res, R.color.bg_graph_year));
+        y.setAxisLineColor(ResUtil.getColor(res, R.color.bg_graph_devider));
 
         mChart.animateY(2500);
         mChart.setOnChartValueSelectedListener(this);

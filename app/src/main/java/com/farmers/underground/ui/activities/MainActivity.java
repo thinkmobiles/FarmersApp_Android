@@ -51,7 +51,8 @@ import java.util.List;
  * Created by omar
  * on 9/28/15.
  */
-public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCallback, FragmentViewsCreatedCallback {
+public class MainActivity extends BaseActivity
+        implements DrawerAdapter.DrawerCallback, FragmentViewsCreatedCallback {
 
     @Bind(R.id.toolbar)
     protected Toolbar mToolbar;
@@ -83,7 +84,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     private SearchManager searchManager;
     private SearchController searchController;
-    private ProjectPagerAdapter<BaseFragment> pagerAdapter;
+    private ProjectPagerAdapter<CropsListFragment> pagerAdapter;
     private CropsListAdapter.CropsAdapterCallback cropsListCallback;
     private CropsFragmentStateController cropsFragmentStateController;
 
@@ -383,18 +384,18 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         return titles;
     }
 
-    private List<BaseFragment> getFragmentList() {
-        List<BaseFragment> fragmentList = new ArrayList<>();
-        fragmentList.add(createFavFragemnt());
-        fragmentList.add(createCropFragemnt());
+    private List<CropsListFragment> getFragmentList() {
+        List<CropsListFragment> fragmentList = new ArrayList<>();
+        fragmentList.add(createFaaFragment());
+        fragmentList.add(createCropFragment());
         return fragmentList;
     }
 
-    private BaseFragment createFavFragemnt() {
+    private CropsListFragment createFaaFragment() {
         return CropsListFragment.getInstance(CropsListFragmentModel.TYPE.FAVOURITES, query);
     }
 
-    private BaseFragment createCropFragemnt() {
+    private CropsListFragment createCropFragment() {
         return CropsListFragment.getInstance(CropsListFragmentModel.TYPE.ALL_CROPS, query);
     }
 

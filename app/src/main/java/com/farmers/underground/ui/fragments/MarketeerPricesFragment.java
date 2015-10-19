@@ -32,9 +32,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by omar on 10/9/15.
+ * Created by omar
+ * on 10/9/15.
  */
-public class MarketeerPricesFragment extends BaseFragment<PricesActivity> implements PricesActivity.DateRangeSetter {
+public class MarketeerPricesFragment extends BaseFragment<PricesActivity>
+        implements PricesActivity.DateRangeSetter {
+
     @Bind(R.id.rv_BaseListFragment)
     protected RecyclerView recyclerView;
 
@@ -47,7 +50,7 @@ public class MarketeerPricesFragment extends BaseFragment<PricesActivity> implem
     private MarketeerPricesAdapter.Callback adapterCallback;
 
 
-    public static BaseFragment getInstance(LastCropPricesModel cropModel) {
+    public static MarketeerPricesFragment getInstance(LastCropPricesModel cropModel) {
         Bundle args = new Bundle();
         Gson gson = new GsonBuilder().create();
         args.putString(ProjectConstants.KEY_DATA, gson.toJson(cropModel));

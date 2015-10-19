@@ -14,6 +14,7 @@ import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.ui.activities.FragmentViewsCreatedCallback;
+import com.farmers.underground.ui.activities.MainActivity;
 import com.farmers.underground.ui.adapters.CropsListAdapter;
 import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.custom_views.CropsItemDivider;
@@ -25,10 +26,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by omar on 9/30/15.
+ * Created by omar
+ * on 9/30/15.
  */
 public class CropsListFragment
-        extends BaseFragment
+        extends BaseFragment<MainActivity>
         implements SearchQueryFragmentCallback {
 
     @Bind(R.id.rv_BaseListFragment)
@@ -57,7 +59,7 @@ public class CropsListFragment
     }
 
 
-    public static BaseFragment getInstance(CropsListFragmentModel.TYPE type, String query) {
+    public static CropsListFragment getInstance(CropsListFragmentModel.TYPE type, String query) {
         CropsListFragmentModel fragmentModel = new CropsListFragmentModel(type, query);
         Bundle args = new Bundle();
         args.putSerializable(ProjectConstants.KEY_DATA, fragmentModel);
