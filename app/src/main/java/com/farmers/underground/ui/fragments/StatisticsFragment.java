@@ -1,13 +1,12 @@
 package com.farmers.underground.ui.fragments;
 
 import android.content.res.Resources;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.TextView;
+import android.widget.*;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
@@ -30,6 +29,8 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.ChartTouchListener;
+import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -56,7 +57,7 @@ public class StatisticsFragment extends BaseFragment<PricesActivity>
     //chart views
     @Bind(R.id.chart_SF)
     protected BarChart mChart;
-    @Bind (R.id.tv_GraphDescription_SF)
+    @Bind(R.id.tv_GraphDescription_SF)
     protected TextView tv_GraphDescription_SF;
     @Bind({R.id.rb0_SF, R.id.rb1_SF, R.id.rb2_SF})
     protected List<RadioButton> mRadioButtons;
@@ -64,35 +65,37 @@ public class StatisticsFragment extends BaseFragment<PricesActivity>
     //bottom switcher
     private static final int defaultPage = 1; // 0 - not used
     private int currentPage;
-    @Bind (R.id.llPageSwitcherContainer)
+    @Bind(R.id.llPageSwitcherContainer)
     protected LinearLayout llPageSwitcherContainer;
-    @Bind (R.id.im_arrow_left)
+    @Bind(R.id.im_arrow_left)
     protected ImageView imArrowLeft;
-    @Bind (R.id.im_arrow_right)
+    @Bind(R.id.im_arrow_right)
     protected ImageView imArrowRight;
-    @Bind (R.id.im_dot_one)
+    @Bind(R.id.im_dot_one)
     protected ImageView imDotOne;
-    @Bind (R.id.im_dot_two)
+    @Bind(R.id.im_dot_two)
     protected ImageView imDotTwo;
-    @Bind (R.id.tv_page_number_title)
+    @Bind(R.id.tv_page_number_title)
     protected TextView tvPageNumberTitle;
 
     private LastCropPricesModel mCropModel;
     private DateRange mDateRange;
 
-    private void initPageToShow(int pageNumber){
+    private float popupValue;
+
+    private void initPageToShow(int pageNumber) {
         final Resources res = getResources();
         if (pageNumber == 1) { //1
-            imArrowLeft.setImageDrawable(ResUtil.getDrawable(res,R.drawable.line_left_not_active));
-            imArrowRight.setImageDrawable(ResUtil.getDrawable(res,R.drawable.line_rigth_active));
-            imDotOne.setImageDrawable(ResUtil.getDrawable(res,R.drawable.dot_blue));
-            imDotTwo.setImageDrawable(ResUtil.getDrawable(res,R.drawable.dot_gray));
+            imArrowLeft.setImageDrawable(ResUtil.getDrawable(res, R.drawable.line_left_not_active));
+            imArrowRight.setImageDrawable(ResUtil.getDrawable(res, R.drawable.line_rigth_active));
+            imDotOne.setImageDrawable(ResUtil.getDrawable(res, R.drawable.dot_blue));
+            imDotTwo.setImageDrawable(ResUtil.getDrawable(res, R.drawable.dot_gray));
             tvPageNumberTitle.setText(res.getString(R.string.page_number_one_statistics_fragment));
-        } else if(pageNumber == 2){ //2
-            imArrowLeft.setImageDrawable(ResUtil.getDrawable(res,R.drawable.line_left_active));
-            imArrowRight.setImageDrawable(ResUtil.getDrawable(res,R.drawable.line_right_not_active));
-            imDotOne.setImageDrawable(ResUtil.getDrawable(res,R.drawable.dot_gray));
-            imDotTwo.setImageDrawable(ResUtil.getDrawable(res,R.drawable.dot_blue));
+        } else if (pageNumber == 2) { //2
+            imArrowLeft.setImageDrawable(ResUtil.getDrawable(res, R.drawable.line_left_active));
+            imArrowRight.setImageDrawable(ResUtil.getDrawable(res, R.drawable.line_right_not_active));
+            imDotOne.setImageDrawable(ResUtil.getDrawable(res, R.drawable.dot_gray));
+            imDotTwo.setImageDrawable(ResUtil.getDrawable(res, R.drawable.dot_blue));
             tvPageNumberTitle.setText(res.getString(R.string.page_number_two_statistics_fragment));
         }
         currentPage = pageNumber;
@@ -101,20 +104,20 @@ public class StatisticsFragment extends BaseFragment<PricesActivity>
     }
 
     @OnClick(R.id.im_arrow_left)
-    protected void leftArrowClicked(){
-        if(currentPage != 1){
+    protected void leftArrowClicked() {
+        if (currentPage != 1) {
             initPageToShow(1);
         }
     }
 
     @OnClick(R.id.im_arrow_right)
-    protected void rightArrowClicked(){
-        if(currentPage != 2){
+    protected void rightArrowClicked() {
+        if (currentPage != 2) {
             initPageToShow(2);
         }
     }
 
-    private void setupDefaultPage(){
+    private void setupDefaultPage() {
         initPageToShow(defaultPage);
         //set click listeners maybe ;
     }
@@ -177,6 +180,50 @@ public class StatisticsFragment extends BaseFragment<PricesActivity>
         mChart.setDrawHighlightArrow(false);
         mChart.setDoubleTapToZoomEnabled(false);
 
+        mChart.setOnChartGestureListener(new OnChartGestureListener() {
+            @Override
+            public void onChartGestureStart(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
+
+            }
+
+            @Override
+            public void onChartGestureEnd(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
+
+            }
+
+            @Override
+            public void onChartLongPressed(MotionEvent me) {
+
+            }
+
+            @Override
+            public void onChartDoubleTapped(MotionEvent me) {
+
+            }
+
+            @Override
+            public void onChartSingleTapped(MotionEvent me) {
+
+                showPopup(me.getX() ,me.getY(),popupValue);
+
+            }
+
+            @Override
+            public void onChartFling(MotionEvent me1, MotionEvent me2, float velocityX, float velocityY) {
+
+            }
+
+            @Override
+            public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
+
+            }
+
+            @Override
+            public void onChartTranslate(MotionEvent me, float dX, float dY) {
+
+            }
+        });
+
 
         XAxis xAxis = mChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -194,7 +241,7 @@ public class StatisticsFragment extends BaseFragment<PricesActivity>
         mChart.setOnChartValueSelectedListener(this);
     }
 
-    private void setChartData(ChartDataModel mChartModel){
+    private void setChartData(ChartDataModel mChartModel) {
         int[] color = new int[11];
         color[0] = R.color.bg_graph_aqua;
         color[1] = R.color.bg_graph_golden;
@@ -250,33 +297,45 @@ public class StatisticsFragment extends BaseFragment<PricesActivity>
     private ChartDataModel generateChartData() {
         ChartDataModel.ChartModel chart1 = new ChartDataModel.ChartModel(11.5f, 5.0f, 7.0f);
         ChartDataModel.ChartModel chart2 = new ChartDataModel.ChartModel(1.5f, 50.0f, 17.0f);
-        ChartDataModel.ChartModel chart3 = new ChartDataModel.ChartModel( 3.5f, 0, 7.0f);
+        ChartDataModel.ChartModel chart3 = new ChartDataModel.ChartModel(3.5f, 0, 7.0f);
         return new ChartDataModel(chart1, chart2, chart3);
     }
 
-    private void defRadioButtons(){
+    private void defRadioButtons() {
         for (int i = 0; i < mRadioButtons.size(); i++) {
             mRadioButtons.get(i).setTypeface(TypefaceManager.getInstance().getArialBold());
         }
+        mRadioButtons.get(2).setChecked(true);
     }
 
     @OnCheckedChanged(R.id.rb0_SF)
-    protected void radio0(boolean isChecked){
-        if(isChecked);
+    protected void radio0(boolean isChecked) {
+        if (isChecked) {
+            for (RadioButton item : mRadioButtons)
+                if (item.getId() != R.id.rb0_SF) item.setChecked(false);
+        }
     }
+
     @OnCheckedChanged(R.id.rb1_SF)
-    protected void radio1(boolean isChecked){
-        if(isChecked);
+    protected void radio1(boolean isChecked) {
+        if (isChecked) {
+            for (RadioButton item : mRadioButtons)
+                if (item.getId() != R.id.rb1_SF) item.setChecked(false);
+        }
     }
+
     @OnCheckedChanged(R.id.rb2_SF)
-    protected void radio2(boolean isChecked){
-        if(isChecked);
+    protected void radio2(boolean isChecked) {
+        if (isChecked) {
+            for (RadioButton item : mRadioButtons)
+                if (item.getId() != R.id.rb2_SF) item.setChecked(false);
+        }
     }
 
     @Override
     public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-        Log.d("lalal", String.valueOf(e.getVal()));
-        //todo show black popup here
+        popupValue = e.getVal();
+
     }
 
     @Override
@@ -294,5 +353,37 @@ public class StatisticsFragment extends BaseFragment<PricesActivity>
             ll_Month_pick_Container_SF.setVisibility(View.VISIBLE);
         }
 
+    }
+
+    private void showPopup(float touchX, float touchY, float value) {
+        final View popupView = LayoutInflater.from(getContext()).inflate(R.layout.statistic_popup, null, false);
+        final PopupWindow popupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setFocusable(true);
+
+        float offsetX = touchX- mChart.getLeft() - 30;
+        float offsetY = touchY - mChart.getBottom() - 50;
+        popupWindow.showAsDropDown(mChart, (int) offsetX, (int) offsetY);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(3000);
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(popupWindow.isShowing())
+                                popupWindow.dismiss();
+                        }
+                    });
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 }
