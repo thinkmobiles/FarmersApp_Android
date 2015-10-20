@@ -149,6 +149,8 @@
 
     <string name="page_head_one_statistics_fragment">באיזה חודשים מחיר ׳עגבניות שרי תמר׳ היה הכי גבוה?</string>
     <string name="page_head_two_statistics_fragment">מה הצפי לקטיף הראשון?</string>
+    <string name="price_cymbol">₪</string>
+    <string name="popup_name">popup name</string>
 
 
 </resources>

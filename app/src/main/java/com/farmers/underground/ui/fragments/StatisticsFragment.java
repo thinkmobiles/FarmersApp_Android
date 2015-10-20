@@ -11,7 +11,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
-
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.LastCropPricesModel;
@@ -42,8 +41,7 @@ import java.util.List;
  * Created by omar
  * on 10/9/15.
  */
-public class StatisticsFragment extends BaseFragment<PricesActivity>
-        implements PricesActivity.DateRangeSetter, OnChartValueSelectedListener, PricesActivity.PageListener {
+public class StatisticsFragment extends BaseFragment<PricesActivity> implements PricesActivity.DateRangeSetter, OnChartValueSelectedListener, PricesActivity.PageListener {
 
 
     //head block
@@ -204,7 +202,7 @@ public class StatisticsFragment extends BaseFragment<PricesActivity>
             @Override
             public void onChartSingleTapped(MotionEvent me) {
 
-                showPopup(me.getX() ,me.getY(),popupValue);
+                showPopup(me.getX(), me.getY(), popupValue);
 
             }
 
@@ -345,10 +343,10 @@ public class StatisticsFragment extends BaseFragment<PricesActivity>
 
     @Override
     public void onPageSelected(int page) {
-        if (page == 1){
+        if (page == 1) {
             tv_HeadTitle_SF.setText(getString(R.string.page_head_one_statistics_fragment));
             ll_Month_pick_Container_SF.setVisibility(View.GONE);
-        } else if (page == 2){
+        } else if (page == 2) {
             tv_HeadTitle_SF.setText(getString(R.string.page_head_two_statistics_fragment));
             ll_Month_pick_Container_SF.setVisibility(View.VISIBLE);
         }
@@ -362,9 +360,14 @@ public class StatisticsFragment extends BaseFragment<PricesActivity>
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
         popupWindow.setOutsideTouchable(true);
         popupWindow.setFocusable(true);
+        popupView.measure(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        float offsetX = touchX- mChart.getLeft() - 30;
-        float offsetY = touchY - mChart.getBottom() - 50;
+        ((TextView) popupWindow.getContentView().findViewById(R.id.tv_Value_Popup)).setText(String.format("%.2f",
+                value));
+
+
+        float offsetX = touchX - mChart.getLeft() - popupView.getMeasuredWidth() / 2;
+        float offsetY = touchY - mChart.getBottom() - popupView.getMeasuredHeight() / 4 * 3;
         popupWindow.showAsDropDown(mChart, (int) offsetX, (int) offsetY);
 
         new Thread(new Runnable() {
@@ -375,8 +378,7 @@ public class StatisticsFragment extends BaseFragment<PricesActivity>
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if(popupWindow.isShowing())
-                                popupWindow.dismiss();
+                            if (popupWindow.isShowing()) popupWindow.dismiss();
                         }
                     });
 

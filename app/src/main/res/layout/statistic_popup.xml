@@ -1,8 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-<View android:layout_width="@dimen/popup_width" android:layout_height="@dimen/popup_height"
-      android:background="#000"/>
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+
+    <LinearLayout android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  android:background="@drawable/statistics_bg"
+                  android:paddingTop="@dimen/padding_margin_default_tiny"
+                  android:paddingBottom="@dimen/padding_margin_default_tiny"
+                  android:paddingLeft="@dimen/padding_margin_default_small"
+                  android:paddingRight="@dimen/padding_margin_default_small">
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="right"
+                android:layout_marginBottom="-4dp">
+            <com.farmers.underground.ui.custom_views.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/bg_graph_golden"
+                    android:textSize="@dimen/small_text_size"
+                    app:customFont="regular"
+                    android:text="@string/price_cymbol"
+                    android:paddingLeft="@dimen/padding_margin_default_tiny"
+                    android:paddingRight="@dimen/padding_margin_default_tiny"
+                    />
+            <com.farmers.underground.ui.custom_views.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4.50"
+                    android:id="@+id/tv_Value_Popup"
+                    android:textColor="@color/bg_graph_golden"
+                    android:textSize="@dimen/large_text_size"
+                    app:customFont="roboto_light"
+                    />
+        </LinearLayout>
+        <com.farmers.underground.ui.custom_views.CustomTextView
+                android:id="@+id/tv_Name_Popup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/bg_graph_golden"
+                android:textSize="@dimen/small_text_size"
+                app:customFont="regular"
+                android:text="@string/popup_name"
+                />
+    </LinearLayout>
+
+
+    <View
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/statistics_triangle"
+        android:layout_width="30dp"
+        android:layout_height="20dp"
+        android:layout_marginBottom="-10dp"
+        android:rotation="180"
+        />
 </LinearLayout>

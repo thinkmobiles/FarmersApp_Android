@@ -130,6 +130,8 @@
     <!--Statistics-->
 
     <string name="statistics_description_1">ממוצע המחירים לפי 3 השנים האחרונות</string>
+    <string name="price_cymbol">₪</string>
+    <string name="popup_name">מועצת הצמחים</string>
 
 
 </resources>
