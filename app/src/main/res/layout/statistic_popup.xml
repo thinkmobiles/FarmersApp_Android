@@ -26,7 +26,7 @@
                     android:textColor="@color/bg_graph_golden"
                     android:textSize="@dimen/small_text_size"
                     app:customFont="regular"
-                    android:text="@string/price_cymbol"
+                    android:text="@string/price_prefix"
                     android:paddingLeft="@dimen/padding_margin_default_tiny"
                     android:paddingRight="@dimen/padding_margin_default_tiny"
                     />
