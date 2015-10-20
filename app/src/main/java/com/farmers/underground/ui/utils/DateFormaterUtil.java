@@ -14,7 +14,7 @@ public class DateFormaterUtil {
         return new SimpleDateFormat("ccc dd.M.yy").format(date.getTime());
     }
 
-    public static String convertDate(Date date){
-        return new SimpleDateFormat("ccc dd.M.yy").format(date);
+    public static String parseToServerResponse(Calendar date){
+        return new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'").format(date.getTime());
     }
 }

@@ -31,8 +31,10 @@ import com.farmers.underground.ui.dialogs.MorePriecesDialogFragment;
 import com.farmers.underground.ui.fragments.AllPricesFragment;
 import com.farmers.underground.ui.fragments.MarketeerPricesFragment;
 import com.farmers.underground.ui.fragments.PeriodPickerFragment;
+import com.farmers.underground.ui.fragments.SearchQueryFragmentCallback;
 import com.farmers.underground.ui.fragments.StatisticsFragment;
 import com.farmers.underground.ui.models.DateRange;
+import com.farmers.underground.ui.utils.DateFormaterUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
@@ -248,6 +250,10 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
                     Bundle bundle = data.getExtras();
                     Calendar dateFrom = (Calendar) bundle.getSerializable(PeriodPickerFragment.KEY_DATE_FROM);
                     Calendar dateTo = (Calendar) bundle.getSerializable(PeriodPickerFragment.KEY_DATE_TO);
+                    DateRange dateRange = new DateRange();
+                    dateRange.setDateFrom(DateFormaterUtil.parseToServerResponse(dateFrom));
+                    dateRange.setDateTo(DateFormaterUtil.parseToServerResponse(dateTo));
+                    ((PricesActivity.DateRangeSetter) pagerAdapter.getItem(viewPager.getCurrentItem())).setDateRange(dateRange);
                     //todo search request
                     break;
                 case REQUEST_CODE_DIALOG_WHY:
