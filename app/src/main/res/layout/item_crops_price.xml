@@ -8,24 +8,28 @@
         android:orientation="vertical">
 
     <LinearLayout
+            android:minWidth="65dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:orientation="horizontal">
 
-        <ImageView
-                android:contentDescription="@null"
-                android:id="@+id/imageView4"
-                android:layout_width="@dimen/crop_price_icon_size"
-                android:layout_height="@dimen/crop_price_icon_size"
+        <com.farmers.underground.ui.custom_views.CustomTextView
+                android:id="@+id/tv_Price_Prefix"
+                android:text="@string/price_prefix"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_dark_grey"
+                android:gravity="bottom"
                 android:layout_gravity="bottom"
-                android:layout_marginBottom="6dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_crop_marketer_price"/>
+                android:textSize="14sp"
+                custom:customFont="regular"/>
 
         <com.farmers.underground.ui.custom_views.CustomTextView
                 android:id="@+id/tv_Price"
-                android:layout_width="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_weight="1"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="4.50"
                 android:textColor="@color/text_dark_grey"

@@ -144,13 +144,17 @@
     <!--Statistics-->
     <string name="statistics_description_1">Average prices under 3 years</string>
 
-    <string name="page_number_one_statistics_fragment">1 מתוך 2</string>
-    <string name="page_number_two_statistics_fragment">2 מתוך 2</string>
+    <string name="page_number_one_statistics_fragment">1 of 2</string>
+    <string name="page_number_two_statistics_fragment">2 of 2</string>
 
     <string name="page_head_one_statistics_fragment">באיזה חודשים מחיר ׳עגבניות שרי תמר׳ היה הכי גבוה?</string>
     <string name="page_head_two_statistics_fragment">מה הצפי לקטיף הראשון?</string>
     <string name="price_cymbol">₪</string>
     <string name="popup_name">popup name</string>
+    <string name="page_head_one_statistics_fragment">In what month price /"agbniot ministers Tmr/" was the highest?</string>
+    <string name="page_head_two_statistics_fragment">What is expected to pick first?</string>
 
+    <!--//global-->
+    <string name="price_prefix">₪</string>
 
 </resources>

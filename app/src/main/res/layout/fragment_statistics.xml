@@ -44,9 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                android:lineSpacingExtra="-4dp"
                 android:text="אוקטובר"
-                android:minHeight="41.2dp"
                 android:textColor="#0a89a7"
                 android:textSize="36sp"
                 app:customFont="regular" />
@@ -62,23 +60,24 @@
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true"
                 android:id="@+id/ll_PricesContainer_SF"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <include android:id="@+id/layout_marketer_SF" layout="@layout/item_all_prices_price" />
-
-                <View
-                    android:layout_width="15dp"
-                    android:layout_height="0dp"/>
-                <include android:id="@+id/layout_market_one_SF" layout="@layout/item_all_prices_price" />
-
+                <include android:id="@+id/layout_marketer_SF" layout="@layout/item_crops_price" />
 
                 <View
                     android:layout_width="15dp"
                     android:layout_height="0dp"/>
 
-                <include android:id="@+id/layout_market_two_SF" layout="@layout/item_all_prices_price" />
+                <include android:id="@+id/layout_market_one_SF" layout="@layout/item_crops_price" />
+
+
+                <View
+                    android:layout_width="15dp"
+                    android:layout_height="0dp"/>
+
+                <include android:id="@+id/layout_market_two_SF" layout="@layout/item_crops_price" />
 
             </LinearLayout>
 

@@ -43,4 +43,8 @@ public interface AuthorizationService {
     @DELETE ("users/dellAccountBySession")
     Call<SuccessMsg> dellAccountBySession();
 
+    @FormUrlEncoded
+    @POST("users/favorites")
+    Call<SuccessMsg> addCropsToFavorites(@Field("favorites") String favoritesID);
+
 }

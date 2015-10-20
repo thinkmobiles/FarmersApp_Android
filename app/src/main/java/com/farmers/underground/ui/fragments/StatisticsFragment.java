@@ -3,19 +3,23 @@ package com.farmers.underground.ui.fragments;
 import android.content.res.Resources;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.*;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
+
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.ui.activities.PricesActivity;
 import com.farmers.underground.ui.base.BaseFragment;
+import com.farmers.underground.ui.custom_views.PriceView;
 import com.farmers.underground.ui.models.ChartDataModel;
 import com.farmers.underground.ui.models.DateRange;
 import com.farmers.underground.ui.utils.ResUtil;
@@ -41,7 +45,8 @@ import java.util.List;
  * Created by omar
  * on 10/9/15.
  */
-public class StatisticsFragment extends BaseFragment<PricesActivity> implements PricesActivity.DateRangeSetter, OnChartValueSelectedListener, PricesActivity.PageListener {
+public class StatisticsFragment extends BaseFragment<PricesActivity>
+        implements PricesActivity.DateRangeSetter, OnChartValueSelectedListener, PricesActivity.PageListener {
 
 
     //head block
@@ -51,6 +56,10 @@ public class StatisticsFragment extends BaseFragment<PricesActivity> implements 
     protected TextView tv_Month_SF; //picker
     @Bind(R.id.ll_Month_pick_Container_SF)
     protected LinearLayout ll_Month_pick_Container_SF;
+
+    private PriceView layout_marketer_SF = new PriceView();
+    private PriceView layout_market_two_SF = new PriceView();
+    private PriceView layout_market_one_SF = new PriceView();
 
     //chart views
     @Bind(R.id.chart_SF)
@@ -115,11 +124,29 @@ public class StatisticsFragment extends BaseFragment<PricesActivity> implements 
         }
     }
 
+    @OnClick(R.id.ll_Month_pick_Container_SF)
+    protected void selectMonth() {
+        initMonthPicker();
+
+    }
+
+    public void initMonthPicker() {
+        //TODO
+        getHostActivity().showToast("to be done", Toast.LENGTH_SHORT);
+
+    }
+
+
     private void setupDefaultPage() {
         initPageToShow(defaultPage);
         //set click listeners maybe ;
     }
 
+    private void colorPriceView(PriceView priceView,@ColorInt int color){
+        priceView.tv_Price_Prefix.setTextColor(color);
+        priceView.tv_Price.setTextColor(color);
+        priceView.tv_Marketeer_CropItem.setTextColor(color);
+    }
 
     public static StatisticsFragment getInstance(LastCropPricesModel cropModel) {
         Bundle args = new Bundle();
@@ -148,10 +175,18 @@ public class StatisticsFragment extends BaseFragment<PricesActivity> implements 
     @Override
     public void onViewCreated(View v, Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
-        ButterKnife.bind(this, v);
+        ButterKnife.bind(this,v);
+
+        ButterKnife.bind(layout_marketer_SF, v.findViewById(R.id.layout_marketer_SF));
+        ButterKnife.bind(layout_market_one_SF, v.findViewById(R.id.layout_market_one_SF));
+        ButterKnife.bind(layout_market_two_SF, v.findViewById(R.id.layout_market_two_SF));
 
         setupDefaultPage();
         //use currentPage int;
+
+        colorPriceView(layout_marketer_SF, ResUtil.getColor(getResources(),R.color.bg_graph_aqua));
+        colorPriceView(layout_market_one_SF, ResUtil.getColor(getResources(),R.color.bg_graph_golden));
+        colorPriceView(layout_market_two_SF, ResUtil.getColor(getResources(),R.color.bg_graph_light_blue));
 
         defChart();
         defRadioButtons();
@@ -343,10 +378,10 @@ public class StatisticsFragment extends BaseFragment<PricesActivity> implements 
 
     @Override
     public void onPageSelected(int page) {
-        if (page == 1) {
+        if (page == 1){
             tv_HeadTitle_SF.setText(getString(R.string.page_head_one_statistics_fragment));
             ll_Month_pick_Container_SF.setVisibility(View.GONE);
-        } else if (page == 2) {
+        } else if (page == 2){
             tv_HeadTitle_SF.setText(getString(R.string.page_head_two_statistics_fragment));
             ll_Month_pick_Container_SF.setVisibility(View.VISIBLE);
         }
@@ -378,7 +413,8 @@ public class StatisticsFragment extends BaseFragment<PricesActivity> implements 
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (popupWindow.isShowing()) popupWindow.dismiss();
+                            if (popupWindow.isShowing())
+                                popupWindow.dismiss();
                         }
                     });
 
