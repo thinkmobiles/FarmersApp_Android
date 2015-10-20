@@ -30,7 +30,9 @@ import java.util.List;
  * Created by omar
  * on 10/9/15.
  */
-public class AllPricesFragment extends BaseFragment implements PricesActivity.DateRangeSetter {
+public class AllPricesFragment extends BaseFragment<PricesActivity>
+        implements PricesActivity.DateRangeSetter {
+
     @Bind(R.id.rv_BaseListFragment)
     protected RecyclerView recyclerView;
 
@@ -42,7 +44,7 @@ public class AllPricesFragment extends BaseFragment implements PricesActivity.Da
     private LastCropPricesModel mCropModel;
     private DateRange mDateRange;
 
-    public static BaseFragment getInstance(LastCropPricesModel cropModel) {
+    public static AllPricesFragment getInstance(LastCropPricesModel cropModel) {
         Bundle args = new Bundle();
         Gson gson = new GsonBuilder().create();
         args.putString(ProjectConstants.KEY_DATA, gson.toJson(cropModel));

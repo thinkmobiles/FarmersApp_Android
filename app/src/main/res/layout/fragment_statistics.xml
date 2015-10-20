@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/margin_default_normal"
+    android:paddingRight="@dimen/margin_default_normal">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2">
+
+        <RelativeLayout
+            android:id="@+id/llTopDataContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <com.farmers.underground.ui.custom_views.CustomTextView
+                android:layout_alignParentTop="true"
+                android:id="@+id/tv_HeadTitle_SF"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:maxLines="2"
+                android:text="@string/page_head_one_statistics_fragment"
+                android:textColor="#0a89a7"
+                android:textSize="18sp"
+                app:customFont="bold" />
+
+            <LinearLayout
+                android:id="@+id/ll_Month_pick_Container_SF"
+                android:layout_below="@id/tv_HeadTitle_SF"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+            <com.farmers.underground.ui.custom_views.CustomTextView
+                android:id="@+id/tv_Month_SF" 
+                android:drawableLeft="@drawable/ic_arrow_drop_down_3_copy"
+                android:drawablePadding="13dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="אוקטובר"
+                android:textColor="#0a89a7"
+                android:textSize="36sp"
+                app:customFont="regular" />
+           <View
+                android:layout_marginLeft="13dp"
+                android:background="#0a89a7"
+                android:layout_width="120dp"
+                android:layout_height="1.5dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:id="@+id/ll_PricesContainer_SF"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <include android:id="@+id/layout_marketer_SF" layout="@layout/item_crops_price" />
+
+                <View
+                    android:layout_width="15dp"
+                    android:layout_height="0dp"/>
+
+                <include android:id="@+id/layout_market_one_SF" layout="@layout/item_crops_price" />
+
+
+                <View
+                    android:layout_width="15dp"
+                    android:layout_height="0dp"/>
+
+                <include android:id="@+id/layout_market_two_SF" layout="@layout/item_crops_price" />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:background="@color/bg_graph_background">
+
+        <com.farmers.underground.ui.custom_views.CustomTextView
+            android:id="@+id/tv_GraphDescription_SF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="@dimen/margin_default_large"
+            android:layout_marginTop="@dimen/margin_default_medium"
+            android:textColor="@color/text_dark_grey"
+            android:textSize="@dimen/normal_text_size"
+            app:customFont="bold" />
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/chart_SF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/rg_SF"
+            android:layout_below="@+id/tv_GraphDescription_SF"
+            android:layout_marginBottom="-12dp"
+            android:layout_marginTop="-8dp" />
+
+        <RadioGroup
+            android:id="@+id/rg_SF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/margin_default_small"
+            android:layout_marginLeft="@dimen/margin_default_medium"
+            android:layout_marginRight="@dimen/margin_default_medium"
+            android:orientation="horizontal">
+            <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+            <RadioButton
+                android:id="@+id/rb0_SF"
+                style="@style/Radio_Statistics"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+             android:text="asdd"
+                 />
+            </FrameLayout>
+            <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+            <RadioButton
+                android:id="@+id/rb1_SF"
+                style="@style/Radio_Statistics"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                 android:text="sad"/>
+            </FrameLayout>
+            <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+            <RadioButton
+                android:id="@+id/rb2_SF"
+                style="@style/Radio_Statistics"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                 android:text="sad"/>
+            </FrameLayout>
+
+        </RadioGroup>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:text="* לחיצה על אחת משלושת קבוצת הגרפים תראה את מחירי הגרף"
+            android:textSize="10sp" />
+
+        <LinearLayout
+            android:id="@+id/llPageSwitcherContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/im_arrow_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/line_left_not_active" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/im_dot_one"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_margin="4dp"
+                        android:src="@drawable/dot_gray" />
+
+                    <ImageView
+                        android:id="@+id/im_dot_two"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_margin="4dp"
+                        android:layout_toRightOf="@id/im_dot_one"
+                        android:src="@drawable/dot_blue" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_page_number_title"
+                    android:layout_width="98dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:singleLine="true"
+                    android:text="@string/page_number_one_statistics_fragment"
+                    android:textSize="9sp" />
+
+
+            </LinearLayout>
+
+
+            <ImageView
+                android:id="@+id/im_arrow_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/line_rigth_active" />
+
+
+        </LinearLayout>
+
+    </FrameLayout>
+</LinearLayout>

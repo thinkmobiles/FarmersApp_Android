@@ -34,8 +34,8 @@ import com.farmers.underground.ui.adapters.ProjectPagerAdapter;
 import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.custom_views.CustomSearchView;
+import com.farmers.underground.ui.fragments.CropsFragmentCallback;
 import com.farmers.underground.ui.fragments.CropsListFragment;
-import com.farmers.underground.ui.fragments.SearchQueryFragmentCallback;
 import com.farmers.underground.ui.models.CropsListFragmentModel;
 import com.farmers.underground.ui.models.DrawerItem;
 import com.farmers.underground.ui.utils.CropsFragmentStateController;
@@ -78,18 +78,20 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     protected FrameLayout fl_DrawerContainer;
 
     @Bind(R.id.ll_logoutMainActivity)
-    View logoutView;
+    protected View logoutView;
 
 
     private SearchManager searchManager;
     private SearchController searchController;
-    private ProjectPagerAdapter<BaseFragment> pagerAdapter;
+    private ProjectPagerAdapter<CropsListFragment> pagerAdapter;
     private CropsListAdapter.CropsAdapterCallback cropsListCallback;
     private CropsFragmentStateController cropsFragmentStateController;
 
 
     private boolean drawerOpened;
     private static String query = "";
+
+    private ArrayList<LastCropPricesModel> mCropList;
 
     public static void start(@NonNull Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -147,9 +149,16 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         RetrofitSingleton.getInstance().getLastCropPricesList(new ACallback<ArrayList<LastCropPricesModel>, ErrorMsg>() {
             @Override
             public void onSuccess(ArrayList<LastCropPricesModel> result) {
-                for (BaseFragment f : pagerAdapter.getFragmentList()) {
-                    ((SearchQueryFragmentCallback) f).onReceiveCrops(result);
+
+                //todo this is for test
+                for (int i = 0; i < result.size(); i++) {
+                    if (i == 0) result.get(i).image = "file:///android_asset/test_apple_gala.jpg";
+                    if (i == 1) result.get(i).image = "file:///android_asset/test_avocado.png";
+                    if (i == 2) result.get(i).image = "file:///android_asset/test_corn.png";
+                    if (i > 4) break;
                 }
+                mCropList = result;
+                updateFragments( );
             }
 
             @Override
@@ -159,10 +168,16 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         });
     }
 
+    private void updateFragments( ) {
+        for (BaseFragment f : pagerAdapter.getFragmentList()) {
+            ((CropsFragmentCallback) f).onReceiveCrops(mCropList);
+        }
+    }
+
 
     private void initCropFragmentAdapters() {
         for (BaseFragment f : pagerAdapter.getFragmentList()) {
-            ((SearchQueryFragmentCallback) f).setListCallback(cropsListCallback);
+            ((CropsFragmentCallback) f).setListCallback(cropsListCallback);
         }
     }
 
@@ -196,8 +211,37 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
             }
 
             @Override
-            public void onFavChecked(LastCropPricesModel cropModel, boolean isChecked) {
+            public void onFavChecked(final LastCropPricesModel cropModel, boolean isChecked) {
+                if (isChecked) {
+                    //TODO add to favourites
+                    showProgressDialog();
+                    RetrofitSingleton.getInstance().addCropsToFavorites(cropModel._crop, new ACallback<SuccessMsg, ErrorMsg>() {
+                        @Override
+                        public void onSuccess(SuccessMsg result) {
+                            showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
+                            for(LastCropPricesModel item: mCropList )
+                            if(item._crop .equals(cropModel._crop))
+                                cropModel.isInFavorites = true;
+                            updateFragments();
+                        }
 
+                        @Override
+                        public void onError(@NonNull ErrorMsg error) {
+                            showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
+                        }
+
+                        @Override
+                        public void anyway() {
+                            hideProgressDialog();
+                        }
+                    });
+                }
+                else{
+                    for(LastCropPricesModel item: mCropList )
+                        if(item._crop .equals(cropModel._crop))
+                            cropModel.isInFavorites = false;
+                    updateFragments();
+                }
             }
 
             @Override
@@ -241,7 +285,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
             @Override
             public boolean onQueryTextChange(final String newText) {
- 
+
                 String newQuerry = "";
                 if (newText.length() > 0) newQuerry = newText.trim();
                 if (newQuerry.isEmpty()) {
@@ -249,7 +293,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                     hint.setName("");
                     searchController.setQuerry(hint);
                     query = "";
-                    updateFragments();
+                    updateFragmentsOnSearch();
                     return false;
                 } else if (newQuerry.length() > 1 && newQuerry.length() < 2) {
                     return true;
@@ -276,7 +320,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     protected void onNewIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             query = intent.getStringExtra(SearchManager.QUERY);
-            updateFragments();
+            updateFragmentsOnSearch();
 
         }
     }
@@ -287,8 +331,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         searchController.hide();
         invalidateOptionsMenu();
     }
-
-
 
 
     //drawer
@@ -370,10 +412,8 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         viewPager.setCurrentItem(pagerAdapter.getCount() - 1);
     }
 
-    private void updateFragments() {
-        for (BaseFragment f : pagerAdapter.getFragmentList()) {
-            ((SearchQueryFragmentCallback) f).onReceiveStringQuery(query);
-        }
+    private void updateFragmentsOnSearch() {
+
     }
 
     private List<String> getTitlesList() {
@@ -383,18 +423,18 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         return titles;
     }
 
-    private List<BaseFragment> getFragmentList() {
-        List<BaseFragment> fragmentList = new ArrayList<>();
-        fragmentList.add(createFavFragemnt());
-        fragmentList.add(createCropFragemnt());
+    private List<CropsListFragment> getFragmentList() {
+        List<CropsListFragment> fragmentList = new ArrayList<>();
+        fragmentList.add(createFaaFragment());
+        fragmentList.add(createCropFragment());
         return fragmentList;
     }
 
-    private BaseFragment createFavFragemnt() {
+    private CropsListFragment createFaaFragment() {
         return CropsListFragment.getInstance(CropsListFragmentModel.TYPE.FAVOURITES, query);
     }
 
-    private BaseFragment createCropFragemnt() {
+    private CropsListFragment createCropFragment() {
         return CropsListFragment.getInstance(CropsListFragmentModel.TYPE.ALL_CROPS, query);
     }
 

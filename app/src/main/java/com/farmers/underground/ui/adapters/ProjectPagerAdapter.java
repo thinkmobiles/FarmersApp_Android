@@ -11,7 +11,7 @@ import java.util.List;
  * Created by omar
  * on 9/24/15.
  */
-public class ProjectPagerAdapter<F extends BaseFragment> extends FragmentPagerAdapter {
+public class ProjectPagerAdapter<F extends BaseFragment<?>> extends FragmentPagerAdapter {
 
     private List<F> fragmentList;
     private List<String> mFragmentTitles;

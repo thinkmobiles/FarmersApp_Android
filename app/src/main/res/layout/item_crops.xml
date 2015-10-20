@@ -26,10 +26,10 @@
                     android:id="@+id/iv_CropsItemImage"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/crops_card_header_height"
-                     android:background="@drawable/ic_drawer_crops"
+
                     android:scaleType="centerCrop"
                     custom:sriv_left_top_corner_radius="@dimen/crops_card_corner_radius"
-                    custom:sriv_right_top_corner_radius="@dimen/crops_card_corner_radius"/>
+                    custom:sriv_right_top_corner_radius="@dimen/crops_card_corner_radius"/><!--android:background="@drawable/ic_drawer_crops"-->
 
             <CheckBox
                     android:id="@+id/cb_FavouriteCropsItem"

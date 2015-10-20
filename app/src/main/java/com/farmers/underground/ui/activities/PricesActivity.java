@@ -46,7 +46,8 @@ import java.util.Calendar;
 import java.util.List;
 
 /**
- * Created by omar on 10/9/15.
+ * Created by omar
+ * on 10/9/15.
  */
 public class PricesActivity extends BaseActivity implements AllPricesAdapter.AllPricesCallback {
 
@@ -74,7 +75,7 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
     private Target target;
 
     private LastCropPricesModel mCropModel;
-    private ProjectPagerAdapter<BaseFragment> pagerAdapter;
+    private ProjectPagerAdapter<BaseFragment<PricesActivity>> pagerAdapter;
 
     public static void start(@NonNull Context context, LastCropPricesModel cropModel) {
         Gson gson = new GsonBuilder().create();
@@ -138,32 +139,31 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
         return titles;
     }
 
-    private List<BaseFragment> getFragmentList() {
-        List<BaseFragment> fragmentList = new ArrayList<>();
+    private List<BaseFragment<PricesActivity>> getFragmentList() {
+        List<BaseFragment<PricesActivity>> fragmentList = new ArrayList<>();
 
-        fragmentList.add(createStatisticsPricesFragemnt(mCropModel));
-        fragmentList.add(createMarketeerPricesFragemnt(mCropModel));
-        fragmentList.add(createAlLPricesFragemnt(mCropModel));
+        fragmentList.add(createStatisticsPricesFragment(mCropModel));
+        fragmentList.add(createMarketeerPricesFragment(mCropModel));
+        fragmentList.add(createAlLPricesFragment(mCropModel));
 
         return fragmentList;
     }
 
-    private BaseFragment createAlLPricesFragemnt(LastCropPricesModel cropModel) {
+    private AllPricesFragment createAlLPricesFragment(LastCropPricesModel cropModel) {
         return AllPricesFragment.getInstance(cropModel);
     }
 
-    private BaseFragment createMarketeerPricesFragemnt(LastCropPricesModel cropModel) {
+    private MarketeerPricesFragment createMarketeerPricesFragment(LastCropPricesModel cropModel) {
         return MarketeerPricesFragment.getInstance(cropModel);
     }
 
-    private BaseFragment createStatisticsPricesFragemnt(LastCropPricesModel cropModel) {
+    private StatisticsFragment createStatisticsPricesFragment(LastCropPricesModel cropModel) {
         return StatisticsFragment.getInstance(cropModel);
     }
 
     private void setTabs() {
         tabLayout.setupWithViewPager(viewPager);
     }
-
 
     // all prices fragment callbacks
     @Override
@@ -186,9 +186,15 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
         void setDateRange(DateRange dateRange);
     }
 
+
+    /** for
+     * StatisticsFragment -  has two pages;
+     * */
+    public interface PageListener {
+        void onPageSelected(int page);
+    }
+
     // options menu
-
-
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.findItem(R.id.action_back).setVisible(true);

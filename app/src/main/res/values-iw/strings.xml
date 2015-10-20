@@ -128,6 +128,19 @@
     <string name="month11">נובמבר</string>
     <string name="month12">דצמבר</string>
 
+    <!--Statistics-->
+
+    <string name="statistics_description_1">ממוצע המחירים לפי 3 השנים האחרונות</string>
+     <string name="popup_name">מועצת הצמחים</string>
+    <string name="page_number_one_statistics_fragment">1 מתוך 2</string>
+    <string name="page_number_two_statistics_fragment">2 מתוך 2</string>
+
+    <string name="page_head_one_statistics_fragment">באיזה חודשים מחיר ׳עגבניות שרי תמר׳ היה הכי גבוה?</string>
+    <string name="page_head_two_statistics_fragment">מה הצפי לקטיף הראשון?</string>
+
+    <!--//global-->
+    <string name="price_prefix">₪</string>
+
 
 
 </resources>

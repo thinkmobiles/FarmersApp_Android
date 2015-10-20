@@ -14,6 +14,7 @@ import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.ui.activities.FragmentViewsCreatedCallback;
+import com.farmers.underground.ui.activities.MainActivity;
 import com.farmers.underground.ui.adapters.CropsListAdapter;
 import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.custom_views.CropsItemDivider;
@@ -25,11 +26,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by omar on 9/30/15.
+ * Created by omar
+ * on 9/30/15.
  */
 public class CropsListFragment
-        extends BaseFragment
-        implements SearchQueryFragmentCallback {
+        extends BaseFragment<MainActivity>
+        implements CropsFragmentCallback {
 
     @Bind(R.id.rv_BaseListFragment)
     protected RecyclerView recyclerView;
@@ -37,7 +39,7 @@ public class CropsListFragment
     @Bind(R.id.tv_NoItemsBaseListFragment)
     protected TextView tv_NoItems;
 
-    private CropsListFragmentModel thisModel;
+    private CropsListFragmentModel mFragmentModel;
     private CropsListAdapter adapter;
     private FragmentViewsCreatedCallback stateCallback;
     private CropsListAdapter.CropsAdapterCallback listCallback;
@@ -57,7 +59,7 @@ public class CropsListFragment
     }
 
 
-    public static BaseFragment getInstance(CropsListFragmentModel.TYPE type, String query) {
+    public static CropsListFragment getInstance(CropsListFragmentModel.TYPE type, String query) {
         CropsListFragmentModel fragmentModel = new CropsListFragmentModel(type, query);
         Bundle args = new Bundle();
         args.putSerializable(ProjectConstants.KEY_DATA, fragmentModel);
@@ -91,8 +93,8 @@ public class CropsListFragment
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (savedInstanceState != null)
-            thisModel = (CropsListFragmentModel) savedInstanceState.getSerializable(ProjectConstants.KEY_DATA);
-        else thisModel = (CropsListFragmentModel) getArguments().getSerializable(ProjectConstants.KEY_DATA);
+            mFragmentModel = (CropsListFragmentModel) savedInstanceState.getSerializable(ProjectConstants.KEY_DATA);
+        else mFragmentModel = (CropsListFragmentModel) getArguments().getSerializable(ProjectConstants.KEY_DATA);
         //showNoItems();
         adapter = new CropsListAdapter();
         recyclerView.setAdapter(adapter);
@@ -102,8 +104,8 @@ public class CropsListFragment
     private void showNoItems() {
         tv_NoItems.setVisibility(View.VISIBLE);
         String itemsText;
-        if (!thisModel.getQuery().isEmpty()){
-            itemsText = getActivity().getString(R.string.no_crops_found) + thisModel.getQuery();
+        if (!mFragmentModel.getQuery().isEmpty()){
+            itemsText = getActivity().getString(R.string.no_crops_found) + mFragmentModel.getQuery();
         } else {
             itemsText = getActivity().getString(R.string.no_crops_found) + getActivity().getString(R.string.all);
         }
@@ -113,7 +115,7 @@ public class CropsListFragment
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable(ProjectConstants.KEY_DATA, thisModel);
+        outState.putSerializable(ProjectConstants.KEY_DATA, mFragmentModel);
     }
 
 
@@ -122,32 +124,35 @@ public class CropsListFragment
         listCallback = callback;
     }
 
-    @Override
-    public void onReceiveStringQuery(String query) {
-        thisModel.setQuery(query);
-       // showNoItems();
-    }
+
 
     @Override
     public void onReceiveCrops(List<LastCropPricesModel> cropsList) {
-        adapter.setDataList(generateCropsDataHolders(cropsList));
+        if(mFragmentModel.getType() == CropsListFragmentModel.TYPE.FAVOURITES){
+            List<LastCropPricesModel> favouritesList = new ArrayList<>();
+           for( LastCropPricesModel item : cropsList)
+               if(item.isInFavorites)
+                   favouritesList.add(item);
+            adapter.setDataList(generateCropsDataHolders(favouritesList));
+        }
+        else
+            adapter.setDataList(generateCropsDataHolders(cropsList));
+
         adapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void notifyFavsRefresh() {
-        adapter.notifyDataSetChanged();
-    }
+
 
     private List<CropsListItemDH> generateCropsDataHolders(List<LastCropPricesModel> cropsList) {
         List<CropsListItemDH> dhList = new ArrayList<>();
         for (LastCropPricesModel model : cropsList) {
-            switch (thisModel.getType()){
+            switch (mFragmentModel.getType()){
                 case ALL_CROPS:
-                    dhList.add(new CropsListItemDH(model, thisModel.getType(), listCallback));
+                    CropsListItemDH dh = new CropsListItemDH(model, mFragmentModel.getType(), listCallback);
+                    dhList.add(dh);
                     break;
                 case FAVOURITES:
-                   if(model.isInFavorites) dhList.add(new CropsListItemDH(model, thisModel.getType(), listCallback));
+                   if(model.isInFavorites) dhList.add(new CropsListItemDH(model, mFragmentModel.getType(), listCallback));
                     break;
             }
 
