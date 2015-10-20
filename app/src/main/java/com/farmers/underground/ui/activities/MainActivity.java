@@ -214,7 +214,25 @@ public class MainActivity extends BaseActivity
 
             @Override
             public void onFavChecked(LastCropPricesModel cropModel, boolean isChecked) {
+                //TODO add to favourites
+                showProgressDialog();
+                RetrofitSingleton.getInstance().addCropsToFavorites(cropModel._crop, new ACallback<SuccessMsg, ErrorMsg>() {
+                    @Override
+                    public void onSuccess(SuccessMsg result) {
+                        showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
 
+                    }
+
+                    @Override
+                    public void onError(@NonNull ErrorMsg error) {
+                        showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
+                    }
+
+                    @Override
+                    public void anyway() {
+                        hideProgressDialog();
+                    }
+                });
             }
 
             @Override

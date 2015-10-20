@@ -252,6 +252,24 @@ public class RetrofitSingleton {
         });
     }
 
+
+    public void addCropsToFavorites(@NonNull String favoritesID, final ACallback<SuccessMsg, ErrorMsg> callback) {
+
+        getAuthorizationService().addCropsToFavorites(favoritesID).enqueue(new Callback<SuccessMsg>() {
+
+            @Override
+            public void onResponse(Response<SuccessMsg> response, Retrofit retrofit) {
+                performCallback(callback, response);
+                callback.anyway();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                callback.onError(new ErrorMsg("Unknown Error"));
+                callback.anyway();
+            }
+        });
+    }
     public void forgotPass(@NonNull String email, final ACallback<SuccessMsg, ErrorMsg> callback) {
 
         getAuthorizationService().forgotPass(email).enqueue(new Callback<SuccessMsg>() {
