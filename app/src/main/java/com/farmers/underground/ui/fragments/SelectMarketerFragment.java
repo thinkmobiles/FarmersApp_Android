@@ -57,8 +57,8 @@ public class SelectMarketerFragment extends BaseFragment<LoginSignUpActivity> {
     @OnClick(R.id.tvSkip)
     protected void skip() {
         FarmersApp.setSkipMode(true);
-        getHostActivity().finish();
         MainActivity.start(getHostActivity());
+        getHostActivity().finish();
     }
 
     @OnClick(R.id.btnStart)
@@ -71,12 +71,11 @@ public class SelectMarketerFragment extends BaseFragment<LoginSignUpActivity> {
             RetrofitSingleton.getInstance().addMarketeer(name, new ACallback<SuccessMsg, ErrorMsg>() {
                 @Override
                 public void onSuccess(SuccessMsg result) {
+                    getHostActivity().showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
 
                     FarmersApp.setSkipMode(true);
-                    getHostActivity().finish();
                     MainActivity.start(getHostActivity());
-
-                    getHostActivity().showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
+                    getHostActivity().finish();
                 }
 
                 @Override

@@ -90,7 +90,8 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
         }
 
         cb_Fav.setChecked(model.isInFavorites);
-        Picasso.with(iv_CropsImage.getContext()).load(dateHolder.getModel().image).into(iv_CropsImage);
+        //todo error
+        Picasso.with(iv_CropsImage.getContext()).load(dateHolder.getModel().image).placeholder(R.drawable.ic_drawer_crops).error(R.drawable.ic_drawer_crops).into(iv_CropsImage);
 
 
         for (int i = 0; i < ll_PriceContainer.getChildCount(); i++) {

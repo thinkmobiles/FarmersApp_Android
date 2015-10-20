@@ -152,14 +152,13 @@ public class MainActivity extends BaseActivity
             @Override
             public void onSuccess(ArrayList<LastCropPricesModel> result) {
 
+                //todo this is for test
                 for (int i = 0; i < result.size(); i++) {
                     if(i==0)
                     result.get(i).image = "file:///android_asset/test_apple_gala.jpg";
-//                    if(i==1)
-//                    result.get(i).image = "file:///android_asset/test_apple_gold.jpg";
-                    if(i==2)
+                    if(i==1)
                     result.get(i).image = "file:///android_asset/test_avocado.png";
-                    if(i==3)
+                    if(i==2)
                     result.get(i).image = "file:///android_asset/test_corn.png";
                     if(i>4)
                         break;
