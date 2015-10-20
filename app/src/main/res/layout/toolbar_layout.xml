@@ -8,6 +8,11 @@
         android:fitsSystemWindows="true"
         android:background="@color/aqua"
         >
+    <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner_TB"
+            style="@style/spinner_style" android:visibility="gone"/>
     <com.farmers.underground.ui.custom_views.CustomSearchView
             android:id="@+id/searchView"
             android:layout_width="wrap_content"

@@ -30,7 +30,6 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
@@ -46,6 +45,8 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
 
     @Bind(R.id.toolbar)
     protected Toolbar toolbar;
+
+
 
     private Calendar today = Calendar.getInstance();
     private OnChangeDateListener onChangeDateListener;

@@ -8,12 +8,10 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.*;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
-
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.LastCropPricesModel;
@@ -45,8 +43,7 @@ import java.util.List;
  * Created by omar
  * on 10/9/15.
  */
-public class StatisticsFragment extends BaseFragment<PricesActivity>
-        implements PricesActivity.DateRangeSetter, OnChartValueSelectedListener, PricesActivity.PageListener {
+public class StatisticsFragment extends BaseFragment<PricesActivity> implements PricesActivity.DateRangeSetter, OnChartValueSelectedListener, PricesActivity.PageListener {
 
 
     //head block
@@ -89,6 +86,8 @@ public class StatisticsFragment extends BaseFragment<PricesActivity>
     private DateRange mDateRange;
 
     private float popupValue;
+    private int popupIndexSelected;
+    private int[] chartColor;
 
     private void initPageToShow(int pageNumber) {
         final Resources res = getResources();
@@ -142,7 +141,7 @@ public class StatisticsFragment extends BaseFragment<PricesActivity>
         //set click listeners maybe ;
     }
 
-    private void colorPriceView(PriceView priceView,@ColorInt int color){
+    private void colorPriceView(PriceView priceView, @ColorInt int color) {
         priceView.tv_Price_Prefix.setTextColor(color);
         priceView.tv_Price.setTextColor(color);
         priceView.tv_Marketeer_CropItem.setTextColor(color);
@@ -175,7 +174,7 @@ public class StatisticsFragment extends BaseFragment<PricesActivity>
     @Override
     public void onViewCreated(View v, Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
-        ButterKnife.bind(this,v);
+        ButterKnife.bind(this, v);
 
         ButterKnife.bind(layout_marketer_SF, v.findViewById(R.id.layout_marketer_SF));
         ButterKnife.bind(layout_market_one_SF, v.findViewById(R.id.layout_market_one_SF));
@@ -184,9 +183,9 @@ public class StatisticsFragment extends BaseFragment<PricesActivity>
         setupDefaultPage();
         //use currentPage int;
 
-        colorPriceView(layout_marketer_SF, ResUtil.getColor(getResources(),R.color.bg_graph_aqua));
-        colorPriceView(layout_market_one_SF, ResUtil.getColor(getResources(),R.color.bg_graph_golden));
-        colorPriceView(layout_market_two_SF, ResUtil.getColor(getResources(),R.color.bg_graph_light_blue));
+        colorPriceView(layout_marketer_SF, ResUtil.getColor(getResources(), R.color.bg_graph_aqua));
+        colorPriceView(layout_market_one_SF, ResUtil.getColor(getResources(), R.color.bg_graph_golden));
+        colorPriceView(layout_market_two_SF, ResUtil.getColor(getResources(), R.color.bg_graph_light_blue));
 
         defChart();
         defRadioButtons();
@@ -275,18 +274,18 @@ public class StatisticsFragment extends BaseFragment<PricesActivity>
     }
 
     private void setChartData(ChartDataModel mChartModel) {
-        int[] color = new int[11];
-        color[0] = R.color.bg_graph_aqua;
-        color[1] = R.color.bg_graph_golden;
-        color[2] = R.color.bg_graph_light_blue;
-        color[3] = R.color.opaque;
-        color[4] = R.color.bg_graph_aqua;
-        color[5] = R.color.bg_graph_golden;
-        color[6] = R.color.bg_graph_light_blue;
-        color[7] = R.color.opaque;
-        color[8] = R.color.bg_graph_aqua;
-        color[9] = R.color.bg_graph_golden;
-        color[10] = R.color.bg_graph_light_blue;
+        chartColor = new int[11];
+        chartColor[0] = R.color.bg_graph_aqua;
+        chartColor[1] = R.color.bg_graph_golden;
+        chartColor[2] = R.color.bg_graph_light_blue;
+        chartColor[3] = R.color.opaque;
+        chartColor[4] = R.color.bg_graph_aqua;
+        chartColor[5] = R.color.bg_graph_golden;
+        chartColor[6] = R.color.bg_graph_light_blue;
+        chartColor[7] = R.color.opaque;
+        chartColor[8] = R.color.bg_graph_aqua;
+        chartColor[9] = R.color.bg_graph_golden;
+        chartColor[10] = R.color.bg_graph_light_blue;
 
 
         ArrayList<BarEntry> yVals1 = new ArrayList<>();
@@ -315,7 +314,7 @@ public class StatisticsFragment extends BaseFragment<PricesActivity>
         }
         final BarDataSet set1 = new BarDataSet(yVals1, "Data Set");
 
-        set1.setColors(color, getContext());
+        set1.setColors(chartColor, getContext());
         set1.setDrawValues(false);
 
         ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
@@ -367,6 +366,7 @@ public class StatisticsFragment extends BaseFragment<PricesActivity>
 
     @Override
     public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
+        popupIndexSelected = e.getXIndex();
         popupValue = e.getVal();
 
     }
@@ -378,10 +378,10 @@ public class StatisticsFragment extends BaseFragment<PricesActivity>
 
     @Override
     public void onPageSelected(int page) {
-        if (page == 1){
+        if (page == 1) {
             tv_HeadTitle_SF.setText(getString(R.string.page_head_one_statistics_fragment));
             ll_Month_pick_Container_SF.setVisibility(View.GONE);
-        } else if (page == 2){
+        } else if (page == 2) {
             tv_HeadTitle_SF.setText(getString(R.string.page_head_two_statistics_fragment));
             ll_Month_pick_Container_SF.setVisibility(View.VISIBLE);
         }
@@ -397,31 +397,62 @@ public class StatisticsFragment extends BaseFragment<PricesActivity>
         popupWindow.setFocusable(true);
         popupView.measure(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        ((TextView) popupWindow.getContentView().findViewById(R.id.tv_Value_Popup)).setText(String.format("%.2f",
-                value));
-
-
         float offsetX = touchX - mChart.getLeft() - popupView.getMeasuredWidth() / 2;
         float offsetY = touchY - mChart.getBottom() - popupView.getMeasuredHeight() / 4 * 3;
-        popupWindow.showAsDropDown(mChart, (int) offsetX, (int) offsetY);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(3000);
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (popupWindow.isShowing())
-                                popupWindow.dismiss();
-                        }
-                    });
+        boolean show = false;
+        switch (popupIndexSelected) {
+            case 0:
+            case 1:
+            case 2:
+            case 4:
+            case 5:
+            case 6:
+            case 8:
+            case 9:
+            case 10:
+                show = true;
+                break;
+            case 7:
+            case 3:
+                show = false;
+                break;
+        }
 
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+        if (show) {
+            ((TextView) popupWindow.getContentView().findViewById(R.id.tv_Value_Popup)).setText(String.format("%.2f", value));
+
+            Resources res = getResources();
+            ((TextView) popupWindow.getContentView().findViewById(R.id.tv_Value_Popup)).setTextColor(ResUtil.getColor(res, chartColor[popupIndexSelected]));
+            ((TextView) popupWindow.getContentView().findViewById(R.id.tv_Name_Popup)).setTextColor(ResUtil.getColor(res, chartColor[popupIndexSelected]));
+            ((TextView) popupWindow.getContentView().findViewById(R.id.tv_Symbol_Popup)).setTextColor(ResUtil.getColor(res, chartColor[popupIndexSelected]));
+
+            popupWindow.showAsDropDown(mChart, (int) offsetX, (int) offsetY);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(3000);
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (popupWindow.isShowing()) popupWindow.dismiss();
+                            }
+                        });
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
-        }).start();
+            }).start();
+
+            if (popupIndexSelected < 3) setItemHiglight(popupIndexSelected);
+            else if (popupIndexSelected < 7) setItemHiglight(popupIndexSelected - 1);
+            else setItemHiglight(popupIndexSelected - 2);
+        }
+    }
+
+    private void setItemHiglight(int item) {
+        //todo: set higlight here
+        //todo: items comming  in 3 sets LTR:  0-1-2,  3-4-5,  6-7-8
     }
 }
