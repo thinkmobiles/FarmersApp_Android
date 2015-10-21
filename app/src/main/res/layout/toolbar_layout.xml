@@ -12,7 +12,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/spinner_TB"
-            style="@style/spinner_style" android:visibility="gone"/>
+            style="@style/spinner_style"
+            android:gravity="left"
+            android:visibility="gone"
+            android:background="@null"/>
     <com.farmers.underground.ui.custom_views.CustomSearchView
             android:id="@+id/searchView"
             android:layout_width="wrap_content"
