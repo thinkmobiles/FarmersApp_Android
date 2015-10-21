@@ -57,6 +57,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:gravity="bottom"
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true"
                 android:id="@+id/ll_PricesContainer_SF"

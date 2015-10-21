@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.farmers.underground.ui.custom_views.PriceView;
 import com.farmers.underground.ui.models.ChartDataModel;
 import com.farmers.underground.ui.models.DateRange;
 import com.farmers.underground.ui.utils.ResUtil;
+import com.farmers.underground.ui.utils.ResourceRetriever;
 import com.farmers.underground.ui.utils.TypefaceManager;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -148,9 +150,11 @@ public class StatisticsFragment
     }
 
     private void colorPriceView(PriceView priceView, @ColorInt int color) {
-//        priceView.tv_Price_Prefix.setTextColor(color);
+        priceView.tv_Price_Prefix.setTextColor(color);
         priceView.tv_Price.setTextColor(color);
         priceView.tv_Marketeer_CropItem.setTextColor(color);
+
+        downLightPriceView( priceView)  ; //for now todo
     }
 
     public static StatisticsFragment getInstance(LastCropPricesModel cropModel) {
@@ -470,8 +474,78 @@ public class StatisticsFragment
 
     }
 
+    private void downLightPriceView(PriceView priceView) {
+        priceView.tv_Price_Prefix.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14F);
+        priceView.tv_Price_Prefix.setTypeface(TypefaceManager.getInstance().getArial());
+
+        priceView.tv_Price.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25F);
+        priceView.tv_Price.setTypeface(TypefaceManager.getInstance().getRobotoLight());
+
+        priceView.tv_Marketeer_CropItem.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11F);
+        priceView.tv_Marketeer_CropItem.setTypeface(TypefaceManager.getInstance().getArial());
+    }
+    private void hightLightPriceView(PriceView priceView) {
+        priceView.tv_Price_Prefix.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18.6F);
+        priceView.tv_Price_Prefix.setTypeface(TypefaceManager.getInstance().getArialBold());
+
+        priceView.tv_Price.setTextSize(TypedValue.COMPLEX_UNIT_SP, 33.2F);
+        priceView.tv_Price.setTypeface(TypefaceManager.getInstance().getArialBold());
+
+        priceView.tv_Marketeer_CropItem.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15.9F);
+        priceView.tv_Marketeer_CropItem.setTypeface(TypefaceManager.getInstance().getArialBold());
+    }
+
     private void setItemHighlight(int item) {
         //todo: set higlight here
         //todo: items comming  in 3 sets LTR:  0-1-2,  3-4-5,  6-7-8
+
+        //test highlight
+        final PriceView priceView;
+        switch (item){
+            case 0:
+            case 3:
+            case 6:
+                priceView = layout_marketer_SF;
+                break;
+            case 4:
+            case 7:
+            case 1:
+                priceView = layout_market_one_SF;
+                break;
+            case 8:
+            case 5:
+            case 2:
+                priceView = layout_market_two_SF;
+                break;
+            default:
+                priceView=null;
+                return;
+        }
+
+        if(priceView==null)
+            return;
+
+        hightLightPriceView(priceView);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(3000);
+                    if (getHostActivity()!=null)
+                        getHostActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (getHostActivity() != null)
+                                    downLightPriceView(priceView);
+
+                            }
+                        });
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
     }
 }

@@ -19,6 +19,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:orientation="horizontal">
+<!--
 
             <ImageView
                     android:contentDescription="@null"
@@ -29,6 +30,17 @@
                     android:layout_marginBottom="6dp"
                     android:scaleType="fitXY"
                     android:src="@drawable/ic_crop_marketer_price"/>
+-->
+            <com.farmers.underground.ui.custom_views.CustomTextView
+                android:id="@+id/tv_Price_Prefix"
+                android:text="@string/price_prefix"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_dark_grey"
+                android:gravity="bottom"
+                android:layout_gravity="bottom"
+                android:textSize="14sp"
+                custom:customFont="regular"/>
 
             <com.farmers.underground.ui.custom_views.CustomTextView
                     android:id="@+id/tv_Price"

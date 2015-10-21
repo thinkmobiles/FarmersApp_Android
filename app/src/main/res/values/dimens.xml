@@ -157,4 +157,13 @@
     <dimen name="popup_width">50dp</dimen>
 
 
+    <!--statistics frag price sizes-->
+    <dimen name="stat_price_prefix_text_size_small">14sp</dimen>
+    <dimen name="stat_price_prefix_text_size_big">18.6sp</dimen>
+    <dimen name="stat_price_text_size_small">26sp</dimen>
+    <dimen name="stat_price_text_size_big">33.2sp</dimen>
+    <dimen name="stat_price_name_text_size_small">12sp</dimen>
+    <dimen name="stat_price_name_text_size_big">15.9sp</dimen>
+
+
 </resources>

@@ -12,8 +12,8 @@ import butterknife.Bind;
  */
 public class PriceView  {
 
-//    @Bind(R.id.tv_Price_Prefix)
-//    public TextView tv_Price_Prefix;
+    @Bind(R.id.tv_Price_Prefix)
+    public TextView tv_Price_Prefix;
 
     @Bind(R.id.tv_Price)
     public TextView tv_Price;
