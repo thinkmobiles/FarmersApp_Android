@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+    <com.farmers.underground.ui.custom_views.CustomTextView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:custom="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/TextView"
+            style="@style/TV_StatisticsSpinnerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLength="8"
+            android:background="@color/opaque"
+            android:gravity="right"
+            android:paddingBottom="@dimen/search_hint_list_item_padding_y"
+            android:paddingLeft="@dimen/padding_margin_default_small"
+            android:paddingRight="@dimen/padding_margin_default_small"
+            android:paddingTop="@dimen/search_hint_list_item_padding_y"
+            custom:customFont="regular"
+            android:text="some tezr"/>
+
+

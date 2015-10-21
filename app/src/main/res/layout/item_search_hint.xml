@@ -16,7 +16,7 @@
         android:paddingLeft="@dimen/search_hint_list_item_padding_x"
         android:paddingRight="@dimen/search_hint_list_item_padding_x"
         android:paddingTop="@dimen/search_hint_list_item_padding_y"
-        custom:customFont="regular" />
+        custom:customFont="regular" android:text="some tezr"/>
 
     <ImageView
         android:id="@+id/imageView5"

@@ -21,6 +21,8 @@
                 android:layout_gravity="right"
                 android:layout_marginBottom="-4dp">
             <com.farmers.underground.ui.custom_views.CustomTextView
+                    android:id="@+id/tv_Symbol_Popup"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/bg_graph_golden"
