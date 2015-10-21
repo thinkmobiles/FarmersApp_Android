@@ -76,6 +76,7 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
     @Bind(R.id.spinner_TB)
     protected Spinner spinner;
 
+
     private Target target;
 
     private LastCropPricesModel mCropModel;
@@ -104,6 +105,15 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
         setViewPager();
         setTabs();
         setUPSpinner(spinnerTestData(), 5);
+
+
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchView.setIconified(true);
+                MainActivity.startWithSearchFocused(PricesActivity.this);
+            }
+        });
     }
 
     @Override
@@ -122,7 +132,6 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
         if (mCropModel == null)
             throw new IllegalAccessError("Create this activity with start(Context, CropModel) " + "method only!");
     }
-
 
     //ViewPager
 
@@ -341,4 +350,6 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
         data.add(getString(R.string.month9));
         return data;
     }
+
+
 }
