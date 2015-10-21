@@ -3,6 +3,7 @@ package com.farmers.underground.ui.fragments;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
@@ -10,12 +11,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.farmers.underground.R;
-import com.farmers.underground.ui.activities.PricesActivity;
 import com.farmers.underground.ui.activities.TransparentActivity;
 import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.utils.DateFormaterUtil;
-
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import butterknife.Bind;
@@ -107,8 +105,12 @@ public class PeriodPickerFragment extends BaseFragment<TransparentActivity> impl
     }
 
     public void showDatePicker(){
-        new DatePickerDialog(getHostActivity(), this, dateFrom.get(Calendar.YEAR), dateFrom.get(Calendar.MONTH), dateFrom.get(Calendar.DAY_OF_MONTH))
-                .show();
+        DatePickerDialog datePickerDialog =  new DatePickerDialog(getHostActivity(), this, dateFrom.get(Calendar.YEAR), dateFrom.get(Calendar.MONTH), dateFrom.get(Calendar.DAY_OF_MONTH));
+
+        if(Build.VERSION.SDK_INT>=21)
+            datePickerDialog.create();
+
+        datePickerDialog.show();
     }
 
     @Override

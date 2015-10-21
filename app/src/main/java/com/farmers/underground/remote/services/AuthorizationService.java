@@ -12,7 +12,6 @@ import retrofit.http.DELETE;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
-import retrofit.http.HTTP;
 import retrofit.http.POST;
 
 /**
