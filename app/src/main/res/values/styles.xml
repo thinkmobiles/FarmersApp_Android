@@ -222,7 +222,7 @@
      </style>
     <style name="spinner_style" parent="Base.Widget.AppCompat.DropDownItem.Spinner">
         <item name="android:popupBackground">#00000000</item>
-        <item name="android:dropDownVerticalOffset">50dp</item>
+        <item name="android:dropDownVerticalOffset">25dp</item>
      </style>
     <style name="TV_StatisticsSpinnerDropDown">
         <item name="android:textStyle">normal</item>
