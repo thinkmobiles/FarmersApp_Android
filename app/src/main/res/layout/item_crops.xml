@@ -104,6 +104,7 @@
             <com.farmers.underground.ui.custom_views.CustomTextView
                     android:layout_marginTop="1dp"
                     android:layout_marginBottom="2dp"
+                    android:layout_marginRight="2dp"
                     android:id="@+id/tv_CropsNameCropItem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -131,7 +131,7 @@
     <dimen name="add_price_layout_padding_left">50dp</dimen>
     <dimen name="add_price_layout_padding_right">20dp</dimen>
     <dimen name="add_price_normal_margin">30dp</dimen>
-    <dimen name="add_price_big_margin">60dp</dimen>
+    <dimen name="add_price_big_margin">40dp</dimen>
     <dimen name="add_price_edit_text_height">35dp</dimen>
     <dimen name="add_price_edit_text_text_size">26sp</dimen>
     <dimen name="add_price_bottom_text_size">11sp</dimen>

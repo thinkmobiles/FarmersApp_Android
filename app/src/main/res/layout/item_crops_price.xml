@@ -12,61 +12,67 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-        <com.farmers.underground.ui.custom_views.CustomTextView
-                android:id="@+id/tv_Price_Prefix"
-                android:text="@string/price_prefix"
+        <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/text_dark_grey"
-                android:gravity="bottom"
-                android:layout_gravity="bottom"
-                android:textSize="14sp"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+            <ImageView
+                    android:contentDescription="@null"
+                    android:id="@+id/imageView4"
+                    android:layout_width="@dimen/crop_price_icon_size"
+                    android:layout_height="@dimen/crop_price_icon_size"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="6dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_crop_marketer_price"/>
+
+            <com.farmers.underground.ui.custom_views.CustomTextView
+                    android:id="@+id/tv_Price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                    android:minWidth="60dp"
+                    android:text="4.50"
+                    android:textColor="@color/text_dark_grey"
+                    android:textSize="@dimen/crop_price_price_text_size"
+                    custom:customFont="roboto_light"/>
+        </LinearLayout>
+
+        <com.farmers.underground.ui.custom_views.CustomTextView
+                android:id="@+id/tv_Marketeer_CropItem"
+                style="@style/TV_Small_CropsItem"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:text="גידולים חיפוש"
+                android:textColor="@color/text_light_grey"
+                android:textSize="@dimen/small_text_size"
                 custom:customFont="regular"/>
 
         <com.farmers.underground.ui.custom_views.CustomTextView
-                android:id="@+id/tv_Price"
-                android:gravity="center_horizontal"
-                android:layout_weight="1"
-                android:layout_width="0dp"
+                android:id="@+id/tv_PriceDate_CropItem"
+                style="@style/TV_Small_CropsItem"
                 android:layout_height="wrap_content"
-                android:text="4.50"
-                android:textColor="@color/text_dark_grey"
-                android:textSize="@dimen/crop_price_price_text_size"
-                custom:customFont="roboto_light"/>
+                android:layout_width="match_parent"
+                android:text="(15.4.11)"
+                android:textColor="@color/text_light_grey"
+                android:textSize="@dimen/small_text_size"
+                custom:customFont="regular"
+                android:visibility="visible"/>
+
+        <com.farmers.underground.ui.custom_views.CustomTextView
+                android:id="@+id/tv_RefresPrice_CropsItem"
+                style="@style/TV_Small_CropsItem"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:clickable="true"
+                android:text="@string/tap_to_refresh_price"
+                android:textColor="@color/selector_tap_to_refresh"
+                android:textSize="@dimen/tiny_text_size"
+                custom:customFont="regular"/>
     </LinearLayout>
-
-        <com.farmers.underground.ui.custom_views.CustomTextView
-            android:id="@+id/tv_Marketeer_CropItem"
-            style="@style/TV_Small_CropsItem"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:text="גידולים חיפוש"
-            android:textColor="@color/text_light_grey"
-            android:textSize="@dimen/small_text_size"
-            custom:customFont="regular"/>
-
-        <com.farmers.underground.ui.custom_views.CustomTextView
-            android:id="@+id/tv_PriceDate_CropItem"
-            style="@style/TV_Small_CropsItem"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:text="(15.4.11)"
-            android:textColor="@color/text_light_grey"
-            android:textSize="@dimen/small_text_size"
-            custom:customFont="regular"
-            android:visibility="visible"/>
-
-        <com.farmers.underground.ui.custom_views.CustomTextView
-            android:id="@+id/tv_RefresPrice_CropsItem"
-            style="@style/TV_Small_CropsItem"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:clickable="true"
-            android:text="@string/tap_to_refresh_price"
-            android:textColor="@color/selector_tap_to_refresh"
-            android:textSize="@dimen/tiny_text_size"
-            custom:customFont="bold"/>
 
 </LinearLayout>
