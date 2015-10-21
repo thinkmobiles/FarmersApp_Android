@@ -28,9 +28,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
+
+import butterknife.OnClick;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
@@ -47,10 +48,14 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
     @Bind(R.id.toolbar)
     protected Toolbar toolbar;
 
+
+
     private Calendar today = Calendar.getInstance();
+    private Calendar selectedDate = Calendar.getInstance();
     private OnChangeDateListener onChangeDateListener;
     private LastCropPricesModel mCropModel;
-
+    private AddPriceFragment childFragment;
+    private boolean enableDone = false;
 
     public static void start(@NonNull Context context, LastCropPricesModel cropModel) {
         Gson gson = new GsonBuilder().create();
@@ -58,6 +63,19 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
         Intent intent = new Intent(context, AddPriceActivity.class);
         intent.putExtra(ProjectConstants.KEY_DATA, s);
         context.startActivity(intent);
+    }
+
+    public void setChildFragment(AddPriceFragment childFragment) {
+        this.childFragment = childFragment;
+    }
+
+    public void setEnableDone(boolean isEnableDone) {
+        this.enableDone = isEnableDone;
+        if(enableDone){
+            buttonDone.setImageDrawable(getResources().getDrawable(R.drawable.ic_circle_done_blue));
+        } else {
+            buttonDone.setImageDrawable(getResources().getDrawable(R.drawable.ic_circle_done_grey));
+        }
     }
 
     @Override
@@ -109,7 +127,7 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
         selectedDay.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
         if (selectedDay.before(today)) {
-            today = selectedDay;
+            selectedDate = selectedDay;
             onChangeDateListener.onChangeDate();
         } else {
             showToast("Please select day before today", Toast.LENGTH_SHORT);
@@ -117,7 +135,7 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
     }
 
     public String getDate(){
-        return DateFormaterUtil.convertDate(today);
+        return DateFormaterUtil.convertDate(selectedDate);
     }
 
     public interface OnChangeDateListener{
@@ -169,5 +187,18 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
         }
 
         return false;
+    }
+
+    @OnClick(R.id.action_done)
+    protected void donePrice(){
+        if(enableDone){
+            showCorrectDialog();
+        } else {
+            showToast("Please fill field correctly", Toast.LENGTH_SHORT);
+        }
+    }
+
+    private void showCorrectDialog(){
+
     }
 }

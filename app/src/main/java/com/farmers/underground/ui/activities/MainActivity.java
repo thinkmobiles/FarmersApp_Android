@@ -246,7 +246,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
             @Override
             public void onPriceRefreshClicked(LastCropPricesModel cropModel) {
-
+                AddPriceActivity.start(MainActivity.this, cropModel);
             }
         };
     }

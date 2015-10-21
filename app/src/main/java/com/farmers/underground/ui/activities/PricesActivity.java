@@ -14,8 +14,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -24,6 +26,7 @@ import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.ui.adapters.AllPricesAdapter;
 import com.farmers.underground.ui.adapters.ProjectPagerAdapter;
+import com.farmers.underground.ui.adapters.ToolbarSpinnerAdapter;
 import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.custom_views.CustomSearchView;
@@ -33,6 +36,7 @@ import com.farmers.underground.ui.fragments.MarketeerPricesFragment;
 import com.farmers.underground.ui.fragments.PeriodPickerFragment;
 import com.farmers.underground.ui.fragments.StatisticsFragment;
 import com.farmers.underground.ui.models.DateRange;
+import com.farmers.underground.ui.utils.DateFormaterUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
@@ -49,8 +53,8 @@ import java.util.List;
  */
 public class PricesActivity extends BaseActivity implements AllPricesAdapter.AllPricesCallback {
 
-    public static final int REQUEST_CODE_PERIOD_PICKER  = 5;
-    public static final int REQUEST_CODE_DIALOG_WHY     = 2;
+    public static final int REQUEST_CODE_PERIOD_PICKER = 5;
+    public static final int REQUEST_CODE_DIALOG_WHY = 2;
 
     @Bind(R.id.drawer_conainer_MainActivity)
     protected FrameLayout mainContainer;
@@ -69,6 +73,9 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
 
     @Bind(R.id.action_calendar)
     protected ImageView calendar;
+
+    @Bind(R.id.spinner_TB)
+    protected Spinner spinner;
 
     private Target target;
 
@@ -97,6 +104,7 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
 
         setViewPager();
         setTabs();
+        setUPSpinner(spinnerTestData(), 5);
     }
 
     @Override
@@ -127,6 +135,36 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
         pagerAdapter.setTitles(getTitlesList());
         pagerAdapter.notifyDataSetChanged();
         viewPager.setCurrentItem(pagerAdapter.getCount() - 1);
+
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position) {
+                    case 0:
+                        spinner.setVisibility(View.VISIBLE);
+                        searchView.setVisibility(View.GONE);
+                        calendar.setVisibility(View.GONE);
+                        spinner.bringToFront();
+                        break;
+                    case 1:
+                    case 2:
+                        spinner.setVisibility(View.GONE);
+                        searchView.setVisibility(View.VISIBLE);
+                        calendar.setVisibility(View.VISIBLE);
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     private List<String> getTitlesList() {
@@ -185,9 +223,10 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
     }
 
 
-    /** for
+    /**
+     * for
      * StatisticsFragment -  has two pages;
-     * */
+     */
     public interface PageListener {
         void onPageSelected(int page);
     }
@@ -231,8 +270,8 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-             case R.id.action_back:
-               onBackPressed();
+            case R.id.action_back:
+                onBackPressed();
                 return true;
         }
 
@@ -241,19 +280,23 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
 
     //clicke events
     @OnClick(R.id.action_calendar)
-    protected void onCalendarClick(){
+    protected void onCalendarClick() {
 
         TransparentActivity.startWithFragmentForResult(this, new PeriodPickerFragment(), REQUEST_CODE_PERIOD_PICKER);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == RESULT_OK){
-            switch (requestCode){
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
                 case REQUEST_CODE_PERIOD_PICKER:
                     Bundle bundle = data.getExtras();
                     Calendar dateFrom = (Calendar) bundle.getSerializable(PeriodPickerFragment.KEY_DATE_FROM);
                     Calendar dateTo = (Calendar) bundle.getSerializable(PeriodPickerFragment.KEY_DATE_TO);
+                    DateRange dateRange = new DateRange();
+                    dateRange.setDateFrom(DateFormaterUtil.parseToServerResponse(dateFrom));
+                    dateRange.setDateTo(DateFormaterUtil.parseToServerResponse(dateTo));
+                    ((PricesActivity.DateRangeSetter) pagerAdapter.getItem(viewPager.getCurrentItem())).setDateRange(dateRange);
                     //todo search request
                     break;
                 case REQUEST_CODE_DIALOG_WHY:
@@ -262,5 +305,45 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+
+    private void setUPSpinner(ArrayList<String> spinnerData, int selection) {
+        final ToolbarSpinnerAdapter spinnerAdatper = new ToolbarSpinnerAdapter(this,
+                spinnerData);
+
+        spinner.setAdapter(spinnerAdatper);
+        spinner.setSelection(selection);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                for (BaseFragment item : pagerAdapter.getFragmentList()) {
+                    if (item instanceof ToolbarSpinnerAdapter.SpinnerCallback) {
+                        ((ToolbarSpinnerAdapter.SpinnerCallback) item).onSpinnerItemSelected(spinnerAdatper.getItem(i));
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+    }
+
+    private ArrayList<String> spinnerTestData() {
+        ArrayList<String> data = new ArrayList<>();
+        data.add(getString(R.string.month1));
+        data.add(getString(R.string.month2));
+        data.add(getString(R.string.month3));
+        data.add(getString(R.string.month4));
+        data.add(getString(R.string.month5));
+        data.add(getString(R.string.month6));
+        data.add(getString(R.string.month7));
+        data.add(getString(R.string.month8));
+        data.add(getString(R.string.month9));
+        return data;
     }
 }

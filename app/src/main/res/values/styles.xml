@@ -182,8 +182,9 @@
     <style name="TV_SearchHintListItem">
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">@dimen/search_hint_list_item_text_size</item>
-        <item name="android:textColor">@color/text_dark_grey</item>
+        <item name="android:textColor">@color/text_light_grey</item>
     </style>
+
     <style name="TV_Small_CropsItem">
         <item name="android:gravity">center_horizontal</item>
     </style>
@@ -199,6 +200,8 @@
         <item name="android:layout_gravity">bottom</item>
         <item name="android:background">@null</item>
         <item name="android:singleLine">true</item>
+        <item name="android:textCursorDrawable">@drawable/et_cursor</item>
+        <item name="android:imeOptions">actionDone</item>
     </style>
 
     <style name="LogoMarketer" parent="WhiteMainRegularText">
@@ -217,7 +220,20 @@
         <item name="android:drawablePadding">2dp</item>
         <item name="android:layout_gravity">center_horizontal</item>
      </style>
+    <style name="spinner_style" parent="Base.Widget.AppCompat.DropDownItem.Spinner">
+        <item name="android:popupBackground">#00000000</item>
+        <item name="android:dropDownVerticalOffset">50dp</item>
+     </style>
+    <style name="TV_StatisticsSpinnerDropDown">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/medium_text_size</item>
+        <item name="android:textColor">@color/text_dark_grey</item>
+     </style>
+    <style name="TV_StatisticsSpinnerView">
 
+        <item name="android:textSize">@dimen/medium_text_size</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
 </resources>
 
 
