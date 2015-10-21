@@ -14,7 +14,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.Spinner;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -23,6 +26,7 @@ import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.ui.adapters.AllPricesAdapter;
 import com.farmers.underground.ui.adapters.ProjectPagerAdapter;
+import com.farmers.underground.ui.adapters.ToolbarSpinnerAdapter;
 import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.custom_views.CustomSearchView;
@@ -99,7 +103,7 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
 
         setViewPager();
         setTabs();
-        setUPSpinner(spinnerTestData(),5);
+        setUPSpinner(spinnerTestData(), 5);
     }
 
     @Override
@@ -300,14 +304,20 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
 
 
     private void setUPSpinner(ArrayList<String> spinnerData, int selection) {
-        ArrayAdapter<String> spinnerAdatper = new ArrayAdapter< >(this, android.R.layout.simple_spinner_item,
+        final ToolbarSpinnerAdapter spinnerAdatper = new ToolbarSpinnerAdapter(this,
                 spinnerData);
+
         spinner.setAdapter(spinnerAdatper);
         spinner.setSelection(selection);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
+                for (BaseFragment item : pagerAdapter.getFragmentList()) {
+                    if (item instanceof ToolbarSpinnerAdapter.SpinnerCallback) {
+                        ((ToolbarSpinnerAdapter.SpinnerCallback) item).onSpinnerItemSelected(spinnerAdatper.getItem(i));
+                        break;
+                    }
+                }
             }
 
             @Override
@@ -318,7 +328,7 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
 
     }
 
-    private ArrayList<String> spinnerTestData(){
+    private ArrayList<String> spinnerTestData() {
         ArrayList<String> data = new ArrayList<>();
         data.add(getString(R.string.month1));
         data.add(getString(R.string.month2));

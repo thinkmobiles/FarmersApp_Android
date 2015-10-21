@@ -16,6 +16,7 @@ import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.ui.activities.PricesActivity;
+import com.farmers.underground.ui.adapters.ToolbarSpinnerAdapter;
 import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.custom_views.PriceView;
 import com.farmers.underground.ui.models.ChartDataModel;
@@ -43,7 +44,12 @@ import java.util.List;
  * Created by omar
  * on 10/9/15.
  */
-public class StatisticsFragment extends BaseFragment<PricesActivity> implements PricesActivity.DateRangeSetter, OnChartValueSelectedListener, PricesActivity.PageListener {
+public class StatisticsFragment
+        extends BaseFragment<PricesActivity>
+        implements PricesActivity.DateRangeSetter,
+        OnChartValueSelectedListener,
+        PricesActivity.PageListener,
+        ToolbarSpinnerAdapter.SpinnerCallback {
 
 
     //head block
@@ -340,6 +346,76 @@ public class StatisticsFragment extends BaseFragment<PricesActivity> implements 
         mRadioButtons.get(2).setChecked(true);
     }
 
+    private void showPopup(float touchX, float touchY, float value) {
+        final View popupView = LayoutInflater.from(getContext()).inflate(R.layout.statistic_popup, null, false);
+        final PopupWindow popupWindow = new PopupWindow(popupView,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setFocusable(true);
+        popupView.measure(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        float offsetX = touchX - mChart.getLeft() - popupView.getMeasuredWidth() / 2;
+        float offsetY = touchY - mChart.getBottom() - popupView.getMeasuredHeight() / 4 * 3;
+
+        boolean show = false;
+        switch (popupIndexSelected) {
+            case 0:
+            case 1:
+            case 2:
+            case 4:
+            case 5:
+            case 6:
+            case 8:
+            case 9:
+            case 10:
+                show = true;
+                break;
+            case 7:
+            case 3:
+                show = false;
+                break;
+        }
+
+        if (show) {
+            ((TextView) popupWindow.getContentView().findViewById(R.id.tv_Value_Popup))
+                    .setText(String.format("%.2f", value));
+
+            Resources res = getResources();
+            ((TextView) popupWindow.getContentView().findViewById(R.id.tv_Value_Popup))
+                    .setTextColor(ResUtil.getColor(res, chartColor[popupIndexSelected]));
+            ((TextView) popupWindow.getContentView().findViewById(R.id.tv_Name_Popup))
+                    .setTextColor(ResUtil.getColor(res, chartColor[popupIndexSelected]));
+            ((TextView) popupWindow.getContentView().findViewById(R.id.tv_Symbol_Popup))
+                    .setTextColor(ResUtil.getColor(res, chartColor[popupIndexSelected]));
+
+            popupWindow.showAsDropDown(mChart, (int) offsetX, (int) offsetY);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(3000);
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (popupWindow.isShowing()) popupWindow.dismiss();
+                            }
+                        });
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+
+            if (popupIndexSelected < 3) setItemHighlight(popupIndexSelected);
+            else if (popupIndexSelected < 7) setItemHighlight(popupIndexSelected - 1);
+            else setItemHighlight(popupIndexSelected - 2);
+        }
+    }
+
+
     @OnCheckedChanged(R.id.rb0_SF)
     protected void radio0(boolean isChecked) {
         if (isChecked) {
@@ -388,70 +464,13 @@ public class StatisticsFragment extends BaseFragment<PricesActivity> implements 
 
     }
 
-    private void showPopup(float touchX, float touchY, float value) {
-        final View popupView = LayoutInflater.from(getContext()).inflate(R.layout.statistic_popup, null, false);
-        final PopupWindow popupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        popupWindow.setBackgroundDrawable(new BitmapDrawable());
-        popupWindow.setOutsideTouchable(true);
-        popupWindow.setFocusable(true);
-        popupView.measure(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+    @Override
+    public void onSpinnerItemSelected(String s) {
 
-        float offsetX = touchX - mChart.getLeft() - popupView.getMeasuredWidth() / 2;
-        float offsetY = touchY - mChart.getBottom() - popupView.getMeasuredHeight() / 4 * 3;
-
-        boolean show = false;
-        switch (popupIndexSelected) {
-            case 0:
-            case 1:
-            case 2:
-            case 4:
-            case 5:
-            case 6:
-            case 8:
-            case 9:
-            case 10:
-                show = true;
-                break;
-            case 7:
-            case 3:
-                show = false;
-                break;
-        }
-
-        if (show) {
-            ((TextView) popupWindow.getContentView().findViewById(R.id.tv_Value_Popup)).setText(String.format("%.2f", value));
-
-            Resources res = getResources();
-            ((TextView) popupWindow.getContentView().findViewById(R.id.tv_Value_Popup)).setTextColor(ResUtil.getColor(res, chartColor[popupIndexSelected]));
-            ((TextView) popupWindow.getContentView().findViewById(R.id.tv_Name_Popup)).setTextColor(ResUtil.getColor(res, chartColor[popupIndexSelected]));
-            ((TextView) popupWindow.getContentView().findViewById(R.id.tv_Symbol_Popup)).setTextColor(ResUtil.getColor(res, chartColor[popupIndexSelected]));
-
-            popupWindow.showAsDropDown(mChart, (int) offsetX, (int) offsetY);
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(3000);
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (popupWindow.isShowing()) popupWindow.dismiss();
-                            }
-                        });
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
-
-            if (popupIndexSelected < 3) setItemHiglight(popupIndexSelected);
-            else if (popupIndexSelected < 7) setItemHiglight(popupIndexSelected - 1);
-            else setItemHiglight(popupIndexSelected - 2);
-        }
     }
 
-    private void setItemHiglight(int item) {
+    private void setItemHighlight(int item) {
         //todo: set higlight here
         //todo: items comming  in 3 sets LTR:  0-1-2,  3-4-5,  6-7-8
     }
