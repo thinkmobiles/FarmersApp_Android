@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
@@ -63,116 +63,115 @@
                 android:id="@+id/tvDate_FAP" />
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/default_divider_height"
-            android:layout_marginBottom="@dimen/add_price_big_margin"
-            android:layout_marginTop="@dimen/margin_default_small"
-            android:background="@color/grey"/>
-
         <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/add_price_normal_margin">
+            android:layout_height="match_parent"
+            android:id="@+id/llContainerPrices">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/default_divider_height"
+                android:layout_marginBottom="@dimen/add_price_big_margin"
+                android:layout_marginTop="@dimen/margin_default_small"
+                android:background="@color/grey"/>
 
             <LinearLayout
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingRight="20dp">
+                android:layout_marginBottom="@dimen/add_price_normal_margin">
 
                 <LinearLayout
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingRight="20dp">
 
-                    <ImageView
-                        android:layout_width="17dp"
-                        android:layout_height="22dp"
-                        android:layout_gravity="bottom"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/ic_crop_marketer_price"
-                        android:id="@+id/imageView6"
-                        android:paddingBottom="6dp"/>
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:layout_width="17dp"
+                            android:layout_height="22dp"
+                            android:layout_gravity="bottom"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/ic_crop_marketer_price"
+                            android:id="@+id/imageView6"
+                            android:paddingBottom="6dp"/>
+
+                        <com.farmers.underground.ui.custom_views.CustomEditText
+                            style="@style/EditTextAddPrice"
+                            android:digits="1234567890."
+                            android:inputType="numberDecimal"
+                            android:hint="@string/add_price_hint_price"
+                            android:id="@+id/etPrice_FAP" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/default_divider_height"
+                        android:layout_marginBottom="@dimen/margin_default_tiny"
+                        android:layout_marginTop="@dimen/margin_default_tiny"
+                        android:background="@color/grey"/>
+
+                    <com.farmers.underground.ui.custom_views.CustomTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/WhiteSmallRegularText"
+                        android:textColor="@color/text_red"
+                        android:gravity="right"
+                        android:visibility="invisible"
+                        android:drawableLeft="@drawable/ic_error_price"
+                        android:text="@string/add_price_incorrect_price"
+                        android:id="@+id/tvPriceError_FAP" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
 
                     <com.farmers.underground.ui.custom_views.CustomEditText
                         style="@style/EditTextAddPrice"
-                        android:digits="1234567890."
-                        android:inputType="number"
-                        android:hint="@string/add_price_hint_price"
-                        android:id="@+id/etPrice_FAP" />
+                        android:hint="@string/add_price_hint_type"
+                        android:layout_gravity="bottom|right"
+                        android:textSize="@dimen/main_text_size"
+                        android:cursorVisible="true"
+                        android:id="@+id/etQuality_FAP" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/default_divider_height"
+                        android:layout_marginBottom="@dimen/margin_default_tiny"
+                        android:layout_marginTop="@dimen/margin_default_tiny"
+                        android:background="@color/grey"/>
+
+                    <com.farmers.underground.ui.custom_views.CustomTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/WhiteSmallRegularText"
+                        android:textColor="@color/text_light_grey"
+                        android:gravity="right"
+                        android:text="@string/add_price_example_type"
+                        android:id="@+id/tvHintQuality_FAP" />
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/default_divider_height"
-                    android:layout_marginBottom="@dimen/margin_default_tiny"
-                    android:layout_marginTop="@dimen/margin_default_tiny"
-                    android:background="@color/grey"/>
-
-                <com.farmers.underground.ui.custom_views.CustomTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/WhiteSmallRegularText"
-                    android:textColor="@color/text_red"
-                    android:gravity="right"
-                    android:visibility="invisible"
-                    android:drawableLeft="@drawable/ic_error_price"
-                    android:text="@string/add_price_incorrect_price"
-                    android:id="@+id/tvPriceError_FAP" />
             </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <com.farmers.underground.ui.custom_views.CustomEditText
-                    style="@style/EditTextAddPrice"
-                    android:hint="@string/add_price_hint_type"
-                    android:layout_gravity="bottom|right"
-                    android:textSize="@dimen/main_text_size"
-                    android:id="@+id/etQuality_FAP" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/default_divider_height"
-                    android:layout_marginBottom="@dimen/margin_default_tiny"
-                    android:layout_marginTop="@dimen/margin_default_tiny"
-                    android:background="@color/grey"/>
-
-                <com.farmers.underground.ui.custom_views.CustomTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/WhiteSmallRegularText"
-                    android:textColor="@color/text_light_grey"
-                    android:gravity="right"
-                    android:text="@string/add_price_example_type"
-                    android:id="@+id/tvHintQuality_FAP" />
-            </LinearLayout>
-
         </LinearLayout>
 
         <com.farmers.underground.ui.custom_views.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
+            android:layout_marginBottom="@dimen/add_price_big_margin"
             style="@style/BlueMainRegularText"
             android:text="@string/add_price_add_type"
             android:id="@+id/tvAddQuality_FAP" />
     </LinearLayout>
-    
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:id="@+id/tvAddPrice_FAP"
-        android:background="@color/aqua"
-        android:gravity="center"
-        android:textSize="24sp"
-        android:text="@string/add_price_add_button"
-        style="@style/WhiteRegularText"/>
 
-</LinearLayout>
+</ScrollView>

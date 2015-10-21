@@ -83,7 +83,7 @@
 
     <!-- add price-->
     <string name="add_price_change_date">שינוי תאריך</string>
-    <string name="add_price_hint_price">מחיר?</string>
+    <string name="add_price_hint_price">מחיר? (88.88)</string>
     <string name="add_price_hint_type">‫סוג‬?</string>
     <string name="add_price_incorrect_price">מחיר לא תקין</string>
     <string name="add_price_example_type">דוגמה: איכות יצוא‬</string>

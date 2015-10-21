@@ -143,7 +143,7 @@ public class StatisticsFragment extends BaseFragment<PricesActivity>
     }
 
     private void colorPriceView(PriceView priceView,@ColorInt int color){
-        priceView.tv_Price_Prefix.setTextColor(color);
+//        priceView.tv_Price_Prefix.setTextColor(color);
         priceView.tv_Price.setTextColor(color);
         priceView.tv_Marketeer_CropItem.setTextColor(color);
     }

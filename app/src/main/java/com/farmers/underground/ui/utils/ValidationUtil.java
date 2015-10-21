@@ -27,8 +27,8 @@ public class ValidationUtil {
     }
 
     public static boolean isValidPrice(String price){
-        String pricePattern = "[0-9]+\\.[0-9]{2}";
-        return price.matches(pricePattern);
+        String pricePattern = "[0-9]{2}\\.[0-9]{2}";
+        return price.matches(pricePattern) && !price.equals("00.00");
     }
 
 }

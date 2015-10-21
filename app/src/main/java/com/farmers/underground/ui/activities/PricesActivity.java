@@ -31,7 +31,6 @@ import com.farmers.underground.ui.dialogs.MorePriecesDialogFragment;
 import com.farmers.underground.ui.fragments.AllPricesFragment;
 import com.farmers.underground.ui.fragments.MarketeerPricesFragment;
 import com.farmers.underground.ui.fragments.PeriodPickerFragment;
-import com.farmers.underground.ui.fragments.SearchQueryFragmentCallback;
 import com.farmers.underground.ui.fragments.StatisticsFragment;
 import com.farmers.underground.ui.models.DateRange;
 import com.farmers.underground.ui.utils.DateFormaterUtil;
