@@ -401,10 +401,12 @@ public class StatisticsFragment
                 public void run() {
                     try {
                         Thread.sleep(3000);
+                        if(getHostActivity() != null)
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if (popupWindow.isShowing()) popupWindow.dismiss();
+                                if ( popupWindow.isShowing())
+                                    popupWindow.dismiss();
                             }
                         });
                     } catch (InterruptedException e) {

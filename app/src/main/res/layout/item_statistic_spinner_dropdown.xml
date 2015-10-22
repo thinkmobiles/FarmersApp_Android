@@ -10,7 +10,7 @@
                 style="@style/TV_StatisticsSpinnerDropDown"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white_opague_90"
+                android:background="@color/white"
                 android:gravity="right"
                 android:paddingBottom="@dimen/search_hint_list_item_padding_y"
                 android:paddingTop="@dimen/search_hint_list_item_padding_y"
