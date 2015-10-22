@@ -1,18 +1,22 @@
 package com.farmers.underground.ui.fragments;
 
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.Html;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.farmers.underground.R;
 import com.farmers.underground.ui.activities.AddPriceActivity;
-import com.farmers.underground.ui.adapters.PriceQualityAdapter;
 import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.utils.ValidationUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -20,12 +24,12 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
 /**
- *
- * Created by samson on 09.10.15.
+ * Created by samson
+ * on 22.10.15.
  */
-public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements AddPriceActivity.OnChangeDateListener, PriceQualityAdapter.OnCorrectionListener {
+public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements AddPriceActivity.OnChangeDateListener {
 
-    private static final String KEY_ID_MARKETER = "id_marketer";
+    private static final int LIMIT = 8;
 
     @Bind(R.id.etPrice_FAP)
     protected EditText etPrice;
@@ -42,24 +46,15 @@ public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements 
     @Bind(R.id.llContainerPrices)
     protected LinearLayout container;
 
-    @Bind(R.id.listPriceQuality_FAP)
-    protected ListView listPriceQuality;
+    private List<EditText> listPrice = new ArrayList<>();
+    private List<EditText> listQuality = new ArrayList<>();
+    private List<TextView> listError = new ArrayList<>();
 
-    private PriceQualityAdapter adapter;
-
-    private boolean isFilledFirsrtPrice = false;
+    private int counter = -1;
 
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_add_price;
-    }
-
-    public static AddPriceFragment newInstance(String idMarketer){
-        AddPriceFragment fragment = new AddPriceFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString(KEY_ID_MARKETER, idMarketer);
-        fragment.setArguments(bundle);
-        return fragment;
     }
 
     @Override
@@ -69,12 +64,6 @@ public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements 
         getHostActivity().setOnChangeDateListener(this);
         setHints();
         setDate();
-        setAdapter();
-    }
-
-    private void setAdapter(){
-        adapter = new PriceQualityAdapter(getHostActivity(), this);
-        listPriceQuality.setAdapter(adapter);
     }
 
     public void setDate() {
@@ -82,10 +71,25 @@ public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements 
     }
 
     public void checkCorrection(){
-        isFilledFirsrtPrice = !etPrice.getText().toString().isEmpty()
-                && !etQuality.getText().toString().isEmpty()
-                && tvError.getVisibility() != View.VISIBLE;
-        adapter.checkCorrection();
+        if(!(!etPrice.getText().toString().isEmpty() && !etQuality.getText().toString().isEmpty() && tvError.getVisibility() != View.VISIBLE)){
+            getHostActivity().setEnableDone(false);
+        } else {
+            for(int i = 0; i <= counter; ++i){
+                if((!listPrice.get(i).getText().toString().isEmpty()
+                        && !listQuality.get(i).getText().toString().isEmpty())
+                        || (listPrice.get(i).getText().toString().isEmpty()
+                        && listQuality.get(i).getText().toString().isEmpty()) ){
+                    if(listError.get(i).getVisibility() == View.VISIBLE){
+                        getHostActivity().setEnableDone(false);
+                        return;
+                    }
+                } else {
+                    getHostActivity().setEnableDone(false);
+                    return;
+                }
+            }
+            getHostActivity().setEnableDone(true);
+        }
     }
 
     private void setHints() {
@@ -96,7 +100,6 @@ public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements 
     protected void showDatePicker(){
         getHostActivity().showDatePicker();
     }
-
     @OnClick(R.id.tvDate_FAP)
     protected void showDate(){
         showDatePicker();
@@ -104,7 +107,19 @@ public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements 
 
     @OnClick(R.id.tvAddQuality_FAP)
     protected void addNewQuality(){
-        adapter.addBlock();
+        if(counter <= LIMIT) {
+            ++counter;
+            View view = LayoutInflater.from(getHostActivity()).inflate(R.layout.item_price_type, null);
+            EditText editText = (EditText) view.findViewById(R.id.etPrice_FAP);
+            editText.setHint(Html.fromHtml("<small><small><small>" + getHostActivity().getString(R.string.add_price_hint_price) + "</small></small></small>"));
+            editText.addTextChangedListener(getPriceWatcher(counter));
+            listPrice.add(editText);
+            editText = (EditText) view.findViewById(R.id.etQuality_FAP);
+            editText.addTextChangedListener(getQualityWatcher());
+            listQuality.add(editText);
+            listError.add((TextView) view.findViewById(R.id.tvPriceError_FAP));
+            container.addView(view);
+        }
     }
 
     @Override
@@ -132,8 +147,50 @@ public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements 
 
     }
 
-    @Override
-    public void onCorrect(boolean isCorrectly) {
-        getHostActivity().setEnableDone(isCorrectly && isFilledFirsrtPrice);
+    private TextWatcher getPriceWatcher(final int position){
+        return new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(ValidationUtil.isValidPrice(s.toString())){
+                    listError.get(position).setVisibility(View.INVISIBLE);
+                } else {
+                    listError.get(position).setVisibility(View.VISIBLE);
+                }
+                if(s.toString().isEmpty()){
+                    listError.get(position).setVisibility(View.INVISIBLE);
+                }
+                checkCorrection();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        };
     }
+
+    private TextWatcher getQualityWatcher(){
+        return new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                checkCorrection();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        };
+    }
+
 }
