@@ -64,6 +64,7 @@
                 android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 
         <activity android:name=".ui.activities.AddPriceActivity"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="sensorPortrait"/>
 
         <meta-data
