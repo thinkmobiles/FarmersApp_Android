@@ -48,7 +48,9 @@ import java.util.List;
  * Created by omar
  * on 9/28/15.
  */
-public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCallback, FragmentViewsCreatedCallback, SearchResultProvider.SearchCallback {
+public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCallback,
+        FragmentViewsCreatedCallback,
+        SearchResultProvider.SearchCallback {
 
     @Bind(R.id.toolbar)
     protected Toolbar mToolbar;
@@ -83,12 +85,13 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     private ProjectPagerAdapter<CropsListFragment> pagerAdapter;
     private CropsListAdapter.CropsAdapterCallback cropsListCallback;
     private CropsFragmentStateController cropsFragmentStateController;
-    private   SearchResultProvider searchResultProvider;
+    private SearchResultProvider searchResultProvider;
 
     private boolean drawerOpened;
     private static String query = "";
 
-    private ArrayList<LastCropPricesModel> mCropList;
+    private List<LastCropPricesModel> mCropList;
+    private List<LastCropPricesModel> cropListSearch;
 
     public static void start(@NonNull Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -100,7 +103,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         intent.putExtra(ProjectConstants.KEY_FOCUS_SEARCH_VIEW, true);
         context.startActivity(intent);
     }
-
 
 
     @Override
@@ -126,7 +128,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         if (savedInstanceState == null)
             setSearchViewFocus(getIntent().getBooleanExtra(ProjectConstants.KEY_FOCUS_SEARCH_VIEW, false));
 
-        searchResultProvider = SearchResultProvider.getInstance(this,this);
+        searchResultProvider = SearchResultProvider.getInstance(this, this);
     }
 
     private void setSearchViewFocus(boolean isFocus) {
@@ -152,8 +154,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     protected int getFragmentContainerId() {
         return 0;
     }
-
-
 
 
     //crops list control
@@ -232,11 +232,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                             ErrorMsg>() {
                         @Override
                         public void onSuccess(SuccessMsg result) {
-                            showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
-                            for (LastCropPricesModel item : mCropList)
-                                if (item._crop.equals(cropModel._crop))
-                                    cropModel.isInFavorites = true;
-                            updateFragments(mCropList, query);
+                            updateAfterFavsClick(result, cropModel, true);
                         }
 
                         @Override
@@ -247,13 +243,10 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                         @Override
                         public void anyway() {
                             hideProgressDialog();
-                        }
+                         }
                     });
                 } else {
-                    for (LastCropPricesModel item : mCropList)
-                        if (item._crop.equals(cropModel._crop))
-                            cropModel.isInFavorites = false;
-                    updateFragments(mCropList, query);
+                    updateAfterFavsClick(null, cropModel, false);
                 }
             }
 
@@ -262,6 +255,22 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                 AddPriceActivity.start(MainActivity.this, cropModel);
             }
         };
+    }
+
+    private void updateAfterFavsClick(SuccessMsg result, LastCropPricesModel cropModel, boolean infavs) {
+        viewPager.requestFocus();
+       if(result!= null) showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
+        for (LastCropPricesModel item : mCropList)
+            if (item._crop.equals(cropModel._crop))
+                cropModel.isInFavorites = infavs;
+
+        if (cropListSearch != null && cropListSearch.size() > 0 && !query.isEmpty()) {
+            for (LastCropPricesModel item : cropListSearch)
+                if (item._crop.equals(cropModel._crop))
+                    cropModel.isInFavorites = infavs;
+            updateFragments(cropListSearch, query);
+        } else
+            updateFragments(mCropList, query);
     }
 
 
@@ -319,12 +328,12 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
+                query = "";
                 forceHideSearchList();
                 return false;
             }
         });
     }
-
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -439,11 +448,11 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     }
 
     private CropsListFragment createFaaFragment() {
-        return CropsListFragment.getInstance(CropsListFragmentModel.TYPE.FAVOURITES );
+        return CropsListFragment.getInstance(CropsListFragmentModel.TYPE.FAVOURITES);
     }
 
     private CropsListFragment createCropFragment() {
-        return CropsListFragment.getInstance(CropsListFragmentModel.TYPE.ALL_CROPS );
+        return CropsListFragment.getInstance(CropsListFragmentModel.TYPE.ALL_CROPS);
     }
 
 
@@ -594,6 +603,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     @Override
     public void onSearchResultLoadFinished(List<LastCropPricesModel> crops) {
         updateFragments(crops, query);
+        cropListSearch = crops;
 
 
     }
