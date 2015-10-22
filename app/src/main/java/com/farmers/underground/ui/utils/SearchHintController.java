@@ -14,7 +14,7 @@ import java.util.List;
  * Created by omar
  * on 9/30/15.
  */
-abstract public class SearchController implements AdapterView.OnItemClickListener {
+abstract public class SearchHintController implements AdapterView.OnItemClickListener {
 
     private ListView lv_Container;
     private SearchHintAdapter adapter;
@@ -35,10 +35,7 @@ abstract public class SearchController implements AdapterView.OnItemClickListene
         return isShowing;
     }
 
-    public SearchController(ListView hintContainer) {
-        SearchHint quarry = new SearchHint();
-        quarry.setName("");
-
+    public SearchHintController(ListView hintContainer) {
         setContainerListView(hintContainer);
     }
 
@@ -84,7 +81,6 @@ abstract public class SearchController implements AdapterView.OnItemClickListene
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
         searchByHint(hintList.get(i));
     }
 

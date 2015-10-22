@@ -14,13 +14,12 @@ public class CropsListFragmentModel implements Serializable {
     }
 
     private TYPE type;
-    private String query;
+
     private int pageCount = 0;
     private int itemRange = 10;
 
-    public CropsListFragmentModel(TYPE type, String query) {
+    public CropsListFragmentModel(TYPE type ) {
         this.type = type;
-        this.query = query;
     }
 
     public int getPageCount() {
@@ -47,11 +46,5 @@ public class CropsListFragmentModel implements Serializable {
         this.type = type;
     }
 
-    public String getQuery() {
-        return query;
-    }
 
-    public void setQuery(String query) {
-        this.query = query;
-    }
 }

@@ -105,10 +105,7 @@ public class PeriodPickerFragment extends BaseFragment<TransparentActivity> impl
     }
 
     public void showDatePicker(){
-        DatePickerDialog datePickerDialog =  new DatePickerDialog(getHostActivity(), this, dateFrom.get(Calendar.YEAR), dateFrom.get(Calendar.MONTH), dateFrom.get(Calendar.DAY_OF_MONTH));
-
-        if(Build.VERSION.SDK_INT>=21)
-            datePickerDialog.create();
+        DatePickerDialog datePickerDialog =  new DatePickerDialog(getContext(), this, dateFrom.get(Calendar.YEAR), dateFrom.get(Calendar.MONTH), dateFrom.get(Calendar.DAY_OF_MONTH));
 
         datePickerDialog.show();
     }

@@ -4,15 +4,28 @@ package com.farmers.underground.remote.models;
  * Created by omar on 10/3/15.
  */
 public class SearchHint {
-    private String id;
+
     private String name;
 
-    public String getId() {
-        return id;
+    public enum HintType{
+        FROM_HISTORY,
+        FROM_CROPS_LIST
     }
 
-    public void setId(String id) {
-        this.id = id;
+    private HintType type;
+
+
+    public SearchHint(String name, HintType type) {
+        this.name = name;
+        this.type = type;
+    }
+
+    public HintType getType() {
+        return type;
+    }
+
+    public void setType(HintType type) {
+        this.type = type;
     }
 
     public String getName() {
@@ -24,7 +37,6 @@ public class SearchHint {
     }
 
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -32,15 +44,12 @@ public class SearchHint {
 
         SearchHint that = (SearchHint) o;
 
-        if (getId() != null ? !getId().equals(that.getId()) : that.getId() != null) return false;
-        return !(getName() != null ? !getName().equals(that.getName()) : that.getName() != null);
+        return getName().equals(that.getName());
 
     }
 
     @Override
     public int hashCode() {
-        int result = getId() != null ? getId().hashCode() : 0;
-        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
-        return result;
+        return getName().hashCode();
     }
 }

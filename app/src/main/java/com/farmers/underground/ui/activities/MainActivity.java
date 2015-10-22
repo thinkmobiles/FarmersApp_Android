@@ -38,10 +38,7 @@ import com.farmers.underground.ui.fragments.CropsFragmentCallback;
 import com.farmers.underground.ui.fragments.CropsListFragment;
 import com.farmers.underground.ui.models.CropsListFragmentModel;
 import com.farmers.underground.ui.models.DrawerItem;
-import com.farmers.underground.ui.utils.CropsFragmentStateController;
-import com.farmers.underground.ui.utils.NotYetHelper;
-import com.farmers.underground.ui.utils.SearchController;
-import com.farmers.underground.ui.utils.SharedPrefHelper;
+import com.farmers.underground.ui.utils.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +48,9 @@ import java.util.List;
  * Created by omar
  * on 9/28/15.
  */
-public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCallback, FragmentViewsCreatedCallback {
+public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCallback,
+        FragmentViewsCreatedCallback,
+        SearchResultProvider.SearchCallback {
 
     @Bind(R.id.toolbar)
     protected Toolbar mToolbar;
@@ -82,16 +81,17 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
 
     private SearchManager searchManager;
-    private SearchController searchController;
+    private SearchHintController searchHintController;
     private ProjectPagerAdapter<CropsListFragment> pagerAdapter;
     private CropsListAdapter.CropsAdapterCallback cropsListCallback;
     private CropsFragmentStateController cropsFragmentStateController;
-
+    private SearchResultProvider searchResultProvider;
 
     private boolean drawerOpened;
     private static String query = "";
 
-    private ArrayList<LastCropPricesModel> mCropList;
+    private List<LastCropPricesModel> mCropList;
+    private List<LastCropPricesModel> cropListSearch;
 
     public static void start(@NonNull Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -103,6 +103,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         intent.putExtra(ProjectConstants.KEY_FOCUS_SEARCH_VIEW, true);
         context.startActivity(intent);
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,10 +125,10 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
         searchView.setVisibility(View.VISIBLE);
 
-        if (savedInstanceState != null) query = savedInstanceState.getString(ProjectConstants.KEY_DATA);
-        else
+        if (savedInstanceState == null)
             setSearchViewFocus(getIntent().getBooleanExtra(ProjectConstants.KEY_FOCUS_SEARCH_VIEW, false));
 
+        searchResultProvider = SearchResultProvider.getInstance(this, this);
     }
 
     private void setSearchViewFocus(boolean isFocus) {
@@ -154,12 +155,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         return 0;
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString(ProjectConstants.KEY_DATA, query);
-    }
-
 
     //crops list control
     private void getLastCrops() {
@@ -176,7 +171,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                     if (i > 4) break;
                 }
                 mCropList = result;
-                updateFragments();
+                updateFragments(mCropList, query);
             }
 
             @Override
@@ -186,9 +181,9 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         });
     }
 
-    private void updateFragments() {
+    private void updateFragments(List<LastCropPricesModel> cropList, String query) {
         for (BaseFragment f : pagerAdapter.getFragmentList()) {
-            ((CropsFragmentCallback) f).onReceiveCrops(mCropList);
+            ((CropsFragmentCallback) f).onReceiveCrops(cropList, query);
         }
     }
 
@@ -237,11 +232,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                             ErrorMsg>() {
                         @Override
                         public void onSuccess(SuccessMsg result) {
-                            showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
-                            for (LastCropPricesModel item : mCropList)
-                                if (item._crop.equals(cropModel._crop))
-                                    cropModel.isInFavorites = true;
-                            updateFragments();
+                            updateAfterFavsClick(result, cropModel, true);
                         }
 
                         @Override
@@ -252,13 +243,10 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                         @Override
                         public void anyway() {
                             hideProgressDialog();
-                        }
+                         }
                     });
                 } else {
-                    for (LastCropPricesModel item : mCropList)
-                        if (item._crop.equals(cropModel._crop))
-                            cropModel.isInFavorites = false;
-                    updateFragments();
+                    updateAfterFavsClick(null, cropModel, false);
                 }
             }
 
@@ -269,16 +257,32 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         };
     }
 
+    private void updateAfterFavsClick(SuccessMsg result, LastCropPricesModel cropModel, boolean infavs) {
+        viewPager.requestFocus();
+       if(result!= null) showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
+        for (LastCropPricesModel item : mCropList)
+            if (item._crop.equals(cropModel._crop))
+                cropModel.isInFavorites = infavs;
+
+        if (cropListSearch != null && cropListSearch.size() > 0 && !query.isEmpty()) {
+            for (LastCropPricesModel item : cropListSearch)
+                if (item._crop.equals(cropModel._crop))
+                    cropModel.isInFavorites = infavs;
+            updateFragments(cropListSearch, query);
+        } else
+            updateFragments(mCropList, query);
+    }
+
 
     //search
     private void setSearchViewListeners() {
-        searchController = new SearchController(lv_SearchHint) {
+        searchHintController = new SearchHintController(lv_SearchHint) {
             @Override
             public void searchByHint(SearchHint query) {
                 SharedPrefHelper.saveSearchHint(query);
                 searchView.setQuery(query.getName(), true);
                 forceHideSearchList();
-                searchController.setQuerry(query);
+                searchHintController.setQuerry(query);
             }
         };
         searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -293,11 +297,11 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                SearchHint hint = new SearchHint();
-                hint.setName(query);
-                searchController.setQuerry(hint);
+                SearchHint hint = new SearchHint(query, SearchHint.HintType.FROM_HISTORY);
+                searchHintController.setQuerry(hint);
                 SharedPrefHelper.saveSearchHint(hint);
                 forceHideSearchList();
+                updateFragmentsOnSearch(query);
                 return false;
             }
 
@@ -307,19 +311,15 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                 String newQuerry = "";
                 if (newText.length() > 0) newQuerry = newText.trim();
                 if (newQuerry.isEmpty()) {
-                    SearchHint hint = new SearchHint();
-                    hint.setName("");
-                    searchController.setQuerry(hint);
-                    query = "";
-                    updateFragmentsOnSearch();
+                    searchHintController.setHinsList(SharedPrefHelper.getSearchHints());
+                    updateFragments(mCropList, query);
                     return false;
-                } else if (newQuerry.length() > 1 && newQuerry.length() < 2) {
-                    return true;
+                } else if (newQuerry.length() < 2) {
+                    searchHintController.setHinsList(SharedPrefHelper.getSearchHints());
+                    updateFragments(mCropList, query);
+                    return false;
                 } else {
-                    query = newQuerry;
-                    SearchHint hint = new SearchHint();
-                    hint.setName("newQuerry");
-                    searchController.setQuerry(hint);
+                    generateQuerryList(newQuerry);
                     return false;
                 }
 
@@ -328,6 +328,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
+                query = "";
                 forceHideSearchList();
                 return false;
             }
@@ -338,15 +339,14 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     protected void onNewIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             query = intent.getStringExtra(SearchManager.QUERY);
-            updateFragmentsOnSearch();
-
+            updateFragmentsOnSearch(query);
         }
     }
 
     private void forceHideSearchList() {
 
         hideSoftKeyboard();
-        searchController.hide();
+        searchHintController.hide();
         invalidateOptionsMenu();
     }
 
@@ -432,9 +432,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         viewPager.setCurrentItem(pagerAdapter.getCount() - 1);
     }
 
-    private void updateFragmentsOnSearch() {
-
-    }
 
     private List<String> getTitlesList() {
         List<String> titles = new ArrayList<>();
@@ -451,11 +448,11 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     }
 
     private CropsListFragment createFaaFragment() {
-        return CropsListFragment.getInstance(CropsListFragmentModel.TYPE.FAVOURITES, query);
+        return CropsListFragment.getInstance(CropsListFragmentModel.TYPE.FAVOURITES);
     }
 
     private CropsListFragment createCropFragment() {
-        return CropsListFragment.getInstance(CropsListFragmentModel.TYPE.ALL_CROPS, query);
+        return CropsListFragment.getInstance(CropsListFragmentModel.TYPE.ALL_CROPS);
     }
 
 
@@ -476,7 +473,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                 return true;
             case R.id.action_back:
                 hideSoftKeyboard();
-                searchController.hide();
+                searchHintController.hide();
                 invalidateOptionsMenu();
 
                 return true;
@@ -487,7 +484,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
 
-        if (searchController.isShowing()) {
+        if (searchHintController.isShowing()) {
             menu.findItem(R.id.action_burger).setVisible(false);
             menu.findItem(R.id.action_back).setVisible(true);
         } else {
@@ -521,8 +518,8 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     @OnClick(R.id.searchView)
     protected void onSearchClicked() {
-        searchController.setHinsList(SharedPrefHelper.getSearchHints());
-        searchController.show();
+        searchHintController.setHinsList(SharedPrefHelper.getSearchHints());
+        searchHintController.show();
         invalidateOptionsMenu();
     }
 
@@ -555,9 +552,9 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         if (drawerOpened) mDrawerlayout.closeDrawers();
 
 
-        else if (searchController.isShowing()) {
+        else if (searchHintController.isShowing()) {
             hideSoftKeyboard();
-            searchController.hide();
+            searchHintController.hide();
         } else super.onBackPressed();
 
     }
@@ -586,4 +583,28 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     }
 
 
+    private void updateFragmentsOnSearch(String newQuerry) {
+
+        searchResultProvider
+                .loadSearchResults(newQuerry, mCropList);
+    }
+
+
+    private void generateQuerryList(String newQuerry) {
+        searchResultProvider
+                .loadSearchHints(newQuerry, mCropList);
+    }
+
+    @Override
+    public void onSearchHintLoadFinished(List<SearchHint> searchHintList) {
+        searchHintController.setHinsList(searchHintList);
+    }
+
+    @Override
+    public void onSearchResultLoadFinished(List<LastCropPricesModel> crops) {
+        updateFragments(crops, query);
+        cropListSearch = crops;
+
+
+    }
 }
