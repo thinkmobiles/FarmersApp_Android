@@ -50,6 +50,7 @@
     <string name="dialog_title_forgot_password">Please, enter your email</string>
     <string name="dialog_btn_ok">OK</string>
     <string name="dialog_btn_cancel">Cancel</string>
+    <string name="dialog_btn_understood">I realized</string>
     <string name="dialog_progress_message_default">Please wait…</string>
 
 
