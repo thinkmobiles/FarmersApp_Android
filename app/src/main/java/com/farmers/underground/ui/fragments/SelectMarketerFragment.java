@@ -1,5 +1,7 @@
 package com.farmers.underground.ui.fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -27,8 +29,23 @@ import com.farmers.underground.ui.base.BaseFragment;
  */
 public class SelectMarketerFragment extends BaseFragment<LoginSignUpActivity> {
 
+    private static final String KEY_CHANGE_MARKETER = "change_marketer";
+
     @Bind(R.id.tvEnterMarketeer)
     protected TextView tvNameMarketer;
+
+    @Bind(R.id.tvLetsGo)
+    protected TextView tvGoOrSave;
+
+    private boolean isChangingMarketer;
+
+    public static SelectMarketerFragment newInstance(boolean forChanging){
+        SelectMarketerFragment fragment = new SelectMarketerFragment();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(KEY_CHANGE_MARKETER, forChanging);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
 
     @Override
     protected int getLayoutResId() {
@@ -38,11 +55,15 @@ public class SelectMarketerFragment extends BaseFragment<LoginSignUpActivity> {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        isChangingMarketer = getArguments().getBoolean(KEY_CHANGE_MARKETER);
         ButterKnife.bind(this, view);
         setNameMarketer();
     }
 
     private void setNameMarketer() {
+        if(isChangingMarketer){
+            getHostActivity().getUserMarketer();
+        }
         String name = getHostActivity().getNameMarketeer();
         if (name != null) {
             tvNameMarketer.setText(name);
@@ -51,12 +72,16 @@ public class SelectMarketerFragment extends BaseFragment<LoginSignUpActivity> {
 
     @OnClick(R.id.tvEnterMarketeer)
     protected void enterMarketeer() {
-        getHostActivity().switchFragment(SelectMarketerListFragment.class.getName(), true);
+        if(isChangingMarketer){
+            getHostActivity().showChangingMarketerDialog();
+        } else {
+            getHostActivity().switchFragment(SelectMarketerListFragment.class.getName(), true);
+        }
     }
 
     @OnClick(R.id.tvSkip)
     protected void skip() {
-        FarmersApp.setSkipMode(true);
+        FarmersApp.setSkipMode(FarmersApp.isSkipMode());
         MainActivity.start(getHostActivity());
         getHostActivity().finish();
     }

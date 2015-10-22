@@ -10,4 +10,8 @@ public class MarketeerBase {
     private String location;
     private Boolean newMarketeer;
     private Boolean canChangeMarketeer;
+
+    public String getFullName() {
+        return fullName;
+    }
 }

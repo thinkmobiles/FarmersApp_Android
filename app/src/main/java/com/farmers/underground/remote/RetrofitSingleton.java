@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import com.farmers.underground.BuildConfig;
 import com.farmers.underground.config.ApiConstants;
 import com.farmers.underground.remote.models.*;
+import com.farmers.underground.remote.models.base.MarketeerBase;
 import com.farmers.underground.remote.services.AuthorizationService;
 import com.farmers.underground.remote.services.CropsService;
 import com.farmers.underground.remote.services.MarketeerService;
@@ -136,6 +137,22 @@ public class RetrofitSingleton {
             @Override
             public void onResponse(Response<SuccessMsg> response, Retrofit retrofit) {
                 performCallback(callback,response);
+                callback.anyway();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                callback.onError(new ErrorMsg("Unknown Error"));
+                callback.anyway();
+            }
+        });
+    }
+
+    public void getMarketeerBySession(final ACallback<MarketeerBase, ErrorMsg> callback){
+        getMarketeerService().getMarketeerBySession().enqueue(new Callback<MarketeerBase>() {
+            @Override
+            public void onResponse(Response<MarketeerBase> response, Retrofit retrofit) {
+                performCallback(callback, response);
                 callback.anyway();
             }
 

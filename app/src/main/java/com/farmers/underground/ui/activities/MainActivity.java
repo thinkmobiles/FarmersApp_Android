@@ -394,7 +394,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
 
         //FarmersApp.getInstance().getCurrentUser()!=null todo remove later (user cant be null here)
-
+        FarmersApp.getInstance().getUserProfileAsync(null);
         final UserProfile user = FarmersApp.getInstance().getCurrentUser();
 
         /*if (user != null && (!(user.hasMarketir() || user.isNewMarketeer()))) {
