@@ -59,8 +59,8 @@ public class CropsListFragment
     }
 
 
-    public static CropsListFragment getInstance(CropsListFragmentModel.TYPE type, String query) {
-        CropsListFragmentModel fragmentModel = new CropsListFragmentModel(type, query);
+    public static CropsListFragment getInstance(CropsListFragmentModel.TYPE type ) {
+        CropsListFragmentModel fragmentModel = new CropsListFragmentModel(type );
         Bundle args = new Bundle();
         args.putSerializable(ProjectConstants.KEY_DATA, fragmentModel);
         CropsListFragment fragment = new CropsListFragment();
@@ -101,14 +101,12 @@ public class CropsListFragment
         stateCallback.onFragmentViewCreated();
     }
 
-    private void showNoItems() {
+    private void showNoItems(String querry) {
         tv_NoItems.setVisibility(View.VISIBLE);
         String itemsText;
-        if (!mFragmentModel.getQuery().isEmpty()){
-            itemsText = getActivity().getString(R.string.no_crops_found) + mFragmentModel.getQuery();
-        } else {
-            itemsText = getActivity().getString(R.string.no_crops_found) + getActivity().getString(R.string.all);
-        }
+
+            itemsText = getActivity().getString(R.string.no_crops_found) + querry;
+
         tv_NoItems.setText(itemsText);
     }
 
@@ -127,7 +125,7 @@ public class CropsListFragment
 
 
     @Override
-    public void onReceiveCrops(List<LastCropPricesModel> cropsList) {
+    public void onReceiveCrops(List<LastCropPricesModel> cropsList, String query) {
         if(mFragmentModel.getType() == CropsListFragmentModel.TYPE.FAVOURITES){
             List<LastCropPricesModel> favouritesList = new ArrayList<>();
            for( LastCropPricesModel item : cropsList)
@@ -139,8 +137,18 @@ public class CropsListFragment
             adapter.setDataList(generateCropsDataHolders(cropsList));
 
         adapter.notifyDataSetChanged();
+
+
+        if(cropsList.size() == 0)
+            showNoItems(query);
+        else
+            hideNoItems();
+
     }
 
+    private void hideNoItems() {
+        tv_NoItems.setVisibility(View.GONE);
+    }
 
 
     private List<CropsListItemDH> generateCropsDataHolders(List<LastCropPricesModel> cropsList) {

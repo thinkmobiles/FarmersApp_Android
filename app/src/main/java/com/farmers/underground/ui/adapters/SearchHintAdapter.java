@@ -37,7 +37,17 @@ public class SearchHintAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_search_hint, viewGroup, false);
+        switch (hintList.get(i).getType()){
+            case FROM_CROPS_LIST:
+                view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_search_hint_crop_list, viewGroup,
+                        false);
+                break;
+            case FROM_HISTORY:
+                view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_search_hint_history, viewGroup,
+                        false);
+                break;
+        }
+
         ((TextView)view.findViewById(R.id.tv_HintItemSearch)).setText(getItem(i).getName());
         return view;
     }

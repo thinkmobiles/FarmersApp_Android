@@ -6,7 +6,7 @@
 
     <com.farmers.underground.ui.custom_views.CustomTextView
         android:id="@+id/tv_HintItemSearch"
-        style="@style/TV_SearchHintListItem"
+        style="@style/TV_SearchHintListItemHistory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@+id/imageView5"
