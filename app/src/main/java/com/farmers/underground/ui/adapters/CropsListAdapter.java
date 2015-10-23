@@ -3,9 +3,9 @@ package com.farmers.underground.ui.adapters;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.ViewGroup;/*
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.view.animation.AnimationUtils;*/
 import com.farmers.underground.R;
 import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.ui.models.CropsListItemDH;
@@ -15,12 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by omar on 10/2/15.
+ * Created by omar
+ * on 10/2/15.
  */
 public class CropsListAdapter extends RecyclerView.Adapter<CropsListItemVH> {
     private List<CropsListItemDH> dataList;
-    private int lastPosition;
-
+    /*private int lastPosition;*/
     public CropsListAdapter() {
         dataList = new ArrayList<>();
     }
@@ -55,11 +55,11 @@ public class CropsListAdapter extends RecyclerView.Adapter<CropsListItemVH> {
         void onPriceRefreshClicked(LastCropPricesModel cropModel);
     }
 
-    private void setAnimation(View viewToAnimate, int position) {
+    /*private void setAnimation(View viewToAnimate, int position) {
         if (position > lastPosition) {
             Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), R.anim.slide_in_bottom);
             viewToAnimate.startAnimation(animation);
             lastPosition = position;
         }
-    }
+    }*/
 }

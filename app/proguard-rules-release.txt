@@ -1,0 +1,16 @@
+# Add project 'test' build variant specific ProGuard rules here.
+
+# Discard all the side effects
+-assumenosideeffects class android.util.Log {
+    public static *** v(...);
+    public static *** i(...);
+    public static *** e(...);
+    public static *** w(...);
+    public static *** d(...);
+    public static *** wtf(...);
+}
+
+-assumenosideeffects class * extends java.lang.Throwable {
+    public *** printStackTrace(...);
+}
+
