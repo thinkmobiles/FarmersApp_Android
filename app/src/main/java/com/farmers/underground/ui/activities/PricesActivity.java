@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,6 +23,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.farmers.underground.R;
+import com.farmers.underground.config.ApiConstants;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.ui.adapters.AllPricesAdapter;
@@ -265,7 +267,13 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
 
             }
         };
-        Picasso.with(this).load(mCropModel.image).transform(new CropCircleTransformation()).into(target);
+
+        //todo   maybe need some other check here later
+        final String url = !TextUtils.isEmpty(mCropModel.image) ? ApiConstants.BASE_URL + mCropModel.image : null ;
+        if (url!=null)
+            Picasso.with(this).load(url).transform(new CropCircleTransformation()).placeholder(R.drawable.ic_drawer_crops)
+                    .error(R.drawable.ic_drawer_crops).into(target);
+
         return super.onPrepareOptionsMenu(menu);
     }
 
