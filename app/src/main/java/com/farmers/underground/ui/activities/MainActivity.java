@@ -253,12 +253,12 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         viewPager.requestFocus();
        if(result!= null) showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
         for (LastCropPricesModel item : mCropList)
-            if (item._crop.equals(cropModel._crop))
+            if (item.displayName.equals(cropModel.displayName))
                 cropModel.isInFavorites = infavs;
 
         if (cropListSearch != null && cropListSearch.size() > 0 && !query.isEmpty()) {
             for (LastCropPricesModel item : cropListSearch)
-                if (item._crop.equals(cropModel._crop))
+                if (item.displayName.equals(cropModel.displayName))
                     cropModel.isInFavorites = infavs;
             updateFragments(cropListSearch, query);
         } else
