@@ -17,6 +17,7 @@ import retrofit.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * Created by tZpace
@@ -87,10 +88,10 @@ public class RetrofitSingleton {
         return pricesService;
     }
 
-    public void getLastCropPricesList(final ACallback<ArrayList<LastCropPricesModel>,ErrorMsg> callback){
-        getPricesService().getLast().enqueue(new Callback<ArrayList<LastCropPricesModel>>() {
+    public void getLastCropPricesList(final ACallback<LinkedList<LastCropPricesModel>,ErrorMsg> callback){
+        getPricesService().getLast().enqueue(new Callback<LinkedList<LastCropPricesModel>>() {
             @Override
-            public void onResponse(Response<ArrayList<LastCropPricesModel>> response, Retrofit retrofit) {
+            public void onResponse(Response<LinkedList<LastCropPricesModel>> response, Retrofit retrofit) {
                 performCallback(callback,response);
                 callback.anyway();
             }
