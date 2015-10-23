@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,17 +36,31 @@ public class SelectMarketerFragment extends BaseFragment<LoginSignUpActivity> {
     @Bind(R.id.tvEnterMarketeer)
     protected TextView tvNameMarketer;
 
+    @Bind(R.id.btnStart)
+    protected LinearLayout llGoOrSave;
+
     @Bind(R.id.tvLetsGo)
     protected TextView tvGoOrSave;
 
     private boolean isChangingMarketer;
 
+    public enum Reason{FirstAddition, Add, Change, Accept}
 
+    private Reason reason;
 
     public static SelectMarketerFragment newInstance(boolean forChanging){
         SelectMarketerFragment fragment = new SelectMarketerFragment();
         Bundle bundle = new Bundle();
         bundle.putBoolean(KEY_CHANGE_MARKETER, forChanging);
+        bundle.putInt("r", Reason.Add.ordinal());
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    public static SelectMarketerFragment newInstance(Reason reason){
+        SelectMarketerFragment fragment = new SelectMarketerFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("position_reason", reason.ordinal());
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -58,9 +73,14 @@ public class SelectMarketerFragment extends BaseFragment<LoginSignUpActivity> {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        isChangingMarketer = getArguments().getBoolean(KEY_CHANGE_MARKETER);
+        getFlag();
+//        isChangingMarketer = getArguments().getBoolean(KEY_CHANGE_MARKETER);
         ButterKnife.bind(this, view);
-        setNameMarketer();
+        setNameMarketer2();
+    }
+
+    private void getFlag(){
+        reason = Reason.values()[getArguments().getInt("position_reason")];
     }
 
     private void setNameMarketer() {
@@ -75,13 +95,32 @@ public class SelectMarketerFragment extends BaseFragment<LoginSignUpActivity> {
         }
     }
 
+    private void setNameMarketer2() {
+        getHostActivity().setIsChanging(false);
+        switch (reason){
+            case FirstAddition:
+                break;
+            case Add:
+                llGoOrSave.setVisibility(View.INVISIBLE);
+                break;
+            case Change:
+                llGoOrSave.setVisibility(View.INVISIBLE);
+                getHostActivity().setNameMarketeer(FarmersApp.getInstance().getCurrentMarketer().getFullName());
+                getHostActivity().setIsChanging(true);
+                break;
+            case Accept:
+                tvGoOrSave.setText(getString(R.string.dialog_accept));
+                break;
+        }
+        String name = getHostActivity().getNameMarketeer();
+        if(name != null) {
+            tvNameMarketer.setText(name);
+        }
+    }
+
     @OnClick(R.id.tvEnterMarketeer)
     protected void enterMarketeer() {
-        if(isChangingMarketer){
-            getHostActivity().showChangingMarketerDialog();
-        } else {
-            getHostActivity().switchFragment(SelectMarketerListFragment.class.getName(), true);
-        }
+        getHostActivity().showChangingMarketerDialog(getArguments());
     }
 
     @OnClick(R.id.tvSkip)
@@ -103,7 +142,7 @@ public class SelectMarketerFragment extends BaseFragment<LoginSignUpActivity> {
                 public void onSuccess(SuccessMsg result) {
                     getHostActivity().showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
 
-                    FarmersApp.setSkipMode(true);
+                    FarmersApp.setSkipMode(false);
                     MainActivity.start(getHostActivity());
                     getHostActivity().finish();
                 }

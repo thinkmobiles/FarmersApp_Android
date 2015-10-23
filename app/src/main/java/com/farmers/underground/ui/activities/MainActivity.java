@@ -504,7 +504,11 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                 viewPager.setCurrentItem(0);
                 break;
             case 5:
-                LoginSignUpActivity.startChooseMarketier(this);
+                if(FarmersApp.isSkipMode())
+                    LoginSignUpActivity.startAddMarketier(this);
+                else
+                    LoginSignUpActivity.startChooseMarketier(this);
+                finish();
                 break;
         }
         mDrawerlayout.closeDrawers();
