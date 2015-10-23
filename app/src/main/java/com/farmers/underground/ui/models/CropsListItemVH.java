@@ -2,6 +2,7 @@ package com.farmers.underground.ui.models;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -12,6 +13,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.farmers.underground.BuildConfig;
 import com.farmers.underground.R;
+import com.farmers.underground.config.ApiConstants;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.remote.models.base.PriceBase;
@@ -20,9 +22,11 @@ import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 /**
- * Created by omar on 10/2/15.
+ * Created by omar
+ * on 10/2/15.
  */
 public class CropsListItemVH extends RecyclerView.ViewHolder {
 
@@ -77,7 +81,7 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
         else tv_CropsName.setText(model.displayName);
 
         String fulldate = model.prices.get(0).data;
-        format = new SimpleDateFormat(ProjectConstants.SERVER_DATE_FORMAT);
+        format = new SimpleDateFormat(ProjectConstants.SERVER_DATE_FORMAT, Locale.getDefault());
         try {
             long time = format.parse(fulldate).getTime();
             String[] date = dateHelper.getDate(time);
@@ -90,8 +94,16 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
         }
 
         cb_Fav.setChecked(model.isInFavorites);
-        //todo error
-        Picasso.with(iv_CropsImage.getContext()).load(dateHolder.getModel().image).placeholder(R.drawable.ic_drawer_crops).error(R.drawable.ic_drawer_crops).into(iv_CropsImage);
+
+        //todo   maybe need some other check here later
+        final String url = !TextUtils.isEmpty(dateHolder.getModel().image) ? ApiConstants.BASE_URL + dateHolder.getModel().image : null ;
+
+        if (url!=null)
+            Picasso.with(iv_CropsImage.getContext())
+                .load(url)
+                .placeholder(R.drawable.ic_drawer_crops)
+                .error(R.drawable.ic_drawer_crops)
+                    .into(iv_CropsImage); //todo error
 
 
         for (int i = 0; i < ll_PriceContainer.getChildCount(); i++) {
@@ -102,7 +114,7 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
 
 
             PriceBase priceModel = model.prices.get(i);
-            double price  =  Double.parseDouble(priceModel.value);
+            double price  =  Double.parseDouble(priceModel.price);
              tv_Price.setText(price!= 0 ? String.format("%.2f",price) : "- -");
             tv_Marketeer_CropItem.setText(priceModel.source.name);
             try {

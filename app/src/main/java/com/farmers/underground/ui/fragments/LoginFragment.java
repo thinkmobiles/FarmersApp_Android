@@ -190,21 +190,17 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> {
                 getHostActivity().showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
                 FarmersApp.getInstance().onUserLogin();
                 FarmersApp.getInstance().saveUserCredentials(new UserCredentials(email, password));
-
+                getHostActivity().hideProgressDialog();
                 getHostActivity().getUserProfileAsync();
 
             }
 
             @Override
             public void onError(@NonNull ErrorMsg error) {
+                getHostActivity().hideProgressDialog();
                 getHostActivity().showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
             }
 
-            @Override
-            public void anyway() {
-                super.anyway();
-                getHostActivity().hideProgressDialog();
-            }
         });
     }
 

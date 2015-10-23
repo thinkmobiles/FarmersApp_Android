@@ -162,14 +162,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                 () {
             @Override
             public void onSuccess(ArrayList<LastCropPricesModel> result) {
-
-                //todo this is for test
-                for (int i = 0; i < result.size(); i++) {
-                    if (i == 0) result.get(i).image = "file:///android_asset/test_apple_gala.jpg";
-                    if (i == 1) result.get(i).image = "file:///android_asset/test_avocado.png";
-                    if (i == 2) result.get(i).image = "file:///android_asset/test_corn.png";
-                    if (i > 4) break;
-                }
                 mCropList = result;
                 updateFragments(mCropList, query);
             }
@@ -228,13 +220,13 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                 if (isChecked) {
                     //TODO add to favourites
                     showProgressDialog();
-                    RetrofitSingleton.getInstance().addCropsToFavorites(cropModel._crop, new ACallback<SuccessMsg,
+                    RetrofitSingleton.getInstance().addCropsToFavorites(cropModel.displayName, new ACallback<SuccessMsg,
                             ErrorMsg>() {
                         @Override
                         public void onSuccess(SuccessMsg result) {
                             showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
                             for (LastCropPricesModel item : mCropList)
-                                if (item._crop.equals(cropModel._crop))
+                                if (item.displayName.equals(cropModel.displayName))
                                     cropModel.isInFavorites = true;
                             updateFragments(mCropList, query);
                         }
@@ -251,7 +243,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                     });
                 } else {
                     for (LastCropPricesModel item : mCropList)
-                        if (item._crop.equals(cropModel._crop))
+                        if (item.displayName.equals(cropModel.displayName))
                             cropModel.isInFavorites = false;
                     updateFragments(mCropList, query);
                 }

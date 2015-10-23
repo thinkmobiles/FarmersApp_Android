@@ -122,7 +122,7 @@ public class AllPricesFragment extends BaseFragment<PricesActivity>
 
         for (int i = 0; i < 20; i++) {
             LastCropPricesModel basquiatCropModel = new LastCropPricesModel();
-            basquiatCropModel._crop = String.valueOf(i);
+            basquiatCropModel.displayName = String.valueOf(i);
             basquiatCropModel.image = "http://www.potomitan.info/ki_nov/images/basquiat_brownspots.jpg";
             cropsList.add(basquiatCropModel);
         }

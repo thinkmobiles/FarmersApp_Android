@@ -9,7 +9,6 @@ import java.util.ArrayList;
  * on 14-Oct-15.
  */
 public class LastCropPricesModel {
-    public String _crop;
     public String englishName;
     public String displayName;
     public Boolean isInFavorites;

@@ -135,7 +135,7 @@ public class TestActivity extends BaseActivity {
     @OnClick(R.id.tv_Prices_Activity)
     void startPricesActivity(){
         LastCropPricesModel basquiatCropModel = new LastCropPricesModel();
-        basquiatCropModel._crop = "some id";
+        basquiatCropModel.displayName = "some id";
         basquiatCropModel.image = "http://www.potomitan.info/ki_nov/images/basquiat_brownspots.jpg";
         PricesActivity.start(this,basquiatCropModel);
     }

@@ -4,7 +4,8 @@ import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.ui.adapters.CropsListAdapter;
 
 /**
- * Created by omar on 10/2/15.
+ * Created by omar
+ * on 10/2/15.
  */
 public class CropsListItemDH {
 

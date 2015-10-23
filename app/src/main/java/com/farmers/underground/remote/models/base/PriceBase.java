@@ -9,7 +9,8 @@ import java.util.ArrayList;
 public class PriceBase {
 
     public Source source;
-    public String value;
+    public String price;
+    public String quality;
     public String data;
     public ArrayList<More> more;
 
@@ -19,11 +20,7 @@ public class PriceBase {
     }
 
     public class More {
-         public String minPrice ;
-         public String maxPrice ;
-         public String avgPrice ;
-         public String site ;
-         public String name ;
-         public String date ;
+        public String price;
+        public String quality;
     }
 }
