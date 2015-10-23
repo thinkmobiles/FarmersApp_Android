@@ -38,6 +38,7 @@ import com.farmers.underground.ui.fragments.MarketeerPricesFragment;
 import com.farmers.underground.ui.fragments.PeriodPickerFragment;
 import com.farmers.underground.ui.fragments.StatisticsFragment;
 import com.farmers.underground.ui.models.DateRange;
+import com.farmers.underground.ui.utils.PicassoHelper;
 import com.farmers.underground.ui.utils.StringFormaterUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -78,9 +79,6 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
 
     @Bind(R.id.spinner_TB)
     protected Spinner spinner;
-
-
-    private Target target;
 
     private LastCropPricesModel mCropModel;
     private ProjectPagerAdapter<BaseFragment<PricesActivity>> pagerAdapter;
@@ -250,7 +248,7 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
         menu.findItem(R.id.action_icon).setVisible(true);
         final MenuItem icon = menu.findItem(R.id.action_icon);
 
-        target = new Target() {
+        final Target target = new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                 icon.setIcon(new BitmapDrawable(bitmap));
@@ -267,12 +265,19 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
 
             }
         };
+        viewPager.setTag(target);
 
-        //todo   maybe need some other check here later
-        final String url = !TextUtils.isEmpty(mCropModel.image) ? ApiConstants.BASE_URL + mCropModel.image : null ;
-        if (url!=null)
-            Picasso.with(this).load(url).transform(new CropCircleTransformation()).placeholder(R.drawable.ic_drawer_crops)
-                    .error(R.drawable.ic_drawer_crops).into(target);
+        final String url = !TextUtils.isEmpty(mCropModel.image) ? ApiConstants.BASE_URL + mCropModel.image : null;
+        if (url != null)
+
+            PicassoHelper.getPicasso(this)
+                    .load(url)
+                    .config(Bitmap.Config.RGB_565)
+                    .transform(new CropCircleTransformation())
+                    .placeholder(R.drawable.ic_drawer_crops)
+                    .error(R.drawable.ic_drawer_crops)
+                    .into(target);
+
 
         return super.onPrepareOptionsMenu(menu);
     }
