@@ -3,7 +3,6 @@ package com.farmers.underground.ui.fragments;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
@@ -13,7 +12,7 @@ import android.widget.Toast;
 import com.farmers.underground.R;
 import com.farmers.underground.ui.activities.TransparentActivity;
 import com.farmers.underground.ui.base.BaseFragment;
-import com.farmers.underground.ui.utils.DateFormaterUtil;
+import com.farmers.underground.ui.utils.StringFormaterUtil;
 import java.util.Calendar;
 
 import butterknife.Bind;
@@ -86,10 +85,10 @@ public class PeriodPickerFragment extends BaseFragment<TransparentActivity> impl
 
     private void setDate(Calendar date){
         if(dayFromTo == Period.From) {
-            tvPeriodFrom.setText(DateFormaterUtil.convertDate(date));
+            tvPeriodFrom.setText(StringFormaterUtil.convertDate(date));
             dateFrom = date;
         } else {
-            tvPeriodTo.setText(DateFormaterUtil.convertDate(date));
+            tvPeriodTo.setText(StringFormaterUtil.convertDate(date));
             dateTo = date;
         }
     }
