@@ -266,9 +266,14 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
         imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
     }
 
-    private boolean isFirstChanging = true;
+    private boolean isChanging = true;
+
+    public void setIsChanging(boolean isChanging) {
+        this.isChanging = isChanging;
+    }
+
     public void showChangingMarketerDialog(){
-        if(isFirstChanging) {
+        if(isChanging) {
             new AlertDialog.Builder(this)
                     .setCancelable(false)
                     .setMessage("Are you sure you want to change marketer?")
@@ -276,7 +281,7 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             switchFragment(SelectMarketerListFragment.class.getName(), true);
-                            isFirstChanging = false;
+                            isChanging = false;
                             dialog.dismiss();
                         }
                     })

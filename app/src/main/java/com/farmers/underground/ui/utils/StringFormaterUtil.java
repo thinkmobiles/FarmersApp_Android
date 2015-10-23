@@ -19,6 +19,6 @@ public class StringFormaterUtil {
     }
 
     public static String getLettersForLogo(String name){
-        return name.substring(name.length()-1, name.length());
+        return name.substring(0, 2);
     }
 }

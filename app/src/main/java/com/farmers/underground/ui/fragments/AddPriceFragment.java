@@ -98,9 +98,11 @@ public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements 
     }
 
     private void setMarketer(){
-        String name = FarmersApp.getInstance().getCurrentUser().getMarketeer();
-        nameMarketer.setText(name);
-        tvLogo.setText(StringFormaterUtil.getLettersForLogo(name));
+        String name = FarmersApp.getInstance().getCurrentMarketer().getFullName();
+        if(name != null) {
+            nameMarketer.setText(name);
+            tvLogo.setText(StringFormaterUtil.getLettersForLogo(name));
+        }
     }
 
     private void checkCorrection(){

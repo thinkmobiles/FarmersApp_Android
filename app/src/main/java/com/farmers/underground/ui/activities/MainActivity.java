@@ -389,6 +389,8 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         FarmersApp.getInstance().getUserProfileAsync(null);
         final UserProfile user = FarmersApp.getInstance().getCurrentUser();
 
+        FarmersApp.getInstance().getMarketerBySession(); //getting of target marketer
+
         /*if (user != null && (!(user.hasMarketir() || user.isNewMarketeer()))) {
             drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_invite_friends, R.string.drawer_content_5));
         } else {

@@ -18,6 +18,7 @@ import com.farmers.underground.R;
 import com.farmers.underground.remote.RetrofitSingleton;
 import com.farmers.underground.remote.models.ErrorMsg;
 import com.farmers.underground.remote.models.SuccessMsg;
+import com.farmers.underground.remote.models.base.MarketeerBase;
 import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.ui.activities.LoginSignUpActivity;
 import com.farmers.underground.ui.activities.MainActivity;
@@ -38,6 +39,8 @@ public class SelectMarketerFragment extends BaseFragment<LoginSignUpActivity> {
     protected TextView tvGoOrSave;
 
     private boolean isChangingMarketer;
+
+
 
     public static SelectMarketerFragment newInstance(boolean forChanging){
         SelectMarketerFragment fragment = new SelectMarketerFragment();
@@ -62,11 +65,13 @@ public class SelectMarketerFragment extends BaseFragment<LoginSignUpActivity> {
 
     private void setNameMarketer() {
         if(isChangingMarketer){
-            getHostActivity().getUserMarketer();
+            getHostActivity().setNameMarketeer(FarmersApp.getInstance().getCurrentMarketer().getFullName());
         }
         String name = getHostActivity().getNameMarketeer();
-        if (name != null) {
+        if(name != null) {
             tvNameMarketer.setText(name);
+        } else {
+            getHostActivity().setIsChanging(false);
         }
     }
 

@@ -11,16 +11,19 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.farmers.underground.R;
+import com.farmers.underground.config.ApiConstants;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.ui.base.BaseActivity;
@@ -107,6 +110,9 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
         mCropModel = gson.fromJson(getIntent().getStringExtra(ProjectConstants.KEY_DATA), LastCropPricesModel.class);
         if (mCropModel == null)
             throw new IllegalAccessError("Create this activity with start(Context, CropModel) " + "method only!");
+        else {
+            ((TextView) toolbar.findViewById(R.id.toolbar_title)).setText(mCropModel.displayName);
+        }
     }
 
     public void setOnChangeDateListener(OnChangeDateListener onChangeDateListener) {
@@ -167,7 +173,11 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
 
             }
         };
-        Picasso.with(this).load(mCropModel.image).transform(new CropCircleTransformation()).into(target);
+        Picasso.with(this)
+                .load(mCropModel.image)
+                .transform(new CropCircleTransformation())
+                .error(R.drawable.bitmap)
+                .into(target);
         return super.onPrepareOptionsMenu(menu);
     }
 
