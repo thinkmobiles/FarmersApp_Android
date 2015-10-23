@@ -13,6 +13,7 @@ import com.farmers.underground.remote.RetrofitSingleton;
 import com.farmers.underground.remote.models.ErrorMsg;
 import com.farmers.underground.remote.models.UserCredentials;
 import com.farmers.underground.remote.models.UserProfile;
+import com.farmers.underground.remote.models.base.MarketeerBase;
 import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.remote.util.ICallback;
 import com.farmers.underground.ui.activities.LoginSignUpActivity;
@@ -98,6 +99,16 @@ public class FarmersApp extends Application {
         this.currentUser = currentUser;
     }
 
+    private MarketeerBase currentMarketer;
+
+    public MarketeerBase getCurrentMarketer() {
+        return currentMarketer;
+    }
+
+    public void setCurrentMarketer(MarketeerBase currentMarketer) {
+        this.currentMarketer = currentMarketer;
+    }
+
     public void getUserProfileAsync(@Nullable final ICallback<UserProfile, ErrorMsg> callback) {
         RetrofitSingleton.getInstance().getUserProfileBySession(new ACallback<UserProfile, ErrorMsg>() {
             @Override
@@ -117,6 +128,20 @@ public class FarmersApp extends Application {
                 } else {
                     onUserLogOut();
                 }
+
+            }
+        });
+    }
+
+    public void getMarketerBySession(){
+        RetrofitSingleton.getInstance().getMarketeerBySession(new ACallback<MarketeerBase, ErrorMsg>() {
+            @Override
+            public void onSuccess(MarketeerBase result) {
+                setCurrentMarketer(result);
+            }
+
+            @Override
+            public void onError(@NonNull ErrorMsg error) {
 
             }
         });

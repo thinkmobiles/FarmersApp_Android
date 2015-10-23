@@ -1,7 +1,9 @@
 package com.farmers.underground.ui.activities;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -9,21 +11,24 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.farmers.underground.R;
+import com.farmers.underground.config.ApiConstants;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.fragments.AddPriceFragment;
-import com.farmers.underground.ui.utils.DateFormaterUtil;
+import com.farmers.underground.ui.utils.StringFormaterUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
@@ -52,6 +57,7 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
     private Calendar selectedDate = Calendar.getInstance();
     private OnChangeDateListener onChangeDateListener;
     private LastCropPricesModel mCropModel;
+    private AddPriceFragment childFragment;
     private boolean enableDone = false;
 
     public static void start(@NonNull Context context, LastCropPricesModel cropModel) {
@@ -65,10 +71,14 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
     public void setEnableDone(boolean isEnableDone) {
         this.enableDone = isEnableDone;
         if(enableDone){
-            buttonDone.setImageDrawable(getResources().getDrawable(R.drawable.ic_circle_done_blue));
+            buttonDone.setImageDrawable(getResources().getDrawable(R.drawable.ic_done_active));
         } else {
-            buttonDone.setImageDrawable(getResources().getDrawable(R.drawable.ic_circle_done_grey));
+            buttonDone.setImageDrawable(getResources().getDrawable(R.drawable.ic_done_noactive));
         }
+    }
+
+    public void setChildFragment(AddPriceFragment childFragment) {
+        this.childFragment = childFragment;
     }
 
     @Override
@@ -100,6 +110,9 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
         mCropModel = gson.fromJson(getIntent().getStringExtra(ProjectConstants.KEY_DATA), LastCropPricesModel.class);
         if (mCropModel == null)
             throw new IllegalAccessError("Create this activity with start(Context, CropModel) " + "method only!");
+        else {
+            ((TextView) toolbar.findViewById(R.id.toolbar_title)).setText(mCropModel.displayName);
+        }
     }
 
     public void setOnChangeDateListener(OnChangeDateListener onChangeDateListener) {
@@ -128,7 +141,7 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
     }
 
     public String getDate(){
-        return DateFormaterUtil.convertDate(selectedDate);
+        return StringFormaterUtil.convertDate(selectedDate);
     }
 
     public interface OnChangeDateListener{
@@ -160,7 +173,11 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
 
             }
         };
-        Picasso.with(this).load(mCropModel.image).transform(new CropCircleTransformation()).into(target);
+        Picasso.with(this)
+                .load(mCropModel.image)
+                .transform(new CropCircleTransformation())
+                .error(R.drawable.bitmap)
+                .into(target);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -192,6 +209,21 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
     }
 
     private void showCorrectDialog(){
-
+        new AlertDialog.Builder(this)
+                .setCancelable(false)
+                .setMessage(getString(R.string.dialog_please_correct))
+                .setPositiveButton(getString(R.string.dialog_accept), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //todo request addPrice()
+                        showToast("todo request", Toast.LENGTH_SHORT);
+                        hideSoftKeyboard();
+                        childFragment.refresh();
+                        dialog.dismiss();
+                    }
+                })
+                .setNeutralButton(getString(R.string.dialog_correct), null)
+                .create()
+                .show();
     }
 }

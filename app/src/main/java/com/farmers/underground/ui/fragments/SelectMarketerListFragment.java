@@ -49,6 +49,13 @@ public class SelectMarketerListFragment extends BaseFragment<LoginSignUpActivity
 
     List<String> listMarketeers = new ArrayList<String>(0);
 
+
+    public static SelectMarketerListFragment newInstance(Bundle args){
+        SelectMarketerListFragment fragment = new SelectMarketerListFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_after_reg_b;
@@ -136,8 +143,12 @@ public class SelectMarketerListFragment extends BaseFragment<LoginSignUpActivity
     private void selectMarketer(int posMarketer){
         getHostActivity().setNameMarketeer(mAdapter.getItem(posMarketer));
         getHostActivity().popBackStackUpTo(getClass());
-        getHostActivity().switchFragment(SelectMarketerFragment.newInstance(false), false);
         getHostActivity().hideSoftKeyboard();
+        if(SelectMarketerFragment.Reason.values()[getArguments().getInt("position_reason")] == SelectMarketerFragment.Reason.FirstAddition){
+            getHostActivity().switchFragment(SelectMarketerFragment.newInstance(SelectMarketerFragment.Reason.FirstAddition), false);
+        } else {
+            getHostActivity().switchFragment(SelectMarketerFragment.newInstance(SelectMarketerFragment.Reason.Accept), false);
+        }
     }
 
     @Override
@@ -149,7 +160,7 @@ public class SelectMarketerListFragment extends BaseFragment<LoginSignUpActivity
 
     @OnClick(R.id.tvSkip_FLM)
     protected void onSkip(){
-        FarmersApp.setSkipMode(true);
+        FarmersApp.setSkipMode(FarmersApp.isSkipMode());
         getHostActivity().finish();
         MainActivity.start(getHostActivity());
     }

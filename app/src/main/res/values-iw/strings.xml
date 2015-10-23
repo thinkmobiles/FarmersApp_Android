@@ -39,6 +39,9 @@
     <string name="dialog_btn_cancel">לבטל</string>
     <string name="dialog_btn_understood">הבנתי</string>
     <string name="dialog_progress_message_default">המתן בבקשה…</string>
+    <string name="dialog_accept">אשר</string>
+    <string name="dialog_correct">תקן</string>
+    <string name="dialog_please_correct">בדוק בבקשה שכל המידע שהזנת נכון</string>
 
     <!--  //sign_up-->
     <string name="sign_up_full_name">שם מלא</string>

@@ -20,8 +20,8 @@ public interface MarketeerService {
     @GET("marketeers")
     Call<ArrayList<String>> getMarketterList();
 
-    @GET("marketeers")
-    Call<MarketeerBase> getMarketeerBySession(); //todo
+    @GET("marketeers/bySession")
+    Call<MarketeerBase> getMarketeerBySession();
 
     @FormUrlEncoded
     @POST("marketeers")

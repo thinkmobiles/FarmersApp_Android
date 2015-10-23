@@ -10,9 +10,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
 import com.farmers.underground.ui.activities.AddPriceActivity;
 import com.farmers.underground.ui.base.BaseFragment;
+import com.farmers.underground.ui.utils.StringFormaterUtil;
 import com.farmers.underground.ui.utils.ValidationUtil;
 
 import java.util.ArrayList;
@@ -43,14 +45,20 @@ public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements 
     @Bind(R.id.tvPriceError_FAP)
     protected TextView tvError;
 
+    @Bind(R.id.tvNameMarketer_FAP)
+    protected TextView nameMarketer;
+
+    @Bind(R.id.tvLogo_FAP)
+    protected TextView tvLogo;
+
     @Bind(R.id.llContainerPrices)
     protected LinearLayout container;
 
-    private List<EditText> listPrice = new ArrayList<>();
-    private List<EditText> listQuality = new ArrayList<>();
-    private List<TextView> listError = new ArrayList<>();
+    private List<EditText> listPrice;
+    private List<EditText> listQuality;
+    private List<TextView> listError;
 
-    private int counter = -1;
+    private int counter;
 
     @Override
     protected int getLayoutResId() {
@@ -62,15 +70,42 @@ public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements 
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         getHostActivity().setOnChangeDateListener(this);
-        setHints();
+        getHostActivity().setChildFragment(this);
+        setMarketer();
+        setHint(etPrice);
         setDate();
+        initLists();
     }
 
     public void setDate() {
         tvDate.setText(getHostActivity().getDate());
     }
 
-    public void checkCorrection(){
+    public void refresh(){
+        etPrice.setText("");
+        etQuality.setText("");
+        tvError.setVisibility(View.INVISIBLE);
+        container.removeViews(2, ++counter);
+        initLists();
+    }
+
+    private void initLists(){
+        listPrice = new ArrayList<>();
+        listQuality = new ArrayList<>();
+        listError = new ArrayList<>();
+
+        counter = -1;
+    }
+
+    private void setMarketer(){
+        String name = FarmersApp.getInstance().getCurrentMarketer().getFullName();
+        if(name != null) {
+            nameMarketer.setText(name);
+            tvLogo.setText(StringFormaterUtil.getLettersForLogo(name));
+        }
+    }
+
+    private void checkCorrection(){
         if(!(!etPrice.getText().toString().isEmpty() && !etQuality.getText().toString().isEmpty() && tvError.getVisibility() != View.VISIBLE)){
             getHostActivity().setEnableDone(false);
         } else {
@@ -92,8 +127,8 @@ public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements 
         }
     }
 
-    private void setHints() {
-        etPrice.setHint(Html.fromHtml("<small><small><small>" + getHostActivity().getString(R.string.add_price_hint_price) + "</small></small></small>"));
+    private void setHint(EditText editText) {
+        editText.setHint(Html.fromHtml("<small><small><small>" + getHostActivity().getString(R.string.add_price_hint_price) + "</small></small></small>"));
     }
 
     @OnClick(R.id.tvChangeDate_FAP)
@@ -111,7 +146,7 @@ public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements 
             ++counter;
             View view = LayoutInflater.from(getHostActivity()).inflate(R.layout.item_price_type, null);
             EditText editText = (EditText) view.findViewById(R.id.etPrice_FAP);
-            editText.setHint(Html.fromHtml("<small><small><small>" + getHostActivity().getString(R.string.add_price_hint_price) + "</small></small></small>"));
+            setHint(editText);
             editText.addTextChangedListener(getPriceWatcher(counter));
             listPrice.add(editText);
             editText = (EditText) view.findViewById(R.id.etQuality_FAP);

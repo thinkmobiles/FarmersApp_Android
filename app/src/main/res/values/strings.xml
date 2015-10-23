@@ -52,6 +52,9 @@
     <string name="dialog_btn_cancel">Cancel</string>
     <string name="dialog_btn_understood">I realized</string>
     <string name="dialog_progress_message_default">Please wait…</string>
+    <string name="dialog_accept">Accept</string>
+    <string name="dialog_correct">Correct</string>
+    <string name="dialog_please_correct">Please check all the information you entered is correct</string>
 
 
     <!--//sign_up-->
