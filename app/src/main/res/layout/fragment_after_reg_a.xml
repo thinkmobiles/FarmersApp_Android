@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 style="@style/WhiteMainRegularText"
                 android:text="@string/after_sign_start"
-                android:id="@+id/textView7" />
+                android:id="@+id/tvLetsGo" />
         </LinearLayout>
 
         <LinearLayout

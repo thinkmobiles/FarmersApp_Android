@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
@@ -32,7 +31,7 @@ import com.farmers.underground.remote.util.ICallback;
 import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.fragments.SelectMarketerFragment;
 import com.farmers.underground.ui.fragments.LoginFragment;
-import com.farmers.underground.ui.fragments.SignUpFragment;
+import com.farmers.underground.ui.fragments.SelectMarketerListFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -83,7 +82,7 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
         super.onCreate(savedInstanceState);
 
         if(isChooseMarketier){
-            switchFragment(new SelectMarketerFragment(),false);
+            switchFragment(SelectMarketerFragment.newInstance(true),false);
             isChooseMarketier = false;
         }  else {
             switchFragment(LoginFragment.class.getName(), false);
@@ -205,18 +204,22 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
         this.nameMarketeer = nameMarketeer;
     }
 
+    public void getUserMarketer(){
+        nameMarketeer = FarmersApp.getInstance().getCurrentUser().getMarketeer();
+    }
+
     public void getUserProfileAsync() {
         showProgressDialog();
         FarmersApp.getInstance().getUserProfileAsync(new ICallback<UserProfile, ErrorMsg>() {
             @Override
             public void onSuccess(UserProfile result) {
-                if(result!=null){
+                if (result != null) {
                     if (result.hasMarketir() || result.isNewMarketeer() || FarmersApp.isSkipMode()) {
                         FarmersApp.setSkipMode(true);
                         MainActivity.start(LoginSignUpActivity.this);
                         finish();
                     } else {
-                        switchFragment(new SelectMarketerFragment(), false);
+                        switchFragment(SelectMarketerFragment.newInstance(false), false);
                     }
                 } else {
                     onError(new ErrorMsg("Profile is not fetched"));
@@ -261,5 +264,27 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
     public void showSoftKeyboard(View view){
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+    }
+
+    private boolean isFirstChanging = true;
+    public void showChangingMarketerDialog(){
+        if(isFirstChanging) {
+            new AlertDialog.Builder(this)
+                    .setCancelable(false)
+                    .setMessage("Are you sure you want to change marketer?")
+                    .setPositiveButton(getString(R.string.dialog_btn_ok), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switchFragment(SelectMarketerListFragment.class.getName(), true);
+                            isFirstChanging = false;
+                            dialog.dismiss();
+                        }
+                    })
+                    .setNeutralButton(getString(R.string.dialog_btn_cancel), null)
+                    .create()
+                    .show();
+        } else {
+            switchFragment(SelectMarketerListFragment.class.getName(), true);
+        }
     }
 }

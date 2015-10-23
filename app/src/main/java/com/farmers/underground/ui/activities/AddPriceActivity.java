@@ -40,8 +40,6 @@ import java.util.Calendar;
  */
 public class AddPriceActivity extends BaseActivity implements DatePickerDialog.OnDateSetListener {
 
-    public static final String KEY_ID_CROP = "id_crop";
-
     @Bind(R.id.action_done)
     protected ImageView buttonDone;
 
@@ -54,7 +52,6 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
     private Calendar selectedDate = Calendar.getInstance();
     private OnChangeDateListener onChangeDateListener;
     private LastCropPricesModel mCropModel;
-    private AddPriceFragment childFragment;
     private boolean enableDone = false;
 
     public static void start(@NonNull Context context, LastCropPricesModel cropModel) {
@@ -63,10 +60,6 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
         Intent intent = new Intent(context, AddPriceActivity.class);
         intent.putExtra(ProjectConstants.KEY_DATA, s);
         context.startActivity(intent);
-    }
-
-    public void setChildFragment(AddPriceFragment childFragment) {
-        this.childFragment = childFragment;
     }
 
     public void setEnableDone(boolean isEnableDone) {

@@ -199,6 +199,6 @@ public class FarmersApp extends Application {
     }
 
     public static boolean isSkipMode(){
-        return getUsrPreferences().getBoolean(ProjectConstants.KEY_CURRENT_USER_SKIP_MODE, false);
+        return getUsrPreferences().getBoolean(ProjectConstants.KEY_CURRENT_USER_SKIP_MODE, true);
     }
 }

@@ -1,114 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:background="@color/white"
+        android:orientation="vertical"
         android:paddingLeft="@dimen/add_price_layout_padding_left"
         android:paddingRight="@dimen/add_price_layout_padding_right"
         android:paddingTop="@dimen/add_price_layout_padding_top">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/add_price_normal_margin"
-            android:gravity="right">
+            android:gravity="right"
+            android:orientation="horizontal">
 
             <com.farmers.underground.ui.custom_views.CustomTextView
+                android:id="@+id/tvNameMarketer_FAP"
                 style="@style/DarkGreyMainRegularText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/margin_default_small"
-                android:text="כרמל יבולים"
-                android:id="@+id/tvNameMarketer_FAP" />
+                android:text="כרמל יבולים" />
 
             <com.farmers.underground.ui.custom_views.CustomTextView
+                android:id="@+id/tvLogo_FAP"
                 style="@style/LogoMarketer"
-                android:text="כי "
-                android:id="@+id/tvLogo_FAP" />
+                android:text="כי " />
 
             <ImageView
+                android:id="@+id/ivIcon_FAP"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/ivIcon_FAP" />
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <com.farmers.underground.ui.custom_views.CustomTextView
+                android:id="@+id/tvChangeDate_FAP"
+                style="@style/BlueMainRegularText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/BlueMainRegularText"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:text="@string/add_price_change_date"
-                android:id="@+id/tvChangeDate_FAP" />
+                android:text="@string/add_price_change_date" />
 
             <com.farmers.underground.ui.custom_views.CustomTextView
+                android:id="@+id/tvDate_FAP"
+                style="@style/BlackMainRegularText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/BlackMainRegularText"
                 android:drawableLeft="@drawable/ic_arrow_drop_down_3_copy"
                 android:drawablePadding="@dimen/padding_margin_default_tiny"
-                android:text="יום שני 12.2.15"
-                android:id="@+id/tvDate_FAP" />
+                android:text="יום שני 12.2.15" />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="vertical"
+            android:id="@+id/llContainerPrices"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/llContainerPrices">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/default_divider_height"
                 android:layout_marginBottom="@dimen/add_price_big_margin"
                 android:layout_marginTop="@dimen/margin_default_small"
-                android:background="@color/grey"/>
+                android:background="@color/grey" />
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/add_price_normal_margin">
+                android:layout_marginBottom="@dimen/add_price_normal_margin"
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:orientation="vertical"
                     android:paddingRight="20dp">
 
                     <LinearLayout
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
 
                         <ImageView
+                            android:id="@+id/imageView6"
                             android:layout_width="17dp"
                             android:layout_height="22dp"
                             android:layout_gravity="bottom"
+                            android:paddingBottom="6dp"
                             android:scaleType="fitXY"
-                            android:src="@drawable/ic_crop_marketer_price"
-                            android:id="@+id/imageView6"
-                            android:paddingBottom="6dp"/>
+                            android:src="@drawable/ic_crop_marketer_price" />
 
                         <com.farmers.underground.ui.custom_views.CustomEditText
+                            android:id="@+id/etPrice_FAP"
                             style="@style/EditTextAddPrice"
                             android:digits="1234567890."
-                            android:inputType="numberDecimal"
                             android:hint="@string/add_price_hint_price"
-                            android:id="@+id/etPrice_FAP" />
+                            android:inputType="numberDecimal" />
                     </LinearLayout>
 
                     <View
@@ -116,62 +118,62 @@
                         android:layout_height="@dimen/default_divider_height"
                         android:layout_marginBottom="@dimen/margin_default_tiny"
                         android:layout_marginTop="@dimen/margin_default_tiny"
-                        android:background="@color/grey"/>
+                        android:background="@color/grey" />
 
                     <com.farmers.underground.ui.custom_views.CustomTextView
+                        android:id="@+id/tvPriceError_FAP"
+                        style="@style/WhiteSmallRegularText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/WhiteSmallRegularText"
-                        android:textColor="@color/text_red"
-                        android:gravity="right"
-                        android:visibility="invisible"
                         android:drawableLeft="@drawable/ic_error_price"
+                        android:gravity="right"
                         android:text="@string/add_price_incorrect_price"
-                        android:id="@+id/tvPriceError_FAP" />
+                        android:textColor="@color/text_red"
+                        android:visibility="invisible" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <com.farmers.underground.ui.custom_views.CustomEditText
+                        android:id="@+id/etQuality_FAP"
                         style="@style/EditTextAddPrice"
-                        android:hint="@string/add_price_hint_type"
                         android:layout_gravity="bottom|right"
-                        android:textSize="@dimen/main_text_size"
                         android:cursorVisible="true"
-                        android:id="@+id/etQuality_FAP" />
+                        android:hint="@string/add_price_hint_type"
+                        android:textSize="@dimen/main_text_size" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/default_divider_height"
                         android:layout_marginBottom="@dimen/margin_default_tiny"
                         android:layout_marginTop="@dimen/margin_default_tiny"
-                        android:background="@color/grey"/>
+                        android:background="@color/grey" />
 
                     <com.farmers.underground.ui.custom_views.CustomTextView
+                        android:id="@+id/tvHintQuality_FAP"
+                        style="@style/WhiteSmallRegularText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/WhiteSmallRegularText"
-                        android:textColor="@color/text_light_grey"
                         android:gravity="right"
                         android:text="@string/add_price_example_type"
-                        android:id="@+id/tvHintQuality_FAP" />
+                        android:textColor="@color/text_light_grey" />
                 </LinearLayout>
 
             </LinearLayout>
+
         </LinearLayout>
 
         <com.farmers.underground.ui.custom_views.CustomTextView
+            android:id="@+id/tvAddQuality_FAP"
+            style="@style/BlueMainRegularText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginBottom="@dimen/add_price_big_margin"
-            style="@style/BlueMainRegularText"
-            android:text="@string/add_price_add_type"
-            android:id="@+id/tvAddQuality_FAP" />
+            android:text="@string/add_price_add_type" />
     </LinearLayout>
-
 </ScrollView>

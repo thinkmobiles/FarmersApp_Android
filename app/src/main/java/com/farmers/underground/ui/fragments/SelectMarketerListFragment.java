@@ -136,7 +136,7 @@ public class SelectMarketerListFragment extends BaseFragment<LoginSignUpActivity
     private void selectMarketer(int posMarketer){
         getHostActivity().setNameMarketeer(mAdapter.getItem(posMarketer));
         getHostActivity().popBackStackUpTo(getClass());
-        getHostActivity().switchFragment(SelectMarketerFragment.class.getName(), false);
+        getHostActivity().switchFragment(SelectMarketerFragment.newInstance(false), false);
         getHostActivity().hideSoftKeyboard();
     }
 

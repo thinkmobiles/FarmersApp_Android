@@ -1,8 +1,9 @@
 package com.farmers.underground.ui.fragments;
 
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.Html;
-import android.view.KeyEvent;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -23,12 +24,11 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
 /**
- *
- * Created by samson on 09.10.15.
+ * Created by samson
+ * on 22.10.15.
  */
 public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements AddPriceActivity.OnChangeDateListener {
 
-    private static final String KEY_ID_MARKETER = "id_marketer";
     private static final int LIMIT = 8;
 
     @Bind(R.id.etPrice_FAP)
@@ -55,14 +55,6 @@ public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements 
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_add_price;
-    }
-
-    public static AddPriceFragment newInstance(String idMarketer){
-        AddPriceFragment fragment = new AddPriceFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString(KEY_ID_MARKETER, idMarketer);
-        fragment.setArguments(bundle);
-        return fragment;
     }
 
     @Override
@@ -120,12 +112,10 @@ public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements 
             View view = LayoutInflater.from(getHostActivity()).inflate(R.layout.item_price_type, null);
             EditText editText = (EditText) view.findViewById(R.id.etPrice_FAP);
             editText.setHint(Html.fromHtml("<small><small><small>" + getHostActivity().getString(R.string.add_price_hint_price) + "</small></small></small>"));
-            editText.setOnEditorActionListener(listener);
-            editText.setTag(counter);
+            editText.addTextChangedListener(getPriceWatcher(counter));
             listPrice.add(editText);
             editText = (EditText) view.findViewById(R.id.etQuality_FAP);
-            editText.setOnEditorActionListener(listener);
-            editText.setTag(counter);
+            editText.addTextChangedListener(getQualityWatcher());
             listQuality.add(editText);
             listError.add((TextView) view.findViewById(R.id.tvPriceError_FAP));
             container.addView(view);
@@ -148,17 +138,6 @@ public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements 
         checkCorrection();
     }
 
-    private TextView.OnEditorActionListener listener = new TextView.OnEditorActionListener() {
-        @Override
-        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-            int position = (int) v.getTag();
-            checkValidation(listPrice.get(position).getText().toString(), listError.get(position));
-            getHostActivity().hideSoftKeyboard();
-            checkCorrection();
-            return true;
-        }
-    };
-
     private void checkValidation(String price, TextView textViewError){
         if(ValidationUtil.isValidPrice(price)){
             textViewError.setVisibility(View.INVISIBLE);
@@ -167,4 +146,51 @@ public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements 
         }
 
     }
+
+    private TextWatcher getPriceWatcher(final int position){
+        return new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(ValidationUtil.isValidPrice(s.toString())){
+                    listError.get(position).setVisibility(View.INVISIBLE);
+                } else {
+                    listError.get(position).setVisibility(View.VISIBLE);
+                }
+                if(s.toString().isEmpty()){
+                    listError.get(position).setVisibility(View.INVISIBLE);
+                }
+                checkCorrection();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        };
+    }
+
+    private TextWatcher getQualityWatcher(){
+        return new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                checkCorrection();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        };
+    }
+
 }
