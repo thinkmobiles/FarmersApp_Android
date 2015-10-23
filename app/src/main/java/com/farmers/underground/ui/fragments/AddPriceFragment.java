@@ -71,7 +71,7 @@ public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements 
         ButterKnife.bind(this, view);
         getHostActivity().setOnChangeDateListener(this);
         getHostActivity().setChildFragment(this);
-//        setMarketer();
+        setMarketer();
         setHint(etPrice);
         setDate();
         initLists();
