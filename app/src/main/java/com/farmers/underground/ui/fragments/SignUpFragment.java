@@ -66,6 +66,7 @@ public class SignUpFragment extends BaseFragment<LoginSignUpActivity>  {
 
     @OnClick({R.id.ivBack_FSU, R.id.tvLogin_FSU})
     protected void back() {
+        getHostActivity().hideSoftKeyboard();
         getHostActivity().getSupportFragmentManager().popBackStack();
     }
 

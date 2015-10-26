@@ -493,7 +493,7 @@ public class StatisticsFragment
         priceView.tv_Price.setTextSize(TypedValue.COMPLEX_UNIT_SP, 33.2F);
         priceView.tv_Price.setTypeface(TypefaceManager.getInstance().getArialBold());
 
-        priceView.tv_Marketeer_CropItem.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15.9F);
+        priceView.tv_Marketeer_CropItem.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13.0F);
         priceView.tv_Marketeer_CropItem.setTypeface(TypefaceManager.getInstance().getArialBold());
     }
 

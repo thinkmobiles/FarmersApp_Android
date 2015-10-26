@@ -10,7 +10,7 @@
 
     <FrameLayout
             android:id="@+id/price_conainer"
-            android:layout_width="wrap_content"
+            android:layout_width="95dp"
             android:layout_height="match_parent"
             android:paddingRight="@dimen/padding_margin_default_tiny"
             android:layout_alignParentTop="true"
@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_gravity="center" android:visibility="visible">
+                android:layout_gravity="center_horizontal" android:visibility="visible">
 
             <LinearLayout
                     android:orientation="horizontal"
@@ -64,18 +64,35 @@
                     android:gravity="left"/>
 
         </LinearLayout>
-        <com.farmers.underground.ui.custom_views.CustomTextView
-                android:id="@+id/tv_why_c_no_price_MP"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/why_c_no_prices"
-                android:lines="2"
-                android:layout_gravity="center"
-                android:textColor="@color/selector_tap_to_refresh"
-                android:textSize="10sp"
-                custom:customFont="bold"
+                android:layout_height="wrap_content"
                 android:visibility="gone"
-                android:gravity="center_vertical|right"/>
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:id="@+id/ll_why_c_container_MP">
+
+                    <ImageView
+                        android:layout_width="@dimen/crop_price_icon_size"
+                        android:layout_height="@dimen/crop_price_icon_size"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_info"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/margin_default_tiny"
+                        android:layout_marginBottom="@dimen/margin_default_tiny"/>
+
+                    <com.farmers.underground.ui.custom_views.CustomTextView
+                        android:id="@+id/tv_why_c_no_price_MP"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/why_c_no_prices"
+                        android:lines="2"
+                        android:layout_gravity="center"
+                        android:textColor="@color/selector_tap_to_refresh"
+                        android:textSize="10sp"
+                        custom:customFont="bold"
+                        android:gravity="center"/>
+            </LinearLayout>
     </FrameLayout>
     <LinearLayout
             android:id="@+id/marketeer_container"

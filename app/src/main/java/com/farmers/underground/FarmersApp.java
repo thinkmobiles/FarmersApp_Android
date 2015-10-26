@@ -18,8 +18,7 @@ import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.remote.util.ICallback;
 import com.farmers.underground.ui.activities.LoginSignUpActivity;
 import com.farmers.underground.ui.utils.TypefaceManager;
-import com.vincentbrison.openlibraries.android.dualcache.lib.DualCacheContextUtils;
-import com.vincentbrison.openlibraries.android.dualcache.lib.DualCacheLogUtils;
+
 
 import io.fabric.sdk.android.Fabric;
 import java.util.HashSet;
@@ -65,10 +64,7 @@ public class FarmersApp extends Application {
         // especially, if you're using Facebook UI elements.
         FacebookSdk.sdkInitialize(getApplicationContext());
 
-        // Android DualCache
-        if (BuildConfig.DEBUG)
-            DualCacheLogUtils.enableLog();
-        DualCacheContextUtils.setContext(getApplicationContext());
+
 
         /**Set Hebrew LOCALE */
            Locale locale = new Locale("iw");

@@ -46,7 +46,7 @@
                 android:singleLine="true"
                 android:text="אוקטובר"
                 android:textColor="#0a89a7"
-                android:textSize="36sp"
+                android:textSize="@dimen/stat_price_name_month"
                 app:customFont="regular" />
            <View
                 android:layout_marginLeft="13dp"

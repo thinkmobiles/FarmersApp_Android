@@ -2,14 +2,13 @@ package com.farmers.underground.ui.models;
 
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 
 import com.farmers.underground.R;
-import com.farmers.underground.ui.activities.TransparentActivity;
-import com.farmers.underground.ui.dialogs.WhyCanISeeThisPriceDialogFragment;
 
 /**
  * Created by omar on 10/2/15.
@@ -35,8 +34,8 @@ public class PriceMarketeerPricesVH extends BaseMarketeerPricesVH {
     @Bind(R.id.rv_container_price_item_MP)
     protected View container;
 
-    @Bind(R.id.tv_why_c_no_price_MP)
-    protected TextView tv_why_c_no_price_MP;
+    @Bind(R.id.ll_why_c_container_MP)
+    protected LinearLayout ll_why_c_container_MP;
 
     @Bind(R.id.ll_price_text_conainer_MP)
     protected View v_PriceContainer;
@@ -79,7 +78,7 @@ public class PriceMarketeerPricesVH extends BaseMarketeerPricesVH {
     private void showRandom() {
         boolean isShow = Math.random() > 0.5f;
         v_PriceContainer.setVisibility(!isShow ? View.VISIBLE : View.GONE);
-        tv_why_c_no_price_MP.setVisibility(isShow ? View.VISIBLE : View.GONE);
+        ll_why_c_container_MP.setVisibility(isShow ? View.VISIBLE : View.GONE);
         tv_MorePrice.setVisibility(Math.random() > 0.5f ? View.VISIBLE : View.GONE);
     }
 

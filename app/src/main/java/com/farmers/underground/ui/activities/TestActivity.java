@@ -17,6 +17,8 @@ import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.ui.base.BaseActivity;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 
 /**
  * Created by tZpace
@@ -77,9 +79,9 @@ public class TestActivity extends BaseActivity {
     @OnClick(R.id.btn_api_call_test)
     void testApiCallsReg() {
         showProgressDialog();
-        RetrofitSingleton.getInstance().getLastCropPricesList(new ACallback<ArrayList<LastCropPricesModel>, ErrorMsg>() {
+        RetrofitSingleton.getInstance().getLastCropPricesList(new ACallback<LinkedList<LastCropPricesModel>, ErrorMsg>() {
             @Override
-            public void onSuccess(ArrayList<LastCropPricesModel> result) {
+            public void onSuccess(LinkedList<LastCropPricesModel> result) {
                 showToast("OK", Toast.LENGTH_SHORT);
             }
 

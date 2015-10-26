@@ -7,6 +7,7 @@ import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.remote.models.SearchHint;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -28,7 +29,7 @@ public class SearchResultLoader extends AsyncTaskLoader<List<LastCropPricesModel
 
     @Override
     public List<LastCropPricesModel> loadInBackground() {
-        List<LastCropPricesModel> searchResult = new ArrayList<>();
+        List<LastCropPricesModel> searchResult = new LinkedList<>();
 
         for (LastCropPricesModel item : mCropList)
             if (BuildConfig.DEBUG)

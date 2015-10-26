@@ -5,6 +5,7 @@ import retrofit.Call;
 import retrofit.http.GET;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * Created by tZpace
@@ -13,6 +14,6 @@ import java.util.ArrayList;
 public interface PricesService {
 
     @GET("prices/getLast")
-    Call<ArrayList<LastCropPricesModel>> getLast(); //todo
+    Call<LinkedList<LastCropPricesModel>> getLast(); //todo
 
 }

@@ -62,6 +62,7 @@
                 android:text="גידולים חיפוש"
                 android:textColor="@color/text_light_grey"
                 android:textSize="@dimen/small_text_size"
+                android:singleLine="true"
                 custom:customFont="regular"/>
 
         <com.farmers.underground.ui.custom_views.CustomTextView
