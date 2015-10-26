@@ -35,6 +35,8 @@
 
     <dimen name="drawer_item_height">50dp</dimen>
 
+    <dimen name="login_text_header_size">30sp</dimen>
+    <dimen name="login_text_subheader_size">16sp</dimen>
 
     <!--statistics frag price sizes-->
     <dimen name="stat_price_prefix_text_size_small">14sp</dimen>
