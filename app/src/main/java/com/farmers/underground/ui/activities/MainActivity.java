@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -39,6 +40,8 @@ import com.farmers.underground.ui.fragments.CropsListFragment;
 import com.farmers.underground.ui.models.CropsListFragmentModel;
 import com.farmers.underground.ui.models.DrawerItem;
 import com.farmers.underground.ui.utils.*;
+
+import org.intellij.lang.annotations.MagicConstant;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -99,6 +102,13 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         context.startActivity(intent);
     }
 
+    public static void startWithPageSelected(@NonNull Context context,
+                 @MagicConstant(stringValues = {ProjectConstants.MAIN_ACTIVITY_PAGE_FAV,ProjectConstants.MAIN_ACTIVITY_PAGE_ALL}) final String pageSelected) {
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra(ProjectConstants.KEY_START_MAIN_ACTIVITY_PAGE, pageSelected);
+        context.startActivity(intent);
+    }
+
     public static void startWithSearchFocused(@NonNull Context context) {
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra(ProjectConstants.KEY_FOCUS_SEARCH_VIEW, true);
@@ -119,7 +129,13 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
         setCropsListCallback();
         setDrawer();
-        setViewPager();
+
+        if(getIntent().hasExtra(ProjectConstants.KEY_START_MAIN_ACTIVITY_PAGE)){
+            setViewPager(getIntent().getStringExtra(ProjectConstants.KEY_START_MAIN_ACTIVITY_PAGE));
+        } else {
+            setViewPager(null);
+        }
+
         setTabs();
         setSearchViewListeners();
         setFragmentStateController();
@@ -417,14 +433,20 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
 
     //view pager
-    public void setViewPager() {
-
+    public void setViewPager(@Nullable String page) {
         pagerAdapter = new ProjectPagerAdapter<>(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
         pagerAdapter.setFragments(getFragmentList());
         pagerAdapter.setTitles(getTitlesList());
         pagerAdapter.notifyDataSetChanged();
-        viewPager.setCurrentItem(pagerAdapter.getCount() - 1);
+
+        if(page==null){
+            viewPager.setCurrentItem(pagerAdapter.getCount() - 1);
+        } else if (page.equals(ProjectConstants.MAIN_ACTIVITY_PAGE_FAV)){
+            viewPager.setCurrentItem(0);
+        } else if (page.equals(ProjectConstants.MAIN_ACTIVITY_PAGE_ALL)){
+            viewPager.setCurrentItem(1);
+        }
     }
 
 
@@ -437,8 +459,8 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     private List<CropsListFragment> getFragmentList() {
         List<CropsListFragment> fragmentList = new ArrayList<>();
-        fragmentList.add(createFaaFragment());
-        fragmentList.add(createCropFragment());
+        fragmentList.add(createFaaFragment()); //MAIN_ACTIVITY_PAGE_FAV
+        fragmentList.add(createCropFragment());//MAIN_ACTIVITY_PAGE_ALL
         return fragmentList;
     }
 
@@ -490,7 +512,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     }
 
     //click events
-
 
     @OnItemClick(R.id.lv_DrawerHolder_MainActivity)
     void onItemClick(int pos) {
