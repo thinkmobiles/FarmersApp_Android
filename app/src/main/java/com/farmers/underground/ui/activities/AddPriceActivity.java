@@ -28,6 +28,7 @@ import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.fragments.AddPriceFragment;
+import com.farmers.underground.ui.utils.PicassoHelper;
 import com.farmers.underground.ui.utils.StringFormaterUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -173,11 +174,18 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
 
             }
         };
-        Picasso.with(this)
-                .load(mCropModel.image)
-                .transform(new CropCircleTransformation())
-                .error(R.drawable.bitmap)
-                .into(target);
+
+        final String url = !TextUtils.isEmpty(mCropModel.image) ? ApiConstants.BASE_URL + mCropModel.image : null;
+        if (url != null)
+
+            PicassoHelper.getPicasso(this)
+                    .load(url)
+                    .config(Bitmap.Config.RGB_565)
+                    .transform(new CropCircleTransformation())
+                    .placeholder(R.drawable.ic_drawer_crops)
+                    .error(R.drawable.ic_drawer_crops)
+                    .into(target);
+
         return super.onPrepareOptionsMenu(menu);
     }
 

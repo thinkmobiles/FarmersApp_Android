@@ -15,6 +15,7 @@ import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.remote.models.MarketeerPriceModel;
+import com.farmers.underground.ui.activities.AddPriceActivity;
 import com.farmers.underground.ui.activities.PricesActivity;
 import com.farmers.underground.ui.activities.TransparentActivity;
 import com.farmers.underground.ui.adapters.MarketeerPricesAdapter;
@@ -189,7 +190,7 @@ public class MarketeerPricesFragment extends BaseFragment<PricesActivity>
 
     @OnClick(R.id.ll_AddPrice_MP)
     protected void addPriceClicked() {
-
+        AddPriceActivity.start(getHostActivity(), mCropModel);
     }
 
 }

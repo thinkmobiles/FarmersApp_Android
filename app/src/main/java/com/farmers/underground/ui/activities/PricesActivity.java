@@ -19,6 +19,8 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -94,8 +96,8 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getDataOnStart(getIntent());
         ButterKnife.bind(this);
+        getDataOnStart(getIntent());
 
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -132,6 +134,8 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
         mCropModel = gson.fromJson(intent.getStringExtra(ProjectConstants.KEY_DATA), LastCropPricesModel.class);
         if (mCropModel == null)
             throw new IllegalAccessError("Create this activity with start(Context, CropModel) " + "method only!");
+        else
+            ((TextView) mToolbar.findViewById(R.id.toolbar_title)).setText(mCropModel.displayName);
     }
 
     //ViewPager
