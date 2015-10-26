@@ -46,6 +46,7 @@ import com.squareup.picasso.Target;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -351,8 +352,8 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
     }
 
     private ArrayList<String> spinnerTestData() {
-        ArrayList<String> data = new ArrayList<>();
-        data.add(getString(R.string.month1));
+        ArrayList<String> data = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.all_month)));
+     /* data.add(getString(R.string.month1));
         data.add(getString(R.string.month2));
         data.add(getString(R.string.month3));
         data.add(getString(R.string.month4));
@@ -360,7 +361,7 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
         data.add(getString(R.string.month6));
         data.add(getString(R.string.month7));
         data.add(getString(R.string.month8));
-        data.add(getString(R.string.month9));
+        data.add(getString(R.string.month9));*/
         return data;
     }
 
