@@ -235,7 +235,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
             @Override
             public void onFavChecked(final LastCropPricesModel cropModel, boolean isChecked) {
                 if (isChecked) {
-                    //TODO add to favourites
                     showProgressDialog();
                     RetrofitSingleton.getInstance().addCropsToFavorites(cropModel.displayName, new ACallback<SuccessMsg,
                             ErrorMsg>() {
@@ -255,7 +254,24 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                          }
                     });
                 } else {
-                    updateAfterFavsClick(null, cropModel, false);
+                    showProgressDialog();
+                    RetrofitSingleton.getInstance().deleteCropsFromFavorites(cropModel.displayName, new ACallback<SuccessMsg,
+                            ErrorMsg>() {
+                        @Override
+                        public void onSuccess(SuccessMsg result) {
+                            updateAfterFavsClick(result, cropModel, false);
+                        }
+
+                        @Override
+                        public void onError(@NonNull ErrorMsg error) {
+                            showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
+                        }
+
+                        @Override
+                        public void anyway() {
+                            hideProgressDialog();
+                        }
+                    });
                 }
             }
 

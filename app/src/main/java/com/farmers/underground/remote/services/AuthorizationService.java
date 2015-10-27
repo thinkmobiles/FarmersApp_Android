@@ -13,6 +13,7 @@ import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 import retrofit.http.POST;
+import retrofit.http.Path;
 
 /**
  * Created by tZpace
@@ -45,5 +46,8 @@ public interface AuthorizationService {
     @FormUrlEncoded
     @POST("users/favorites")
     Call<SuccessMsg> addCropsToFavorites(@Field("favorites") String favoritesID);
+
+    @DELETE("users/favorites/{displayName}")
+    Call<SuccessMsg> deleteCropsFromFavorites(@Path("displayName") String displayName);
 
 }

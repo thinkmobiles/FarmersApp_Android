@@ -13,6 +13,7 @@ import com.farmers.underground.remote.RetrofitSingleton;
 import com.farmers.underground.remote.models.ErrorMsg;
 import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.remote.models.SuccessMsg;
+import com.farmers.underground.remote.models.base.PriceBase;
 import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.ui.base.BaseActivity;
 
@@ -79,9 +80,9 @@ public class TestActivity extends BaseActivity {
     @OnClick(R.id.btn_api_call_test)
     void testApiCallsReg() {
         showProgressDialog();
-        RetrofitSingleton.getInstance().getLastCropPricesList(new ACallback<LinkedList<LastCropPricesModel>, ErrorMsg>() {
+        RetrofitSingleton.getInstance().getCropPricesForPeriod("2015-10-27T12:09:12.000Z", "2015-10-24T12:09:12.000Z","אנונה"  ,new ACallback<ArrayList<PriceBase>,ErrorMsg>() {
             @Override
-            public void onSuccess(LinkedList<LastCropPricesModel> result) {
+            public void onSuccess(ArrayList<PriceBase> result) {
                 showToast("OK", Toast.LENGTH_SHORT);
             }
 
