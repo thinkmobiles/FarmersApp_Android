@@ -5,6 +5,7 @@ import com.farmers.underground.BuildConfig;
 import com.farmers.underground.config.ApiConstants;
 import com.farmers.underground.remote.models.*;
 import com.farmers.underground.remote.models.base.MarketeerBase;
+import com.farmers.underground.remote.models.base.PriceBase;
 import com.farmers.underground.remote.services.AuthorizationService;
 import com.farmers.underground.remote.services.CropsService;
 import com.farmers.underground.remote.services.MarketeerService;
@@ -104,6 +105,22 @@ public class RetrofitSingleton {
         });
     }
 
+    public void getCropPricesForPeriod(@NonNull String startDate, @NonNull  String endDate, @NonNull  String name,
+                                       final ACallback<ArrayList<PriceBase>,ErrorMsg> callback){
+        getPricesService().getCropPricesForPeriod(startDate,endDate,name).enqueue(new Callback<ArrayList<PriceBase>>() {
+            @Override
+            public void onResponse(Response<ArrayList<PriceBase>> response, Retrofit retrofit) {
+                performCallback(callback,response);
+                callback.anyway();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                callback.onError(new ErrorMsg("Network Error"));
+                callback.anyway();
+            }
+        });
+    }
 
     private void initMarketeerService(Retrofit retrofit) {
         marketeerService = retrofit.create(MarketeerService.class);
@@ -271,9 +288,27 @@ public class RetrofitSingleton {
     }
 
 
-    public void addCropsToFavorites(@NonNull String favoritesID, final ACallback<SuccessMsg, ErrorMsg> callback) {
+    public void addCropsToFavorites(@NonNull String displayName, final ACallback<SuccessMsg, ErrorMsg> callback) {
 
-        getAuthorizationService().addCropsToFavorites(favoritesID).enqueue(new Callback<SuccessMsg>() {
+        getAuthorizationService().addCropsToFavorites(displayName).enqueue(new Callback<SuccessMsg>() {
+
+            @Override
+            public void onResponse(Response<SuccessMsg> response, Retrofit retrofit) {
+                performCallback(callback, response);
+                callback.anyway();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                callback.onError(new ErrorMsg("Unknown Error"));
+                callback.anyway();
+            }
+        });
+    }
+
+    public void deleteCropsFromFavorites(@NonNull String displayName, final ACallback<SuccessMsg, ErrorMsg> callback) {
+
+        getAuthorizationService().deleteCropsFromFavorites(displayName).enqueue(new Callback<SuccessMsg>() {
 
             @Override
             public void onResponse(Response<SuccessMsg> response, Retrofit retrofit) {
