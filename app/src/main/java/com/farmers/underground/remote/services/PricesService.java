@@ -4,8 +4,6 @@ import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.remote.models.base.PriceBase;
 
 import retrofit.Call;
-import retrofit.http.Field;
-import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 import retrofit.http.Query;
 
@@ -26,7 +24,6 @@ public interface PricesService {
     *
     * this is for fetch prices for cor for period
     * */
-
     @GET("prices/getCropPricesForPeriod")
     Call<ArrayList<PriceBase>> getCropPricesForPeriod(@Query("startDate") String startDate, @Query("endDate") String endDate, @Query("name") String name);
 
