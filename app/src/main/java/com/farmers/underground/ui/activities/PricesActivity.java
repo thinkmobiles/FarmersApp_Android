@@ -55,6 +55,7 @@ import com.farmers.underground.ui.models.DrawerItem;
 import com.farmers.underground.ui.utils.NotYetHelper;
 import com.farmers.underground.ui.utils.PicassoHelper;
 import com.farmers.underground.ui.utils.StringFormaterUtil;
+import com.farmers.underground.ui.utils.WhatsAppUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
@@ -486,7 +487,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                 MainActivity.startWithPageSelected(this, ProjectConstants.MAIN_ACTIVITY_PAGE_ALL);
                 break;
             case 3:
-                NotYetHelper.notYetImplmented(this, "drawer items pos=" + pos);
+                WhatsAppUtil.getInstance(this).sendInvitation();
                 break;
             case 4:
                 MainActivity.startWithPageSelected(this, ProjectConstants.MAIN_ACTIVITY_PAGE_FAV);

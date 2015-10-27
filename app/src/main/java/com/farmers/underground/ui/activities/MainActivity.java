@@ -528,7 +528,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                 viewPager.setCurrentItem(1);
                 break;
             case 3:
-                NotYetHelper.notYetImplmented(this, "drawer items pos=" + pos);
+               WhatsAppUtil.getInstance(this).sendInvitation();
                 break;
             case 4:
                 viewPager.setCurrentItem(0);
