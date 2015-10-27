@@ -142,17 +142,18 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
 
 
             PriceBase priceModel = model.prices.get(i);
-            double price = Double.parseDouble(priceModel.price);
-            tv_Price.setText(price != 0 ? String.format("%.2f", price) : "- -");
-            tv_Marketeer_CropItem.setText(priceModel.source.name);
-            try {
-                long time = format.parse(priceModel.data).getTime();
-                tv_refreshDate.setText(DateFormat.getDateInstance(DateFormat.SHORT).format(time));
-            } catch (Exception e) {
-                e.printStackTrace();
+
+            if (priceModel != null) {
+                double price = Double.parseDouble(priceModel.price);
+                tv_Marketeer_CropItem.setText(priceModel.source.name);
+                try {
+                    long time = format.parse(priceModel.data).getTime();
+                    tv_refreshDate.setText(DateFormat.getDateInstance(DateFormat.SHORT).format(time));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             }
-
-
             if (i != 0) {
                 tv_refreshDate.setVisibility(View.INVISIBLE);
                 tv_refresh.setOnClickListener(null);

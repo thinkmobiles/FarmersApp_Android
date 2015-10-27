@@ -103,7 +103,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     }
 
     public static void startWithPageSelected(@NonNull Context context,
-                 @MagicConstant(stringValues = {ProjectConstants.MAIN_ACTIVITY_PAGE_FAV,ProjectConstants.MAIN_ACTIVITY_PAGE_ALL}) final String pageSelected) {
+            @MagicConstant(stringValues = {ProjectConstants.MAIN_ACTIVITY_PAGE_FAV, ProjectConstants.MAIN_ACTIVITY_PAGE_ALL}) final String pageSelected) {
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra(ProjectConstants.KEY_START_MAIN_ACTIVITY_PAGE, pageSelected);
         context.startActivity(intent);
@@ -130,7 +130,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         setCropsListCallback();
         setDrawer();
 
-        if(getIntent().hasExtra(ProjectConstants.KEY_START_MAIN_ACTIVITY_PAGE)){
+        if (getIntent().hasExtra(ProjectConstants.KEY_START_MAIN_ACTIVITY_PAGE)) {
             setViewPager(getIntent().getStringExtra(ProjectConstants.KEY_START_MAIN_ACTIVITY_PAGE));
         } else {
             setViewPager(null);
@@ -252,7 +252,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                         @Override
                         public void anyway() {
                             hideProgressDialog();
-                         }
+                        }
                     });
                 } else {
                     updateAfterFavsClick(null, cropModel, false);
@@ -268,7 +268,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     private void updateAfterFavsClick(SuccessMsg result, LastCropPricesModel cropModel, boolean infavs) {
         viewPager.requestFocus();
-       if(result!= null) showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
+        if (result != null) showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
         for (LastCropPricesModel item : mCropList)
             if (item.displayName.equals(cropModel.displayName))
                 cropModel.isInFavorites = infavs;
@@ -391,8 +391,16 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     public void setDrawerList() {
         List<DrawerItem> drawerItemList = new ArrayList<>();
         if (BuildConfig.PRODUCTION) {
-            drawerItemList.add(new DrawerItem(FarmersApp.getInstance().getCurrentUser().getAvatar(), FarmersApp
-                    .getInstance().getCurrentUser().getFullName()));
+            String avatar = "";
+            try {
+                avatar = FarmersApp.getInstance().getCurrentUser().getAvatar();
+            } catch (RuntimeException e) {
+                e.printStackTrace();
+            } finally {
+                drawerItemList.add(new DrawerItem(avatar, FarmersApp
+                        .getInstance().getCurrentUser().getFullName()));
+            }
+
         } else
             drawerItemList.add(new DrawerItem("http://s2.turbopic.org/img/2007_03/i4603058af2b30.jpg", "Bela  " +
                     "Lugosie"));
@@ -440,11 +448,11 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         pagerAdapter.setTitles(getTitlesList());
         pagerAdapter.notifyDataSetChanged();
 
-        if(page==null){
+        if (page == null) {
             viewPager.setCurrentItem(pagerAdapter.getCount() - 1);
-        } else if (page.equals(ProjectConstants.MAIN_ACTIVITY_PAGE_FAV)){
+        } else if (page.equals(ProjectConstants.MAIN_ACTIVITY_PAGE_FAV)) {
             viewPager.setCurrentItem(0);
-        } else if (page.equals(ProjectConstants.MAIN_ACTIVITY_PAGE_ALL)){
+        } else if (page.equals(ProjectConstants.MAIN_ACTIVITY_PAGE_ALL)) {
             viewPager.setCurrentItem(1);
         }
     }
@@ -526,7 +534,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                 viewPager.setCurrentItem(0);
                 break;
             case 5:
-                if(FarmersApp.isSkipMode())
+                if (FarmersApp.isSkipMode())
                     LoginSignUpActivity.startAddMarketier(this);
                 else
                     LoginSignUpActivity.startChooseMarketier(this);

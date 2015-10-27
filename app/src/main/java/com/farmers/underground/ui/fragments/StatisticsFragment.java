@@ -405,7 +405,8 @@ public class StatisticsFragment
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if ( popupWindow.isShowing())
+                                if(getHostActivity() != null)
+                                    if ( popupWindow.isShowing())
                                     popupWindow.dismiss();
                             }
                         });

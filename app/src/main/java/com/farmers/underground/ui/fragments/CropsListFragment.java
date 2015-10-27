@@ -126,7 +126,7 @@ public class CropsListFragment
 
     @Override
     public void onReceiveCrops(List<LastCropPricesModel> cropsList, String query) {
-        if(mFragmentModel.getType() == CropsListFragmentModel.TYPE.FAVOURITES){
+        if(mFragmentModel!= null && mFragmentModel.getType() == CropsListFragmentModel.TYPE.FAVOURITES){
             List<LastCropPricesModel> favouritesList = new ArrayList<>();
            for( LastCropPricesModel item : cropsList)
                if(item.isInFavorites)
