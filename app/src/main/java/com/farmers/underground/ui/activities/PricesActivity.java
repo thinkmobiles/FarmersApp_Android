@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -16,19 +17,29 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import com.farmers.underground.BuildConfig;
+import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ApiConstants;
 import com.farmers.underground.config.ProjectConstants;
+import com.farmers.underground.remote.RetrofitSingleton;
+import com.farmers.underground.remote.models.ErrorMsg;
 import com.farmers.underground.remote.models.LastCropPricesModel;
+import com.farmers.underground.remote.models.SuccessMsg;
+import com.farmers.underground.remote.models.UserProfile;
+import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.ui.adapters.AllPricesAdapter;
+import com.farmers.underground.ui.adapters.DrawerAdapter;
 import com.farmers.underground.ui.adapters.ProjectPagerAdapter;
 import com.farmers.underground.ui.adapters.ToolbarSpinnerAdapter;
 import com.farmers.underground.ui.base.BaseActivity;
@@ -40,12 +51,17 @@ import com.farmers.underground.ui.fragments.MarketeerPricesFragment;
 import com.farmers.underground.ui.fragments.PeriodPickerFragment;
 import com.farmers.underground.ui.fragments.StatisticsFragment;
 import com.farmers.underground.ui.models.DateRange;
+import com.farmers.underground.ui.models.DrawerItem;
+import com.farmers.underground.ui.utils.NotYetHelper;
 import com.farmers.underground.ui.utils.PicassoHelper;
 import com.farmers.underground.ui.utils.StringFormaterUtil;
+import com.farmers.underground.ui.utils.WhatsAppUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
+
+import butterknife.OnItemClick;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 import java.util.ArrayList;
@@ -57,13 +73,20 @@ import java.util.List;
  * Created by omar
  * on 10/9/15.
  */
-public class PricesActivity extends BaseActivity implements AllPricesAdapter.AllPricesCallback {
+public class PricesActivity extends BaseActivity implements DrawerAdapter.DrawerCallback, AllPricesAdapter.AllPricesCallback {
 
     public static final int REQUEST_CODE_PERIOD_PICKER = 5;
     public static final int REQUEST_CODE_DIALOG_WHY = 2;
 
-    @Bind(R.id.drawer_conainer_MainActivity)
-    protected FrameLayout mainContainer;
+    @Bind(R.id.drawer_conainer_PriceActivity)
+    protected DrawerLayout mDrawerlayout;
+//    @Bind(R.id.fl_DrawerHolder_PricesActivity)
+//    protected FrameLayout fl_DrawerContainer;
+    @Bind(R.id.lv_DrawerHolder_PricesActivity)
+    protected ListView lvDrawerContainer;
+    @Bind(R.id.ll_logoutPricesActivity)
+    protected View logoutView;
+    private boolean drawerOpened;
 
     @Bind(R.id.toolbar)
     protected Toolbar mToolbar;
@@ -95,6 +118,11 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
     }
 
     @Override
+    public int getLayoutResId() {
+        return R.layout.activity_prices;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
@@ -105,7 +133,7 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
 
         searchView.setVisibility(View.VISIBLE);
         calendar.setVisibility(View.VISIBLE);
-
+        setDrawer();
         setViewPager();
         setTabs();
         setUPSpinner(spinnerTestData(), 5);
@@ -121,8 +149,16 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
     }
 
     @Override
-    public int getLayoutResId() {
-        return R.layout.activity_prices;
+    protected void onResume() {
+        super.onResume();
+        setDrawerList();
+        viewPager.addOnPageChangeListener(pageChangeListener);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        viewPager.addOnPageChangeListener(null);
     }
 
     @Override
@@ -150,36 +186,46 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
         pagerAdapter.notifyDataSetChanged();
         viewPager.setCurrentItem(pagerAdapter.getCount() - 1);
 
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                switch (position) {
-                    case 0:
-                        spinner.setVisibility(View.VISIBLE);
-                        searchView.setVisibility(View.GONE);
-                        calendar.setVisibility(View.GONE);
-                        spinner.bringToFront();
-                        break;
-                    case 1:
-                    case 2:
-                        spinner.setVisibility(View.GONE);
-                        searchView.setVisibility(View.VISIBLE);
-                        calendar.setVisibility(View.VISIBLE);
-                        break;
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
+        //done in onResume
+        //viewPager.addOnPageChangeListener(pageChangeListener);
     }
+
+    private ViewPager.OnPageChangeListener pageChangeListener  = new ViewPager.OnPageChangeListener() {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            switch (position) {
+                case 0:
+                    spinner.setVisibility(View.VISIBLE);
+                    searchView.setVisibility(View.GONE);
+                    calendar.setVisibility(View.GONE);
+                    spinner.bringToFront();
+                    mDrawerlayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                    break;
+                case 1:
+                    spinner.setVisibility(View.GONE);
+                    searchView.setVisibility(View.VISIBLE);
+                    calendar.setVisibility(View.VISIBLE);
+                    mDrawerlayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                    break;
+                case 2:
+                    spinner.setVisibility(View.GONE);
+                    searchView.setVisibility(View.VISIBLE);
+                    calendar.setVisibility(View.VISIBLE);
+                    mDrawerlayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                    break;
+            }
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
+    };
 
     private List<String> getTitlesList() {
         List<String> titles = new ArrayList<>();
@@ -229,6 +275,13 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
     @Override
     public void onMorePricesClicked(LastCropPricesModel cropModel) {
         TransparentActivity.startWithFragment(this, new MorePriecesDialogFragment());
+    }
+
+    @Override
+    public void onSettingsClicked() {
+        NotYetHelper.notYetImplmented(this, "drawer settings");
+
+        mDrawerlayout.closeDrawers();
     }
 
 
@@ -305,7 +358,8 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
         return false;
     }
 
-    //clicke events
+    //clicks events
+
     @OnClick(R.id.action_calendar)
     protected void onCalendarClick() {
 
@@ -360,19 +414,128 @@ public class PricesActivity extends BaseActivity implements AllPricesAdapter.All
 
     }
 
+
+    //todo remove later
     private ArrayList<String> spinnerTestData() {
         ArrayList<String> data = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.all_month)));
-     /* data.add(getString(R.string.month1));
-        data.add(getString(R.string.month2));
-        data.add(getString(R.string.month3));
-        data.add(getString(R.string.month4));
-        data.add(getString(R.string.month5));
-        data.add(getString(R.string.month6));
-        data.add(getString(R.string.month7));
-        data.add(getString(R.string.month8));
-        data.add(getString(R.string.month9));*/
         return data;
     }
 
+
+    //drawer (from main Activity)
+    private void setDrawer() {
+        mDrawerlayout.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                /*lvDrawerContainer.bringToFront();*/
+
+                mDrawerlayout.requestLayout();
+                drawerOpened = true;
+                logoutView.bringToFront();
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                drawerOpened = false;
+            }
+        });
+    }
+
+//    private void openDrawer() {
+//        if (mDrawerlayout.isDrawerOpen(fl_DrawerContainer)) {
+//            mDrawerlayout.closeDrawer(fl_DrawerContainer);
+//        }
+//        mDrawerlayout.openDrawer(fl_DrawerContainer);
+//    }
+
+    public void setDrawerList() {
+        List<DrawerItem> drawerItemList = new ArrayList<>();
+        if (BuildConfig.PRODUCTION) {
+            drawerItemList.add(new DrawerItem(FarmersApp.getInstance().getCurrentUser().getAvatar(), FarmersApp
+                    .getInstance().getCurrentUser().getFullName()));
+        } else
+            drawerItemList.add(new DrawerItem("http://s2.turbopic.org/img/2007_03/i4603058af2b30.jpg", "Bela  " +
+                    "Lugosie"));
+        drawerItemList.add(new DrawerItem());
+        drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_crops, R.string.drawer_content_0));
+        drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_invite_friends, R.string.drawer_content_2));
+        drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_favourites, R.string.drawer_content_3));
+
+
+        //FarmersApp.getInstance().getCurrentUser()!=null todo remove later (user cant be null here)
+        FarmersApp.getInstance().getUserProfileAsync(null);
+        final UserProfile user = FarmersApp.getInstance().getCurrentUser();
+
+        FarmersApp.getInstance().getMarketerBySession(); //getting of target marketer
+
+        if (user != null && (!(user.hasMarketir() || user.isNewMarketeer()))) {
+            drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_plus, R.string.drawer_content_5));
+        } else {
+            drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_plus, R.string.drawer_content_6));
+        }
+
+        drawerItemList.add(new DrawerItem());
+        lvDrawerContainer.setAdapter(new DrawerAdapter(drawerItemList, this));
+    }
+
+    @OnItemClick(R.id.lv_DrawerHolder_PricesActivity)
+    void onItemClick(int pos) {
+        switch (pos) {
+            case 2:
+                MainActivity.startWithPageSelected(this, ProjectConstants.MAIN_ACTIVITY_PAGE_ALL);
+                break;
+            case 3:
+                WhatsAppUtil.getInstance(this).sendInvitation();
+                break;
+            case 4:
+                MainActivity.startWithPageSelected(this, ProjectConstants.MAIN_ACTIVITY_PAGE_FAV);
+                break;
+            case 5:
+                if(FarmersApp.isSkipMode())
+                    LoginSignUpActivity.startAddMarketier(this);
+                else
+                    LoginSignUpActivity.startChooseMarketier(this);
+                finish();
+                break;
+        }
+        mDrawerlayout.closeDrawers();
+    }
+
+    @OnClick(R.id.ll_logoutPricesActivity)
+    protected void logOut() {
+        showProgressDialog();
+        RetrofitSingleton.getInstance().signOut(new ACallback<SuccessMsg, ErrorMsg>() {
+            @Override
+            public void onSuccess(SuccessMsg result) {
+                showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
+                finish();
+                FarmersApp.getInstance().onUserLogOut();
+            }
+
+            @Override
+            public void onError(@NonNull ErrorMsg error) {
+                showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
+            }
+
+            @Override
+            public void anyway() {
+                hideProgressDialog();
+            }
+        });
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if (drawerOpened && mDrawerlayout!=null){
+            mDrawerlayout.closeDrawers();
+        }
+        /*else if ( ) {
+           //todo
+        }*/ else super.onBackPressed();
+
+    }
 
 }

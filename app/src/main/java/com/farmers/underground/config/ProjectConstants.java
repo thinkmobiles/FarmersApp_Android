@@ -9,6 +9,11 @@ public class ProjectConstants {
     public static final String KEY_DATA = "data";
     public static final String KEY_FOCUS_SEARCH_VIEW = "focus_search_view";
 
+    public static final String KEY_START_MAIN_ACTIVITY_PAGE  = "StartWithPageSelected";
+
+    public static final String MAIN_ACTIVITY_PAGE_FAV  = "main_page_favourites";
+    public static final String MAIN_ACTIVITY_PAGE_ALL  = "main_page_all";
+
     public static final String PREFERENCES_FILE_NAME_USR = "preferences_usr";
     public static final String PREFERENCES_FILE_NAME_APP = "preferences_app";
 
