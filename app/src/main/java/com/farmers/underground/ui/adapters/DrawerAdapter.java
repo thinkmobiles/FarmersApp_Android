@@ -1,6 +1,7 @@
 package com.farmers.underground.ui.adapters;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,7 +89,7 @@ public class DrawerAdapter extends BaseAdapter implements View.OnClickListener {
         viewHolder.ivContentIcon.setTag(position);
         viewHolder.ivContentIcon.setOnClickListener(this);
         Picasso.with(mContext)
-                .load(getItem(position).iconPath)
+                .load(Uri.parse(getItem(position).iconPath))
                 .transform(new CropCircleTransformation())
                 .placeholder(R.drawable.user_oval)
                 .error(R.drawable.user_oval)
