@@ -451,12 +451,10 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     public void setDrawerList() {
         List<DrawerItem> drawerItemList = new ArrayList<>();
-        if (BuildConfig.PRODUCTION) {
+
             drawerItemList.add(new DrawerItem(FarmersApp.getInstance().getCurrentUser().getAvatar(), FarmersApp
                     .getInstance().getCurrentUser().getFullName()));
-        } else
-            drawerItemList.add(new DrawerItem("http://s2.turbopic.org/img/2007_03/i4603058af2b30.jpg", "Bela  " +
-                    "Lugosie"));
+
         drawerItemList.add(new DrawerItem());
         drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_crops, R.string.drawer_content_0));
         drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_invite_friends, R.string.drawer_content_2));

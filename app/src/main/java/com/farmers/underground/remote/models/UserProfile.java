@@ -44,7 +44,10 @@ public class UserProfile {
     }
 
     public String getAvatar() {
-        return avatar;
+        if(TextUtils.isEmpty(avatar))
+            return "";
+        else
+            return avatar;
     }
 
     public String getEmail() {

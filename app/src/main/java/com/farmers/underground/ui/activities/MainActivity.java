@@ -405,20 +405,10 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     public void setDrawerList() {
         List<DrawerItem> drawerItemList = new ArrayList<>();
-        if (BuildConfig.PRODUCTION) {
-            String avatar = "";
-            try {
-                avatar = FarmersApp.getInstance().getCurrentUser().getAvatar();
-            } catch (RuntimeException e) {
-                e.printStackTrace();
-            } finally {
-                drawerItemList.add(new DrawerItem(avatar, FarmersApp
-                        .getInstance().getCurrentUser().getFullName()));
-            }
 
-        } else
-            drawerItemList.add(new DrawerItem("http://s2.turbopic.org/img/2007_03/i4603058af2b30.jpg", "Bela  " +
-                    "Lugosie"));
+        drawerItemList.add(new DrawerItem(FarmersApp.getInstance().getCurrentUser().getAvatar(), FarmersApp
+                .getInstance().getCurrentUser().getFullName()));
+
         drawerItemList.add(new DrawerItem());
         drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_crops, R.string.drawer_content_0));
         drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_invite_friends, R.string.drawer_content_2));
@@ -426,7 +416,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
 
         //FarmersApp.getInstance().getCurrentUser()!=null todo remove later (user cant be null here)
-        FarmersApp.getInstance().getUserProfileAsync(null);
+        //FarmersApp.getInstance().getUserProfileAsync(null); - wtf
         final UserProfile user = FarmersApp.getInstance().getCurrentUser();
 
         FarmersApp.getInstance().getMarketerBySession(); //getting of target marketer

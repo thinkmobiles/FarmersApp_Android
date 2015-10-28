@@ -109,6 +109,9 @@ public class FarmersApp extends Application {
         RetrofitSingleton.getInstance().getUserProfileBySession(new ACallback<UserProfile, ErrorMsg>() {
             @Override
             public void onSuccess(UserProfile result) {
+                if(result==null)
+                    onError(new ErrorMsg("Profile is not fetched"));
+
                 setCurrentUser(result);
                 if (callback != null) {
                     callback.onSuccess(getCurrentUser());
