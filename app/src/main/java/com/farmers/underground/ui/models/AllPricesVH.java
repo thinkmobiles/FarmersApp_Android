@@ -8,6 +8,15 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.farmers.underground.R;
+import com.farmers.underground.config.ProjectConstants;
+import com.farmers.underground.remote.models.PricesByDateModel;
+import com.farmers.underground.remote.models.base.PriceBase;
+import com.farmers.underground.ui.utils.DateHelper;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by omar
@@ -42,59 +51,98 @@ public class AllPricesVH extends RecyclerView.ViewHolder {
     @Bind(R.id.all_prices_item_view)
     protected View container;
 
+    private static final int TYPE_ADD = 1;
+    private static final int TYPE_MORE = 2;
+
     public View getContainer() {
         return container;
     }
 
     private AllPricesDH dateHolder;
+    private LinearLayout[] layouts;
 
     public AllPricesVH(final View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
-
+        layouts = new LinearLayout[3];
+        layouts[0] = layout_marketer;
+        layouts[1] = layout_market_one;
+        layouts[2] = layout_market_two;
     }
 
     public void bindData(final AllPricesDH dateHolder, boolean hideDevider) {
 
-        ((TextView) layout_marketer.findViewById(R.id.tv_Marketeer_CropItem)).setText(R.string.your_dealer);
-        ((TextView) layout_market_one.findViewById(R.id.tv_Marketeer_CropItem)).setText(R.string.whole_sales);
-        ((TextView) layout_market_two.findViewById(R.id.tv_Marketeer_CropItem)).setText(R.string.plant_counsil);
-
         this.dateHolder = dateHolder;
-        for (int i = 0; i < ll_PriceContainer.getChildCount(); i++) {
-            TextView tv_refresh = (TextView) ll_PriceContainer.getChildAt(i)
-                    .findViewById(R.id.tv_RefresPrice_CropsItem);
-            if (Math.random() > 0.5f && tv_refresh != null) {
-                tv_refresh.setVisibility(View.GONE);
-            } else if (tv_refresh != null) {
-                tv_refresh.setVisibility(View.VISIBLE);
+
+        List<PriceBase> prices =  dateHolder.getModel2().prices;
+
+        for(int i = 0; i < 3; ++i) {
+            setSourse(layouts[i].findViewById(R.id.tv_Marketeer_CropItem), prices.get(i).source.name);
+            setPrice(layouts[i].findViewById(R.id.tv_Price), prices.get(i).price);
+            if(i == 0){
+                setVisibilityAndListener(
+                        layouts[i].findViewById(R.id.tv_RefresPrice_CropsItem),
+                        prices.get(i).more.size() < 10,
+                        TYPE_ADD
+                );
+            } else {
+                setVisibilityAndListener(
+                        layouts[i].findViewById(R.id.tv_RefresPrice_CropsItem),
+                        prices.get(i).more.size() > 0,
+                        TYPE_MORE
+                );
             }
         }
-        if (hideDevider) devider.setVisibility(View.GONE);
-        else devider.setVisibility(View.VISIBLE);
 
-        layout_marketer.findViewById(R.id.tv_RefresPrice_CropsItem).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dateHolder.getCallback().onAddPricesClicked(dateHolder.getModel());
-            }
-        });
-        layout_market_one.findViewById(R.id.tv_RefresPrice_CropsItem).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dateHolder.getCallback().onMorePricesClicked(dateHolder.getModel());
-            }
-        });
-        layout_market_two.findViewById(R.id.tv_RefresPrice_CropsItem).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dateHolder.getCallback().onMorePricesClicked(dateHolder.getModel());
-            }
-        });
+        setDate(prices.get(0).data);
 
-
+        if (hideDevider)
+            devider.setVisibility(View.GONE);
+        else
+            devider.setVisibility(View.VISIBLE);
     }
 
+    private void setSourse(View tvSourse, String nameSourse){
+        ((TextView) tvSourse).setText(nameSourse);
+    }
+
+    private void setPrice(View tvPrice, Double price){
+        ((TextView) tvPrice).setText(price != 0 ? String.format("%.2f", price) : "- -");
+    }
+
+    private void setVisibilityAndListener(View view, boolean isVisible, int type){
+        view.setVisibility(isVisible ? View.VISIBLE : View.INVISIBLE);
+        if(type == TYPE_MORE) {
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dateHolder.getCallback().onMorePricesClicked(dateHolder.getModel());
+                }
+            });
+            ((TextView) view).setText(R.string.more_prices);
+        } else {
+            layout_marketer.findViewById(R.id.tv_RefresPrice_CropsItem).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dateHolder.getCallback().onAddPricesClicked(dateHolder.getModel());
+                }
+            });
+        }
+    }
+
+    private void setDate(String day){
+        SimpleDateFormat format = new SimpleDateFormat(ProjectConstants.SERVER_DATE_FORMAT, Locale.getDefault());
+        try {
+            long time = format.parse(day).getTime();
+            String[] date = DateHelper.getInstance(container.getContext()).getDate(time);
+            tv_Number.setText(date[0]);
+            tv_MonthWord.setText(date[1]);
+            tv_YearText.setText(date[2]);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @OnClick(R.id.ll_PricesContainer_CropItem)
     protected void onImageCLicked() {

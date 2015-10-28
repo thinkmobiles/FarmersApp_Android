@@ -12,7 +12,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
+import com.farmers.underground.remote.RetrofitSingleton;
 import com.farmers.underground.remote.models.LastCropPricesModel;
+import com.farmers.underground.remote.models.PricesByDateModel;
 import com.farmers.underground.ui.activities.PricesActivity;
 import com.farmers.underground.ui.adapters.AllPricesAdapter;
 import com.farmers.underground.ui.base.BaseFragment;
@@ -31,7 +33,7 @@ import java.util.List;
  * on 10/9/15.
  */
 public class AllPricesFragment extends BaseFragment<PricesActivity>
-        implements PricesActivity.DateRangeSetter {
+        implements PricesActivity.DateRangeSetter, PricesActivity.CropAllPricesCallback {
 
     @Bind(R.id.rv_BaseListFragment)
     protected RecyclerView recyclerView;
@@ -70,20 +72,20 @@ public class AllPricesFragment extends BaseFragment<PricesActivity>
         recyclerView.addItemDecoration(new CropsItemDivider(ResourceRetriever.retrievePX(getContext(), R.dimen.margin_default_normal)));
         adapter = new AllPricesAdapter();
         recyclerView.setAdapter(adapter);
+        getHostActivity().makeRequestGetPriceForPeriod(this);
         return v;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setAdapterData(generateTestCropsList());
+//        setAdapterData(generateTestCropsList());
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         allPricesCallback = ((AllPricesAdapter.AllPricesCallback) context);
-
     }
 
     @Override
@@ -127,5 +129,19 @@ public class AllPricesFragment extends BaseFragment<PricesActivity>
             cropsList.add(basquiatCropModel);
         }
          return cropsList;
+    }
+
+    @Override
+    public void onGetResult(List<PricesByDateModel> result) {
+        adapter.setDataList(generateDH2(result));
+    }
+
+    private List<AllPricesDH> generateDH2(List<PricesByDateModel> result) {
+        List<AllPricesDH> allPricesDHs = new ArrayList<>();
+        for (PricesByDateModel item : result) {
+            AllPricesDH allPricesDH = new AllPricesDH(item, allPricesCallback);
+            allPricesDHs.add(allPricesDH);
+        }
+        return allPricesDHs;
     }
 }
