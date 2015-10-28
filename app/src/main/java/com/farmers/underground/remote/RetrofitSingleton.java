@@ -19,6 +19,7 @@ import retrofit.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by tZpace
@@ -89,10 +90,10 @@ public class RetrofitSingleton {
         return pricesService;
     }
 
-    public void getLastCropPricesList(final ACallback<LinkedList<LastCropPricesModel>,ErrorMsg> callback){
-        getPricesService().getLast().enqueue(new Callback<LinkedList<LastCropPricesModel>>() {
+    public void getLastCropPricesList(final ACallback<List<LastCropPricesModel>,ErrorMsg> callback){
+        getPricesService().getLast().enqueue(new Callback<List<LastCropPricesModel>>() {
             @Override
-            public void onResponse(Response<LinkedList<LastCropPricesModel>> response, Retrofit retrofit) {
+            public void onResponse(Response<List<LastCropPricesModel>> response, Retrofit retrofit) {
                 performCallback(callback,response);
                 callback.anyway();
             }
@@ -106,10 +107,10 @@ public class RetrofitSingleton {
     }
 
     public void getCropPricesForPeriod(@NonNull String startDate, @NonNull  String endDate, @NonNull  String name,
-                                       final ACallback<ArrayList<PriceBase>,ErrorMsg> callback){
-        getPricesService().getCropPricesForPeriod(startDate,endDate,name).enqueue(new Callback<ArrayList<PriceBase>>() {
+                                       final ACallback<List<PriceBase>,ErrorMsg> callback){
+        getPricesService().getCropPricesForPeriod(startDate,endDate,name).enqueue(new Callback<List<PriceBase>>() {
             @Override
-            public void onResponse(Response<ArrayList<PriceBase>> response, Retrofit retrofit) {
+            public void onResponse(Response<List<PriceBase>> response, Retrofit retrofit) {
                 performCallback(callback,response);
                 callback.anyway();
             }

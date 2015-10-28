@@ -44,7 +44,6 @@ import com.farmers.underground.ui.utils.*;
 import org.intellij.lang.annotations.MagicConstant;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 
@@ -175,10 +174,10 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     //crops list control
     private void getLastCrops() {
-        RetrofitSingleton.getInstance().getLastCropPricesList(new ACallback<LinkedList<LastCropPricesModel>, ErrorMsg>
+        RetrofitSingleton.getInstance().getLastCropPricesList(new ACallback<List<LastCropPricesModel>, ErrorMsg>
                 () {
             @Override
-            public void onSuccess(LinkedList<LastCropPricesModel> result) {
+            public void onSuccess(List<LastCropPricesModel> result) {
                 mCropList = result;
                 updateFragments(mCropList, query);
             }

@@ -24,6 +24,7 @@ import com.farmers.underground.ui.utils.PicassoHelper;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
@@ -66,9 +67,11 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
 
 
     private CropsListItemDH dateHolder;
+
     private LastCropPricesModel model;
     private DateHelper dateHelper;
     private SimpleDateFormat format;
+
     float radius;
 
 
@@ -84,10 +87,10 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
         this.model = this.dateHolder.getModel();
         dateHelper = new DateHelper(container.getContext());
 
-        if (!BuildConfig.PRODUCTION) tv_CropsName.setText(model.englishName);
-        else tv_CropsName.setText(model.englishName + " - " + model.displayName); // todo remove later
+        tv_CropsName.setText(model.displayName);
 
         String fulldate = model.prices.get(0).data;
+
         format = new SimpleDateFormat(ProjectConstants.SERVER_DATE_FORMAT, Locale.getDefault());
         try {
             long time = format.parse(fulldate).getTime();
@@ -105,7 +108,7 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
         //todo   maybe need some other check here later
         final String url = !TextUtils.isEmpty(dateHolder.getModel().image) ? ApiConstants.BASE_URL + dateHolder.getModel().image : null;
 
-        if (url != null)
+        if (url != null) {
             if (height == 0)
                 iv_CropsImage.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
                     @Override
@@ -132,7 +135,7 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
                         .placeholder(R.drawable.ic_drawer_crops)
                         .error(R.drawable.ic_drawer_crops)
                         .into(iv_CropsImage); //todo error
-
+        }
 
         for (int i = 0; i < ll_PriceContainer.getChildCount(); i++) {
             TextView tv_refreshDate = (TextView) ll_PriceContainer.getChildAt(i).findViewById(R.id.tv_PriceDate_CropItem);
@@ -144,13 +147,16 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
             PriceBase priceModel = model.prices.get(i);
 
             if (priceModel != null) {
-                double price = Double.parseDouble(priceModel.price);
+                double price  = priceModel.price;
+                        tv_Price.setText(price != 0 ? String.format("%.2f", price) : "- -");
+
                 tv_Marketeer_CropItem.setText(priceModel.source.name);
                 try {
                     long time = format.parse(priceModel.data).getTime();
                     tv_refreshDate.setText(DateFormat.getDateInstance(DateFormat.SHORT).format(time));
-                } catch (Exception e) {
+                } catch (ParseException e) {
                     e.printStackTrace();
+                    //todo
                 }
 
             }
