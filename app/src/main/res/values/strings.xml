@@ -158,5 +158,8 @@
 
     <!--//global-->
     <string name="price_prefix">₪</string>
+    <string name="your_dealer">המשווק שלך</string>
+    <string name="whole_sales">שוק סיטונאי</string>
+    <string name="plant_counsil">מועצת הצמחים</string>
 
 </resources>

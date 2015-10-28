@@ -55,8 +55,10 @@ public class AllPricesVH extends RecyclerView.ViewHolder {
     }
 
     public void bindData(final AllPricesDH dateHolder, boolean hideDevider) {
-        ((TextView) layout_market_one.findViewById(R.id.tv_Marketeer_CropItem)).setText("שוק סיטונאי");
-        ((TextView) layout_market_two.findViewById(R.id.tv_Marketeer_CropItem)).setText("מועצת הצמחים");
+
+        ((TextView) layout_marketer.findViewById(R.id.tv_Marketeer_CropItem)).setText(R.string.your_dealer);
+        ((TextView) layout_market_one.findViewById(R.id.tv_Marketeer_CropItem)).setText(R.string.whole_sales);
+        ((TextView) layout_market_two.findViewById(R.id.tv_Marketeer_CropItem)).setText(R.string.plant_counsil);
 
         this.dateHolder = dateHolder;
         for (int i = 0; i < ll_PriceContainer.getChildCount(); i++) {

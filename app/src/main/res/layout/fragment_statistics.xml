@@ -57,7 +57,8 @@
             </LinearLayout>
 
             <LinearLayout
-                android:gravity="bottom"
+                android:padding="8dp"
+                android:gravity="top"
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true"
                 android:id="@+id/ll_PricesContainer_SF"
@@ -68,14 +69,14 @@
                 <include android:id="@+id/layout_marketer_SF" layout="@layout/item_crops_price" />
 
                 <View
-                    android:layout_width="15dp"
+                    android:layout_width="12dp"
                     android:layout_height="0dp"/>
 
                 <include android:id="@+id/layout_market_one_SF" layout="@layout/item_crops_price" />
 
 
                 <View
-                    android:layout_width="15dp"
+                    android:layout_width="12dp"
                     android:layout_height="0dp"/>
 
                 <include android:id="@+id/layout_market_two_SF" layout="@layout/item_crops_price" />

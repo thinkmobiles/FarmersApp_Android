@@ -154,7 +154,7 @@ public class StatisticsFragment
         priceView.tv_Price.setTextColor(color);
         priceView.tv_Marketeer_CropItem.setTextColor(color);
 
-        downLightPriceView( priceView)  ; //for now todo
+        downLightPriceView(priceView)  ; //for now todo
     }
 
     public static StatisticsFragment getInstance(LastCropPricesModel cropModel) {
@@ -196,6 +196,20 @@ public class StatisticsFragment
         colorPriceView(layout_marketer_SF, ResUtil.getColor(getResources(), R.color.bg_graph_aqua));
         colorPriceView(layout_market_one_SF, ResUtil.getColor(getResources(), R.color.bg_graph_golden));
         colorPriceView(layout_market_two_SF, ResUtil.getColor(getResources(), R.color.bg_graph_light_blue));
+
+        layout_marketer_SF.tv_PriceDate_CropItem.setText("לחץ לעדכן מחיר"); // click to update price ; //todo
+        layout_marketer_SF.tv_PriceDate_CropItem.setTextColor(ResUtil.getColor(getResources(),R.color.text_light_blue));
+        layout_marketer_SF.tv_RefresPrice_CropsItem.setVisibility(View.GONE);
+        layout_marketer_SF.tv_Marketeer_CropItem.setText(R.string.your_dealer);
+
+
+        layout_market_one_SF.tv_PriceDate_CropItem.setVisibility(View.GONE);
+        layout_market_one_SF.tv_RefresPrice_CropsItem.setVisibility(View.GONE);
+        layout_market_one_SF.tv_Marketeer_CropItem.setText(R.string.whole_sales);
+
+        layout_market_two_SF.tv_PriceDate_CropItem.setVisibility(View.GONE);
+        layout_market_two_SF.tv_RefresPrice_CropsItem.setVisibility(View.GONE);
+        layout_market_two_SF.tv_Marketeer_CropItem.setText(R.string.plant_counsil);
 
         defChart();
         defRadioButtons();
