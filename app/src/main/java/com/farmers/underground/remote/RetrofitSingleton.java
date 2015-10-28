@@ -106,11 +106,11 @@ public class RetrofitSingleton {
         });
     }
 
-    public void getCropPricesForPeriod(@NonNull String startDate, @NonNull  String endDate, @NonNull  String name,
-                                       final ACallback<List<PriceBase>,ErrorMsg> callback){
-        getPricesService().getCropPricesForPeriod(startDate,endDate,name).enqueue(new Callback<List<PriceBase>>() {
+    public void getCropPricesForPeriod(@NonNull String startDate, @NonNull  String endDate, @NonNull  String cropName,
+                                       final ACallback<List<PricesByDateModel>,ErrorMsg> callback){
+        getPricesService().getCropPricesForPeriod(cropName,startDate,endDate).enqueue(new Callback<List<PricesByDateModel>>() {
             @Override
-            public void onResponse(Response<List<PriceBase>> response, Retrofit retrofit) {
+            public void onResponse(Response<List<PricesByDateModel>> response, Retrofit retrofit) {
                 performCallback(callback,response);
                 callback.anyway();
             }

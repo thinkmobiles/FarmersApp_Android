@@ -1,6 +1,7 @@
 package com.farmers.underground.remote.services;
 
 import com.farmers.underground.remote.models.LastCropPricesModel;
+import com.farmers.underground.remote.models.PricesByDateModel;
 import com.farmers.underground.remote.models.base.PriceBase;
 
 import retrofit.Call;
@@ -24,6 +25,6 @@ public interface PricesService {
     * this is for fetch prices for cor for period
     * */
     @GET("prices/getCropPricesForPeriod")
-    Call<List<PriceBase>> getCropPricesForPeriod(@Query("startDate") String startDate, @Query("endDate") String endDate, @Query("name") String name);
+    Call<List<PricesByDateModel>> getCropPricesForPeriod(@Query("cropName") String cropName, @Query("startDate") String startDate, @Query("endDate") String endDate);
 
 }
