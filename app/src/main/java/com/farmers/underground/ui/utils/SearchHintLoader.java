@@ -33,7 +33,6 @@ public class SearchHintLoader extends AsyncTaskLoader<List<SearchHint>> {
 
         for (LastCropPricesModel item : mCropList) {
             if (BuildConfig.DEBUG) {
-
                 if (item.englishName.toLowerCase().contains(newQuerry.toLowerCase()))
                     newHintList.add(new SearchHint(item.englishName, SearchHint.HintType.FROM_CROPS_LIST));
             } else {

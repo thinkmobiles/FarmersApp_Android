@@ -1,7 +1,8 @@
 package com.farmers.underground.remote.models;
 
 /**
- * Created by omar on 10/3/15.
+ * Created by omar
+ * on 10/3/15.
  */
 public class SearchHint {
 
