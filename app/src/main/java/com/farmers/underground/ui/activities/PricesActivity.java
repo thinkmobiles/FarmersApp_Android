@@ -538,8 +538,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
             Calendar prevMonth = Calendar.getInstance();
             prevMonth.set(Calendar.MONTH, prevMonth.get(Calendar.MONTH) - 1);
             dateRange = new DateRange() ;
-            dateRange.setDateFrom(StringFormaterUtil.parseToServerResponse(Calendar.getInstance()));
-            dateRange.setDateTo(StringFormaterUtil.parseToServerResponse(prevMonth));
+            dateRange.setDateFrom(StringFormaterUtil.parseToServerResponse(prevMonth));
+            dateRange.setDateTo(StringFormaterUtil.parseToServerResponse(Calendar.getInstance()));
 
         } else {
             /*nothing now */
