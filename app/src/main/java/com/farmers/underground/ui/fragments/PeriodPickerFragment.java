@@ -20,7 +20,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by samson on 12.10.15.
+ * Created by samson
+ * on 12.10.15.
  */
 public class PeriodPickerFragment extends BaseFragment<TransparentActivity> implements DatePickerDialog.OnDateSetListener {
 

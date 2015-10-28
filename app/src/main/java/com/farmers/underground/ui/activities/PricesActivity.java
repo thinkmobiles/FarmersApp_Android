@@ -7,6 +7,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -109,6 +110,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     protected Spinner spinner;
 
     private LastCropPricesModel mCropModel;
+    private List<PricesByDateModel> pricesAdapterData = new ArrayList<>(0);
     private ProjectPagerAdapter<BaseFragment<PricesActivity>> pagerAdapter;
 
     public static void start(@NonNull Context context, LastCropPricesModel cropModel) {
@@ -286,11 +288,14 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         mDrawerlayout.closeDrawers();
     }
 
+    public List<PricesByDateModel> getPricesAdapterData() {
+        return pricesAdapterData;
+    }
+
 
     public interface DateRangeSetter {
         void setDateRange(DateRange dateRange);
     }
-
 
     /**
      * for
@@ -380,7 +385,6 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                     dateRange.setDateFrom(StringFormaterUtil.parseToServerResponse(dateFrom));
                     dateRange.setDateTo(StringFormaterUtil.parseToServerResponse(dateTo));
                     ((PricesActivity.DateRangeSetter) pagerAdapter.getItem(viewPager.getCurrentItem())).setDateRange(dateRange);
-                    //todo search request
                     break;
                 case REQUEST_CODE_DIALOG_WHY:
                     onAddPricesClicked();
@@ -443,13 +447,6 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
             }
         });
     }
-
-//    private void openDrawer() {
-//        if (mDrawerlayout.isDrawerOpen(fl_DrawerContainer)) {
-//            mDrawerlayout.closeDrawer(fl_DrawerContainer);
-//        }
-//        mDrawerlayout.openDrawer(fl_DrawerContainer);
-//    }
 
     public void setDrawerList() {
         List<DrawerItem> drawerItemList = new ArrayList<>();
@@ -532,28 +529,44 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     }
 
-    public void makeRequestGetPriceForPeriod(final CropAllPricesCallback callback){
-        Calendar prevMonth = Calendar.getInstance();
-        prevMonth.set(Calendar.MONTH, prevMonth.get(Calendar.MONTH) - 1);
-        RetrofitSingleton.getInstance().getCropPricesForPeriod(
-                StringFormaterUtil.parseToServerResponse(Calendar.getInstance()),
-                StringFormaterUtil.parseToServerResponse(prevMonth),
+    /**
+     * if dateRange == null default date range is used
+     * */
+    public void makeRequestGetPriceForPeriod(@Nullable DateRange dateRange, final CropAllPricesCallback callback){
+
+        if(dateRange == null){
+            Calendar prevMonth = Calendar.getInstance();
+            prevMonth.set(Calendar.MONTH, prevMonth.get(Calendar.MONTH) - 1);
+            dateRange = new DateRange() ;
+            dateRange.setDateFrom(StringFormaterUtil.parseToServerResponse(Calendar.getInstance()));
+            dateRange.setDateTo(StringFormaterUtil.parseToServerResponse(prevMonth));
+
+        } else {
+            /*nothing now */
+        }
+
+        RetrofitSingleton.getInstance().getCropPricesForPeriod(dateRange.getDateTo(),dateRange.getDateFrom(),
                 mCropModel.displayName,
                 new ACallback<List<PricesByDateModel>, ErrorMsg>() {
                     @Override
                     public void onSuccess(List<PricesByDateModel> result) {
-                        callback.onGetResult(result);
+                        if (result != null && !result.isEmpty()){
+                            pricesAdapterData = result;
+                            callback.onGetResult(result);
+                        } else
+                            onError(new ErrorMsg("No Prices Fetched"));
+
                     }
 
                     @Override
                     public void onError(@NonNull ErrorMsg error) {
-
+                        showToast(error.getErrorMsg(),Toast.LENGTH_SHORT);
                     }
                 }
         );
     }
 
-    public interface CropAllPricesCallback{
+    public interface CropAllPricesCallback {
         void onGetResult(List<PricesByDateModel> result);
     }
 }

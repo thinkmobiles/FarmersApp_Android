@@ -1,7 +1,8 @@
 package com.farmers.underground.ui.models;
 
 /**
- * Created by omar on 10/9/15.
+ * Created by omar
+ * on 10/9/15.
  */
 public class DateRange {
     private String dateTo;

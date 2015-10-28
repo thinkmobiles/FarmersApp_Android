@@ -72,7 +72,7 @@ public class AllPricesFragment extends BaseFragment<PricesActivity>
         recyclerView.addItemDecoration(new CropsItemDivider(ResourceRetriever.retrievePX(getContext(), R.dimen.margin_default_normal)));
         adapter = new AllPricesAdapter();
         recyclerView.setAdapter(adapter);
-        getHostActivity().makeRequestGetPriceForPeriod(this);
+        getHostActivity().makeRequestGetPriceForPeriod(null, this);
         return v;
     }
 
@@ -80,6 +80,12 @@ public class AllPricesFragment extends BaseFragment<PricesActivity>
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 //        setAdapterData(generateTestCropsList());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        onGetResult(getHostActivity().getPricesAdapterData());
     }
 
     @Override
@@ -99,44 +105,19 @@ public class AllPricesFragment extends BaseFragment<PricesActivity>
         return R.layout.fragment_base_list;
     }
 
-
     @Override
     public void setDateRange(DateRange dateRange) {
         mDateRange = dateRange;
-    }
-
-    private List<AllPricesDH> generateDH(List<LastCropPricesModel> cropModelList) {
-        List<AllPricesDH> allPricesDHs = new ArrayList<>();
-        for (LastCropPricesModel item : cropModelList) {
-            AllPricesDH allPricesDH = new AllPricesDH(item, allPricesCallback);
-            allPricesDHs.add(allPricesDH);
-        }
-        return allPricesDHs;
-    }
-
-    private void setAdapterData( List<LastCropPricesModel> cropModels){
-            adapter.setDataList(generateDH(cropModels));
-    }
-
-    //dev test methods
-    private  List<LastCropPricesModel>  generateTestCropsList(){
-        List<LastCropPricesModel> cropsList = new ArrayList<>();
-
-        for (int i = 0; i < 20; i++) {
-            LastCropPricesModel basquiatCropModel = new LastCropPricesModel();
-            basquiatCropModel.displayName = String.valueOf(i);
-            basquiatCropModel.image = "http://www.potomitan.info/ki_nov/images/basquiat_brownspots.jpg";
-            cropsList.add(basquiatCropModel);
-        }
-         return cropsList;
+        //todo - test it  search request
+        getHostActivity().makeRequestGetPriceForPeriod(dateRange,this);
     }
 
     @Override
     public void onGetResult(List<PricesByDateModel> result) {
-        adapter.setDataList(generateDH2(result));
+        adapter.setDataList(generateDH(result));
     }
 
-    private List<AllPricesDH> generateDH2(List<PricesByDateModel> result) {
+    private List<AllPricesDH> generateDH(List<PricesByDateModel> result) {
         List<AllPricesDH> allPricesDHs = new ArrayList<>();
         for (PricesByDateModel item : result) {
             AllPricesDH allPricesDH = new AllPricesDH(item, allPricesCallback);
