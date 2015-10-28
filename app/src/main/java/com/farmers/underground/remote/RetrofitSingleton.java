@@ -123,6 +123,22 @@ public class RetrofitSingleton {
         });
     }
 
+    public void addFarmerPriceForCrop(@NonNull FarmerPricesModel farmerPrices,  final ACallback<SuccessMsg,ErrorMsg> callback){
+        getPricesService().addFarmerPrice(farmerPrices).enqueue(new Callback<SuccessMsg>() {
+            @Override
+            public void onResponse(Response<SuccessMsg> response, Retrofit retrofit) {
+                performCallback(callback,response);
+                callback.anyway();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                callback.onError(new ErrorMsg("Network Error"));
+                callback.anyway();
+            }
+        });
+    }
+
     private void initMarketeerService(Retrofit retrofit) {
         marketeerService = retrofit.create(MarketeerService.class);
     }
