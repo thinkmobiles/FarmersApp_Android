@@ -115,6 +115,7 @@ public class AllPricesFragment extends BaseFragment<PricesActivity>
     @Override
     public void onGetResult(List<PricesByDateModel> result) {
         adapter.setDataList(generateDH(result));
+        adapter.notifyDataSetChanged();
     }
 
     private List<AllPricesDH> generateDH(List<PricesByDateModel> result) {
