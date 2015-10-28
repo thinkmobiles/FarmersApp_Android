@@ -111,7 +111,6 @@ public class AllPricesFragment extends BaseFragment<PricesActivity>
         getHostActivity().makeRequestGetPriceForPeriod(dateRange,this);
     }
 
-    }
 
     @Override
     public void onGetResult(List<PricesByDateModel> result) {
