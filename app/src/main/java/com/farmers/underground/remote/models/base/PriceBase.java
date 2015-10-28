@@ -1,12 +1,13 @@
 package com.farmers.underground.remote.models.base;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by tZpace
  * on 14-Oct-15.
  */
-public class PriceBase {
+public class PriceBase implements Serializable {
 
     public Source source;
     public Double price;
@@ -20,7 +21,7 @@ public class PriceBase {
     }
 
     public class More {
-        public String price;
+        public Double price;
         public String quality;
     }
 }

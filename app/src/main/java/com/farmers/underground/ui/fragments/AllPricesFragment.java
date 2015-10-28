@@ -79,7 +79,6 @@ public class AllPricesFragment extends BaseFragment<PricesActivity>
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        setAdapterData(generateTestCropsList());
     }
 
     @Override
@@ -110,6 +109,8 @@ public class AllPricesFragment extends BaseFragment<PricesActivity>
         mDateRange = dateRange;
         //todo - test it  search request
         getHostActivity().makeRequestGetPriceForPeriod(dateRange,this);
+    }
+
     }
 
     @Override

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.farmers.underground.R;
 import com.farmers.underground.remote.models.PriceModel;
+import com.farmers.underground.ui.models.MorePriceItemModel;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ import java.util.List;
 public class MorePriecesAdapter extends BaseAdapter  {
 
     private Context mContext;
-    private List<PriceModel> mListItems;
+    private List<MorePriceItemModel> mListItems;
 
     static class ViewHolder {
         TextView tvPrice;
@@ -28,7 +29,7 @@ public class MorePriecesAdapter extends BaseAdapter  {
         TextView tvSubitle;
     }
 
-    public MorePriecesAdapter(List<PriceModel> mListItems, Context mContext) {
+    public MorePriecesAdapter(List<MorePriceItemModel> mListItems, Context mContext) {
         this.mContext = mContext;
         this.mListItems = mListItems;
     }
@@ -39,7 +40,7 @@ public class MorePriecesAdapter extends BaseAdapter  {
     }
 
     @Override
-    public PriceModel getItem(int i) {
+    public MorePriceItemModel getItem(int i) {
         return mListItems.get(i);
     }
 
@@ -50,7 +51,7 @@ public class MorePriecesAdapter extends BaseAdapter  {
 
     @Override
     public View getView(int i, View convertView, ViewGroup viewGroup) {
-        ViewHolder holder = null;
+        ViewHolder holder;
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_more_prieces_list, viewGroup, false);
             holder = new ViewHolder();
@@ -67,8 +68,8 @@ public class MorePriecesAdapter extends BaseAdapter  {
         //set data here
 
         holder.tvPrice.setText(String.valueOf(mListItems.get(i).getPrice()));
-        holder.tvTitle.setText(mListItems.get(i).getSource().getName());
-        holder.tvSubitle.setText(mListItems.get(i).getSource().getType());
+        holder.tvTitle.setText(mListItems.get(i).getCropName());
+        holder.tvSubitle.setText(mListItems.get(i).getQuality());
 
 
         return convertView;
