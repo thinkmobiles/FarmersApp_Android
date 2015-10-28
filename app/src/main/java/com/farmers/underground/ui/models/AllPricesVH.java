@@ -83,7 +83,7 @@ public class AllPricesVH extends RecyclerView.ViewHolder {
                 setVisibilityAndListener(
                         layouts[i].findViewById(R.id.tv_RefresPrice_CropsItem),
                         prices.get(i).more.size() < 10,
-                        TYPE_ADD
+                        i
                 );
             } else {
                 setVisibilityAndListener(
@@ -110,21 +110,23 @@ public class AllPricesVH extends RecyclerView.ViewHolder {
         ((TextView) tvPrice).setText(price != 0 ? String.format("%.2f", price) : "- -");
     }
 
-    private void setVisibilityAndListener(View view, boolean isVisible, int type){
-        view.setVisibility(isVisible ? View.VISIBLE : View.INVISIBLE);
-        if(type == TYPE_MORE) {
+    private void setVisibilityAndListener(View view, boolean isVisible, final int pos){
+        final PriceBase priceBase = dateHolder.getModel2().prices.get(pos);
+        if(pos != 0) {
+            view.setVisibility(priceBase.more.size() > 0 ? View.VISIBLE : View.INVISIBLE);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    dateHolder.getCallback().onMorePricesClicked(dateHolder.getModel());
+                    dateHolder.getCallback().onMorePricesClicked(priceBase);
                 }
             });
             ((TextView) view).setText(R.string.more_prices);
         } else {
+            view.setVisibility(priceBase.more.size() < 10 ? View.VISIBLE : View.INVISIBLE);
             layout_marketer.findViewById(R.id.tv_RefresPrice_CropsItem).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    dateHolder.getCallback().onAddPricesClicked(dateHolder.getModel());
+                    dateHolder.getCallback().onAddPricesClicked();
                 }
             });
         }

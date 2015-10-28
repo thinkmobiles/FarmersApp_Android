@@ -38,6 +38,7 @@ import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.remote.models.PricesByDateModel;
 import com.farmers.underground.remote.models.SuccessMsg;
 import com.farmers.underground.remote.models.UserProfile;
+import com.farmers.underground.remote.models.base.PriceBase;
 import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.ui.adapters.AllPricesAdapter;
 import com.farmers.underground.ui.adapters.DrawerAdapter;
@@ -269,12 +270,12 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     }
 
     @Override
-    public void onAddPricesClicked(LastCropPricesModel cropModel) {
+    public void onAddPricesClicked() {
         AddPriceActivity.start(this, mCropModel);
     }
 
     @Override
-    public void onMorePricesClicked(LastCropPricesModel cropModel) {
+    public void onMorePricesClicked(PriceBase priceBase) {
         TransparentActivity.startWithFragment(this, new MorePriecesDialogFragment());
     }
 
@@ -382,7 +383,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                     //todo search request
                     break;
                 case REQUEST_CODE_DIALOG_WHY:
-                    onAddPricesClicked(mCropModel);
+                    onAddPricesClicked();
                     break;
             }
         }

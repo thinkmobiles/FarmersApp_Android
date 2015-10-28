@@ -10,12 +10,14 @@ import android.widget.TextView;
 import com.farmers.underground.R;
 import com.farmers.underground.remote.models.PriceModel;
 import com.farmers.underground.remote.models.SourceModel;
+import com.farmers.underground.remote.models.base.PriceBase;
 import com.farmers.underground.ui.activities.TransparentActivity;
 import com.farmers.underground.ui.adapters.CropQualityPriecesAdapter;
 import com.farmers.underground.ui.adapters.MorePriecesAdapter;
 import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.custom_views.CustomTextView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +49,15 @@ public class MorePriecesDialogFragment extends BaseFragment<TransparentActivity>
     @Bind(R.id.tv_foot_dialog_more_prieces)
     TextView tvFoot;
 
+    private static final String KEY_PRICE_BASE = "price_base";
+
+    public static MorePriecesDialogFragment newInstanse(PriceBase priceBase){
+        MorePriecesDialogFragment fragment = new MorePriecesDialogFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(KEY_PRICE_BASE, (Serializable) priceBase);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     protected int getLayoutResId() {
@@ -68,6 +79,10 @@ public class MorePriecesDialogFragment extends BaseFragment<TransparentActivity>
 
 
     private MorePriecesAdapter initListAdapterTest(){
+
+        if(getArguments() != null){
+
+        }
 
         PriceModel priceModel = new PriceModel();
         priceModel.setPrice(4.50f);
