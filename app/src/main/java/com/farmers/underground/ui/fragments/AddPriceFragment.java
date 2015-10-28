@@ -3,6 +3,7 @@ package com.farmers.underground.ui.fragments;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
+import com.farmers.underground.remote.models.UserPriceQualityModel;
 import com.farmers.underground.ui.activities.AddPriceActivity;
 import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.utils.StringFormaterUtil;
@@ -87,6 +89,17 @@ public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements 
         tvError.setVisibility(View.INVISIBLE);
         container.removeViews(2, ++counter);
         initLists();
+    }
+
+    public List<UserPriceQualityModel> getPriceList(){
+        List<UserPriceQualityModel> list = new ArrayList<>();
+        list.add(new UserPriceQualityModel(Float.valueOf(etPrice.getText().toString()), etQuality.getText().toString()));
+        for(int i = 0; i < counter; ++i){
+            if(!TextUtils.isEmpty(listPrice.get(i).getText().toString())){
+                list.add(new UserPriceQualityModel(Float.valueOf(listPrice.get(i).getText().toString()), listQuality.get(i).getText().toString()));
+            }
+        }
+        return list;
     }
 
     private void initLists(){

@@ -26,6 +26,7 @@ import com.farmers.underground.R;
 import com.farmers.underground.config.ApiConstants;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.LastCropPricesModel;
+import com.farmers.underground.remote.models.UserPriceQualityModel;
 import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.fragments.AddPriceFragment;
 import com.farmers.underground.ui.utils.PicassoHelper;
@@ -39,6 +40,7 @@ import butterknife.OnClick;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 import java.util.Calendar;
+import java.util.List;
 
 /**
  *
@@ -223,6 +225,7 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
                 .setPositiveButton(getString(R.string.dialog_accept), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        List<UserPriceQualityModel> list = childFragment.getPriceList();
                         //todo request addPrice()
                         //todo after request show message "thanks for add..."
                         showToast("todo request", Toast.LENGTH_SHORT);
