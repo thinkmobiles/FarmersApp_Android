@@ -16,6 +16,8 @@ import com.farmers.underground.ui.adapters.CropQualityPriecesAdapter;
 import com.farmers.underground.ui.adapters.MorePriecesAdapter;
 import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.custom_views.CustomTextView;
+import com.farmers.underground.ui.models.MorePriceItemModel;
+import com.farmers.underground.ui.utils.StringFormaterUtil;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -50,11 +52,13 @@ public class MorePriecesDialogFragment extends BaseFragment<TransparentActivity>
     TextView tvFoot;
 
     private static final String KEY_PRICE_BASE = "price_base";
+    private static final String KEY_CROP_NAME = "crop_name";
 
-    public static MorePriecesDialogFragment newInstanse(PriceBase priceBase){
+    public static MorePriecesDialogFragment newInstanse(PriceBase priceBase, String cropName){
         MorePriecesDialogFragment fragment = new MorePriecesDialogFragment();
         Bundle args = new Bundle();
-        args.putSerializable(KEY_PRICE_BASE, (Serializable) priceBase);
+        args.putSerializable(KEY_PRICE_BASE, priceBase);
+        args.putString(KEY_CROP_NAME, cropName);
         fragment.setArguments(args);
         return fragment;
     }
@@ -69,7 +73,7 @@ public class MorePriecesDialogFragment extends BaseFragment<TransparentActivity>
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
-        listView.setAdapter(initListAdapterTest());
+        setData();
     }
 
     @OnClick(R.id.im_close_dialog_more_prieces)
@@ -77,26 +81,22 @@ public class MorePriecesDialogFragment extends BaseFragment<TransparentActivity>
         getHostActivity().finish();
     }
 
+    private void setData(){
+        PriceBase model = (PriceBase) getArguments().getSerializable(KEY_PRICE_BASE);
+        String cropName = getArguments().getString(KEY_CROP_NAME);
 
-    private MorePriecesAdapter initListAdapterTest(){
+        tvTitle.setText(model.source.name);
+        tvFoot.setText(model.data.substring(0,10)); //todo parse date
+        tcSubtitle.setVisibility(View.INVISIBLE);
 
-        if(getArguments() != null){
-
+        List<MorePriceItemModel> list = new ArrayList<>();
+        for(PriceBase.More more : model.more){
+            MorePriceItemModel itemModel =  new MorePriceItemModel();
+            itemModel.setQuality(more.quality);
+            itemModel.setPrice(StringFormaterUtil.parsePrice(more.price));
+            itemModel.setCropName(cropName);
+            list.add(itemModel);
         }
-
-        PriceModel priceModel = new PriceModel();
-        priceModel.setPrice(4.50f);
-        SourceModel sourceModel = new SourceModel();
-        sourceModel.setName("CropName");
-        sourceModel.setType("QualityName");
-        priceModel.setSource(sourceModel);
-        List<PriceModel> mListItems =new ArrayList<>(0);
-        mListItems.add(priceModel);
-        mListItems.add(priceModel);
-        mListItems.add(priceModel);
-        mListItems.add(priceModel);
-        mListItems.add(priceModel);
-
-        return new MorePriecesAdapter(mListItems, getHostActivity());
+        listView.setAdapter(new MorePriecesAdapter(list, getHostActivity()));
     }
 }

@@ -83,11 +83,13 @@
             android:layout_height="1dp"
             android:background="@color/grey" />
 
-        <TextView
+        <com.farmers.underground.ui.custom_views.CustomTextView
             android:id="@+id/tv_foot_dialog_more_prieces"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="15dp"
+            android:gravity="right"
+            custom:customFont="regular"
             android:text="@string/foot" />
 
     </LinearLayout>

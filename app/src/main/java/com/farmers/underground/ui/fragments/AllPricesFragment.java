@@ -79,7 +79,6 @@ public class AllPricesFragment extends BaseFragment<PricesActivity>
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        setAdapterData(generateTestCropsList());
     }
 
     @Override
@@ -103,32 +102,6 @@ public class AllPricesFragment extends BaseFragment<PricesActivity>
     @Override
     public void setDateRange(DateRange dateRange) {
         mDateRange = dateRange;
-    }
-
-    private List<AllPricesDH> generateDH(List<LastCropPricesModel> cropModelList) {
-        List<AllPricesDH> allPricesDHs = new ArrayList<>();
-        for (LastCropPricesModel item : cropModelList) {
-            AllPricesDH allPricesDH = new AllPricesDH(item, allPricesCallback);
-            allPricesDHs.add(allPricesDH);
-        }
-        return allPricesDHs;
-    }
-
-    private void setAdapterData( List<LastCropPricesModel> cropModels){
-            adapter.setDataList(generateDH(cropModels));
-    }
-
-    //dev test methods
-    private  List<LastCropPricesModel>  generateTestCropsList(){
-        List<LastCropPricesModel> cropsList = new ArrayList<>();
-
-        for (int i = 0; i < 20; i++) {
-            LastCropPricesModel basquiatCropModel = new LastCropPricesModel();
-            basquiatCropModel.displayName = String.valueOf(i);
-            basquiatCropModel.image = "http://www.potomitan.info/ki_nov/images/basquiat_brownspots.jpg";
-            cropsList.add(basquiatCropModel);
-        }
-         return cropsList;
     }
 
     @Override

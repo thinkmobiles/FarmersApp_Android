@@ -276,7 +276,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     @Override
     public void onMorePricesClicked(PriceBase priceBase) {
-        TransparentActivity.startWithFragment(this, new MorePriecesDialogFragment());
+        TransparentActivity.startWithFragment(this, MorePriecesDialogFragment.newInstanse(priceBase, mCropModel.displayName));
     }
 
     @Override

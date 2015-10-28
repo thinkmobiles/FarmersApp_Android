@@ -80,17 +80,9 @@ public class AllPricesVH extends RecyclerView.ViewHolder {
             setSourse(layouts[i].findViewById(R.id.tv_Marketeer_CropItem), prices.get(i).source.name);
             setPrice(layouts[i].findViewById(R.id.tv_Price), prices.get(i).price);
             if(i == 0){
-                setVisibilityAndListener(
-                        layouts[i].findViewById(R.id.tv_RefresPrice_CropsItem),
-                        prices.get(i).more.size() < 10,
-                        i
-                );
+                setVisibilityAndListener(layouts[i].findViewById(R.id.tv_RefresPrice_CropsItem), i);
             } else {
-                setVisibilityAndListener(
-                        layouts[i].findViewById(R.id.tv_RefresPrice_CropsItem),
-                        prices.get(i).more.size() > 0,
-                        TYPE_MORE
-                );
+                setVisibilityAndListener(layouts[i].findViewById(R.id.tv_RefresPrice_CropsItem), i);
             }
         }
 
@@ -110,7 +102,7 @@ public class AllPricesVH extends RecyclerView.ViewHolder {
         ((TextView) tvPrice).setText(price != 0 ? String.format("%.2f", price) : "- -");
     }
 
-    private void setVisibilityAndListener(View view, boolean isVisible, final int pos){
+    private void setVisibilityAndListener(View view, final int pos){
         final PriceBase priceBase = dateHolder.getModel2().prices.get(pos);
         if(pos != 0) {
             view.setVisibility(priceBase.more.size() > 0 ? View.VISIBLE : View.INVISIBLE);
