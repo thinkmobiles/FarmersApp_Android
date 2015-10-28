@@ -417,8 +417,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     //todo remove later
     private ArrayList<String> spinnerTestData() {
-        ArrayList<String> data = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.all_month)));
-        return data;
+        return new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.all_month)));
     }
 
 
@@ -463,14 +462,9 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_invite_friends, R.string.drawer_content_2));
         drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_favourites, R.string.drawer_content_3));
 
-
-        //FarmersApp.getInstance().getCurrentUser()!=null todo remove later (user cant be null here)
-        FarmersApp.getInstance().getUserProfileAsync(null);
         final UserProfile user = FarmersApp.getInstance().getCurrentUser();
 
-        FarmersApp.getInstance().getMarketerBySession(); //getting of target marketer
-
-        if (user != null && (!(user.hasMarketir() || user.isNewMarketeer()))) {
+        if (user != null && !(user.hasMarketir() || user.isNewMarketeer())) {
             drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_plus, R.string.drawer_content_5));
         } else {
             drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_plus, R.string.drawer_content_6));
@@ -529,7 +523,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     @Override
     public void onBackPressed() {
-        if (drawerOpened && mDrawerlayout!=null){
+        if (drawerOpened && mDrawerlayout != null){
             mDrawerlayout.closeDrawers();
         }
         /*else if ( ) {

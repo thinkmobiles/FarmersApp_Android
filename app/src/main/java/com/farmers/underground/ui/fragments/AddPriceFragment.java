@@ -31,7 +31,7 @@ import butterknife.OnTextChanged;
  */
 public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements AddPriceActivity.OnChangeDateListener {
 
-    private static final int LIMIT = 8;
+    private static final int MAX_AMOUNT_PRICES = 9;
 
     @Bind(R.id.etPrice_FAP)
     protected EditText etPrice;
@@ -142,7 +142,7 @@ public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements 
 
     @OnClick(R.id.tvAddQuality_FAP)
     protected void addNewQuality(){
-        if(counter <= LIMIT) {
+        if(counter < MAX_AMOUNT_PRICES) {
             ++counter;
             View view = LayoutInflater.from(getHostActivity()).inflate(R.layout.item_price_type, null);
             EditText editText = (EditText) view.findViewById(R.id.etPrice_FAP);

@@ -37,7 +37,7 @@ public class TransparentActivity extends BaseActivity {
         context.startActivity(intent);
     }
 
-    public static  <F extends BaseFragment<TransparentActivity>> void startWithFragmentForResult(@NonNull BaseActivity activity, F fragment,int code) {
+    public static  <A extends BaseActivity, F extends BaseFragment<TransparentActivity>> void startWithFragmentForResult(@NonNull A activity, F fragment,int code) {
         temp = fragment;
         Intent intent = new Intent(activity, TransparentActivity.class);
         activity.startActivityForResult(intent, code);

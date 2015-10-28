@@ -224,6 +224,7 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //todo request addPrice()
+                        //todo after request show message "thanks for add..."
                         showToast("todo request", Toast.LENGTH_SHORT);
                         hideSoftKeyboard();
                         childFragment.refresh();
