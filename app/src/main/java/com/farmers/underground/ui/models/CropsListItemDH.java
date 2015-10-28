@@ -13,8 +13,6 @@ public class CropsListItemDH {
     private CropsListFragmentModel.TYPE type;
     private CropsListAdapter.CropsAdapterCallback callback;
 
-
-
     public CropsListItemDH(LastCropPricesModel model, CropsListFragmentModel.TYPE type, CropsListAdapter.CropsAdapterCallback callback) {
         this.model = model;
         this.type = type;

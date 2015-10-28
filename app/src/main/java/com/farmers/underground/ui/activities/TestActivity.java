@@ -20,6 +20,7 @@ import com.farmers.underground.ui.base.BaseActivity;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by tZpace
@@ -80,9 +81,9 @@ public class TestActivity extends BaseActivity {
     @OnClick(R.id.btn_api_call_test)
     void testApiCallsReg() {
         showProgressDialog();
-        RetrofitSingleton.getInstance().getCropPricesForPeriod("2015-10-27T12:09:12.000Z", "2015-10-24T12:09:12.000Z","אנונה"  ,new ACallback<ArrayList<PriceBase>,ErrorMsg>() {
+        RetrofitSingleton.getInstance().getCropPricesForPeriod("2015-10-27T12:09:12.000Z", "2015-10-24T12:09:12.000Z","אנונה"  ,new ACallback<List<PriceBase>,ErrorMsg>() {
             @Override
-            public void onSuccess(ArrayList<PriceBase> result) {
+            public void onSuccess(List<PriceBase> result) {
                 showToast("OK", Toast.LENGTH_SHORT);
             }
 
