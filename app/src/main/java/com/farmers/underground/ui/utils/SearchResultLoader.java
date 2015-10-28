@@ -11,7 +11,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by omar on 10/22/15.
+ * Created by omar
+ * on 10/22/15.
  */
 public class SearchResultLoader extends AsyncTaskLoader<List<LastCropPricesModel>> {
 
@@ -29,14 +30,20 @@ public class SearchResultLoader extends AsyncTaskLoader<List<LastCropPricesModel
 
     @Override
     public List<LastCropPricesModel> loadInBackground() {
-        List<LastCropPricesModel> searchResult = new LinkedList<>();
+        List<LastCropPricesModel> searchResult = new ArrayList<>();
 
-        for (LastCropPricesModel item : mCropList)
-            if (BuildConfig.DEBUG)
+        for (LastCropPricesModel item : mCropList){
+            if (BuildConfig.DEBUG){
                 if (item.englishName.toLowerCase().contains(newQuerry.toLowerCase()))
                     searchResult.add(item);
-                else if (item.displayName.toLowerCase().contains(newQuerry.toLowerCase()))
+            } else if (BuildConfig.PRODUCTION) {
+                if (item.displayName.toLowerCase().contains(newQuerry.toLowerCase()))
                     searchResult.add(item);
+            } else {
+                if (item.displayName.toLowerCase().contains(newQuerry.toLowerCase()) || item.englishName.toLowerCase().contains(newQuerry.toLowerCase()))
+                    searchResult.add(item);
+            }
+        }
 
         return searchResult;
     }

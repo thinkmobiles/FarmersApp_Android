@@ -12,6 +12,7 @@ import com.farmers.underground.R;
 import com.farmers.underground.remote.RetrofitSingleton;
 import com.farmers.underground.remote.models.ErrorMsg;
 import com.farmers.underground.remote.models.LastCropPricesModel;
+import com.farmers.underground.remote.models.PricesByDateModel;
 import com.farmers.underground.remote.models.SuccessMsg;
 import com.farmers.underground.remote.models.base.PriceBase;
 import com.farmers.underground.remote.util.ACallback;
@@ -81,15 +82,20 @@ public class TestActivity extends BaseActivity {
     @OnClick(R.id.btn_api_call_test)
     void testApiCallsReg() {
         showProgressDialog();
-        RetrofitSingleton.getInstance().getCropPricesForPeriod("2015-10-27T12:09:12.000Z", "2015-10-24T12:09:12.000Z","אנונה"  ,new ACallback<List<PriceBase>,ErrorMsg>() {
+        RetrofitSingleton.getInstance().getCropPricesForPeriod("2016-10-27T12:09:12.000Z", "2014-10-24T12:09:12.000Z","שום",new ACallback<List<PricesByDateModel>,ErrorMsg>() {
             @Override
-            public void onSuccess(List<PriceBase> result) {
+            public void onSuccess(List<PricesByDateModel> result) {
                 showToast("OK", Toast.LENGTH_SHORT);
             }
 
             @Override
             public void onError(@NonNull ErrorMsg error) {
                 showToast("BAD", Toast.LENGTH_SHORT);
+            }
+
+            @Override
+            public void anyway() {
+                hideProgressDialog();
             }
         });
     }
