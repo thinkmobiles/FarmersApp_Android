@@ -35,6 +35,7 @@ import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.RetrofitSingleton;
 import com.farmers.underground.remote.models.ErrorMsg;
 import com.farmers.underground.remote.models.LastCropPricesModel;
+import com.farmers.underground.remote.models.PricesByDateModel;
 import com.farmers.underground.remote.models.SuccessMsg;
 import com.farmers.underground.remote.models.UserProfile;
 import com.farmers.underground.remote.util.ACallback;
@@ -532,4 +533,28 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     }
 
+    public void makeRequestGetPriceForPeriod(final CropAllPricesCallback callback){
+        Calendar prevMonth = Calendar.getInstance();
+        prevMonth.set(Calendar.MONTH, prevMonth.get(Calendar.MONTH) - 1);
+        RetrofitSingleton.getInstance().getCropPricesForPeriod(
+                StringFormaterUtil.parseToServerResponse(Calendar.getInstance()),
+                StringFormaterUtil.parseToServerResponse(prevMonth),
+                mCropModel.displayName,
+                new ACallback<List<PricesByDateModel>, ErrorMsg>() {
+                    @Override
+                    public void onSuccess(List<PricesByDateModel> result) {
+                        callback.onGetResult(result);
+                    }
+
+                    @Override
+                    public void onError(@NonNull ErrorMsg error) {
+
+                    }
+                }
+        );
+    }
+
+    public interface CropAllPricesCallback{
+        void onGetResult(List<PricesByDateModel> result);
+    }
 }

@@ -86,11 +86,13 @@ public class TestActivity extends BaseActivity {
             @Override
             public void onSuccess(List<PricesByDateModel> result) {
                 showToast("OK", Toast.LENGTH_SHORT);
+                anyway();
             }
 
             @Override
             public void onError(@NonNull ErrorMsg error) {
                 showToast("BAD", Toast.LENGTH_SHORT);
+                anyway();
             }
 
             @Override
