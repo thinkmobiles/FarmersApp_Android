@@ -118,6 +118,9 @@
     <string name="alert_message_after_registration_check_mail">Please check email and confirm of recitation</string>
 
 
+    <string name="alert_message_after_add_price">Thank you for sharing! The more you share the more you see other marketers prices!</string>
+
+
     <!-- period picker-->
     <string name="period_picker_choose">Choose date</string>
 

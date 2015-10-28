@@ -515,7 +515,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                 hideSoftKeyboard();
                 searchHintController.hide();
                 invalidateOptionsMenu();
-
                 return true;
         }
         return false;
@@ -592,9 +591,8 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     @Override
     public void onBackPressed() {
-        if (drawerOpened) mDrawerlayout.closeDrawers();
-
-
+        if (drawerOpened)
+            mDrawerlayout.closeDrawers();
         else if (searchHintController.isShowing()) {
             hideSoftKeyboard();
             searchHintController.hide();
@@ -627,15 +625,12 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
 
     private void updateFragmentsOnSearch(String newQuerry) {
-
-        searchResultProvider
-                .loadSearchResults(newQuerry, mCropList);
+        searchResultProvider.loadSearchResults(newQuerry, mCropList);
     }
 
 
     private void generateQuerryList(String newQuerry) {
-        searchResultProvider
-                .loadSearchHints(newQuerry, mCropList);
+        searchResultProvider.loadSearchHints(newQuerry, mCropList);
     }
 
     @Override
@@ -647,7 +642,5 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     public void onSearchResultLoadFinished(List<LastCropPricesModel> crops) {
         updateFragments(crops, query);
         cropListSearch = crops;
-
-
     }
 }

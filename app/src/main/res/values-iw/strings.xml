@@ -104,6 +104,10 @@
     <string name="tab3">כל המחירים</string>
     <string name="alert_message_after_registration_check_mail">הכנס אנא
 לתיבת הדואר שלך ואשר את הרישום</string>
+
+
+    <string name="alert_message_after_add_price">תודה ששיתפת! ככל שתשתף יותר כך תחשף ליותר מחירים של משווקים אחרים</string>
+
     <string name="why_c_no_prices">מדוע אני לא\n רואה מחיר?</string>
 
     <!-- period picker-->

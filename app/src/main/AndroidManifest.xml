@@ -36,6 +36,7 @@
         <activity
                 android:name=".ui.activities.MainActivity"
                 android:launchMode="singleTop"
+                android:windowSoftInputMode="adjustNothing"
                 android:screenOrientation="sensorPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>

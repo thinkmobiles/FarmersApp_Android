@@ -65,7 +65,7 @@
     <dimen name="login_margin_register_login_fb">40dp</dimen>
     <dimen name="login_margin_btn_logins">8dp</dimen>
     <dimen name="login_margin_btn_login_edit">30dp</dimen>
-    <dimen name="login_margin_top_header">15dp</dimen>
+    <dimen name="login_margin_top_header">40dp</dimen>
     <!--sign up-->
     <dimen name="sign_up_edit_text_margin_padding">15dp</dimen>
     <dimen name="sign_up_arrow_padding">5dp</dimen>
