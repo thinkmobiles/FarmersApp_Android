@@ -11,9 +11,11 @@ import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
 import com.farmers.underground.remote.RetrofitSingleton;
 import com.farmers.underground.remote.models.ErrorMsg;
+import com.farmers.underground.remote.models.FarmerPricesModel;
 import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.remote.models.PricesByDateModel;
 import com.farmers.underground.remote.models.SuccessMsg;
+import com.farmers.underground.remote.models.UserPriceQualityModel;
 import com.farmers.underground.remote.models.base.PriceBase;
 import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.ui.base.BaseActivity;
@@ -82,9 +84,20 @@ public class TestActivity extends BaseActivity {
     @OnClick(R.id.btn_api_call_test)
     void testApiCallsReg() {
         showProgressDialog();
-        RetrofitSingleton.getInstance().getCropPricesForPeriod("2016-10-27T12:09:12.000Z", "2014-10-24T12:09:12.000Z","שום",new ACallback<List<PricesByDateModel>,ErrorMsg>() {
+
+        FarmerPricesModel farmerPricesModel =  new FarmerPricesModel();
+        farmerPricesModel.date = "2015-10-28 12:09:12.000Z";
+        farmerPricesModel.cropName = "תפוזים טבורי";
+
+        farmerPricesModel.prices = new ArrayList<>();
+
+        farmerPricesModel.prices.add( new UserPriceQualityModel(5.3D,"excellent"));
+
+        farmerPricesModel.prices.add( new UserPriceQualityModel(5.15D,"תפוזים טבורי"));
+
+        RetrofitSingleton.getInstance().addFarmerPriceForCrop(farmerPricesModel, new ACallback<SuccessMsg, ErrorMsg>() {
             @Override
-            public void onSuccess(List<PricesByDateModel> result) {
+            public void onSuccess(SuccessMsg result) {
                 showToast("OK", Toast.LENGTH_SHORT);
                 anyway();
             }

@@ -62,7 +62,7 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
         return container;
     }
 
-    static int height = 0;
+
     static int width = 0;
 
 
@@ -109,7 +109,7 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
         final String url = !TextUtils.isEmpty(dateHolder.getModel().image) ? ApiConstants.BASE_URL + dateHolder.getModel().image : null;
 
         if (url != null) {
-            if (height == 0)
+            if (width == 0)
                 iv_CropsImage.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
                     @Override
                     public boolean onPreDraw() {
@@ -117,13 +117,13 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
                             PicassoHelper.getPicasso(iv_CropsImage.getContext())
                                     .load(url)
                                     .config(Bitmap.Config.RGB_565)
-                                    .resize(iv_CropsImage.getMeasuredWidth(), iv_CropsImage.getMeasuredHeight())
+                                    .resize(iv_CropsImage.getMeasuredWidth(), iv_CropsImage.getMeasuredWidth())
+                            .centerInside()
                                     .placeholder(R.drawable.ic_drawer_crops)
                                     .error(R.drawable.ic_drawer_crops)
                                     .into(iv_CropsImage); //todo error
                         width = iv_CropsImage.getMeasuredWidth();
-                        height = iv_CropsImage.getMeasuredHeight();
-                        iv_CropsImage.getViewTreeObserver().removeOnPreDrawListener(this);
+                         iv_CropsImage.getViewTreeObserver().removeOnPreDrawListener(this);
                         return false;
                     }
                 });
@@ -131,7 +131,7 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
                 PicassoHelper.getPicasso(iv_CropsImage.getContext())
                         .load(url)
                         .config(Bitmap.Config.RGB_565)
-                        .resize(width, height)
+                        .resize(width, width).centerInside()
                         .placeholder(R.drawable.ic_drawer_crops)
                         .error(R.drawable.ic_drawer_crops)
                         .into(iv_CropsImage); //todo error
