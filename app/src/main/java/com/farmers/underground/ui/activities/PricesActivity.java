@@ -17,13 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -88,6 +82,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     protected FrameLayout fl_DrawerContainer;
     @Bind(R.id.lv_DrawerHolder_PricesActivity)
     protected ListView lvDrawerContainer;
+
     @Bind(R.id.ll_logoutPricesActivity)
     protected View logoutView;
     private boolean drawerOpened;
@@ -366,7 +361,10 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                 onBackPressed();
                 return true;
             case R.id.action_burger:
-                mDrawerlayout.openDrawer(fl_DrawerContainer);
+                if (mDrawerlayout != null)
+                    if (drawerOpened)
+                        mDrawerlayout.closeDrawers();
+                    else mDrawerlayout.openDrawer(fl_DrawerContainer);
                 return true;
         }
 
@@ -459,8 +457,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     public void setDrawerList() {
         List<DrawerItem> drawerItemList = new ArrayList<>();
 
-            drawerItemList.add(new DrawerItem(FarmersApp.getInstance().getCurrentUser().getAvatar(), FarmersApp
-                    .getInstance().getCurrentUser().getFullName()));
+        drawerItemList.add(new DrawerItem(FarmersApp.getInstance().getCurrentUser().getAvatar(), FarmersApp
+                .getInstance().getCurrentUser().getFullName()));
 
         drawerItemList.add(new DrawerItem());
         drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_crops, R.string.drawer_content_0));
@@ -492,7 +490,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                 MainActivity.startWithPageSelected(this, ProjectConstants.MAIN_ACTIVITY_PAGE_FAV);
                 break;
             case 5:
-                if(FarmersApp.isSkipMode())
+                if (FarmersApp.isSkipMode())
                     LoginSignUpActivity.startAddMarketier(this);
                 else
                     LoginSignUpActivity.startChooseMarketier(this);
@@ -528,24 +526,25 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     @Override
     public void onBackPressed() {
-        if (drawerOpened && mDrawerlayout != null){
+        if (drawerOpened && mDrawerlayout != null) {
             mDrawerlayout.closeDrawers();
         }
         /*else if ( ) {
            //todo
-        }*/ else super.onBackPressed();
+        }*/
+        else super.onBackPressed();
 
     }
 
     /**
      * if dateRange == null default date range is used
-     * */
-    public void makeRequestGetPriceForPeriod(@Nullable DateRange dateRange, final CropAllPricesCallback callback){
+     */
+    public void makeRequestGetPriceForPeriod(@Nullable DateRange dateRange, final CropAllPricesCallback callback) {
 
-        if(dateRange == null){
+        if (dateRange == null) {
             Calendar prevMonth = Calendar.getInstance();
             prevMonth.set(Calendar.MONTH, prevMonth.get(Calendar.MONTH) - 1);
-            dateRange = new DateRange() ;
+            dateRange = new DateRange();
             dateRange.setDateFrom(StringFormaterUtil.parseToServerResponse(prevMonth));
             dateRange.setDateTo(StringFormaterUtil.parseToServerResponse(Calendar.getInstance()));
 
@@ -553,12 +552,12 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
             /*nothing now */
         }
 
-        RetrofitSingleton.getInstance().getCropPricesForPeriod(dateRange.getDateTo(),dateRange.getDateFrom(),
+        RetrofitSingleton.getInstance().getCropPricesForPeriod(dateRange.getDateTo(), dateRange.getDateFrom(),
                 mCropModel.displayName,
                 new ACallback<List<PricesByDateModel>, ErrorMsg>() {
                     @Override
                     public void onSuccess(List<PricesByDateModel> result) {
-                        if (result != null && !result.isEmpty()){
+                        if (result != null && !result.isEmpty()) {
                             pricesAdapterData = result;
                             callback.onGetResult(result);
                         } else
@@ -568,7 +567,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
                     @Override
                     public void onError(@NonNull ErrorMsg error) {
-                        showToast(error.getErrorMsg(),Toast.LENGTH_SHORT);
+                        showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
                     }
                 }
         );

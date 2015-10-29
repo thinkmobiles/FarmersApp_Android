@@ -153,6 +153,7 @@ public class CropsListFragment
 
     private List<CropsListItemDH> generateCropsDataHolders(List<LastCropPricesModel> cropsList) {
         List<CropsListItemDH> dhList = new ArrayList<>();
+        if(cropsList != null)
         for (LastCropPricesModel model : cropsList) {
             switch (mFragmentModel.getType()){
                 case ALL_CROPS:

@@ -89,7 +89,7 @@
                         android:lines="2"
                         android:layout_gravity="center"
                         android:textColor="@color/selector_tap_to_refresh"
-                        android:textSize="10sp"
+                        android:textSize="@dimen/small_text_size"
                         custom:customFont="bold"
                         android:gravity="center"/>
             </LinearLayout>
