@@ -88,6 +88,7 @@ public class DrawerAdapter extends BaseAdapter implements View.OnClickListener {
         viewHolder.tvUserName.setText(getItem(position).userName);
         viewHolder.ivContentIcon.setTag(position);
         viewHolder.ivContentIcon.setOnClickListener(this);
+
         Picasso.with(mContext)
                 .load(Uri.parse(getItem(position).iconPath))
                 .transform(new CropCircleTransformation())

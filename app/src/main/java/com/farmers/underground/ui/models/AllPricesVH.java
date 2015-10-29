@@ -105,22 +105,24 @@ public class AllPricesVH extends RecyclerView.ViewHolder {
     private void setVisibilityAndListener(View view, final int pos){
         final PriceBase priceBase = dateHolder.getModel2().prices.get(pos);
         if(pos != 0) {
-            view.setVisibility(priceBase.more.size() > 0 ? View.VISIBLE : View.INVISIBLE);
-            view.setOnClickListener(new View.OnClickListener() {
+            boolean shouldSet = priceBase.more.size() > 0;
+            view.setVisibility(shouldSet ? View.VISIBLE : View.INVISIBLE);
+            layouts[pos].setOnClickListener(shouldSet ? new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     dateHolder.getCallback().onMorePricesClicked(priceBase);
                 }
-            });
+            } : null);
             ((TextView) view).setText(R.string.more_prices);
         } else {
-            view.setVisibility(priceBase.more.size() < 10 ? View.VISIBLE : View.INVISIBLE);
-            layout_marketer.findViewById(R.id.tv_RefresPrice_CropsItem).setOnClickListener(new View.OnClickListener() {
+            boolean shouldSet = priceBase.more.size() < 10;
+            view.setVisibility(shouldSet ? View.VISIBLE : View.INVISIBLE);
+            layouts[pos].setOnClickListener(shouldSet ? new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     dateHolder.getCallback().onAddPricesClicked();
                 }
-            });
+            } : null);
         }
     }
 
@@ -143,13 +145,13 @@ public class AllPricesVH extends RecyclerView.ViewHolder {
         dateHolder.getCallback().onAllPricesItemClicked(dateHolder.getModel());
     }
 
-    @OnClick(R.id.tv_RefresPrice_CropsItem)
-    protected void onRefreshClicked() {
+//    @OnClick(R.id.tv_RefresPrice_CropsItem)
+//    protected void onRefreshClicked() {
 //        if( true){
 //            dateHolder.getCallback().onAddPricesClicked(dateHolder.getModel());
 //        } else  {
 //            dateHolder.getCallback().onMorePricesClicked(dateHolder.getModel());
 //        }
-    }
+ //   }
 
 }

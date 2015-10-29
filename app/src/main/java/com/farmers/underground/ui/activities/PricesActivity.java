@@ -17,12 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -83,10 +78,11 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     @Bind(R.id.drawer_conainer_PriceActivity)
     protected DrawerLayout mDrawerlayout;
-//    @Bind(R.id.fl_DrawerHolder_PricesActivity)
-//    protected FrameLayout fl_DrawerContainer;
+    @Bind(R.id.fl_DrawerHolder_PricesActivity)
+    protected FrameLayout fl_DrawerContainer;
     @Bind(R.id.lv_DrawerHolder_PricesActivity)
     protected ListView lvDrawerContainer;
+
     @Bind(R.id.ll_logoutPricesActivity)
     protected View logoutView;
     private boolean drawerOpened;
@@ -112,6 +108,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     private LastCropPricesModel mCropModel;
     private List<PricesByDateModel> pricesAdapterData = new ArrayList<>(0);
     private ProjectPagerAdapter<BaseFragment<PricesActivity>> pagerAdapter;
+
+    private int selectedTab;
 
     public static void start(@NonNull Context context, LastCropPricesModel cropModel) {
         Gson gson = new GsonBuilder().create();
@@ -188,13 +186,13 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         pagerAdapter.setFragments(getFragmentList());
         pagerAdapter.setTitles(getTitlesList());
         pagerAdapter.notifyDataSetChanged();
-        viewPager.setCurrentItem(pagerAdapter.getCount() - 1);
+        viewPager.setCurrentItem(selectedTab = pagerAdapter.getCount() - 1);
 
         //done in onResume
         //viewPager.addOnPageChangeListener(pageChangeListener);
     }
 
-    private ViewPager.OnPageChangeListener pageChangeListener  = new ViewPager.OnPageChangeListener() {
+    private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -202,6 +200,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
         @Override
         public void onPageSelected(int position) {
+            selectedTab = position;
             switch (position) {
                 case 0:
                     spinner.setVisibility(View.VISIBLE);
@@ -223,6 +222,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                     mDrawerlayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                     break;
             }
+            invalidateOptionsMenu();
         }
 
         @Override
@@ -308,8 +308,23 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     // options menu
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.findItem(R.id.action_back).setVisible(true);
-        menu.findItem(R.id.action_burger).setVisible(false);
+
+        switch (selectedTab) {
+            case 0:
+                menu.findItem(R.id.action_back).setVisible(true);
+                menu.findItem(R.id.action_burger).setVisible(false);
+                break;
+            case 1:
+                menu.findItem(R.id.action_back).setVisible(true);
+                menu.findItem(R.id.action_burger).setVisible(false);
+                break;
+            case 2:
+                menu.findItem(R.id.action_back).setVisible(false);
+                menu.findItem(R.id.action_burger).setVisible(true);
+                break;
+        }
+
+
         menu.findItem(R.id.action_icon).setVisible(true);
         final MenuItem icon = menu.findItem(R.id.action_icon);
 
@@ -359,6 +374,12 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         switch (item.getItemId()) {
             case R.id.action_back:
                 onBackPressed();
+                return true;
+            case R.id.action_burger:
+                if (mDrawerlayout != null)
+                    if (drawerOpened)
+                        mDrawerlayout.closeDrawers();
+                    else mDrawerlayout.openDrawer(fl_DrawerContainer);
                 return true;
         }
 
@@ -451,8 +472,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     public void setDrawerList() {
         List<DrawerItem> drawerItemList = new ArrayList<>();
 
-            drawerItemList.add(new DrawerItem(FarmersApp.getInstance().getCurrentUser().getAvatar(), FarmersApp
-                    .getInstance().getCurrentUser().getFullName()));
+        drawerItemList.add(new DrawerItem(FarmersApp.getInstance().getCurrentUser().getAvatar(), FarmersApp
+                .getInstance().getCurrentUser().getFullName()));
 
         drawerItemList.add(new DrawerItem());
         drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_crops, R.string.drawer_content_0));
@@ -484,7 +505,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                 MainActivity.startWithPageSelected(this, ProjectConstants.MAIN_ACTIVITY_PAGE_FAV);
                 break;
             case 5:
-                if(FarmersApp.isSkipMode())
+                if (FarmersApp.isSkipMode())
                     LoginSignUpActivity.startAddMarketier(this);
                 else
                     LoginSignUpActivity.startChooseMarketier(this);
@@ -520,24 +541,25 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     @Override
     public void onBackPressed() {
-        if (drawerOpened && mDrawerlayout != null){
+        if (drawerOpened && mDrawerlayout != null) {
             mDrawerlayout.closeDrawers();
         }
         /*else if ( ) {
            //todo
-        }*/ else super.onBackPressed();
+        }*/
+        else super.onBackPressed();
 
     }
 
     /**
      * if dateRange == null default date range is used
-     * */
-    public void makeRequestGetPriceForPeriod(@Nullable DateRange dateRange, final CropAllPricesCallback callback){
+     */
+    public void makeRequestGetPriceForPeriod(@Nullable DateRange dateRange, final CropAllPricesCallback callback) {
 
-        if(dateRange == null){
+        if (dateRange == null) {
             Calendar prevMonth = Calendar.getInstance();
             prevMonth.set(Calendar.MONTH, prevMonth.get(Calendar.MONTH) - 1);
-            dateRange = new DateRange() ;
+            dateRange = new DateRange();
             dateRange.setDateFrom(StringFormaterUtil.parseToServerResponse(prevMonth));
             dateRange.setDateTo(StringFormaterUtil.parseToServerResponse(Calendar.getInstance()));
 
@@ -545,12 +567,12 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
             /*nothing now */
         }
 
-        RetrofitSingleton.getInstance().getCropPricesForPeriod(dateRange.getDateTo(),dateRange.getDateFrom(),
+        RetrofitSingleton.getInstance().getCropPricesForPeriod(dateRange.getDateTo(), dateRange.getDateFrom(),
                 mCropModel.displayName,
                 new ACallback<List<PricesByDateModel>, ErrorMsg>() {
                     @Override
                     public void onSuccess(List<PricesByDateModel> result) {
-                        if (result != null && !result.isEmpty()){
+                        if (result != null && !result.isEmpty()) {
                             pricesAdapterData = result;
                             callback.onGetResult(result);
                         } else
@@ -560,7 +582,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
                     @Override
                     public void onError(@NonNull ErrorMsg error) {
-                        showToast(error.getErrorMsg(),Toast.LENGTH_SHORT);
+                        showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
                     }
                 }
         );
