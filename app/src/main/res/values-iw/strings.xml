@@ -35,6 +35,7 @@
 
     <!--//dialogs-->
     <string name="dialog_title_forgot_password">אנא, הכנס את הדוא"ל שלך</string>
+    <string name="dialog_btn_yes">כן</string>
     <string name="dialog_btn_ok">אוקיי</string>
     <string name="dialog_btn_cancel">לבטל</string>
     <string name="dialog_btn_understood">הבנתי</string>
@@ -72,7 +73,7 @@
     <string name="drawer_content_3">המעודפים שלי</string>
     <string name="drawer_content_4">להתנתק</string>
     <string name="drawer_content_5">הוסף שם משווק</string>
-    <string name="drawer_content_6">שווקה שם מוטציה</string>
+    <string name="drawer_content_6">מוטציה שם משווק</string>
 
     <!--TODO-->
 
@@ -107,6 +108,7 @@
 
 
     <string name="alert_message_after_add_price">תודה ששיתפת! ככל שתשתף יותר כך תחשף ליותר מחירים של משווקים אחרים</string>
+    <string name="message_sure_change_marketer">אתה בטוח שברצונך להחליף את שם המשווק שלך ?</string>
 
     <string name="why_c_no_prices">מדוע אני לא\n רואה מחיר?</string>
 

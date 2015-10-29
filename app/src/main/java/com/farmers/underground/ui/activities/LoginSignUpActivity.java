@@ -286,8 +286,8 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
         if(isChanging) {
             new AlertDialog.Builder(this)
                     .setCancelable(false)
-                    .setMessage("Are you sure you want to change marketer?")
-                    .setPositiveButton(getString(R.string.dialog_btn_ok), new DialogInterface.OnClickListener() {
+                    .setMessage(R.string.message_sure_change_marketer)
+                    .setPositiveButton(getString(R.string.dialog_btn_yes), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             switchFragment(SelectMarketerListFragment.newInstance(args), true);

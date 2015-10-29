@@ -10,13 +10,13 @@
         android:id="@+id/rl_head_dialog_more_prieces"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp">
+        android:paddingBottom="@dimen/padding_margin_default_tiny"
+        android:paddingTop="@dimen/padding_margin_default_tiny">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
+            android:layout_margin="@dimen/margin_default_tiny"
             android:layout_toLeftOf="@+id/im_logo_dialog_more_prieces"
             android:gravity="center_vertical"
             android:orientation="vertical">
@@ -46,7 +46,7 @@
             android:layout_height="35dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_margin="4dp"
+            android:layout_margin="@dimen/margin_default_tiny"
             android:src="@android:drawable/ic_dialog_info" />
 
     </RelativeLayout>
@@ -67,7 +67,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/default_divider_height_1"
             android:background="@color/grey" />
 
         <ListView
@@ -77,17 +77,17 @@
             android:layout_height="240dp" />
 
         <View
-            android:layout_marginRight="15dp"
-            android:layout_marginLeft="15dp"
+            android:layout_marginRight="@dimen/margin_default_medium"
+            android:layout_marginLeft="@dimen/margin_default_medium"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/default_divider_height_1"
             android:background="@color/grey" />
 
         <com.farmers.underground.ui.custom_views.CustomTextView
             android:id="@+id/tv_foot_dialog_more_prieces"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="@dimen/margin_default_medium"
             android:gravity="right"
             custom:customFont="regular"
             android:text="@string/foot" />

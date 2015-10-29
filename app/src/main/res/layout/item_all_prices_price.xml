@@ -49,7 +49,6 @@
         style="@style/TV_Small_CropsItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
         android:gravity="right"
         android:text="@string/all_prices_more_price"
         android:textColor="@color/selector_tap_to_refresh"

@@ -18,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -83,8 +84,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     @Bind(R.id.drawer_conainer_PriceActivity)
     protected DrawerLayout mDrawerlayout;
-//    @Bind(R.id.fl_DrawerHolder_PricesActivity)
-//    protected FrameLayout fl_DrawerContainer;
+    @Bind(R.id.fl_DrawerHolder_PricesActivity)
+    protected FrameLayout fl_DrawerContainer;
     @Bind(R.id.lv_DrawerHolder_PricesActivity)
     protected ListView lvDrawerContainer;
     @Bind(R.id.ll_logoutPricesActivity)
@@ -112,6 +113,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     private LastCropPricesModel mCropModel;
     private List<PricesByDateModel> pricesAdapterData = new ArrayList<>(0);
     private ProjectPagerAdapter<BaseFragment<PricesActivity>> pagerAdapter;
+
+    private boolean isVisibleBurger;;
 
     public static void start(@NonNull Context context, LastCropPricesModel cropModel) {
         Gson gson = new GsonBuilder().create();
@@ -141,7 +144,6 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         setViewPager();
         setTabs();
         setUPSpinner(spinnerTestData(), 5);
-
 
         searchView.setOnSearchClickListener(new View.OnClickListener() {
             @Override
@@ -189,6 +191,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         pagerAdapter.setTitles(getTitlesList());
         pagerAdapter.notifyDataSetChanged();
         viewPager.setCurrentItem(pagerAdapter.getCount() - 1);
+        isVisibleBurger = true;
 
         //done in onResume
         //viewPager.addOnPageChangeListener(pageChangeListener);
@@ -209,18 +212,21 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                     calendar.setVisibility(View.GONE);
                     spinner.bringToFront();
                     mDrawerlayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                    isVisibleBurger = false;
                     break;
                 case 1:
                     spinner.setVisibility(View.GONE);
                     searchView.setVisibility(View.VISIBLE);
                     calendar.setVisibility(View.VISIBLE);
                     mDrawerlayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                    isVisibleBurger = false;
                     break;
                 case 2:
                     spinner.setVisibility(View.GONE);
                     searchView.setVisibility(View.VISIBLE);
                     calendar.setVisibility(View.VISIBLE);
                     mDrawerlayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                    isVisibleBurger = true;
                     break;
             }
         }
@@ -308,8 +314,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     // options menu
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.findItem(R.id.action_back).setVisible(true);
-        menu.findItem(R.id.action_burger).setVisible(false);
+        menu.findItem(R.id.action_back).setVisible(!isVisibleBurger);
+        menu.findItem(R.id.action_burger).setVisible(isVisibleBurger);
         menu.findItem(R.id.action_icon).setVisible(true);
         final MenuItem icon = menu.findItem(R.id.action_icon);
 
@@ -349,8 +355,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -359,6 +364,9 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         switch (item.getItemId()) {
             case R.id.action_back:
                 onBackPressed();
+                return true;
+            case R.id.action_burger:
+                mDrawerlayout.openDrawer(fl_DrawerContainer);
                 return true;
         }
 
