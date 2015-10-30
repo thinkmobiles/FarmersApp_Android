@@ -13,6 +13,7 @@ import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.PricesByDateModel;
 import com.farmers.underground.remote.models.base.PriceBase;
 import com.farmers.underground.ui.utils.DateHelper;
+import com.farmers.underground.ui.utils.StringFormaterUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -97,28 +98,30 @@ public class AllPricesVH extends RecyclerView.ViewHolder {
     }
 
     private void setPrice(View tvPrice, Double price){
-        ((TextView) tvPrice).setText(price != 0 ? String.format("%.2f", price) : "- -");
+        ((TextView) tvPrice).setText(StringFormaterUtil.parsePrice(price));
     }
 
     private void setVisibilityAndListener(View view, final int pos){
         final PriceBase priceBase = dateHolder.getModel2().prices.get(pos);
         if(pos != 0) {
-            view.setVisibility(!TextUtils.isEmpty(priceBase.quality) ? View.VISIBLE : View.INVISIBLE);
-            layouts[pos].setOnClickListener(new View.OnClickListener() {
+            boolean isEnable = !TextUtils.isEmpty(priceBase.quality);
+            view.setVisibility(isEnable ? View.VISIBLE : View.INVISIBLE);
+            layouts[pos].setOnClickListener(isEnable ? new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     dateHolder.getCallback().onMorePricesClicked(priceBase);
                 }
-            });
+            } : null);
             ((TextView) view).setText(priceBase.quality);
         } else {
-            view.setVisibility(priceBase.more.size() < 10 ? View.VISIBLE : View.INVISIBLE);
-            layouts[pos].setOnClickListener(new View.OnClickListener() {
+            boolean isEnable = priceBase.more.size() < 10;
+            view.setVisibility(isEnable ? View.VISIBLE : View.INVISIBLE);
+            layouts[pos].setOnClickListener(isEnable ? new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     dateHolder.getCallback().onAddPricesClicked();
                 }
-            });
+            } : null);
         }
     }
 

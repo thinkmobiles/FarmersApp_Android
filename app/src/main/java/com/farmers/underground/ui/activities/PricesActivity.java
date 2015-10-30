@@ -173,7 +173,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         if (mCropModel == null)
             throw new IllegalAccessError("Create this activity with start(Context, CropModel) " + "method only!");
         else
-            ((TextView) mToolbar.findViewById(R.id.toolbar_title)).setText(mCropModel.displayName);
+            ((TextView) mToolbar.findViewById(R.id.toolbar_title)).setText(mCropModel.englishName);
     }
 
     //ViewPager
@@ -375,7 +375,6 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     @OnClick(R.id.action_calendar)
     protected void onCalendarClick() {
-
         TransparentActivity.startWithFragmentForResult(this, new PeriodPickerFragment(), REQUEST_CODE_PERIOD_PICKER);
     }
 
@@ -544,15 +543,17 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         if (dateRange == null) {
             Calendar prevMonth = Calendar.getInstance();
             prevMonth.set(Calendar.MONTH, prevMonth.get(Calendar.MONTH) - 1);
+            prevMonth.set(Calendar.HOUR_OF_DAY, 0);
+            prevMonth.set(Calendar.MINUTE, 0);
             dateRange = new DateRange();
-            dateRange.setDateFrom(StringFormaterUtil.parseToServerResponse(prevMonth));
-            dateRange.setDateTo(StringFormaterUtil.parseToServerResponse(Calendar.getInstance()));
+            dateRange.setDateFrom(StringFormaterUtil.parseToServerResponse(Calendar.getInstance()));
+            dateRange.setDateTo(StringFormaterUtil.parseToServerResponse(prevMonth));
 
         } else {
             /*nothing now */
         }
 
-        RetrofitSingleton.getInstance().getCropPricesForPeriod(dateRange.getDateTo(), dateRange.getDateFrom(),
+        RetrofitSingleton.getInstance().getCropPricesForPeriod(dateRange.getDateFrom(), dateRange.getDateTo(),
                 mCropModel.displayName,
                 new ACallback<List<PricesByDateModel>, ErrorMsg>() {
                     @Override
