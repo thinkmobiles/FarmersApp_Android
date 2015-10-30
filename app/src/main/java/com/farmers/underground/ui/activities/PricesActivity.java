@@ -173,7 +173,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         if (mCropModel == null)
             throw new IllegalAccessError("Create this activity with start(Context, CropModel) " + "method only!");
         else
-            ((TextView) mToolbar.findViewById(R.id.toolbar_title)).setText(mCropModel.englishName);
+            ((TextView) mToolbar.findViewById(R.id.toolbar_title)).setText(mCropModel.displayName);
     }
 
     //ViewPager

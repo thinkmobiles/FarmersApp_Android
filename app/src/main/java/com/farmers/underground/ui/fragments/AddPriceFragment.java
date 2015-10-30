@@ -91,8 +91,8 @@ public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements 
         initLists();
     }
 
-    public List<UserPriceQualityModel> getPriceList(){
-        List<UserPriceQualityModel> list = new ArrayList<>();
+    public ArrayList<UserPriceQualityModel> getPriceList(){
+        ArrayList<UserPriceQualityModel> list = new ArrayList<>();
         list.add(new UserPriceQualityModel(Double.valueOf(etPrice.getText().toString()), etQuality.getText().toString()));
         for(int i = 0; i < counter; ++i){
             if(!TextUtils.isEmpty(listPrice.get(i).getText().toString())){

@@ -17,4 +17,12 @@ public class FarmerPricesModel {
 
     public ArrayList<UserPriceQualityModel> prices;
 
+    public FarmerPricesModel() {
+    }
+
+    public FarmerPricesModel(String cropName, String date, ArrayList<UserPriceQualityModel> prices) {
+        this.cropName = cropName;
+        this.date = date;
+        this.prices = prices;
+    }
 }
