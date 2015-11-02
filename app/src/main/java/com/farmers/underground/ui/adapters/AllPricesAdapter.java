@@ -29,6 +29,7 @@ public class AllPricesAdapter extends RecyclerView.Adapter<AllPricesVH> {
 
     public void setDataList(List<AllPricesDH> dataList) {
         this.dataList = dataList;
+        notifyDataSetChanged();
     }
 
     @Override
