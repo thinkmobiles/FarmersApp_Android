@@ -48,7 +48,7 @@ public class CropsListFragment
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        stateCallback = (FragmentViewsCreatedCallback)context;
+        stateCallback = (FragmentViewsCreatedCallback) context;
     }
 
     @Override
@@ -59,8 +59,8 @@ public class CropsListFragment
     }
 
 
-    public static CropsListFragment getInstance(CropsListFragmentModel.TYPE type ) {
-        CropsListFragmentModel fragmentModel = new CropsListFragmentModel(type );
+    public static CropsListFragment getInstance(CropsListFragmentModel.TYPE type) {
+        CropsListFragmentModel fragmentModel = new CropsListFragmentModel(type);
         Bundle args = new Bundle();
         args.putSerializable(ProjectConstants.KEY_DATA, fragmentModel);
         CropsListFragment fragment = new CropsListFragment();
@@ -78,7 +78,7 @@ public class CropsListFragment
         View v = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, v);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.addItemDecoration(new CropsItemDivider(ResourceRetriever.retrievePX(getContext(),R.dimen
+        recyclerView.addItemDecoration(new CropsItemDivider(ResourceRetriever.retrievePX(getContext(), R.dimen
                 .crops_card_layout_margin)));
         return v;
     }
@@ -105,7 +105,7 @@ public class CropsListFragment
         tv_NoItems.setVisibility(View.VISIBLE);
         String itemsText;
 
-            itemsText = getActivity().getString(R.string.no_crops_found) + querry;
+        itemsText = getActivity().getString(R.string.no_crops_found) + querry;
 
         tv_NoItems.setText(itemsText);
     }
@@ -123,26 +123,31 @@ public class CropsListFragment
     }
 
 
-
     @Override
     public void onReceiveCrops(List<LastCropPricesModel> cropsList, String query) {
-        if(mFragmentModel!= null && mFragmentModel.getType() == CropsListFragmentModel.TYPE.FAVOURITES){
-            List<LastCropPricesModel> favouritesList = new ArrayList<>();
-           for( LastCropPricesModel item : cropsList)
-               if(item.isInFavorites)
-                   favouritesList.add(item);
-            adapter.setDataList(generateCropsDataHolders(favouritesList));
-        }
-        else
-            adapter.setDataList(generateCropsDataHolders(cropsList));
 
-        adapter.notifyDataSetChanged();
+        if (cropsList != null && mFragmentModel != null && query != null) {
 
 
-        if(cropsList.size() == 0)
-            showNoItems(query);
-        else
-            hideNoItems();
+            if (mFragmentModel.getType() == CropsListFragmentModel.TYPE
+                    .FAVOURITES) {
+                List<LastCropPricesModel> favouritesList = new ArrayList<>();
+                for (LastCropPricesModel item : cropsList)
+                    if (item.isInFavorites)
+                        favouritesList.add(item);
+                adapter.setDataList(generateCropsDataHolders(favouritesList));
+            } else
+                adapter.setDataList(generateCropsDataHolders(cropsList));
+
+            adapter.notifyDataSetChanged();
+
+
+            if (cropsList.size() == 0)
+                showNoItems(query);
+            else
+                hideNoItems();
+        } else
+            showNoItems("");
 
     }
 
@@ -153,19 +158,20 @@ public class CropsListFragment
 
     private List<CropsListItemDH> generateCropsDataHolders(List<LastCropPricesModel> cropsList) {
         List<CropsListItemDH> dhList = new ArrayList<>();
-        if(cropsList != null)
-        for (LastCropPricesModel model : cropsList) {
-            switch (mFragmentModel.getType()){
-                case ALL_CROPS:
-                    CropsListItemDH dh = new CropsListItemDH(model, mFragmentModel.getType(), listCallback);
-                    dhList.add(dh);
-                    break;
-                case FAVOURITES:
-                   if(model.isInFavorites) dhList.add(new CropsListItemDH(model, mFragmentModel.getType(), listCallback));
-                    break;
-            }
+        if (cropsList != null)
+            for (LastCropPricesModel model : cropsList) {
+                switch (mFragmentModel.getType()) {
+                    case ALL_CROPS:
+                        CropsListItemDH dh = new CropsListItemDH(model, mFragmentModel.getType(), listCallback);
+                        dhList.add(dh);
+                        break;
+                    case FAVOURITES:
+                        if (model.isInFavorites)
+                            dhList.add(new CropsListItemDH(model, mFragmentModel.getType(), listCallback));
+                        break;
+                }
 
-        }
+            }
         return dhList;
     }
 
