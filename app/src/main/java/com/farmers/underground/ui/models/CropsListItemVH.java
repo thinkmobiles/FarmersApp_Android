@@ -21,6 +21,7 @@ import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.remote.models.base.PriceBase;
 import com.farmers.underground.ui.utils.DateHelper;
 import com.farmers.underground.ui.utils.PicassoHelper;
+import com.farmers.underground.ui.utils.StringFormaterUtil;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
@@ -84,14 +85,14 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
 
     public void bindData(CropsListItemDH dateHolder) {
         this.dateHolder = dateHolder;
-        this.model = this.dateHolder.getModel();
-        dateHelper = new DateHelper(container.getContext());
+        LastCropPricesModel model = this.dateHolder.getModel();
+        DateHelper dateHelper = new DateHelper(container.getContext());
 
         tv_CropsName.setText(model.displayName);
 
         String fulldate = model.prices.get(0).data;
 
-        format = new SimpleDateFormat(ProjectConstants.SERVER_DATE_FORMAT, Locale.getDefault());
+        SimpleDateFormat format = new SimpleDateFormat(ProjectConstants.SERVER_DATE_FORMAT, Locale.getDefault());
         try {
             long time = format.parse(fulldate).getTime();
             String[] date = dateHelper.getDate(time);
@@ -113,12 +114,11 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
                 iv_CropsImage.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
                     @Override
                     public boolean onPreDraw() {
-                        if (url != null)
-                            PicassoHelper.getPicasso(iv_CropsImage.getContext())
+                        PicassoHelper.getPicasso(iv_CropsImage.getContext())
                                     .load(url)
                                     .config(Bitmap.Config.RGB_565)
                                     .resize(iv_CropsImage.getMeasuredWidth(), iv_CropsImage.getMeasuredWidth())
-                            .centerInside()
+                                    .centerInside()
                                     .placeholder(R.drawable.ic_drawer_crops)
                                     .error(R.drawable.ic_drawer_crops)
                                     .into(iv_CropsImage); //todo error
@@ -147,9 +147,7 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
             PriceBase priceModel = model.prices.get(i);
 
             if (priceModel != null) {
-                double price  = priceModel.price;
-                        tv_Price.setText(price != 0 ? String.format("%.2f", price) : "- -");
-
+                tv_Price.setText(StringFormaterUtil.parsePrice(priceModel.price));
                 tv_Marketeer_CropItem.setText(priceModel.source.name);
                 try {
                     long time = format.parse(priceModel.data).getTime();

@@ -10,29 +10,12 @@ import com.farmers.underground.ui.adapters.AllPricesAdapter;
  */
 public class AllPricesDH {
 
-    private LastCropPricesModel model;
-
     private PricesByDateModel model2;
-
     private AllPricesAdapter.AllPricesCallback callback;
-
-
-    public AllPricesDH(LastCropPricesModel model, AllPricesAdapter.AllPricesCallback callback) {
-        this.model = model;
-        this.callback = callback;
-    }
 
     public AllPricesDH(PricesByDateModel model2, AllPricesAdapter.AllPricesCallback callback) {
         this.model2 = model2;
         this.callback = callback;
-    }
-
-    public LastCropPricesModel getModel() {
-        return model;
-    }
-
-    public void setModel(LastCropPricesModel model) {
-        this.model = model;
     }
 
     public AllPricesAdapter.AllPricesCallback getCallback() {
@@ -41,9 +24,5 @@ public class AllPricesDH {
 
     public PricesByDateModel getModel2() {
         return model2;
-    }
-
-    public void setModel2(PricesByDateModel model2) {
-        this.model2 = model2;
     }
 }

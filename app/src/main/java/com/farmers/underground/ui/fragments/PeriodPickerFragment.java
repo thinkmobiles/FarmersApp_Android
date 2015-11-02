@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -34,9 +35,9 @@ public class PeriodPickerFragment extends BaseFragment<TransparentActivity> impl
     @Bind(R.id.tvPeriodTo)
     protected TextView tvPeriodTo;
 
-    private enum Period{From, To};
+    private enum Period{StartDate, EndDate};
     private Period dayFromTo;
-    private Calendar selectedDay, dateFrom, dateTo;
+    private Calendar selectedDay, dateStart, dateEnd;
 
     @Override
     protected int getLayoutResId() {
@@ -47,23 +48,22 @@ public class PeriodPickerFragment extends BaseFragment<TransparentActivity> impl
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-
         setData();
     }
 
     private void setData(){
-        dayFromTo = Period.From;
+        dayFromTo = Period.StartDate;
         setDate(Calendar.getInstance());
     }
 
     @OnClick(R.id.tvPeriodFrom)
     protected void pickFromDate(){
-        pickDate(Period.From);
+        pickDate(Period.StartDate);
     }
 
     @OnClick(R.id.tvPeriodTo)
     protected void pickToDate(){
-        pickDate(Period.To);
+        pickDate(Period.EndDate);
     }
 
     private void pickDate(Period period){
@@ -72,8 +72,10 @@ public class PeriodPickerFragment extends BaseFragment<TransparentActivity> impl
     }
 
     public void onPickDate(Calendar date) {
-        if(dayFromTo == Period.To) {
-            if (dateFrom.before(date)) {
+        if(dayFromTo == Period.EndDate) {
+            if (dateStart.after(date)) {
+                date.set(Calendar.HOUR_OF_DAY, 0);
+                date.set(Calendar.MINUTE, 0);
                 setDate(date);
                 sendPeriod();
             } else {
@@ -85,19 +87,19 @@ public class PeriodPickerFragment extends BaseFragment<TransparentActivity> impl
     }
 
     private void setDate(Calendar date){
-        if(dayFromTo == Period.From) {
+        if(dayFromTo == Period.StartDate) {
             tvPeriodFrom.setText(StringFormaterUtil.convertDate(date));
-            dateFrom = date;
+            dateStart = date;
         } else {
             tvPeriodTo.setText(StringFormaterUtil.convertDate(date));
-            dateTo = date;
+            dateEnd = date;
         }
     }
 
     private void sendPeriod(){
         Bundle bundle = new Bundle();
-        bundle.putSerializable(KEY_DATE_FROM, dateFrom);
-        bundle.putSerializable(KEY_DATE_TO, dateTo);
+        bundle.putSerializable(KEY_DATE_FROM, dateStart);
+        bundle.putSerializable(KEY_DATE_TO, dateEnd);
         Intent intent = new Intent();
         intent.putExtras(bundle);
         getHostActivity().setResult(Activity.RESULT_OK, intent);
@@ -105,8 +107,13 @@ public class PeriodPickerFragment extends BaseFragment<TransparentActivity> impl
     }
 
     public void showDatePicker(){
-        DatePickerDialog datePickerDialog =  new DatePickerDialog(getContext(), this, dateFrom.get(Calendar.YEAR), dateFrom.get(Calendar.MONTH), dateFrom.get(Calendar.DAY_OF_MONTH));
-
+        DatePickerDialog datePickerDialog =  new DatePickerDialog(
+                getContext(),
+                this,
+                dateStart.get(Calendar.YEAR),
+                dateStart.get(Calendar.MONTH),
+                dateStart.get(Calendar.DAY_OF_MONTH)
+        );
         datePickerDialog.show();
     }
 

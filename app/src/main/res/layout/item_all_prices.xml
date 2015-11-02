@@ -83,7 +83,7 @@
     <View
         android:id="@+id/v_Devider_AllPrices"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
+        android:layout_height="@dimen/default_divider_height"
         android:layout_alignRight="@+id/ll_PricesContainer_CropItem"
         android:layout_below="@id/ll_DateHolder_AllPrices"
         android:layout_gravity="center_vertical"

@@ -100,7 +100,7 @@ public class SignUpFragment extends BaseFragment<LoginSignUpActivity>  {
     @OnClick(R.id.btnSignUp_FSU)
     protected void signUp() {
         String name = etName.getText().toString();
-        final String email = etEmail.getText().toString();
+        final String email = etEmail.getText().toString().trim();
         final String password = etPassword.getText().toString();
         if (isEmpty(name, "name") || isEmpty(email, "email") || isEmpty(password, "password")) {
             return;

@@ -1,6 +1,7 @@
 package com.farmers.underground.ui.models;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.PricesByDateModel;
 import com.farmers.underground.remote.models.base.PriceBase;
 import com.farmers.underground.ui.utils.DateHelper;
+import com.farmers.underground.ui.utils.StringFormaterUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -50,9 +52,6 @@ public class AllPricesVH extends RecyclerView.ViewHolder {
 
     @Bind(R.id.all_prices_item_view)
     protected View container;
-
-    private static final int TYPE_ADD = 1;
-    private static final int TYPE_MORE = 2;
 
     public View getContainer() {
         return container;
@@ -99,28 +98,30 @@ public class AllPricesVH extends RecyclerView.ViewHolder {
     }
 
     private void setPrice(View tvPrice, Double price){
-        ((TextView) tvPrice).setText(price != 0 ? String.format("%.2f", price) : "- -");
+        ((TextView) tvPrice).setText(StringFormaterUtil.parsePrice(price));
     }
 
     private void setVisibilityAndListener(View view, final int pos){
         final PriceBase priceBase = dateHolder.getModel2().prices.get(pos);
         if(pos != 0) {
-            view.setVisibility(priceBase.more.size() > 0 ? View.VISIBLE : View.INVISIBLE);
-            view.setOnClickListener(new View.OnClickListener() {
+            boolean isEnable = !TextUtils.isEmpty(priceBase.quality);
+            view.setVisibility(isEnable ? View.VISIBLE : View.INVISIBLE);
+            layouts[pos].setOnClickListener(isEnable ? new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     dateHolder.getCallback().onMorePricesClicked(priceBase);
                 }
-            });
-            ((TextView) view).setText(R.string.more_prices);
+            } : null);
+            ((TextView) view).setText(priceBase.quality);
         } else {
-            view.setVisibility(priceBase.more.size() < 10 ? View.VISIBLE : View.INVISIBLE);
-            layout_marketer.findViewById(R.id.tv_RefresPrice_CropsItem).setOnClickListener(new View.OnClickListener() {
+            boolean isEnable = priceBase.more.size() < 10;
+            view.setVisibility(isEnable ? View.VISIBLE : View.INVISIBLE);
+            layouts[pos].setOnClickListener(isEnable ? new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     dateHolder.getCallback().onAddPricesClicked();
                 }
-            });
+            } : null);
         }
     }
 
@@ -136,20 +137,6 @@ public class AllPricesVH extends RecyclerView.ViewHolder {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @OnClick(R.id.ll_PricesContainer_CropItem)
-    protected void onImageCLicked() {
-        dateHolder.getCallback().onAllPricesItemClicked(dateHolder.getModel());
-    }
-
-    @OnClick(R.id.tv_RefresPrice_CropsItem)
-    protected void onRefreshClicked() {
-//        if( true){
-//            dateHolder.getCallback().onAddPricesClicked(dateHolder.getModel());
-//        } else  {
-//            dateHolder.getCallback().onMorePricesClicked(dateHolder.getModel());
-//        }
     }
 
 }

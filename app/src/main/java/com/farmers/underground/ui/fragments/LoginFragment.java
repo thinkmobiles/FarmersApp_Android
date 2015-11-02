@@ -169,7 +169,7 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> {
 
     @OnClick(R.id.btnLogin)
     protected void login() {
-        final String email = etEmail.getText().toString();
+        final String email = etEmail.getText().toString().trim();
         final String password = etPassword.getText().toString();
         if (isEmpty(email, "email") || isEmpty(password, "password")) {
             return;

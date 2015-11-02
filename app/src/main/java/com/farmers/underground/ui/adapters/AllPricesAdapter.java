@@ -22,7 +22,6 @@ import java.util.List;
 public class AllPricesAdapter extends RecyclerView.Adapter<AllPricesVH> {
 
     private List<AllPricesDH> dataList;
-    private int lastPosition;
 
     public AllPricesAdapter() {
         dataList = new ArrayList<>();
@@ -42,7 +41,6 @@ public class AllPricesAdapter extends RecyclerView.Adapter<AllPricesVH> {
     public void onBindViewHolder(AllPricesVH holder, int position) {
         boolean hideDevider = position == getItemCount()-1;
         holder.bindData(dataList.get(position), hideDevider);
-//        setAnimation(   holder.getContainer(), position);
     }
 
     @Override
@@ -54,13 +52,5 @@ public class AllPricesAdapter extends RecyclerView.Adapter<AllPricesVH> {
         void onAllPricesItemClicked(LastCropPricesModel cropModel); // -> ?
         void onAddPricesClicked();
         void onMorePricesClicked(PriceBase priceModel);
-    }
-
-    private void setAnimation(View viewToAnimate, int position) {
-        if (position > lastPosition) {
-            Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), R.anim.slide_in_bottom);
-            viewToAnimate.startAnimation(animation);
-            lastPosition = position;
-        }
     }
 }

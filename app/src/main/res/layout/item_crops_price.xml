@@ -85,7 +85,7 @@
                 android:text="@string/tap_to_refresh_price"
                 android:textColor="@color/selector_tap_to_refresh"
                 android:textSize="@dimen/tiny_text_size"
-                custom:customFont="regular"/>
+                custom:customFont="bold" />
     </LinearLayout>
 
 </LinearLayout>

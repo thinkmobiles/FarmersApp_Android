@@ -62,6 +62,7 @@ public class AllPricesFragment extends BaseFragment<PricesActivity>
         super.onCreate(savedInstanceState);
         Gson gson = new GsonBuilder().create();
         mCropModel = gson.fromJson(getArguments().getString(ProjectConstants.KEY_DATA), LastCropPricesModel.class);
+        setHasOptionsMenu(true);
     }
 
     @Override

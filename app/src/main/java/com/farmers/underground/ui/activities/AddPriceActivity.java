@@ -25,8 +25,13 @@ import butterknife.ButterKnife;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ApiConstants;
 import com.farmers.underground.config.ProjectConstants;
+import com.farmers.underground.remote.RetrofitSingleton;
+import com.farmers.underground.remote.models.ErrorMsg;
+import com.farmers.underground.remote.models.FarmerPricesModel;
 import com.farmers.underground.remote.models.LastCropPricesModel;
+import com.farmers.underground.remote.models.SuccessMsg;
 import com.farmers.underground.remote.models.UserPriceQualityModel;
+import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.fragments.AddPriceFragment;
 import com.farmers.underground.ui.utils.PicassoHelper;
@@ -39,6 +44,7 @@ import com.squareup.picasso.Target;
 import butterknife.OnClick;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -225,9 +231,7 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
                 .setPositiveButton(getString(R.string.dialog_accept), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        List<UserPriceQualityModel> list = childFragment.getPriceList();
-                        //todo request addPrice()
-                        //todo after request show message "thanks for add..."
+//                        sendPrices(); //request
                         showToast("todo request", Toast.LENGTH_SHORT);
                         hideSoftKeyboard();
                         childFragment.refresh();
@@ -237,5 +241,35 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
                 .setNeutralButton(getString(R.string.dialog_correct), null)
                 .create()
                 .show();
+    }
+
+    private void sendPrices(){
+        FarmerPricesModel farmerPricesModel = new FarmerPricesModel();
+        farmerPricesModel.cropName = mCropModel.displayName;
+        farmerPricesModel.date = StringFormaterUtil.parseToServerResponse(selectedDate);
+        RetrofitSingleton.getInstance().addFarmerPriceForCrop(
+                new FarmerPricesModel(
+                        mCropModel.displayName,
+                        StringFormaterUtil.parseToServerResponse(selectedDate),
+                        childFragment.getPriceList()),
+                new ACallback<SuccessMsg, ErrorMsg>() {
+
+            @Override
+            public void onSuccess(SuccessMsg result) {
+                showToast(getString(R.string.alert_message_after_add_price), Toast.LENGTH_SHORT);
+                anyway();
+            }
+
+            @Override
+            public void onError(@NonNull ErrorMsg error) {
+                showToast("BAD", Toast.LENGTH_SHORT);
+                anyway();
+            }
+
+            @Override
+            public void anyway() {
+                hideProgressDialog();
+            }
+        });
     }
 }

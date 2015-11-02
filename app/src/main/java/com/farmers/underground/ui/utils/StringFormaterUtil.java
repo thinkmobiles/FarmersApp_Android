@@ -3,6 +3,7 @@ package com.farmers.underground.ui.utils;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by samson
@@ -11,11 +12,11 @@ import java.util.Date;
 public class StringFormaterUtil {
 
     public static String convertDate(Calendar date){
-        return new SimpleDateFormat("ccc dd.M.yy").format(date.getTime());
+        return new SimpleDateFormat("ccc dd.M.yy", Locale.getDefault()).format(date.getTime());
     }
 
     public static String parseToServerResponse(Calendar date){
-        return new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'").format(date.getTime());
+        return new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'", Locale.getDefault()).format(date.getTime());
     }
 
     public static String getLettersForLogo(String name){

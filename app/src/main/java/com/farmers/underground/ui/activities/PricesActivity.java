@@ -17,12 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -83,10 +78,11 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     @Bind(R.id.drawer_conainer_PriceActivity)
     protected DrawerLayout mDrawerlayout;
-//    @Bind(R.id.fl_DrawerHolder_PricesActivity)
-//    protected FrameLayout fl_DrawerContainer;
+    @Bind(R.id.fl_DrawerHolder_PricesActivity)
+    protected FrameLayout fl_DrawerContainer;
     @Bind(R.id.lv_DrawerHolder_PricesActivity)
     protected ListView lvDrawerContainer;
+
     @Bind(R.id.ll_logoutPricesActivity)
     protected View logoutView;
     private boolean drawerOpened;
@@ -112,6 +108,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     private LastCropPricesModel mCropModel;
     private List<PricesByDateModel> pricesAdapterData = new ArrayList<>(0);
     private ProjectPagerAdapter<BaseFragment<PricesActivity>> pagerAdapter;
+
+    private boolean isVisibleBurger;;
 
     public static void start(@NonNull Context context, LastCropPricesModel cropModel) {
         Gson gson = new GsonBuilder().create();
@@ -141,7 +139,6 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         setViewPager();
         setTabs();
         setUPSpinner(spinnerTestData(), 5);
-
 
         searchView.setOnSearchClickListener(new View.OnClickListener() {
             @Override
@@ -189,6 +186,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         pagerAdapter.setTitles(getTitlesList());
         pagerAdapter.notifyDataSetChanged();
         viewPager.setCurrentItem(pagerAdapter.getCount() - 1);
+        isVisibleBurger = true;
 
         //done in onResume
         //viewPager.addOnPageChangeListener(pageChangeListener);
@@ -209,18 +207,21 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                     calendar.setVisibility(View.GONE);
                     spinner.bringToFront();
                     mDrawerlayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                    isVisibleBurger = false;
                     break;
                 case 1:
                     spinner.setVisibility(View.GONE);
                     searchView.setVisibility(View.VISIBLE);
                     calendar.setVisibility(View.VISIBLE);
                     mDrawerlayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                    isVisibleBurger = false;
                     break;
                 case 2:
                     spinner.setVisibility(View.GONE);
                     searchView.setVisibility(View.VISIBLE);
                     calendar.setVisibility(View.VISIBLE);
                     mDrawerlayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                    isVisibleBurger = true;
                     break;
             }
         }
@@ -308,8 +309,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     // options menu
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.findItem(R.id.action_back).setVisible(true);
-        menu.findItem(R.id.action_burger).setVisible(false);
+        menu.findItem(R.id.action_back).setVisible(!isVisibleBurger);
+        menu.findItem(R.id.action_burger).setVisible(isVisibleBurger);
         menu.findItem(R.id.action_icon).setVisible(true);
         final MenuItem icon = menu.findItem(R.id.action_icon);
 
@@ -349,8 +350,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -359,6 +359,12 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         switch (item.getItemId()) {
             case R.id.action_back:
                 onBackPressed();
+                return true;
+            case R.id.action_burger:
+                if (mDrawerlayout != null)
+                    if (drawerOpened)
+                        mDrawerlayout.closeDrawers();
+                    else mDrawerlayout.openDrawer(fl_DrawerContainer);
                 return true;
         }
 
@@ -369,7 +375,6 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     @OnClick(R.id.action_calendar)
     protected void onCalendarClick() {
-
         TransparentActivity.startWithFragmentForResult(this, new PeriodPickerFragment(), REQUEST_CODE_PERIOD_PICKER);
     }
 
@@ -451,8 +456,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     public void setDrawerList() {
         List<DrawerItem> drawerItemList = new ArrayList<>();
 
-            drawerItemList.add(new DrawerItem(FarmersApp.getInstance().getCurrentUser().getAvatar(), FarmersApp
-                    .getInstance().getCurrentUser().getFullName()));
+        drawerItemList.add(new DrawerItem(FarmersApp.getInstance().getCurrentUser().getAvatar(), FarmersApp
+                .getInstance().getCurrentUser().getFullName()));
 
         drawerItemList.add(new DrawerItem());
         drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_crops, R.string.drawer_content_0));
@@ -484,7 +489,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                 MainActivity.startWithPageSelected(this, ProjectConstants.MAIN_ACTIVITY_PAGE_FAV);
                 break;
             case 5:
-                if(FarmersApp.isSkipMode())
+                if (FarmersApp.isSkipMode())
                     LoginSignUpActivity.startAddMarketier(this);
                 else
                     LoginSignUpActivity.startChooseMarketier(this);
@@ -520,37 +525,40 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     @Override
     public void onBackPressed() {
-        if (drawerOpened && mDrawerlayout != null){
+        if (drawerOpened && mDrawerlayout != null) {
             mDrawerlayout.closeDrawers();
         }
         /*else if ( ) {
            //todo
-        }*/ else super.onBackPressed();
+        }*/
+        else super.onBackPressed();
 
     }
 
     /**
      * if dateRange == null default date range is used
-     * */
-    public void makeRequestGetPriceForPeriod(@Nullable DateRange dateRange, final CropAllPricesCallback callback){
+     */
+    public void makeRequestGetPriceForPeriod(@Nullable DateRange dateRange, final CropAllPricesCallback callback) {
 
-        if(dateRange == null){
+        if (dateRange == null) {
             Calendar prevMonth = Calendar.getInstance();
             prevMonth.set(Calendar.MONTH, prevMonth.get(Calendar.MONTH) - 1);
-            dateRange = new DateRange() ;
-            dateRange.setDateFrom(StringFormaterUtil.parseToServerResponse(prevMonth));
-            dateRange.setDateTo(StringFormaterUtil.parseToServerResponse(Calendar.getInstance()));
+            prevMonth.set(Calendar.HOUR_OF_DAY, 0);
+            prevMonth.set(Calendar.MINUTE, 0);
+            dateRange = new DateRange();
+            dateRange.setDateFrom(StringFormaterUtil.parseToServerResponse(Calendar.getInstance()));
+            dateRange.setDateTo(StringFormaterUtil.parseToServerResponse(prevMonth));
 
         } else {
             /*nothing now */
         }
 
-        RetrofitSingleton.getInstance().getCropPricesForPeriod(dateRange.getDateTo(),dateRange.getDateFrom(),
+        RetrofitSingleton.getInstance().getCropPricesForPeriod(dateRange.getDateFrom(), dateRange.getDateTo(),
                 mCropModel.displayName,
                 new ACallback<List<PricesByDateModel>, ErrorMsg>() {
                     @Override
                     public void onSuccess(List<PricesByDateModel> result) {
-                        if (result != null && !result.isEmpty()){
+                        if (result != null && !result.isEmpty()) {
                             pricesAdapterData = result;
                             callback.onGetResult(result);
                         } else
@@ -560,7 +568,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
                     @Override
                     public void onError(@NonNull ErrorMsg error) {
-                        showToast(error.getErrorMsg(),Toast.LENGTH_SHORT);
+                        showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
                     }
                 }
         );

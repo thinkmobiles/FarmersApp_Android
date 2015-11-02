@@ -48,6 +48,7 @@
 
     <!--//dialogs-->
     <string name="dialog_title_forgot_password">Please, enter your email</string>
+    <string name="dialog_btn_yes">Yes</string>
     <string name="dialog_btn_ok">OK</string>
     <string name="dialog_btn_cancel">Cancel</string>
     <string name="dialog_btn_understood">I realized</string>
@@ -119,6 +120,7 @@
 
 
     <string name="alert_message_after_add_price">Thank you for sharing! The more you share the more you see other marketers prices!</string>
+    <string name="message_sure_change_marketer">Are you sure you want to change marketer?</string>
 
 
     <!-- period picker-->
