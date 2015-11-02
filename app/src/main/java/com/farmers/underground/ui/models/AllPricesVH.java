@@ -1,22 +1,19 @@
 package com.farmers.underground.ui.models;
 
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
-import com.farmers.underground.remote.models.PricesByDateModel;
 import com.farmers.underground.remote.models.base.PriceBase;
 import com.farmers.underground.ui.utils.DateHelper;
 import com.farmers.underground.ui.utils.StringFormaterUtil;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -73,16 +70,12 @@ public class AllPricesVH extends RecyclerView.ViewHolder {
 
         this.dateHolder = dateHolder;
 
-        List<PriceBase> prices =  dateHolder.getModel2().prices;
+        List<PriceBase> prices =  dateHolder.getModel().prices;
 
         for(int i = 0; i < 3; ++i) {
             setSourse(layouts[i].findViewById(R.id.tv_Marketeer_CropItem), prices.get(i).source.name);
             setPrice(layouts[i].findViewById(R.id.tv_Price), prices.get(i).price);
-            if(i == 0){
-                setVisibilityAndListener(layouts[i].findViewById(R.id.tv_RefresPrice_CropsItem), i);
-            } else {
-                setVisibilityAndListener(layouts[i].findViewById(R.id.tv_RefresPrice_CropsItem), i);
-            }
+            setVisibilityAndListener(layouts[i].findViewById(R.id.tv_RefresPrice_CropsItem), i);
         }
 
         setDate(prices.get(0).data);
@@ -102,17 +95,20 @@ public class AllPricesVH extends RecyclerView.ViewHolder {
     }
 
     private void setVisibilityAndListener(View view, final int pos){
-        final PriceBase priceBase = dateHolder.getModel2().prices.get(pos);
+        final PriceBase priceBase = dateHolder.getModel().prices.get(pos);
         if(pos != 0) {
-            boolean isEnable = !TextUtils.isEmpty(priceBase.quality);
-            view.setVisibility(isEnable ? View.VISIBLE : View.INVISIBLE);
-            layouts[pos].setOnClickListener(isEnable ? new View.OnClickListener() {
+            int sizeMore = priceBase.more.size();
+            view.setVisibility(sizeMore > 0 ? View.VISIBLE : View.INVISIBLE);
+            ((TextView) view).setText(priceBase.quality);
+            if(sizeMore == 1)
+                ((TextView) view).setTextColor(container.getResources().getColor(R.color.text_light_grey));
+            layouts[pos].setOnClickListener(sizeMore > 1 ? new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     dateHolder.getCallback().onMorePricesClicked(priceBase);
                 }
             } : null);
-            ((TextView) view).setText(priceBase.quality);
+
         } else {
             boolean isEnable = priceBase.more.size() < 10;
             view.setVisibility(isEnable ? View.VISIBLE : View.INVISIBLE);

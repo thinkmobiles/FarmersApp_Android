@@ -231,8 +231,8 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
                 .setPositiveButton(getString(R.string.dialog_accept), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-//                        sendPrices(); //request
-                        showToast("todo request", Toast.LENGTH_SHORT);
+                        sendPrices(); //request
+//                        showToast("todo request", Toast.LENGTH_SHORT);
                         hideSoftKeyboard();
                         childFragment.refresh();
                         dialog.dismiss();
