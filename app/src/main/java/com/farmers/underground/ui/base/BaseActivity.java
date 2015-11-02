@@ -2,6 +2,7 @@ package com.farmers.underground.ui.base;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -15,6 +16,8 @@ import com.farmers.underground.R;
 import com.farmers.underground.ui.dialogs.ProgressDialog;
 import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Locale;
 
 /**
  * Created by tZpace
@@ -30,6 +33,14 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        /**Set Hebrew LOCALE */
+            Locale locale = new Locale("iw");
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            getBaseContext().getResources().updateConfiguration(config,
+                    getBaseContext().getResources().getDisplayMetrics());
 
         //TODO: maybe use some default layout for activity
         if(getLayoutResId() == 0)

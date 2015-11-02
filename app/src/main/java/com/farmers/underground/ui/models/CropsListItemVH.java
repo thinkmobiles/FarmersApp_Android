@@ -14,14 +14,17 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.farmers.underground.BuildConfig;
+import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ApiConstants;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.remote.models.base.PriceBase;
 import com.farmers.underground.ui.utils.DateHelper;
+import com.farmers.underground.ui.utils.ImageCacheManager;
 import com.farmers.underground.ui.utils.PicassoHelper;
 import com.farmers.underground.ui.utils.StringFormaterUtil;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
@@ -67,11 +70,14 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
     static int width = 0;
 
 
+    private final ImageLoader imageLoader = ImageCacheManager.getImageLoader(FarmersApp.ImageLoaders.CACHE_MAIN);
+
+
     private CropsListItemDH dateHolder;
 
-    private LastCropPricesModel model;
-    private DateHelper dateHelper;
-    private SimpleDateFormat format;
+//    private LastCropPricesModel model;
+//    private DateHelper dateHelper;
+//    private SimpleDateFormat format;
 
     float radius;
 
@@ -106,36 +112,38 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
 
         cb_Fav.setChecked(model.isInFavorites);
 
-        //todo   maybe need some other check here later
         final String url = !TextUtils.isEmpty(dateHolder.getModel().image) ? ApiConstants.BASE_URL + dateHolder.getModel().image : null;
 
-        if (url != null) {
-            if (width == 0)
-                iv_CropsImage.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-                    @Override
-                    public boolean onPreDraw() {
-                        PicassoHelper.getPicasso(iv_CropsImage.getContext())
-                                    .load(url)
-                                    .config(Bitmap.Config.RGB_565)
-                                    .resize(iv_CropsImage.getMeasuredWidth(), iv_CropsImage.getMeasuredWidth())
-                                    .centerInside()
-                                    .placeholder(R.drawable.ic_drawer_crops)
-                                    .error(R.drawable.ic_drawer_crops)
-                                    .into(iv_CropsImage); //todo error
-                        width = iv_CropsImage.getMeasuredWidth();
-                         iv_CropsImage.getViewTreeObserver().removeOnPreDrawListener(this);
-                        return false;
-                    }
-                });
-            else
-                PicassoHelper.getPicasso(iv_CropsImage.getContext())
-                        .load(url)
-                        .config(Bitmap.Config.RGB_565)
-                        .resize(width, width).centerInside()
-                        .placeholder(R.drawable.ic_drawer_crops)
-                        .error(R.drawable.ic_drawer_crops)
-                        .into(iv_CropsImage); //todo error
-        }
+//        if (url != null) {
+//
+            imageLoader.displayImage(url, iv_CropsImage );
+//
+//            if (width == 0)
+//                iv_CropsImage.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+//                    @Override
+//                    public boolean onPreDraw() {
+//                        PicassoHelper.getPicasso(iv_CropsImage.getContext())
+//                                    .load(url)
+//                                    .config(Bitmap.Config.RGB_565)
+//                                    .resize(iv_CropsImage.getMeasuredWidth(), iv_CropsImage.getMeasuredWidth())
+//                                    .centerInside()
+//                                    .placeholder(R.drawable.ic_drawer_crops)
+//                                    .error(R.drawable.ic_drawer_crops)
+//                                    .into(iv_CropsImage); //todo error
+//                        width = iv_CropsImage.getMeasuredWidth();
+//                         iv_CropsImage.getViewTreeObserver().removeOnPreDrawListener(this);
+//                        return false;
+//                    }
+//                });
+//            else
+//                PicassoHelper.getPicasso(iv_CropsImage.getContext())
+//                        .load(url)
+//                        .config(Bitmap.Config.RGB_565)
+//                        .resize(width, width).centerInside()
+//                        .placeholder(R.drawable.ic_drawer_crops)
+//                        .error(R.drawable.ic_drawer_crops)
+//                        .into(iv_CropsImage); //todo error
+//        }
 
         for (int i = 0; i < ll_PriceContainer.getChildCount(); i++) {
             TextView tv_refreshDate = (TextView) ll_PriceContainer.getChildAt(i).findViewById(R.id.tv_PriceDate_CropItem);

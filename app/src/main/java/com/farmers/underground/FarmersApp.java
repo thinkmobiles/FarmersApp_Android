@@ -1,8 +1,10 @@
 package com.farmers.underground;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -17,10 +19,23 @@ import com.farmers.underground.remote.models.base.MarketeerBase;
 import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.remote.util.ICallback;
 import com.farmers.underground.ui.activities.LoginSignUpActivity;
+import com.farmers.underground.ui.utils.ImageCacheManager;
 import com.farmers.underground.ui.utils.TypefaceManager;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
+import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
+import com.nostra13.universalimageloader.core.download.ImageDownloader;
 
+
+import org.jetbrains.annotations.NotNull;
 
 import io.fabric.sdk.android.Fabric;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Locale;
 
@@ -34,7 +49,7 @@ public class FarmersApp extends Application {
 
     public synchronized static FarmersApp getInstance() {
         if (ourInstance == null) {
-            if (BuildConfig.DEBUG){
+            if (BuildConfig.DEBUG) {
                 killAppProcess();
                 throw new Error("WTF! FarmersApp was not created!");
             }
@@ -48,13 +63,15 @@ public class FarmersApp extends Application {
         android.os.Process.killProcess(android.os.Process.myPid());
     }
 
+    private ImageLoaders imageCache;
+
     @Override
     public void onCreate() {
         super.onCreate();
         ourInstance = this;
 
         // Init Crashlytics
-        if(BuildConfig.PRODUCTION)
+        if (BuildConfig.PRODUCTION)
             Fabric.with(this, new Crashlytics());
 
         // Init Fonts
@@ -65,18 +82,93 @@ public class FarmersApp extends Application {
         FacebookSdk.sdkInitialize(getApplicationContext());
 
 
+        ImageCacheManager.init(imageCache = new ImageLoaders(this));
 
         /**Set Hebrew LOCALE */
-           Locale locale = new Locale("iw");
-           Locale.setDefault(locale);
-           Configuration config = new Configuration();
-           config.locale = locale;
-           getBaseContext().getResources().updateConfiguration(config,
-                   getBaseContext().getResources().getDisplayMetrics());
+        Locale locale = new Locale("iw");
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());
 
     }
 
-    public void onUserLogin(){
+    public ImageLoaders getImageCache() {
+        return imageCache;
+    }
+
+    public static final class ImageLoaders implements ImageCacheManager.ImageLoaderCallbacks {
+
+        public static final int CACHE_MAIN = 0;
+
+        private final Context context;
+
+        private ImageLoaders(Context context) {
+            /* Prevent instantiating */
+            this.context = context;
+        }
+
+        public static DisplayImageOptions.Builder getCacheMain = new DisplayImageOptions.Builder()
+                .cacheInMemory(true)
+                .showImageForEmptyUri(R.drawable.ic_drawer_crops)
+                .showImageOnLoading(R.drawable.ic_drawer_crops)
+                .showImageOnFail(R.drawable.ic_drawer_crops)
+                .imageScaleType(ImageScaleType.IN_SAMPLE_POWER_OF_2)
+                .resetViewBeforeLoading(true)
+                .cacheOnDisk(true);
+
+        @NotNull
+        @Override
+        public ImageLoader onCreateImageLoader(int loaderId, @org.jetbrains.annotations.Nullable Bundle params) {
+            ImageLoader imageLoader;
+            switch (loaderId) {
+                case CACHE_MAIN:
+                    imageLoader = getCacheMain();
+                    break;
+                //todo paste case here if need some more caches
+                default:
+                    throw new Error("Bad loader id!");
+            }
+            return imageLoader;
+        }
+
+        private class Im extends ImageLoader {
+            public Im() {
+                super();
+            }
+        }
+
+        private void checkInit(ImageLoader imageLoader) {
+            if (imageLoader != null && imageLoader.isInited())
+                imageLoader.destroy();
+        }
+
+        private Im newInstance() {
+            return new Im();
+        }
+
+        private ImageLoader getCacheMain() {
+            ImageLoader
+                    imageLoader = newInstance();
+            checkInit(imageLoader);
+            imageLoader.init(
+                    new ImageLoaderConfiguration.Builder(context)
+                            .defaultDisplayImageOptions(getCacheMain.build())
+                                    //  .imageDownloader(new BaseImageDownloader(context))
+                                    //  .imageDecoder(new BaseImageDecoder(BuildConfig.DEBUG))
+                            .denyCacheImageMultipleSizesInMemory()
+                            .memoryCacheSizePercentage(10)
+                            .build());
+
+            imageLoader.handleSlowNetwork(true);
+
+            return imageLoader;
+        }
+    }
+
+
+    public void onUserLogin() {
         setLoggedInBefore();
     }
 
@@ -109,7 +201,7 @@ public class FarmersApp extends Application {
         RetrofitSingleton.getInstance().getUserProfileBySession(new ACallback<UserProfile, ErrorMsg>() {
             @Override
             public void onSuccess(UserProfile result) {
-                if(result==null)
+                if (result == null)
                     onError(new ErrorMsg("Profile is not fetched"));
 
                 setCurrentUser(result);
@@ -132,7 +224,7 @@ public class FarmersApp extends Application {
         });
     }
 
-    public void getMarketerBySession(){
+    public void getMarketerBySession() {
         RetrofitSingleton.getInstance().getMarketeerBySession(new ACallback<MarketeerBase, ErrorMsg>() {
             @Override
             public void onSuccess(MarketeerBase result) {
@@ -146,28 +238,29 @@ public class FarmersApp extends Application {
         });
     }
 
-    public boolean isUserAuthenticated(){
-       return getUsrPreferences().contains(ProjectConstants.KEY_CURRENT_USER_COOKIES) && !getUsrPreferences().getStringSet(ProjectConstants.KEY_CURRENT_USER_COOKIES,new HashSet<String>(0)).isEmpty();
+    public boolean isUserAuthenticated() {
+        return getUsrPreferences().contains(ProjectConstants.KEY_CURRENT_USER_COOKIES) && !getUsrPreferences().getStringSet(ProjectConstants.KEY_CURRENT_USER_COOKIES, new HashSet<String>(0)).isEmpty();
     }
 
-    public void saveUserCredentials(@NonNull UserCredentials userCredentials){
+    public void saveUserCredentials(@NonNull UserCredentials userCredentials) {
         getUsrPreferences().edit()
                 .putString(ProjectConstants.KEY_CURRENT_USER_LOGIN, userCredentials.getEmail())
                 .putString(ProjectConstants.KEY_CURRENT_USER_PASSWORD, userCredentials.getPass())
                 .apply();
     }
 
-    public UserCredentials getUserCredentials(){
-        if (getUsrPreferences().contains(ProjectConstants.KEY_CURRENT_USER_LOGIN) && getUsrPreferences().contains(ProjectConstants.KEY_CURRENT_USER_PASSWORD)){
-            return new UserCredentials(getUsrPreferences().getString(ProjectConstants.KEY_CURRENT_USER_LOGIN,""),getUsrPreferences().getString(ProjectConstants.KEY_CURRENT_USER_PASSWORD,""));
+    public UserCredentials getUserCredentials() {
+        if (getUsrPreferences().contains(ProjectConstants.KEY_CURRENT_USER_LOGIN) && getUsrPreferences().contains(ProjectConstants.KEY_CURRENT_USER_PASSWORD)) {
+            return new UserCredentials(getUsrPreferences().getString(ProjectConstants.KEY_CURRENT_USER_LOGIN, ""), getUsrPreferences().getString(ProjectConstants.KEY_CURRENT_USER_PASSWORD, ""));
         } else return null;
     }
 
-    public boolean wasLoggedInBefore(){
-      return FarmersApp.getUsrPreferences().contains(ProjectConstants.KEY_CURRENT_USER_LOGIN_SUCCESSFUL) && FarmersApp.getUsrPreferences().getBoolean(ProjectConstants.KEY_CURRENT_USER_LOGIN_SUCCESSFUL,false);
+    public boolean wasLoggedInBefore() {
+        return FarmersApp.getUsrPreferences().contains(ProjectConstants.KEY_CURRENT_USER_LOGIN_SUCCESSFUL) && FarmersApp.getUsrPreferences().getBoolean(ProjectConstants.KEY_CURRENT_USER_LOGIN_SUCCESSFUL, false);
     }
-    public void setLoggedInBefore(){
-       FarmersApp.getUsrPreferences().edit().putBoolean(ProjectConstants.KEY_CURRENT_USER_LOGIN_SUCCESSFUL,true).apply();
+
+    public void setLoggedInBefore() {
+        FarmersApp.getUsrPreferences().edit().putBoolean(ProjectConstants.KEY_CURRENT_USER_LOGIN_SUCCESSFUL, true).apply();
     }
 
     public static SharedPreferences getAppPreferences() {
@@ -216,13 +309,13 @@ public class FarmersApp extends Application {
                 .apply();
     }
 
-    public static void setSkipMode(boolean isSkip){
+    public static void setSkipMode(boolean isSkip) {
         getUsrPreferences().edit()
                 .putBoolean(ProjectConstants.KEY_CURRENT_USER_SKIP_MODE, isSkip)
                 .apply();
     }
 
-    public static boolean isSkipMode(){
+    public static boolean isSkipMode() {
         return getUsrPreferences().getBoolean(ProjectConstants.KEY_CURRENT_USER_SKIP_MODE, true);
     }
 }

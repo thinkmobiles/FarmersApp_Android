@@ -128,6 +128,10 @@ dependencies {
     compile 'com.timehop.stickyheadersrecyclerview:library:0.4.2@aar'
 
     compile 'com.github.PhilJay:MPAndroidChart:v2.1.5'
+
+
+    //test picasso replacement
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
 }
 
 // Utilities
