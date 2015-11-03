@@ -64,18 +64,21 @@ public class SignUpFragment extends BaseFragment<LoginSignUpActivity>  {
         etConfirm.setTransformationMethod(new PasswordTransformationMethod());
     }
 
+
+    @SuppressWarnings("unused")
     @OnClick({R.id.ivBack_FSU, R.id.tvLogin_FSU})
     protected void back() {
         getHostActivity().hideSoftKeyboard();
         getHostActivity().getSupportFragmentManager().popBackStack();
     }
 
-
+    @SuppressWarnings("unused")
     @OnClick(R.id.btnSignUpFB_FSU)
     protected void signUpFB() {
         LoginManager.getInstance().logInWithReadPermissions(getHostActivity(), Arrays.asList("public_profile", "email"));
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.ivShowPass_FSU)
     protected void showHidePass() {
         if (isVisiblePass) {
@@ -97,6 +100,7 @@ public class SignUpFragment extends BaseFragment<LoginSignUpActivity>  {
         etPassword.setSelection(etPassword.getText().length());
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.btnSignUp_FSU)
     protected void signUp() {
         String name = etName.getText().toString();

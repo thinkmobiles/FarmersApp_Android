@@ -148,11 +148,14 @@ public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements 
     protected void showDatePicker(){
         getHostActivity().showDatePicker();
     }
+
+    @SuppressWarnings("unused")
     @OnClick(R.id.tvDate_FAP)
     protected void showDate(){
         showDatePicker();
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.tvAddQuality_FAP)
     protected void addNewQuality(){
         if(counter < MAX_AMOUNT_PRICES) {
@@ -175,12 +178,14 @@ public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements 
         setDate();
     }
 
+    @SuppressWarnings("unused")
     @OnTextChanged(R.id.etPrice_FAP)
     protected void checkValidPrice(CharSequence text){
         checkValidation(text.toString(), tvError);
         checkCorrection();
     }
 
+    @SuppressWarnings("unused")
     @OnTextChanged(R.id.etQuality_FAP)
     protected void changeQuality(){
         checkCorrection();

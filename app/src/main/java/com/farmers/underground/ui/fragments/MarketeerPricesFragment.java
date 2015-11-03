@@ -188,6 +188,7 @@ public class MarketeerPricesFragment extends BaseFragment<PricesActivity>
         };
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.ll_AddPrice_MP)
     protected void addPriceClicked() {
         AddPriceActivity.start(getHostActivity(), mCropModel);

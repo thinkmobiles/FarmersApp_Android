@@ -9,7 +9,7 @@ import android.widget.Toast;
  */
 public class NotYetHelper {
 
-    public static void notYetImplmented(Context context, String feature){
+    public static void notYetImplemented(Context context, String feature){
         Toast.makeText(context, feature + " not yet implemented", Toast.LENGTH_SHORT).show();
     }
 

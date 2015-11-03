@@ -2,7 +2,6 @@ package com.farmers.underground.ui.utils;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
-import android.os.Bundle;
 import com.farmers.underground.BuildConfig;
 import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.remote.models.SearchHint;
@@ -11,7 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by omar on 10/22/15.
+ * Created by omar
+ * on 10/22/15.
  */
 public class SearchHintLoader extends AsyncTaskLoader<List<SearchHint>> {
 

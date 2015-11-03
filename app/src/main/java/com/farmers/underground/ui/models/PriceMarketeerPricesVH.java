@@ -11,7 +11,8 @@ import butterknife.OnClick;
 import com.farmers.underground.R;
 
 /**
- * Created by omar on 10/2/15.
+ * Created by omar
+ * on 10/2/15.
  */
 public class PriceMarketeerPricesVH extends BaseMarketeerPricesVH {
 
@@ -64,12 +65,13 @@ public class PriceMarketeerPricesVH extends BaseMarketeerPricesVH {
         return container;
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.tv_why_c_no_price_MP)
     protected void onNoPriceClick() {
         dataHolder.getCallback().onNoPricesClicked(dataHolder.getModel());
     }
 
-
+    @SuppressWarnings("unused")
     @OnClick(R.id.tv_MorePrice_MP)
     protected void onMorePriceClick() {
         dataHolder.getCallback().onMorePricesClicked(dataHolder.getModel());

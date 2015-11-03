@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by omar on 10/15/15.
+ * Created by omar
+ * on 10/15/15.
  */
 public class ChartDataModel {
     public List<ChartModel> charts;
@@ -29,6 +30,5 @@ public class ChartDataModel {
 
         }
     }
-
 
 }

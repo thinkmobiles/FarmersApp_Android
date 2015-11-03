@@ -14,7 +14,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
@@ -23,7 +22,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import com.farmers.underground.BuildConfig;
 import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ApiConstants;
@@ -109,7 +107,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     private List<PricesByDateModel> pricesAdapterData = new ArrayList<>(0);
     private ProjectPagerAdapter<BaseFragment<PricesActivity>> pagerAdapter;
 
-    private boolean isVisibleBurger;;
+    private boolean isVisibleBurger;
 
     public static void start(@NonNull Context context, LastCropPricesModel cropModel) {
         Gson gson = new GsonBuilder().create();
@@ -284,7 +282,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     @Override
     public void onSettingsClicked() {
-        NotYetHelper.notYetImplmented(this, "drawer settings");
+        NotYetHelper.notYetImplemented(this, "drawer settings");
 
         mDrawerlayout.closeDrawers();
     }
@@ -317,7 +315,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         final Target target = new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                icon.setIcon(new BitmapDrawable(bitmap));
+                icon.setIcon(new BitmapDrawable(getResources(),bitmap));
 
             }
 
@@ -476,6 +474,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         lvDrawerContainer.setAdapter(new DrawerAdapter(drawerItemList, this));
     }
 
+    @SuppressWarnings("unused")
     @OnItemClick(R.id.lv_DrawerHolder_PricesActivity)
     void onItemClick(int pos) {
         switch (pos) {
@@ -499,6 +498,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         mDrawerlayout.closeDrawers();
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.ll_logoutPricesActivity)
     protected void logOut() {
         showProgressDialog();

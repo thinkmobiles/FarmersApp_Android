@@ -99,19 +99,29 @@ public class SelectMarketerListFragment extends BaseFragment<LoginSignUpActivity
         lvMarketeers.setAdapter(mAdapter);
     }
 
+    @SuppressWarnings("unused")
     @OnTextChanged(R.id.etMarketeer)
     protected void changeNameMarketer(){
         if (mAdapter!=null)
             mAdapter.findMarketeer(etMarketeer.getText().toString());
     }
 
-   @OnItemClick(R.id.lvListMarketeers)
+    @SuppressWarnings("unused")
+    @OnItemClick(R.id.lvListMarketeers)
     protected void onListItemClicked(int pos){
        if(mAdapter.isAddItem(pos)){
            sendRequestAddNewMarketer();
        } else {
            selectMarketer(pos);
        }
+    }
+
+    @SuppressWarnings("unused")
+    @OnClick(R.id.tvSkip_FLM)
+    protected void onSkip(){
+        FarmersApp.setSkipMode(FarmersApp.isSkipMode());
+        getHostActivity().finish();
+        MainActivity.start(getHostActivity());
     }
 
     private void sendRequestAddNewMarketer(){
@@ -136,7 +146,6 @@ public class SelectMarketerListFragment extends BaseFragment<LoginSignUpActivity
             });
         }
 
-
       //  getHostActivity().showToast("send new marketer", Toast.LENGTH_SHORT);
     }
 
@@ -158,10 +167,4 @@ public class SelectMarketerListFragment extends BaseFragment<LoginSignUpActivity
         tvCounter.setText(String.valueOf(countMarketer + File.separator + listMarketeers.size()));
     }
 
-    @OnClick(R.id.tvSkip_FLM)
-    protected void onSkip(){
-        FarmersApp.setSkipMode(FarmersApp.isSkipMode());
-        getHostActivity().finish();
-        MainActivity.start(getHostActivity());
-    }
 }

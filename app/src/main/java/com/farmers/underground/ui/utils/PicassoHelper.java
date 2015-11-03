@@ -6,7 +6,8 @@ import com.squareup.picasso.LruCache;
 import com.squareup.picasso.Picasso;
 
 /**
- * Created by omar on 10/23/15.
+ * Created by omar
+ * on 10/23/15.
  */
 public class PicassoHelper {
 

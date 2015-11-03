@@ -70,11 +70,13 @@ public class TutorialItemFragment extends BaseFragment<TutorialActivity> {
         tv_TutorialText.setText(getString(tutorialItemDataHolder.getContentTextRes()));
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.ll_TutorialNext)
     protected void onNextClikcked() {
         callback.onNextClicked();
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.tv_TutorialTitle)
     protected void OnTitleClicked() {
         callback.onSkipClicked();
@@ -94,6 +96,5 @@ public class TutorialItemFragment extends BaseFragment<TutorialActivity> {
 
         void onSkipClicked();
     }
-
 
 }

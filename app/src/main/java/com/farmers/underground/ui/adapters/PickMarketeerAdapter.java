@@ -117,6 +117,6 @@ public class PickMarketeerAdapter extends BaseAdapter {
     }
 
     public interface OnFindMarketerListener{
-        public void onFind(int countMarketer);
+        void onFind(int countMarketer);
     }
 }

@@ -1,7 +1,5 @@
 package com.farmers.underground.ui.fragments;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -19,7 +17,6 @@ import com.farmers.underground.R;
 import com.farmers.underground.remote.RetrofitSingleton;
 import com.farmers.underground.remote.models.ErrorMsg;
 import com.farmers.underground.remote.models.SuccessMsg;
-import com.farmers.underground.remote.models.base.MarketeerBase;
 import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.ui.activities.LoginSignUpActivity;
 import com.farmers.underground.ui.activities.MainActivity;
@@ -118,11 +115,13 @@ public class SelectMarketerFragment extends BaseFragment<LoginSignUpActivity> {
         }
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.tvEnterMarketeer)
     protected void enterMarketeer() {
         getHostActivity().showChangingMarketerDialog(getArguments());
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.tvSkip)
     protected void skip() {
         FarmersApp.setSkipMode(FarmersApp.isSkipMode());
@@ -130,6 +129,7 @@ public class SelectMarketerFragment extends BaseFragment<LoginSignUpActivity> {
         getHostActivity().finish();
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.btnStart)
     protected void start() {
         String name = getHostActivity().getNameMarketeer();

@@ -16,7 +16,6 @@ import java.util.List;
  */
 public class SearchResultLoader extends AsyncTaskLoader<List<LastCropPricesModel>> {
 
-
     private String newQuerry;
     private List<LastCropPricesModel> mCropList;
     private List<LastCropPricesModel> output;

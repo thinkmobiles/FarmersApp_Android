@@ -16,6 +16,7 @@ import com.farmers.underground.FarmersApp;
 public final class ResUtil {
 
     @ColorInt
+    @SuppressWarnings("deprecation")
     public static int getColor(final Resources res,@ColorRes int id){
         if(Build.VERSION.SDK_INT >= 23) {
             return res.getColor(id, FarmersApp.getInstance().getTheme());
@@ -24,6 +25,7 @@ public final class ResUtil {
         }
     }
 
+    @SuppressWarnings("deprecation")
     public static Drawable getDrawable(final Resources res,@DrawableRes int id){
         if(Build.VERSION.SDK_INT >= 21) {
             return res.getDrawable(id, FarmersApp.getInstance().getTheme());

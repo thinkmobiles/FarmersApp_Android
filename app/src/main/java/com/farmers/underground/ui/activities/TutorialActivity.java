@@ -1,11 +1,11 @@
 package com.farmers.underground.ui.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnPageChange;
@@ -27,7 +27,6 @@ import java.util.List;
  * on 9/24/15.
  */
 public class TutorialActivity extends BaseActivity implements TutorialItemFragment.Callback {
-
 
 
     @Bind(R.id.rg_Tutorial)
@@ -97,8 +96,9 @@ public class TutorialActivity extends BaseActivity implements TutorialItemFragme
         ((RadioButton) radioGroup.getChildAt(0)).setChecked(true);
     }
 
+    @SuppressWarnings("unused")
     @OnPageChange(R.id.vp_Tutorial)
-   protected void onPagerPageChanged(int position) {
+    protected void onPagerPageChanged(int position) {
         ((RadioButton) radioGroup.getChildAt(position)).setChecked(true);
         adapter.getItem(position).animateNextButton();
     }
@@ -107,10 +107,10 @@ public class TutorialActivity extends BaseActivity implements TutorialItemFragme
     public void onNextClicked() {
         int currentPagerItem = viewPager.getCurrentItem();
         if (isRTL()) {
-            if (0 == currentPagerItem)  onSkipClicked();
+            if (0 == currentPagerItem) onSkipClicked();
             else viewPager.setCurrentItem(currentPagerItem - 1);
         } else {
-            if (adapter.getCount() - 1 == currentPagerItem)  onSkipClicked();
+            if (adapter.getCount() - 1 == currentPagerItem) onSkipClicked();
             else viewPager.setCurrentItem(currentPagerItem + 1);
         }
     }

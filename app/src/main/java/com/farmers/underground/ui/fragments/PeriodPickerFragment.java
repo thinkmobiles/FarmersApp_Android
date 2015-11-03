@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.CalendarContract;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -35,7 +34,11 @@ public class PeriodPickerFragment extends BaseFragment<TransparentActivity> impl
     @Bind(R.id.tvPeriodTo)
     protected TextView tvPeriodTo;
 
-    private enum Period{StartDate, EndDate};
+    private enum Period {
+        StartDate,
+        EndDate
+    }
+
     private Period dayFromTo;
     private Calendar selectedDay, dateStart, dateEnd;
 
@@ -56,11 +59,13 @@ public class PeriodPickerFragment extends BaseFragment<TransparentActivity> impl
         setDate(Calendar.getInstance());
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.tvPeriodFrom)
     protected void pickFromDate(){
         pickDate(Period.StartDate);
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.tvPeriodTo)
     protected void pickToDate(){
         pickDate(Period.EndDate);

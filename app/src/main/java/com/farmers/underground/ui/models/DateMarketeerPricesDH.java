@@ -1,9 +1,11 @@
 package com.farmers.underground.ui.models;
 
 /**
- * Created by omar on 10/2/15.
+ * Created by omar
+ * on 10/2/15.
  */
 public class DateMarketeerPricesDH extends BaseMarketeerPricesDH {
+
     private String date;
 
     public String getDate() {

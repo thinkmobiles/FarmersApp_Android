@@ -36,7 +36,7 @@ public class WhatsAppUtil {
             PackageInfo info = pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
             waIntent.setPackage("com.whatsapp");
             waIntent.putExtra(Intent.EXTRA_TEXT, text);
-            context.  startActivity(Intent.createChooser(waIntent, "Share with"));
+            context.startActivity(Intent.createChooser(waIntent, "Share with"));
 
         } catch (PackageManager.NameNotFoundException e) {
             Toast.makeText(context, "WhatsApp not Installed", Toast.LENGTH_SHORT)

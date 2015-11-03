@@ -11,7 +11,8 @@ import com.farmers.underground.R;
 import java.util.List;
 
 /**
- * Created by omar on 10/21/15.
+ * Created by omar
+ * on 10/21/15.
  */
 public class ToolbarSpinnerAdapter extends BaseAdapter {
 

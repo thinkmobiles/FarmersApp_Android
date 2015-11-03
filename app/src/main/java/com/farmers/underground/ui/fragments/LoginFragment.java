@@ -78,16 +78,19 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> {
         etPassword.setTransformationMethod(new PasswordTransformationMethod());
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.tvRegister)
     protected void register() {
         getHostActivity().addFragment(SignUpFragment.class.getName(), true);
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.btnLoginFB)
     protected void loginFB() {
         LoginManager.getInstance().logInWithReadPermissions(getHostActivity(), Arrays.asList(FB.public_profile, FB.email));
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.tvForgot)
     protected void forgotPW() {
 
@@ -97,17 +100,7 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> {
                 .setTitle(R.string.dialog_title_forgot_password)
                 .setView(view)
                 .setCancelable(true)
-                .setPositiveButton(R.string.dialog_btn_ok, null)/* new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        EditText editText = (EditText) view.findViewById(R.id.et_dialog_field);
-
-                        String email = editText.getText().toString();
-
-                        apiCallForgotPass(email);
-                    }
-                })*/
+                .setPositiveButton(R.string.dialog_btn_ok, null)
                 .setNegativeButton(R.string.dialog_btn_cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -145,7 +138,7 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> {
         dialog.show();
     }
 
-
+    @SuppressWarnings("unused")
     @OnClick(R.id.ivShowPass)
     protected void showHidePass() {
         if (isVisiablePass) {
@@ -167,6 +160,7 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> {
         etPassword.setSelection(etPassword.getText().length());
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.btnLogin)
     protected void login() {
         final String email = etEmail.getText().toString().trim();

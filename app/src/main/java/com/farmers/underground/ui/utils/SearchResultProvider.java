@@ -11,7 +11,8 @@ import com.farmers.underground.remote.models.SearchHint;
 import java.util.List;
 
 /**
- * Created by omar on 10/22/15.
+ * Created by omar
+ * on 10/22/15.
  */
 public class SearchResultProvider {
 

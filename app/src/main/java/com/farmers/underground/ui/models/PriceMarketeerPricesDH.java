@@ -4,12 +4,13 @@ import com.farmers.underground.remote.models.MarketeerPriceModel;
 import com.farmers.underground.ui.adapters.MarketeerPricesAdapter;
 
 /**
- * Created by omar on 10/2/15.
+ * Created by omar
+ * on 10/2/15.
  */
 public class PriceMarketeerPricesDH extends BaseMarketeerPricesDH {
 
-    private MarketeerPricesAdapter.Callback callback;
     private MarketeerPriceModel model;
+    private MarketeerPricesAdapter.Callback callback;
 
     public MarketeerPriceModel getModel() {
         return model;

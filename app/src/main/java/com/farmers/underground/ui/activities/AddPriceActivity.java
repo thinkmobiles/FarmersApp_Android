@@ -30,7 +30,6 @@ import com.farmers.underground.remote.models.ErrorMsg;
 import com.farmers.underground.remote.models.FarmerPricesModel;
 import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.remote.models.SuccessMsg;
-import com.farmers.underground.remote.models.UserPriceQualityModel;
 import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.fragments.AddPriceFragment;
@@ -44,9 +43,7 @@ import com.squareup.picasso.Target;
 import butterknife.OnClick;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 /**
  *
@@ -168,7 +165,7 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
         Target target = new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                icon.setIcon(new BitmapDrawable(bitmap));
+                icon.setIcon(new BitmapDrawable(getResources(),bitmap));
 
             }
 
@@ -215,6 +212,7 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
         return false;
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.action_done)
     protected void donePrice(){
         if(enableDone){

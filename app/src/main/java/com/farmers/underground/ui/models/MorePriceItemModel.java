@@ -1,7 +1,8 @@
 package com.farmers.underground.ui.models;
 
 /**
- * Created by samson on 28.10.15.
+ * Created by samson
+ * on 28.10.15.
  */
 public class MorePriceItemModel {
     private String price;

@@ -1,11 +1,9 @@
 package com.farmers.underground.ui.models;
 
-import android.graphics.Bitmap;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,7 +11,6 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.farmers.underground.BuildConfig;
 import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ApiConstants;
@@ -22,15 +19,19 @@ import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.remote.models.base.PriceBase;
 import com.farmers.underground.ui.utils.DateHelper;
 import com.farmers.underground.ui.utils.ImageCacheManager;
-import com.farmers.underground.ui.utils.PicassoHelper;
 import com.farmers.underground.ui.utils.StringFormaterUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.squareup.picasso.Picasso;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+
+//import android.graphics.Bitmap;
+//import com.squareup.picasso.Picasso;
+//import android.view.ViewTreeObserver;
+//import com.farmers.underground.ui.utils.PicassoHelper;
+//import com.farmers.underground.BuildConfig;
+
 
 /**
  * Created by omar
@@ -67,7 +68,7 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
     }
 
 
-    static int width = 0;
+//    static int width = 0;
 
 
     private final ImageLoader imageLoader = ImageCacheManager.getImageLoader(FarmersApp.ImageLoaders.CACHE_MAIN);
@@ -116,7 +117,7 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
 
 //        if (url != null) {
 //
-            imageLoader.displayImage(url, iv_CropsImage );
+            imageLoader.displayImage(url, iv_CropsImage);
 //
 //            if (width == 0)
 //                iv_CropsImage.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
@@ -176,17 +177,19 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
 
     }
 
-
+    @SuppressWarnings("unused")
     @OnClick(R.id.cb_FavouriteCropsItem)
     protected void onFaveChecked() {
         dateHolder.getCallback().onFavChecked(dateHolder.getModel(), cb_Fav.isChecked());
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.crops_item_view)
     protected void onImageCLicked() {
         dateHolder.getCallback().onItemClicked(dateHolder.getModel());
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.tv_RefresPrice_CropsItem)
     protected void onRefreshClicked() {
         dateHolder.getCallback().onPriceRefreshClicked(dateHolder.getModel());

@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by omar on 9/30/15.
+ * Created by omar
+ * on 9/30/15.
  */
 public class SearchHintCollection {
     private List<SearchHint> hintsList;

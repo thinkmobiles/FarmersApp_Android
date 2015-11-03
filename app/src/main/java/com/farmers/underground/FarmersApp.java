@@ -25,17 +25,12 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
-import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
-import com.nostra13.universalimageloader.core.download.ImageDownloader;
 
 
 import org.jetbrains.annotations.NotNull;
 
 import io.fabric.sdk.android.Fabric;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Locale;
 
@@ -82,7 +77,7 @@ public class FarmersApp extends Application {
         FacebookSdk.sdkInitialize(getApplicationContext());
 
 
-        ImageCacheManager.init(imageCache = new ImageLoaders(this));
+        /* ImageCacheManager.init(*/imageCache = new ImageLoaders(this)/*)*/;
 
         /**Set Hebrew LOCALE */
         Locale locale = new Locale("iw");
@@ -101,6 +96,7 @@ public class FarmersApp extends Application {
     public static final class ImageLoaders implements ImageCacheManager.ImageLoaderCallbacks {
 
         public static final int CACHE_MAIN = 0;
+//        public static final int CACHE_ROUND = 1;
 
         private final Context context;
 
@@ -118,6 +114,16 @@ public class FarmersApp extends Application {
                 .resetViewBeforeLoading(true)
                 .cacheOnDisk(true);
 
+//        public static DisplayImageOptions.Builder getCacheRoundPic = new DisplayImageOptions.Builder()
+//                .cacheInMemory(true)
+//                .displayer(new RoundedBitmapDisplayer(50))
+//                .showImageForEmptyUri(R.drawable.ic_drawer_crops)
+//                .showImageOnLoading(R.drawable.ic_drawer_crops)
+//                .showImageOnFail(R.drawable.ic_drawer_crops)
+//                .imageScaleType(ImageScaleType.IN_SAMPLE_POWER_OF_2)
+//                .resetViewBeforeLoading(true)
+//                .cacheOnDisk(true);
+
         @NotNull
         @Override
         public ImageLoader onCreateImageLoader(int loaderId, @org.jetbrains.annotations.Nullable Bundle params) {
@@ -126,6 +132,9 @@ public class FarmersApp extends Application {
                 case CACHE_MAIN:
                     imageLoader = getCacheMain();
                     break;
+//                case CACHE_ROUND:
+//                imageLoader = getCacheRoundPic();
+//                    break;
                 //todo paste case here if need some more caches
                 default:
                     throw new Error("Bad loader id!");
@@ -147,6 +156,22 @@ public class FarmersApp extends Application {
         private Im newInstance() {
             return new Im();
         }
+
+//        private ImageLoader getCacheRoundPic() {
+//            ImageLoader
+//                    imageLoader = newInstance();
+//            checkInit(imageLoader);
+//            imageLoader.init(
+//                    new ImageLoaderConfiguration.Builder(context)
+//                            .defaultDisplayImageOptions(getCacheRoundPic.build())
+//                            .denyCacheImageMultipleSizesInMemory()
+//                            .memoryCacheSizePercentage(5)
+//                            .build());
+//
+//            imageLoader.handleSlowNetwork(true);
+//
+//            return imageLoader;
+//        }
 
         private ImageLoader getCacheMain() {
             ImageLoader

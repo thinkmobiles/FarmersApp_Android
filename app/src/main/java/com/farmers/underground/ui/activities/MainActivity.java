@@ -22,7 +22,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
-import com.farmers.underground.BuildConfig;
 import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
@@ -524,7 +523,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     }
 
     //click events
-
+    @SuppressWarnings("unused")
     @OnItemClick(R.id.lv_DrawerHolder_MainActivity)
     void onItemClick(int pos) {
         switch (pos) {
@@ -557,7 +556,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     @Override
     public void onSettingsClicked() {
-        NotYetHelper.notYetImplmented(this, "drawer settings");
+        NotYetHelper.notYetImplemented(this, "drawer settings");
 
         //todo remove IT later
 

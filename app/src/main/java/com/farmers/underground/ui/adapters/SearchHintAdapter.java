@@ -11,7 +11,8 @@ import com.farmers.underground.remote.models.SearchHint;
 import java.util.List;
 
 /**
- * Created by omar on 9/30/15.
+ * Created by omar
+ * on 9/30/15.
  */
 public class SearchHintAdapter extends BaseAdapter {
     private List<SearchHint> hintList;

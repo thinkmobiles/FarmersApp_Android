@@ -11,8 +11,5 @@ import java.util.List;
  */
 public interface CropsFragmentCallback {
     void setListCallback(CropsListAdapter.CropsAdapterCallback callback);
-
     void onReceiveCrops(List<LastCropPricesModel> cropsList, String query);
-
-
 }

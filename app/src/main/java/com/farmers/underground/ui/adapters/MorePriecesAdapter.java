@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.farmers.underground.R;
-import com.farmers.underground.remote.models.PriceModel;
 import com.farmers.underground.ui.models.MorePriceItemModel;
 
 import java.util.List;

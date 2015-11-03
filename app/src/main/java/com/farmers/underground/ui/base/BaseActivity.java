@@ -147,7 +147,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void showProgressDialog() {
-        showProgressDialog((DialogInterface.OnDismissListener) null);
+        showProgressDialog(null);
     }
 
 

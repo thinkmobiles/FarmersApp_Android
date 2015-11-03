@@ -5,6 +5,7 @@ package com.farmers.underground.ui.models;
  * on 10/9/15.
  */
 public class DateRange {
+
     private String dateTo;
     private String dateFrom;
 

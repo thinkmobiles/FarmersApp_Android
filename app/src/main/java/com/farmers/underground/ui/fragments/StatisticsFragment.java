@@ -117,6 +117,7 @@ public class StatisticsFragment
         llPageSwitcherContainer.requestLayout();
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.im_arrow_left)
     protected void leftArrowClicked() {
         if (currentPage != 1) {
@@ -124,6 +125,7 @@ public class StatisticsFragment
         }
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.im_arrow_right)
     protected void rightArrowClicked() {
         if (currentPage != 2) {
@@ -131,6 +133,7 @@ public class StatisticsFragment
         }
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.ll_Month_pick_Container_SF)
     protected void selectMonth() {
         initMonthPicker();
@@ -142,7 +145,6 @@ public class StatisticsFragment
         getHostActivity().showToast("to be done", Toast.LENGTH_SHORT);
 
     }
-
 
     private void setupDefaultPage() {
         initPageToShow(defaultPage);
@@ -436,7 +438,7 @@ public class StatisticsFragment
         }
     }
 
-
+    @SuppressWarnings("unused")
     @OnCheckedChanged(R.id.rb0_SF)
     protected void radio0(boolean isChecked) {
         if (isChecked) {
@@ -445,6 +447,7 @@ public class StatisticsFragment
         }
     }
 
+    @SuppressWarnings("unused")
     @OnCheckedChanged(R.id.rb1_SF)
     protected void radio1(boolean isChecked) {
         if (isChecked) {
@@ -453,6 +456,7 @@ public class StatisticsFragment
         }
     }
 
+    @SuppressWarnings("unused")
     @OnCheckedChanged(R.id.rb2_SF)
     protected void radio2(boolean isChecked) {
         if (isChecked) {

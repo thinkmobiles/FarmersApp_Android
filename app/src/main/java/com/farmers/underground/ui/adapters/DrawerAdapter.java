@@ -16,7 +16,8 @@ import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 import java.util.List;
 
 /**
- * Created by omar on 9/28/15.
+ * Created by omar
+ * on 9/28/15.
  */
 public class DrawerAdapter extends BaseAdapter implements View.OnClickListener {
     private Context mContext;

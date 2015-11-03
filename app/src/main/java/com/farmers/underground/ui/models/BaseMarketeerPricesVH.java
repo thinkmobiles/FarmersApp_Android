@@ -5,18 +5,17 @@ import android.view.View;
 import butterknife.ButterKnife;
 
 /**
- * Created by omar on 10/2/15.
+ * Created by omar
+ * on 10/2/15.
  */
 abstract public class BaseMarketeerPricesVH extends RecyclerView.ViewHolder {
-
-
 
     public BaseMarketeerPricesVH(final View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
 
-    abstract public <T extends  BaseMarketeerPricesDH>void  bindData( T dataHolder, boolean hideDevider);
+    abstract public <T extends  BaseMarketeerPricesDH> void  bindData( T dataHolder, boolean hideDivider);
 
     abstract public View getContainer();
 

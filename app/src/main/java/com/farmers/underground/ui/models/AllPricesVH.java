@@ -73,7 +73,7 @@ public class AllPricesVH extends RecyclerView.ViewHolder {
         List<PriceBase> prices =  dateHolder.getModel().prices;
 
         for(int i = 0; i < 3; ++i) {
-            setSourse(layouts[i].findViewById(R.id.tv_Marketeer_CropItem), prices.get(i).source.name);
+            setSource(layouts[i].findViewById(R.id.tv_Marketeer_CropItem), prices.get(i).source.name);
             setPrice(layouts[i].findViewById(R.id.tv_Price), prices.get(i).price);
             setVisibilityAndListener(layouts[i].findViewById(R.id.tv_RefresPrice_CropsItem), i);
         }
@@ -86,7 +86,7 @@ public class AllPricesVH extends RecyclerView.ViewHolder {
             devider.setVisibility(View.VISIBLE);
     }
 
-    private void setSourse(View tvSourse, String nameSourse){
+    private void setSource(View tvSourse, String nameSourse){
         ((TextView) tvSourse).setText(nameSourse);
     }
 

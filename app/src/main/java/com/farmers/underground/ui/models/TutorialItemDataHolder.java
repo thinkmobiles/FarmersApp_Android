@@ -10,6 +10,7 @@ import java.io.Serializable;
  * on 9/24/15.
  */
 public class TutorialItemDataHolder implements Serializable {
+
     @DrawableRes
     private int contentImageRes;
     @StringRes
@@ -19,7 +20,6 @@ public class TutorialItemDataHolder implements Serializable {
         this.contentImageRes = contentImageRes;
         this.contentText = contentText;
     }
-
 
     public int getContentImageRes() {
         return contentImageRes;
