@@ -75,7 +75,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     public static final int REQUEST_CODE_DIALOG_WHY = 2;
 
     @Bind(R.id.drawer_conainer_PriceActivity)
-    protected DrawerLayout mDrawerlayout;
+    protected DrawerLayout mDrawerLayout;
     @Bind(R.id.fl_DrawerHolder_PricesActivity)
     protected FrameLayout fl_DrawerContainer;
     @Bind(R.id.lv_DrawerHolder_PricesActivity)
@@ -204,21 +204,21 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                     searchView.setVisibility(View.GONE);
                     calendar.setVisibility(View.GONE);
                     spinner.bringToFront();
-                    mDrawerlayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                    mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                     isVisibleBurger = false;
                     break;
                 case 1:
                     spinner.setVisibility(View.GONE);
                     searchView.setVisibility(View.VISIBLE);
                     calendar.setVisibility(View.VISIBLE);
-                    mDrawerlayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                    mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                     isVisibleBurger = false;
                     break;
                 case 2:
                     spinner.setVisibility(View.GONE);
                     searchView.setVisibility(View.VISIBLE);
                     calendar.setVisibility(View.VISIBLE);
-                    mDrawerlayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                    mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                     isVisibleBurger = true;
                     break;
             }
@@ -284,7 +284,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     public void onSettingsClicked() {
         NotYetHelper.notYetImplemented(this, "drawer settings");
 
-        mDrawerlayout.closeDrawers();
+        mDrawerLayout.closeDrawers();
     }
 
     public List<PricesByDateModel> getPricesAdapterData() {
@@ -359,10 +359,10 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                 onBackPressed();
                 return true;
             case R.id.action_burger:
-                if (mDrawerlayout != null)
+                if (mDrawerLayout != null)
                     if (drawerOpened)
-                        mDrawerlayout.closeDrawers();
-                    else mDrawerlayout.openDrawer(fl_DrawerContainer);
+                        mDrawerLayout.closeDrawers();
+                    else mDrawerLayout.openDrawer(fl_DrawerContainer);
                 return true;
         }
 
@@ -371,6 +371,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     //clicks events
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.action_calendar)
     protected void onCalendarClick() {
         TransparentActivity.startWithFragmentForResult(this, new PeriodPickerFragment(), REQUEST_CODE_PERIOD_PICKER);
@@ -432,13 +433,13 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     //drawer (from main Activity)
     private void setDrawer() {
-        mDrawerlayout.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+        mDrawerLayout.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 /*lvDrawerContainer.bringToFront();*/
 
-                mDrawerlayout.requestLayout();
+                mDrawerLayout.requestLayout();
                 drawerOpened = true;
                 logoutView.bringToFront();
             }
@@ -495,7 +496,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                 finish();
                 break;
         }
-        mDrawerlayout.closeDrawers();
+        mDrawerLayout.closeDrawers();
     }
 
     @SuppressWarnings("unused")
@@ -525,8 +526,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     @Override
     public void onBackPressed() {
-        if (drawerOpened && mDrawerlayout != null) {
-            mDrawerlayout.closeDrawers();
+        if (drawerOpened && mDrawerLayout != null) {
+            mDrawerLayout.closeDrawers();
         }
         /*else if ( ) {
            //todo

@@ -12,7 +12,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
-import com.farmers.underground.remote.RetrofitSingleton;
 import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.remote.models.PricesByDateModel;
 import com.farmers.underground.ui.activities.PricesActivity;
@@ -73,7 +72,7 @@ public class AllPricesFragment extends BaseFragment<PricesActivity>
         recyclerView.addItemDecoration(new CropsItemDivider(ResourceRetriever.retrievePX(getContext(), R.dimen.margin_default_normal)));
         adapter = new AllPricesAdapter();
         recyclerView.setAdapter(adapter);
-        getHostActivity().makeRequestGetPriceForPeriod(null, this);
+        //getHostActivity().makeRequestGetPriceForPeriod(null, this);
         return v;
     }
 
@@ -86,6 +85,9 @@ public class AllPricesFragment extends BaseFragment<PricesActivity>
     public void onResume() {
         super.onResume();
         onGetResult(getHostActivity().getPricesAdapterData());
+
+        //test if ok todo
+        getHostActivity().makeRequestGetPriceForPeriod(mDateRange,this);
     }
 
     @Override

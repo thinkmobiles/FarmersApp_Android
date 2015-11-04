@@ -34,6 +34,7 @@ import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.fragments.AddPriceFragment;
 import com.farmers.underground.ui.utils.PicassoHelper;
+import com.farmers.underground.ui.utils.ResUtil;
 import com.farmers.underground.ui.utils.StringFormaterUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -57,8 +58,6 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
     @Bind(R.id.toolbar)
     protected Toolbar toolbar;
 
-
-
     private Calendar today = Calendar.getInstance();
     private Calendar selectedDate = Calendar.getInstance();
     private OnChangeDateListener onChangeDateListener;
@@ -77,9 +76,9 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
     public void setEnableDone(boolean isEnableDone) {
         this.enableDone = isEnableDone;
         if(enableDone){
-            buttonDone.setImageDrawable(getResources().getDrawable(R.drawable.ic_done_active));
+            buttonDone.setImageDrawable(ResUtil.getDrawable(getResources(),R.drawable.ic_done_active));
         } else {
-            buttonDone.setImageDrawable(getResources().getDrawable(R.drawable.ic_done_noactive));
+            buttonDone.setImageDrawable(ResUtil.getDrawable(getResources(), R.drawable.ic_done_noactive));
         }
     }
 
