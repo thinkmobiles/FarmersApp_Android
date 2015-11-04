@@ -1,5 +1,7 @@
 package com.farmers.underground.ui.utils;
 
+import com.farmers.underground.config.ProjectConstants;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -15,7 +17,7 @@ public class StringFormaterUtil {
     }
 
     public static String parseToServerResponse(Calendar date){
-        return new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'", Locale.getDefault()).format(date.getTime());
+        return new SimpleDateFormat(ProjectConstants.SERVER_DATE_FORMAT, Locale.getDefault()).format(date.getTime());
     }
 
     public static String getLettersForLogo(String name){

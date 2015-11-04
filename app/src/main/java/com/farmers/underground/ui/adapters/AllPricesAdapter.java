@@ -51,7 +51,7 @@ public class AllPricesAdapter extends RecyclerView.Adapter<AllPricesVH> {
 
     public interface AllPricesCallback {
         void onAllPricesItemClicked(LastCropPricesModel cropModel); // -> ? todo
-        void onAddPricesClicked();
+        void onAddPricesClicked(String date);
         void onMorePricesClicked(PriceBase priceModel);
     }
 }

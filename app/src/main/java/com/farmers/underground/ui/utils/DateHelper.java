@@ -3,8 +3,12 @@ package com.farmers.underground.ui.utils;
 import android.content.Context;
 
 import com.farmers.underground.R;
+import com.farmers.underground.config.ProjectConstants;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by omar
@@ -39,4 +43,14 @@ public class DateHelper {
         return date;
     }
 
+    public static Calendar parseToCalendar(String date){
+        SimpleDateFormat format = new SimpleDateFormat(ProjectConstants.SERVER_DATE_FORMAT, Locale.getDefault());
+        Calendar calendar = Calendar.getInstance();
+        try {
+            calendar.setTime(format.parse(date));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return calendar;
+    }
 }

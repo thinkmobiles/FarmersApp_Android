@@ -115,7 +115,7 @@ public class AllPricesVH extends RecyclerView.ViewHolder {
             layouts[pos].setOnClickListener(isEnable ? new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    dateHolder.getCallback().onAddPricesClicked();
+                    dateHolder.getCallback().onAddPricesClicked(priceBase.data);
                 }
             } : null);
         }
