@@ -33,6 +33,7 @@ import com.farmers.underground.remote.models.SuccessMsg;
 import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.fragments.AddPriceFragment;
+import com.farmers.underground.ui.utils.DateHelper;
 import com.farmers.underground.ui.utils.PicassoHelper;
 import com.farmers.underground.ui.utils.ResUtil;
 import com.farmers.underground.ui.utils.StringFormaterUtil;
@@ -44,6 +45,7 @@ import com.squareup.picasso.Target;
 import butterknife.OnClick;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
+import java.text.DateFormat;
 import java.util.Calendar;
 
 /**
@@ -70,6 +72,15 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
         String s = gson.toJson(cropModel);
         Intent intent = new Intent(context, AddPriceActivity.class);
         intent.putExtra(ProjectConstants.KEY_DATA, s);
+        context.startActivity(intent);
+    }
+
+    public static void start(@NonNull Context context, LastCropPricesModel cropModel, String date) {
+        Gson gson = new GsonBuilder().create();
+        String s = gson.toJson(cropModel);
+        Intent intent = new Intent(context, AddPriceActivity.class);
+        intent.putExtra(ProjectConstants.KEY_DATA, s);
+        intent.putExtra(ProjectConstants.KEY_DATE, date);
         context.startActivity(intent);
     }
 
@@ -117,6 +128,9 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
             throw new IllegalAccessError("Create this activity with start(Context, CropModel) " + "method only!");
         else {
             ((TextView) toolbar.findViewById(R.id.toolbar_title)).setText(mCropModel.displayName);
+        }
+        if(getIntent().getStringExtra(ProjectConstants.KEY_DATE) != null){
+            selectedDate = DateHelper.parseToCalendar(getIntent().getStringExtra(ProjectConstants.KEY_DATE));
         }
     }
 

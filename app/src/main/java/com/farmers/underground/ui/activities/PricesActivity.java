@@ -48,6 +48,7 @@ import com.farmers.underground.ui.fragments.PeriodPickerFragment;
 import com.farmers.underground.ui.fragments.StatisticsFragment;
 import com.farmers.underground.ui.models.DateRange;
 import com.farmers.underground.ui.models.DrawerItem;
+import com.farmers.underground.ui.utils.DateHelper;
 import com.farmers.underground.ui.utils.NotYetHelper;
 import com.farmers.underground.ui.utils.PicassoHelper;
 import com.farmers.underground.ui.utils.StringFormaterUtil;
@@ -271,8 +272,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     }
 
     @Override
-    public void onAddPricesClicked() {
-        AddPriceActivity.start(this, mCropModel);
+    public void onAddPricesClicked(String date) {
+        AddPriceActivity.start(this, mCropModel, date);
     }
 
     @Override
@@ -391,7 +392,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                     ((PricesActivity.DateRangeSetter) pagerAdapter.getItem(viewPager.getCurrentItem())).setDateRange(dateRange);
                     break;
                 case REQUEST_CODE_DIALOG_WHY:
-                    onAddPricesClicked();
+                    onAddPricesClicked(StringFormaterUtil.parseToServerResponse(Calendar.getInstance()));
                     break;
             }
         }
