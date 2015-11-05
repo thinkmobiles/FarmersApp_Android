@@ -427,7 +427,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         }*/
 
 
-        if (user != null && (!(user.hasMarketir() || user.isNewMarketeer()))) {
+        if (user != null && !(user.hasMarketir() || user.isNewMarketeer())) {
             drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_plus, R.string.drawer_content_5));
         } else {
             drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_plus, R.string.drawer_content_6));

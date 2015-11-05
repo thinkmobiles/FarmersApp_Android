@@ -86,7 +86,7 @@ android {
     }
 
     dexOptions {
-        incremental true
+        incremental false
     }
 
     compileOptions {

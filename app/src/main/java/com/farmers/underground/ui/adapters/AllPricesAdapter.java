@@ -32,6 +32,11 @@ public class AllPricesAdapter extends RecyclerView.Adapter<AllPricesVH> {
         notifyDataSetChanged();
     }
 
+    public void addDataList(List<AllPricesDH> dataList) {
+        this.dataList.addAll(dataList);
+        notifyDataSetChanged();
+    }
+
     @Override
     public AllPricesVH onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_all_prices, parent, false);

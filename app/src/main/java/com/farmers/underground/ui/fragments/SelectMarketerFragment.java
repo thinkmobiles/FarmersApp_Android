@@ -152,6 +152,7 @@ public class SelectMarketerFragment extends BaseFragment<LoginSignUpActivity> {
                     getHostActivity().showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
                 }
             });
+            getHostActivity().getUserProfileAsync(); //for refresh state of having of marketer
         }
 
     }

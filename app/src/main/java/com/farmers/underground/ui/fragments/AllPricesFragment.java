@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.farmers.underground.R;
@@ -40,10 +41,13 @@ public class AllPricesFragment extends BaseFragment<PricesActivity>
     @Bind(R.id.tv_NoItemsBaseListFragment)
     protected TextView tv_NoItems;
 
+    private enum TypeRequest{Refresh, Search, Add}
+
     private AllPricesAdapter.AllPricesCallback allPricesCallback;
     private AllPricesAdapter adapter;
-    private LastCropPricesModel mCropModel;
-    private DateRange mDateRange;
+    private LinearLayoutManager mLayoutManager;
+
+    private TypeRequest mTypeRequest;
 
     public static AllPricesFragment getInstance(LastCropPricesModel cropModel) {
         Bundle args = new Bundle();
@@ -59,8 +63,6 @@ public class AllPricesFragment extends BaseFragment<PricesActivity>
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Gson gson = new GsonBuilder().create();
-        mCropModel = gson.fromJson(getArguments().getString(ProjectConstants.KEY_DATA), LastCropPricesModel.class);
         setHasOptionsMenu(true);
     }
 
@@ -68,12 +70,32 @@ public class AllPricesFragment extends BaseFragment<PricesActivity>
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, v);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        setSettingRecycler();
+        //getHostActivity().makeRequestGetPriceForPeriod(null, this);
+        return v;
+    }
+
+    private void setSettingRecycler(){
+        mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new CropsItemDivider(ResourceRetriever.retrievePX(getContext(), R.dimen.margin_default_normal)));
         adapter = new AllPricesAdapter();
         recyclerView.setAdapter(adapter);
-        //getHostActivity().makeRequestGetPriceForPeriod(null, this);
-        return v;
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if(mLayoutManager.findLastVisibleItemPosition() == adapter.getItemCount() - 2){
+                    addMonth();
+                }
+            }
+        });
+    }
+
+    private void addMonth(){
+        if(mTypeRequest != TypeRequest.Search) {
+            mTypeRequest = TypeRequest.Add;
+            getHostActivity().makeRequestGetPriceForPeriodAddMonth(this);
+        }
     }
 
     @Override
@@ -84,10 +106,9 @@ public class AllPricesFragment extends BaseFragment<PricesActivity>
     @Override
     public void onResume() {
         super.onResume();
-        onGetResult(getHostActivity().getPricesAdapterData());
-
+        mTypeRequest = mTypeRequest != TypeRequest.Search ? TypeRequest.Refresh : TypeRequest.Search;
         //test if ok todo
-        getHostActivity().makeRequestGetPriceForPeriod(mDateRange,this);
+        getHostActivity().makeRequestGetPriceForPeriod(this);
     }
 
     @Override
@@ -109,15 +130,18 @@ public class AllPricesFragment extends BaseFragment<PricesActivity>
 
     @Override
     public void setDateRange(DateRange dateRange) {
-        mDateRange = dateRange;
+        mTypeRequest = TypeRequest.Search;
         //todo - test it  search request
-        getHostActivity().makeRequestGetPriceForPeriod(dateRange,this);
+        getHostActivity().makeRequestGetPriceForPeriod(this);
     }
 
 
     @Override
     public void onGetResult(List<PricesByDateModel> result) {
-        adapter.setDataList(generateDH(result));
+        if(mTypeRequest == TypeRequest.Add)
+            adapter.addDataList(generateDH(result));
+        else
+            adapter.setDataList(generateDH(result));
     }
 
     private List<AllPricesDH> generateDH(List<PricesByDateModel> result) {

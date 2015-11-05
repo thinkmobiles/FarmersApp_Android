@@ -109,6 +109,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     private ProjectPagerAdapter<BaseFragment<PricesActivity>> pagerAdapter;
 
     private boolean isVisibleBurger;
+    private DateRange mDateRange;
 
     public static void start(@NonNull Context context, LastCropPricesModel cropModel) {
         Gson gson = new GsonBuilder().create();
@@ -386,10 +387,10 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                     Bundle bundle = data.getExtras();
                     Calendar dateFrom = (Calendar) bundle.getSerializable(PeriodPickerFragment.KEY_DATE_FROM);
                     Calendar dateTo = (Calendar) bundle.getSerializable(PeriodPickerFragment.KEY_DATE_TO);
-                    DateRange dateRange = new DateRange();
-                    dateRange.setDateFrom(StringFormaterUtil.parseToServerResponse(dateFrom));
-                    dateRange.setDateTo(StringFormaterUtil.parseToServerResponse(dateTo));
-                    ((PricesActivity.DateRangeSetter) pagerAdapter.getItem(viewPager.getCurrentItem())).setDateRange(dateRange);
+                    mDateRange = new DateRange();
+                    mDateRange.setDateFrom(StringFormaterUtil.parseToServerResponse(dateFrom));
+                    mDateRange.setDateTo(StringFormaterUtil.parseToServerResponse(dateTo));
+                    ((PricesActivity.DateRangeSetter) pagerAdapter.getItem(viewPager.getCurrentItem())).setDateRange(mDateRange);
                     break;
                 case REQUEST_CODE_DIALOG_WHY:
                     onAddPricesClicked(StringFormaterUtil.parseToServerResponse(Calendar.getInstance()));
@@ -540,20 +541,34 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     /**
      * if dateRange == null default date range is used
      */
+
+    private Calendar prevMonth;
+
+    public void makeRequestGetPriceForPeriod(final CropAllPricesCallback callback) {
+        makeRequestGetPriceForPeriod(mDateRange, callback);
+    }
+
+    public void makeRequestGetPriceForPeriodAddMonth(final CropAllPricesCallback callback) {
+        prevMonth.set(Calendar.MONTH, prevMonth.get(Calendar.MONTH) - 1);
+        mDateRange.setDateTo(StringFormaterUtil.parseToServerResponse(prevMonth));
+
+        makeRequestGetPriceForPeriod(mDateRange, callback);
+    }
+
     public void makeRequestGetPriceForPeriod(@Nullable DateRange dateRange, final CropAllPricesCallback callback) {
 
         if (dateRange == null) {
-            Calendar prevMonth = Calendar.getInstance();
+            prevMonth = Calendar.getInstance();
             prevMonth.set(Calendar.MONTH, prevMonth.get(Calendar.MONTH) - 1);
-            prevMonth.set(Calendar.HOUR_OF_DAY, 0);
-            prevMonth.set(Calendar.MINUTE, 0);
             dateRange = new DateRange();
             dateRange.setDateFrom(StringFormaterUtil.parseToServerResponse(Calendar.getInstance()));
             dateRange.setDateTo(StringFormaterUtil.parseToServerResponse(prevMonth));
 
+            mDateRange = dateRange;
         } else {
             /*nothing now */
         }
+
 
         RetrofitSingleton.getInstance().getCropPricesForPeriod(dateRange.getDateFrom(), dateRange.getDateTo(),
                 mCropModel.displayName,
@@ -565,7 +580,6 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                             callback.onGetResult(result);
                         } else
                             onError(new ErrorMsg("No Prices Fetched"));
-
                     }
 
                     @Override

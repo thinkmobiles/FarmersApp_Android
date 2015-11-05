@@ -55,7 +55,7 @@ public class PeriodPickerFragment extends BaseFragment<TransparentActivity> impl
     }
 
     private void setData(){
-        dayFromTo = Period.StartDate;
+        dayFromTo = Period.EndDate;
         setDate(Calendar.getInstance());
     }
 
@@ -77,10 +77,8 @@ public class PeriodPickerFragment extends BaseFragment<TransparentActivity> impl
     }
 
     public void onPickDate(Calendar date) {
-        if(dayFromTo == Period.EndDate) {
-            if (dateStart.after(date)) {
-                date.set(Calendar.HOUR_OF_DAY, 0);
-                date.set(Calendar.MINUTE, 0);
+        if(dayFromTo == Period.StartDate) {
+            if (dateEnd.after(date)) {
                 setDate(date);
                 sendPeriod();
             } else {
@@ -103,8 +101,8 @@ public class PeriodPickerFragment extends BaseFragment<TransparentActivity> impl
 
     private void sendPeriod(){
         Bundle bundle = new Bundle();
-        bundle.putSerializable(KEY_DATE_FROM, dateStart);
-        bundle.putSerializable(KEY_DATE_TO, dateEnd);
+        bundle.putSerializable(KEY_DATE_TO, dateStart);
+        bundle.putSerializable(KEY_DATE_FROM, dateEnd);
         Intent intent = new Intent();
         intent.putExtras(bundle);
         getHostActivity().setResult(Activity.RESULT_OK, intent);
@@ -115,9 +113,9 @@ public class PeriodPickerFragment extends BaseFragment<TransparentActivity> impl
         DatePickerDialog datePickerDialog =  new DatePickerDialog(
                 getContext(),
                 this,
-                dateStart.get(Calendar.YEAR),
-                dateStart.get(Calendar.MONTH),
-                dateStart.get(Calendar.DAY_OF_MONTH)
+                dateEnd.get(Calendar.YEAR),
+                dateEnd.get(Calendar.MONTH),
+                dateEnd.get(Calendar.DAY_OF_MONTH)
         );
         datePickerDialog.show();
     }
