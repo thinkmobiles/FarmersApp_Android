@@ -34,6 +34,7 @@ import com.farmers.underground.ui.adapters.ProjectPagerAdapter;
 import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.custom_views.CustomSearchView;
+import com.farmers.underground.ui.dialogs.InviteDialogFragment;
 import com.farmers.underground.ui.fragments.CropsFragmentCallback;
 import com.farmers.underground.ui.fragments.CropsListFragment;
 import com.farmers.underground.ui.models.CropsListFragmentModel;
@@ -531,7 +532,8 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                 viewPager.setCurrentItem(1);
                 break;
             case 3:
-               WhatsAppUtil.getInstance(this).sendInvitation();
+                TransparentActivity.startWithFragment(this, new InviteDialogFragment());
+//               WhatsAppUtil.getInstance(this).sendInvitation();
                 break;
             case 4:
                 viewPager.setCurrentItem(0);
