@@ -27,6 +27,7 @@ public class PeriodPickerFragment extends BaseFragment<TransparentActivity> impl
 
     public static final String KEY_DATE_FROM = "date_from";
     public static final String KEY_DATE_TO = "date_to";
+    public static final String KEY_ALL_TIME = "is_all_time";
 
     @Bind(R.id.tvPeriodFrom)
     protected TextView tvPeriodFrom;
@@ -40,7 +41,8 @@ public class PeriodPickerFragment extends BaseFragment<TransparentActivity> impl
     }
 
     private Period dayFromTo;
-    private Calendar selectedDay, dateStart, dateEnd;
+    private Calendar dateStart, dateEnd;
+    private boolean isAllTme = false;
 
     @Override
     protected int getLayoutResId() {
@@ -57,6 +59,16 @@ public class PeriodPickerFragment extends BaseFragment<TransparentActivity> impl
     private void setData(){
         dayFromTo = Period.EndDate;
         setDate(Calendar.getInstance());
+    }
+
+    @SuppressWarnings("unused")
+    @OnClick(R.id.tvAllTime)
+    protected void pickAllTime(){
+        isAllTme = true;
+        dateEnd = Calendar.getInstance();
+        dateStart = Calendar.getInstance();
+        dateStart.set(Calendar.MONTH, dateStart.get(Calendar.MONTH) - 1);
+        sendPeriod();
     }
 
     @SuppressWarnings("unused")
@@ -103,6 +115,7 @@ public class PeriodPickerFragment extends BaseFragment<TransparentActivity> impl
         Bundle bundle = new Bundle();
         bundle.putSerializable(KEY_DATE_TO, dateStart);
         bundle.putSerializable(KEY_DATE_FROM, dateEnd);
+        bundle.putBoolean(KEY_ALL_TIME, isAllTme);
         Intent intent = new Intent();
         intent.putExtras(bundle);
         getHostActivity().setResult(Activity.RESULT_OK, intent);

@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@null"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="@null">
 
     <LinearLayout
         android:orientation="vertical"
+        android:layout_centerInParent="true"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="45dp"
         android:layout_marginLeft="45dp"
-        >
+        android:id="@+id/llPeriod">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="New Text"
+            android:text="@string/period_picker_choose"
             android:gravity="center_horizontal"
             android:textSize="@dimen/period_picker_date_text_size"
             style="@style/WhiteRegularText"
@@ -55,5 +57,16 @@
             android:background="@color/white"/>
 
     </LinearLayout>
+
+    <com.farmers.underground.ui.custom_views.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/WhiteRegularText"
+        android:text="All Time"
+        android:textSize="@dimen/period_picker_date_text_size"
+        android:layout_marginTop="30dp"
+        android:id="@+id/tvAllTime"
+        android:layout_below="@+id/llPeriod"
+        android:layout_centerHorizontal="true" />
 
 </LinearLayout>

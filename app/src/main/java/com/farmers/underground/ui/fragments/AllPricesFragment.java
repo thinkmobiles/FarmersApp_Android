@@ -129,12 +129,11 @@ public class AllPricesFragment extends BaseFragment<PricesActivity>
     }
 
     @Override
-    public void setDateRange(DateRange dateRange) {
-        mTypeRequest = TypeRequest.Search;
+    public void setDateRange(DateRange dateRange, boolean isAllTime) {
+        mTypeRequest = isAllTime ? TypeRequest.Refresh : TypeRequest.Search;
         //todo - test it  search request
         getHostActivity().makeRequestGetPriceForPeriod(this);
     }
-
 
     @Override
     public void onGetResult(List<PricesByDateModel> result) {

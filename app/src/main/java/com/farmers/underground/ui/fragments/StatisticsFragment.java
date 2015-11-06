@@ -220,11 +220,6 @@ public class StatisticsFragment
         setChartData(generateChartData());
     }
 
-    @Override
-    public void setDateRange(DateRange dateRange) {
-        mDateRange = dateRange;
-    }
-
     private void defChart() {
         mChart.setDescription("");
         mChart.setMaxVisibleValueCount(11);
@@ -568,5 +563,10 @@ public class StatisticsFragment
             }
         }).start();
 
+    }
+
+    @Override
+    public void setDateRange(DateRange dateRange, boolean isAllTime) {
+        mDateRange = dateRange;
     }
 }

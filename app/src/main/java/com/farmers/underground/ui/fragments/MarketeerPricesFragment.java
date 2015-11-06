@@ -112,11 +112,6 @@ public class MarketeerPricesFragment extends BaseFragment<PricesActivity>
     }
 
 
-    @Override
-    public void setDateRange(DateRange dateRange) {
-        mDateRange = dateRange;
-    }
-
 
     private List<PriceMarketeerPricesDH> generateDH(List<MarketeerPriceModel> cropModelList) {
         List<PriceMarketeerPricesDH> holders = new ArrayList<>();
@@ -194,4 +189,8 @@ public class MarketeerPricesFragment extends BaseFragment<PricesActivity>
         AddPriceActivity.start(getHostActivity(), mCropModel);
     }
 
+    @Override
+    public void setDateRange(DateRange dateRange, boolean isAllTime) {
+        mDateRange = dateRange;
+    }
 }

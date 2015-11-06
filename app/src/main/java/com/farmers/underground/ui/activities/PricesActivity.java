@@ -105,11 +105,10 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     protected Spinner spinner;
 
     private LastCropPricesModel mCropModel;
-    private List<PricesByDateModel> pricesAdapterData = new ArrayList<>(0);
     private ProjectPagerAdapter<BaseFragment<PricesActivity>> pagerAdapter;
 
     private boolean isVisibleBurger;
-    private DateRange mDateRange;
+    private DateRange mDateRange, mFullRange;
 
     public static void start(@NonNull Context context, LastCropPricesModel cropModel) {
         Gson gson = new GsonBuilder().create();
@@ -289,13 +288,10 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         mDrawerLayout.closeDrawers();
     }
 
-    public List<PricesByDateModel> getPricesAdapterData() {
-        return pricesAdapterData;
-    }
 
 
     public interface DateRangeSetter {
-        void setDateRange(DateRange dateRange);
+        void setDateRange(DateRange dateRange, boolean isAllTime);
     }
 
     /**
@@ -390,7 +386,13 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                     mDateRange = new DateRange();
                     mDateRange.setDateFrom(StringFormaterUtil.parseToServerResponse(dateFrom));
                     mDateRange.setDateTo(StringFormaterUtil.parseToServerResponse(dateTo));
-                    ((PricesActivity.DateRangeSetter) pagerAdapter.getItem(viewPager.getCurrentItem())).setDateRange(mDateRange);
+                    mFullRange = new DateRange();
+                    mFullRange.setDateFrom(StringFormaterUtil.parseToServerResponse(dateFrom));
+                    mFullRange.setDateTo(StringFormaterUtil.parseToServerResponse(dateTo));
+                    ((PricesActivity.DateRangeSetter) pagerAdapter.getItem(viewPager.getCurrentItem())).setDateRange(
+                            mDateRange,
+                            bundle.getBoolean(PeriodPickerFragment.KEY_ALL_TIME)
+                    );
                     break;
                 case REQUEST_CODE_DIALOG_WHY:
                     onAddPricesClicked(StringFormaterUtil.parseToServerResponse(Calendar.getInstance()));
@@ -550,7 +552,9 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     public void makeRequestGetPriceForPeriodAddMonth(final CropAllPricesCallback callback) {
         prevMonth.set(Calendar.MONTH, prevMonth.get(Calendar.MONTH) - 1);
+        mDateRange.setDateFrom(mDateRange.getDateTo());
         mDateRange.setDateTo(StringFormaterUtil.parseToServerResponse(prevMonth));
+        mFullRange.setDateTo(StringFormaterUtil.parseToServerResponse(prevMonth));
 
         makeRequestGetPriceForPeriod(mDateRange, callback);
     }
@@ -565,6 +569,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
             dateRange.setDateTo(StringFormaterUtil.parseToServerResponse(prevMonth));
 
             mDateRange = dateRange;
+            mFullRange = dateRange;
         } else {
             /*nothing now */
         }
@@ -576,7 +581,6 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                     @Override
                     public void onSuccess(List<PricesByDateModel> result) {
                         if (result != null && !result.isEmpty()) {
-                            pricesAdapterData = result;
                             callback.onGetResult(result);
                         } else
                             onError(new ErrorMsg("No Prices Fetched"));

@@ -1,5 +1,6 @@
 package com.farmers.underground.ui.dialogs;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,7 +17,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by samson on 06.11.15.
+ * Created by samson
+ * on 06.11.15.
  */
 public class InviteDialogFragment extends BaseFragment<TransparentActivity> {
 
@@ -37,7 +39,7 @@ public class InviteDialogFragment extends BaseFragment<TransparentActivity> {
     protected void sendSMS(){
         Intent smsIntent = new Intent(Intent.ACTION_VIEW);
         smsIntent.setType("vnd.android-dir/mms-sms");
-        smsIntent.putExtra(Intent.EXTRA_TEXT, TEXT_INVITE);
+        smsIntent.putExtra("sms_body", TEXT_INVITE);
         getHostActivity().startActivity(Intent.createChooser(smsIntent, "SMS:"));
     }
 
@@ -45,11 +47,10 @@ public class InviteDialogFragment extends BaseFragment<TransparentActivity> {
     protected void sendEmail(){
         Intent mailer = new Intent(Intent.ACTION_SEND);
         mailer.setType("message/rfc822");
-//        mailer.setType("text/plain");
         mailer.putExtra(Intent.EXTRA_TEXT, TEXT_INVITE);
         try {
             getHostActivity().startActivity(Intent.createChooser(mailer, "Send"));
-        } catch (android.content.ActivityNotFoundException ex) {
+        } catch (ActivityNotFoundException e) {
             getHostActivity().showToast("There are no email clients installed.", Toast.LENGTH_SHORT);
         }
     }
