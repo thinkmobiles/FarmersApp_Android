@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -49,6 +50,7 @@ import com.farmers.underground.ui.fragments.StatisticsFragment;
 import com.farmers.underground.ui.models.DateRange;
 import com.farmers.underground.ui.models.DrawerItem;
 import com.farmers.underground.ui.utils.DateHelper;
+import com.farmers.underground.ui.utils.FacebookInviteUtil;
 import com.farmers.underground.ui.utils.NotYetHelper;
 import com.farmers.underground.ui.utils.PicassoHelper;
 import com.farmers.underground.ui.utils.StringFormaterUtil;
@@ -484,7 +486,9 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                 MainActivity.startWithPageSelected(this, ProjectConstants.MAIN_ACTIVITY_PAGE_ALL);
                 break;
             case 3:
-                WhatsAppUtil.getInstance(this).sendInvitation();
+                //test post
+                FacebookInviteUtil.inviteFBpeopleMessage(this);
+                 //WhatsAppUtil.getInstance(this).sendInvitation();
                 break;
             case 4:
                 MainActivity.startWithPageSelected(this, ProjectConstants.MAIN_ACTIVITY_PAGE_FAV);
