@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,6 +75,10 @@ public class AllPricesFragment extends BaseFragment<PricesActivity>
         return v;
     }
 
+
+    private boolean loading = true;
+    private  int pastVisiblesItems, visibleItemCount, totalItemCount;
+
     private void setSettingRecycler(){
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -81,10 +86,26 @@ public class AllPricesFragment extends BaseFragment<PricesActivity>
         adapter = new AllPricesAdapter();
         recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
+          /*  @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 if(mLayoutManager.findLastVisibleItemPosition() == adapter.getItemCount() - 2){
                     addMonth();
+                }
+            }*/
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                visibleItemCount = mLayoutManager.getChildCount();
+                totalItemCount = mLayoutManager.getItemCount();
+                pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
+
+                if (loading) {
+                    if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                        loading = false;
+                        Log.d("onScrolled", "Last Item Now! total = " + totalItemCount);
+                        addMonth();
+                    }
                 }
             }
         });
@@ -140,6 +161,8 @@ public class AllPricesFragment extends BaseFragment<PricesActivity>
             adapter.addDataList(generateDH(result));
         else
             adapter.setDataList(generateDH(result));
+
+        loading= true;
     }
 
     private List<AllPricesDH> generateDH(List<PricesByDateModel> result) {

@@ -3,14 +3,13 @@ package com.farmers.underground.ui.dialogs;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.farmers.underground.R;
 import com.farmers.underground.ui.activities.TransparentActivity;
 import com.farmers.underground.ui.base.BaseFragment;
+import com.farmers.underground.ui.utils.FacebookInviteUtil;
 import com.farmers.underground.ui.utils.WhatsAppUtil;
 
 import butterknife.ButterKnife;
@@ -35,6 +34,7 @@ public class InviteDialogFragment extends BaseFragment<TransparentActivity> {
         ButterKnife.bind(this, view);
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.llSMS)
     protected void sendSMS(){
         Intent smsIntent = new Intent(Intent.ACTION_VIEW);
@@ -43,6 +43,7 @@ public class InviteDialogFragment extends BaseFragment<TransparentActivity> {
         getHostActivity().startActivity(Intent.createChooser(smsIntent, "SMS:"));
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.llEmail)
     protected void sendEmail(){
         Intent mailer = new Intent(Intent.ACTION_SEND);
@@ -55,16 +56,19 @@ public class InviteDialogFragment extends BaseFragment<TransparentActivity> {
         }
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.llWhatsapp)
-    protected void sendWhatsapp(){
+    protected void sendWhatsApp(){
         WhatsAppUtil.getInstance(getHostActivity()).sendInvitation();
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.llFacebook)
     protected void sendFacebook(){
-
+        FacebookInviteUtil.inviteFBpeopleMessage(getHostActivity());
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.ivCloseDialog)
     protected void sendClose(){
         getHostActivity().finish();
