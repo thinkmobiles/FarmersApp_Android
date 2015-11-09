@@ -47,8 +47,6 @@ public class AllPricesFragment extends BaseFragment<PricesActivity>
     private AllPricesAdapter adapter;
     private LinearLayoutManager mLayoutManager;
     private TypeRequest mTypeRequest;
-    private boolean isLoading = false;
-    private View footer;
 
     public static AllPricesFragment getInstance(LastCropPricesModel cropModel) {
         Bundle args = new Bundle();
@@ -71,7 +69,6 @@ public class AllPricesFragment extends BaseFragment<PricesActivity>
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, v);
-        footer = LayoutInflater.from(getHostActivity()).inflate(R.layout.footer_progressbar,container,false);
         setSettingRecycler();
         //getHostActivity().makeRequestGetPriceForPeriod(null, this);
         return v;
@@ -87,12 +84,7 @@ public class AllPricesFragment extends BaseFragment<PricesActivity>
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 if(mLayoutManager.findLastVisibleItemPosition() == adapter.getItemCount() - 2){
-                    if(!isLoading) {
-                        addMonth();
-                        recyclerView.addView(footer,adapter.getItemCount());
-                        isLoading = true;
-                    }
-
+                    addMonth();
                 }
             }
         });
@@ -144,8 +136,6 @@ public class AllPricesFragment extends BaseFragment<PricesActivity>
 
     @Override
     public void onGetResult(List<PricesByDateModel> result) {
-        isLoading = false;
-        recyclerView.removeView(footer);
         if(mTypeRequest == TypeRequest.Add)
             adapter.addDataList(generateDH(result));
         else
