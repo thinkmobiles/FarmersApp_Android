@@ -41,7 +41,7 @@ android {
     defaultConfig {
         applicationId "com.farmers.underground"
         minSdkVersion 15
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 1
         versionName '1.0'
 
@@ -86,6 +86,7 @@ android {
     }
 
     dexOptions {
+        jumboMode true
         incremental false
     }
 
