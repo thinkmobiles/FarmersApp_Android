@@ -73,7 +73,7 @@ public class CropsListFragment
         return R.layout.fragment_base_list;
     }
 
-    @Override
+  /*  @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, v);
@@ -82,7 +82,7 @@ public class CropsListFragment
                 .crops_card_layout_margin)));
         return v;
     }
-
+*/
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -92,6 +92,10 @@ public class CropsListFragment
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.addItemDecoration(new CropsItemDivider(ResourceRetriever.retrievePX(getContext(), R.dimen
+                .crops_card_layout_margin)));
         if (savedInstanceState != null)
             mFragmentModel = (CropsListFragmentModel) savedInstanceState.getSerializable(ProjectConstants.KEY_DATA);
         else mFragmentModel = (CropsListFragmentModel) getArguments().getSerializable(ProjectConstants.KEY_DATA);

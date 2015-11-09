@@ -69,13 +69,16 @@ public class MarketeerPricesFragment extends BaseFragment<PricesActivity>
         mCropModel = gson.fromJson(getArguments().getString(ProjectConstants.KEY_DATA), LastCropPricesModel.class);
         generateAdapterCB();
     }
+/*
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, v);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        /**/
+        */
+/**//*
+
         adapter = new MarketeerPricesAdapter();
         recyclerView.setAdapter(adapter);
 
@@ -89,10 +92,25 @@ public class MarketeerPricesFragment extends BaseFragment<PricesActivity>
         });
         return v;
     }
+*/
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        /**/
+        adapter = new MarketeerPricesAdapter();
+        recyclerView.setAdapter(adapter);
+
+        final StickyRecyclerHeadersDecoration headersDecor = new StickyRecyclerHeadersDecoration(adapter);
+        recyclerView.addItemDecoration(headersDecor);
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                headersDecor.invalidateHeaders();
+            }
+        });
         setAdapterData(generateTestPriceList());
     }
 

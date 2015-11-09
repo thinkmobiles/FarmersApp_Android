@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,6 +23,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import com.farmers.underground.BuildConfig;
 import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ApiConstants;
@@ -582,7 +584,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                         if (result != null && !result.isEmpty()) {
                             callback.onGetResult(result);
                         } else
-                            onError(new ErrorMsg("No More Prices Fetched"));
+                            if(BuildConfig.DEBUG)
+                                onError(new ErrorMsg("No More Prices Fetched"));
                     }
 
                     @Override

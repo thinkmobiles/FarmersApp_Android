@@ -65,7 +65,7 @@ public class AllPricesFragment extends BaseFragment<PricesActivity>
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
-
+/*
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = super.onCreateView(inflater, container, savedInstanceState);
@@ -73,7 +73,7 @@ public class AllPricesFragment extends BaseFragment<PricesActivity>
         setSettingRecycler();
         //getHostActivity().makeRequestGetPriceForPeriod(null, this);
         return v;
-    }
+    }*/
 
 
     private boolean loading = true;
@@ -121,6 +121,8 @@ public class AllPricesFragment extends BaseFragment<PricesActivity>
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
+        setSettingRecycler();
     }
 
     @Override
