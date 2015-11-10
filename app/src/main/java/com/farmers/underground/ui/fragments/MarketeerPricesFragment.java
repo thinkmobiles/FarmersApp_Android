@@ -42,7 +42,7 @@ public class MarketeerPricesFragment extends BaseFragment<PricesActivity>
     @Bind(R.id.rv_BaseListFragment)
     protected RecyclerView recyclerView;
 
-    @Bind(R.id.tv_NoItemsBaseListFragment)
+    @Bind(R.id.tv_NoItemsBaseListFragmentM)
     protected TextView tv_NoItems;
 
     private MarketeerPricesAdapter adapter;

@@ -94,9 +94,9 @@ public class LoginFragment extends BaseFragment<LoginSignUpActivity> {
     @OnClick(R.id.tvForgot)
     protected void forgotPW() {
 
-        final View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_edit_text_field, null);
+        final View view = LayoutInflater.from(getHostActivity()).inflate(R.layout.dialog_edit_text_field, null);
 
-        final AlertDialog dialog = new AlertDialog.Builder(getContext())
+        final AlertDialog dialog = new AlertDialog.Builder(getHostActivity())
                 .setTitle(R.string.dialog_title_forgot_password)
                 .setView(view)
                 .setCancelable(true)

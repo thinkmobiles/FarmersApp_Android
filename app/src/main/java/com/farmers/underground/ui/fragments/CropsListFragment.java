@@ -41,20 +41,13 @@ public class CropsListFragment
 
     private CropsListFragmentModel mFragmentModel;
     private CropsListAdapter adapter;
-    private FragmentViewsCreatedCallback stateCallback;
+  /*  private FragmentViewsCreatedCallback stateCallback;*/
     private CropsListAdapter.CropsAdapterCallback listCallback;
-
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        stateCallback = (FragmentViewsCreatedCallback) context;
-    }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        stateCallback = null;
+        /*stateCallback = null;*/
         listCallback = null;
     }
 
@@ -85,8 +78,8 @@ public class CropsListFragment
 */
     @Override
     public void onDestroyView() {
+        getHostActivity().onFragmentViewDestroyed();
         super.onDestroyView();
-        stateCallback.onFragmentViewDestroyed();
     }
 
     @Override
@@ -94,15 +87,16 @@ public class CropsListFragment
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.addItemDecoration(new CropsItemDivider(ResourceRetriever.retrievePX(getContext(), R.dimen
+        recyclerView.addItemDecoration(new CropsItemDivider(ResourceRetriever.retrievePX(getHostActivity(), R.dimen
                 .crops_card_layout_margin)));
+
         if (savedInstanceState != null)
             mFragmentModel = (CropsListFragmentModel) savedInstanceState.getSerializable(ProjectConstants.KEY_DATA);
         else mFragmentModel = (CropsListFragmentModel) getArguments().getSerializable(ProjectConstants.KEY_DATA);
         //showNoItems();
         adapter = new CropsListAdapter();
         recyclerView.setAdapter(adapter);
-        stateCallback.onFragmentViewCreated();
+        getHostActivity().onFragmentViewCreated();
     }
 
     private void showNoItems(String querry) {
@@ -131,8 +125,6 @@ public class CropsListFragment
     public void onReceiveCrops(List<LastCropPricesModel> cropsList, String query) {
 
         if (cropsList != null && mFragmentModel != null && query != null) {
-
-
             if (mFragmentModel.getType() == CropsListFragmentModel.TYPE
                     .FAVOURITES) {
                 List<LastCropPricesModel> favouritesList = new ArrayList<>();
@@ -140,18 +132,18 @@ public class CropsListFragment
                     if (item.isInFavorites)
                         favouritesList.add(item);
                 adapter.setDataList(generateCropsDataHolders(favouritesList));
-            } else
+            } else {
                 adapter.setDataList(generateCropsDataHolders(cropsList));
+            }
 
             adapter.notifyDataSetChanged();
 
+            if (cropsList.size() == 0) showNoItems(query);
+            else hideNoItems();
 
-            if (cropsList.size() == 0)
-                showNoItems(query);
-            else
-                hideNoItems();
-        } else
+        } else {
             showNoItems("");
+        }
 
     }
 

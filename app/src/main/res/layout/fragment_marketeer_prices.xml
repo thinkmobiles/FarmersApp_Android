@@ -37,7 +37,7 @@
                 />
     </LinearLayout>
     <TextView
-              android:id="@+id/tv_NoItemsBaseListFragment"
+              android:id="@+id/tv_NoItemsBaseListFragmentM"
               android:visibility="gone"
               android:gravity="center_horizontal"
               style="@style/TV_SearchHintListItemHistory"

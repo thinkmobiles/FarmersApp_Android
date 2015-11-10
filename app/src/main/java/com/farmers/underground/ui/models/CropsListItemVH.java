@@ -160,7 +160,7 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
                 tv_Price.setText(StringFormaterUtil.parsePrice(priceModel.price));
                 tv_Marketeer_CropItem.setText(priceModel.source.name);
 
-                tv_refreshDate.setVisibility(View.INVISIBLE); //don't show date here anyway
+                tv_refreshDate.setVisibility(View.GONE); //don't show date here anyway
 
 /*
                 try {
@@ -173,7 +173,7 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
 
             }
             if (i != 0) {
-                tv_refreshDate.setVisibility(View.INVISIBLE);
+                tv_refreshDate.setVisibility(View.GONE);
                 tv_refresh.setOnClickListener(null);
                 tv_refresh.setVisibility(View.INVISIBLE);
             }

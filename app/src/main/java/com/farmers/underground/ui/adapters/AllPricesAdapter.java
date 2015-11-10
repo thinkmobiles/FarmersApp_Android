@@ -4,10 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import com.farmers.underground.R;
-import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.remote.models.base.PriceBase;
 import com.farmers.underground.ui.models.AllPricesDH;
 import com.farmers.underground.ui.models.AllPricesVH;
@@ -45,8 +42,8 @@ public class AllPricesAdapter extends RecyclerView.Adapter<AllPricesVH> {
 
     @Override
     public void onBindViewHolder(AllPricesVH holder, int position) {
-        boolean hideDevider = position == getItemCount()-1;
-        holder.bindData(dataList.get(position), hideDevider);
+        boolean hideDivider = position == getItemCount()-1;
+        holder.bindData(dataList.get(position), hideDivider);
     }
 
     @Override
@@ -55,7 +52,6 @@ public class AllPricesAdapter extends RecyclerView.Adapter<AllPricesVH> {
     }
 
     public interface AllPricesCallback {
-        void onAllPricesItemClicked(LastCropPricesModel cropModel); // -> ? todo
         void onAddPricesClicked(String date);
         void onMorePricesClicked(PriceBase priceModel);
     }

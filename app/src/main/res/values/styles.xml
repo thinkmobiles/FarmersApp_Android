@@ -1,14 +1,18 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
+    <style name="_AppThemeBase" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--todo maybe -->
         <item name="colorPrimary">@color/aqua</item>
         <item name="colorPrimaryDark">@color/project_background_dark</item>
         <item name="colorAccent">@color/text_white</item>
         <item name="android:textColorPrimary">@color/text_white</item>
         <item name="android:textColorSecondary">@color/text_white</item>
         <item name="actionModeStyle">@style/LStyled.ActionMode</item>
+    </style>
+
+    <style name="AppTheme" parent="_AppThemeBase">
+        <!-- Customize your theme here. -->
     </style>
 
     <style name="Theme.AppCompat.Translucent" parent="Theme.AppCompat.Light.NoActionBar">

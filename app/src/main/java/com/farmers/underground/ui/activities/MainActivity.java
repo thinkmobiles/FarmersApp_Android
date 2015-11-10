@@ -454,7 +454,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     //view pager
     public void setViewPager(@Nullable String page) {
-        pagerAdapter = new ProjectPagerAdapter<>(getSupportFragmentManager());
+        pagerAdapter = new ProjectPagerAdapter<>(getFragmentManager());
         viewPager.setAdapter(pagerAdapter);
         pagerAdapter.setFragments(getFragmentList());
         pagerAdapter.setTitles(getTitlesList());
@@ -477,10 +477,15 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         return titles;
     }
 
+    private List<CropsListFragment> fragmentList = new ArrayList<>();
+
     private List<CropsListFragment> getFragmentList() {
-        List<CropsListFragment> fragmentList = new ArrayList<>();
-        fragmentList.add(createFaaFragment()); //MAIN_ACTIVITY_PAGE_FAV
-        fragmentList.add(createCropFragment());//MAIN_ACTIVITY_PAGE_ALL
+
+         if(fragmentList.isEmpty()){
+             fragmentList.add(createFaaFragment()); //MAIN_ACTIVITY_PAGE_FAV
+             fragmentList.add(createCropFragment());//MAIN_ACTIVITY_PAGE_ALL
+         }
+
         return fragmentList;
     }
 

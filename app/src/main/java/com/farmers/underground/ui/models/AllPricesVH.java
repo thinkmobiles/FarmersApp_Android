@@ -86,8 +86,8 @@ public class AllPricesVH extends RecyclerView.ViewHolder {
             devider.setVisibility(View.VISIBLE);
     }
 
-    private void setSource(View tvSourse, String nameSourse){
-        ((TextView) tvSourse).setText(nameSourse);
+    private void setSource(View tvSource, String nameSource){
+        ((TextView) tvSource).setText(nameSource);
     }
 
     private void setPrice(View tvPrice, Double price){

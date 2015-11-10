@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="_AppThemeBase">
+        <!-- Customize your theme here. -->
+        <item name="android:alertDialogTheme">@style/MyAlertDialogStyle</item>
+    </style>
+
+    <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/aqua</item>
+    </style>
+</resources>

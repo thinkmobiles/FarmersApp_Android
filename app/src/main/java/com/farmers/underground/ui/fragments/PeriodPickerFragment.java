@@ -124,7 +124,7 @@ public class PeriodPickerFragment extends BaseFragment<TransparentActivity> impl
 
     public void showDatePicker(){
         DatePickerDialog datePickerDialog =  new DatePickerDialog(
-                getContext(),
+                getHostActivity(),
                 this,
                 dateEnd.get(Calendar.YEAR),
                 dateEnd.get(Calendar.MONTH),

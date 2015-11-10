@@ -1,18 +1,14 @@
 package com.farmers.underground.ui.base;
 
 import android.os.Bundle;
-import android.content.Context;
-
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.support.annotation.LayoutRes;
 
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.LayoutInflater;
-import android.view.inputmethod.InputMethodManager;
 
 import com.farmers.underground.BuildConfig;
-import com.farmers.underground.R;
 
 /**
  * Created by tZpace

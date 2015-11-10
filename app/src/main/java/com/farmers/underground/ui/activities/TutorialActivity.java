@@ -54,7 +54,7 @@ public class TutorialActivity extends BaseActivity implements TutorialItemFragme
     }
 
     public void initPager() {
-        adapter = new ProjectPagerAdapter<>(getSupportFragmentManager());
+        adapter = new ProjectPagerAdapter<>(getFragmentManager());
         viewPager.setAdapter(adapter);
         adapter.setFragments(getFragmentList(getDataList()));
         adapter.notifyDataSetChanged();

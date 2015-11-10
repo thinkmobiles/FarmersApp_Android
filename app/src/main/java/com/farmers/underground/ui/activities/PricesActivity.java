@@ -179,7 +179,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     public void setViewPager() {
 
-        pagerAdapter = new ProjectPagerAdapter<>(getSupportFragmentManager());
+        pagerAdapter = new ProjectPagerAdapter<>(getFragmentManager());
         viewPager.setAdapter(pagerAdapter);
         pagerAdapter.setFragments(getFragmentList());
         pagerAdapter.setTitles(getTitlesList());
@@ -267,17 +267,14 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     // all prices fragment callbacks
     @Override
-    public void onAllPricesItemClicked(LastCropPricesModel cropModel) {
-        //hz
-    }
-
-    @Override
     public void onAddPricesClicked(String date) {
         AddPriceActivity.start(this, mCropModel, date);
     }
 
     @Override
     public void onMorePricesClicked(PriceBase priceBase) {
+        if(getCurrentFragment() !=null && getCurrentFragment() instanceof AllPricesFragment)
+            ((AllPricesFragment)getCurrentFragment()).setTypeRequestNothing();
         TransparentActivity.startWithFragment(this, MorePriecesDialogFragment.newInstanse(priceBase, mCropModel.displayName));
     }
 
@@ -549,6 +546,15 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     public void makeRequestGetPriceForPeriod(final CropAllPricesCallback callback) {
         makeRequestGetPriceForPeriod(mDateRange, callback);
     }
+
+    public void makeRequestGetPriceForPeriod(boolean isFull, final CropAllPricesCallback callback) {
+        if(isFull){
+            makeRequestGetPriceForPeriod(mFullRange, callback);
+        } else {
+            makeRequestGetPriceForPeriod(mDateRange, callback);
+        }
+    }
+
 
     public void makeRequestGetPriceForPeriodAddMonth(final CropAllPricesCallback callback) {
         prevMonth.set(Calendar.MONTH, prevMonth.get(Calendar.MONTH) - 1);

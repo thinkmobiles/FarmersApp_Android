@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -76,7 +76,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Nullable
     public Fragment getCurrentFragment() {
-        Fragment f = getSupportFragmentManager()
+        Fragment f = getFragmentManager()
                 .findFragmentById(getFragmentContainerId());
         return f != null && f.isAdded() ? f : null;
     }
@@ -97,7 +97,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         final String fragmentTag = ((Object) fragment).getClass().getName();
 
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
         if (add) {
             ft.add(getFragmentContainerId(), fragment, fragmentTag);
         } else {

@@ -1,7 +1,7 @@
 package com.farmers.underground.ui.adapters;
 
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.app.FragmentManager;
+import android.support.v13.app.FragmentPagerAdapter;
 import com.farmers.underground.ui.base.BaseFragment;
 
 import java.util.ArrayList;

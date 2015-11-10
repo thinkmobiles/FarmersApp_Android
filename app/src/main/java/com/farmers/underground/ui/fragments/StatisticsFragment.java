@@ -214,7 +214,7 @@ public class StatisticsFragment
 
         defChart();
         defRadioButtons();
-        tv_GraphDescription_SF.setText(getContext().getString(R.string.statistics_description_1));
+        tv_GraphDescription_SF.setText(getHostActivity().getString(R.string.statistics_description_1));
 
         setChartData(generateChartData());
     }
@@ -281,7 +281,7 @@ public class StatisticsFragment
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setSpaceBetweenLabels(0);
         xAxis.setDrawGridLines(false);
-        final Resources res = getContext().getResources();
+        final Resources res = getResources();
 
         YAxis y = mChart.getAxisLeft();
         y.setTypeface(TypefaceManager.getInstance().getArialBold());
@@ -334,7 +334,7 @@ public class StatisticsFragment
         }
         final BarDataSet set1 = new BarDataSet(yVals1, "Data Set");
 
-        set1.setColors(chartColor, getContext());
+        set1.setColors(chartColor, getHostActivity());
         set1.setDrawValues(false);
 
         ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
@@ -361,7 +361,7 @@ public class StatisticsFragment
     }
 
     private void showPopup(float touchX, float touchY, float value) {
-        final View popupView = LayoutInflater.from(getContext()).inflate(R.layout.statistic_popup, null, false);
+        final View popupView = LayoutInflater.from(getHostActivity()).inflate(R.layout.statistic_popup, null, false);
         final PopupWindow popupWindow = new PopupWindow(popupView,
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
