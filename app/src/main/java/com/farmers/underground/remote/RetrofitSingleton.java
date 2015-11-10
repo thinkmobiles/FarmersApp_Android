@@ -57,6 +57,7 @@ public class RetrofitSingleton {
 
         client.interceptors().add(new AddCookiesInterceptor());
         client.interceptors().add(new ReceivedCookiesInterceptor());
+
         /*OR try this
         CookieManager cookieManager = new CookieManager();
         cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);

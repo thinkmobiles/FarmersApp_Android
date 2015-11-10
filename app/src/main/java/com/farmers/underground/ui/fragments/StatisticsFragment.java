@@ -23,7 +23,6 @@ import com.farmers.underground.ui.custom_views.PriceView;
 import com.farmers.underground.ui.models.ChartDataModel;
 import com.farmers.underground.ui.models.DateRange;
 import com.farmers.underground.ui.utils.ResUtil;
-import com.farmers.underground.ui.utils.ResourceRetriever;
 import com.farmers.underground.ui.utils.TypefaceManager;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -500,7 +499,7 @@ public class StatisticsFragment
         priceView.tv_Marketeer_CropItem.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11F);
         priceView.tv_Marketeer_CropItem.setTypeface(TypefaceManager.getInstance().getArial());
     }
-    private void hightLightPriceView(PriceView priceView) {
+    private void heightLightPriceView(PriceView priceView) {
         priceView.tv_Price_Prefix.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18.6F);
         priceView.tv_Price_Prefix.setTypeface(TypefaceManager.getInstance().getArialBold());
 
@@ -511,11 +510,9 @@ public class StatisticsFragment
         priceView.tv_Marketeer_CropItem.setTypeface(TypefaceManager.getInstance().getArialBold());
     }
 
+    /** item = [0;8] */
     private void setItemHighlight(int item) {
-        //todo: set higlight here
-        //todo: items comming  in 3 sets LTR:  0-1-2,  3-4-5,  6-7-8
-
-        //test highlight
+        //remark: items coming  in 3 sets LTR:  0-1-2,  3-4-5,  6-7-8
         final PriceView priceView;
         switch (item){
             case 0:
@@ -534,14 +531,13 @@ public class StatisticsFragment
                 priceView = layout_market_two_SF;
                 break;
             default:
-                priceView=null;
                 return;
         }
 
         if(priceView==null)
             return;
 
-        hightLightPriceView(priceView);
+        heightLightPriceView(priceView);
 
         new Thread(new Runnable() {
             @Override
@@ -562,7 +558,6 @@ public class StatisticsFragment
                 }
             }
         }).start();
-
     }
 
     @Override

@@ -85,8 +85,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/default_divider_height"
         android:layout_alignRight="@+id/ll_PricesContainer_CropItem"
-        android:layout_below="@id/ll_DateHolder_AllPrices"
+        android:layout_below="@id/ll_PricesContainer_CropItem"
         android:layout_gravity="center_vertical"
-        android:layout_marginTop="@dimen/margin_default_normal"
-        android:background="@color/bg_grey_opaque" />
+
+        android:background="@color/bg_grey_opaque" /> <!-- android:layout_marginTop="@dimen/margin_default_normal"-->
 </RelativeLayout>

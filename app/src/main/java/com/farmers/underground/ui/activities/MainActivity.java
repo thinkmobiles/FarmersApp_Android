@@ -336,10 +336,12 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                 if (newText.length() > 0) newQuerry = newText.trim();
                 if (newQuerry.isEmpty()) {
                     searchHintController.setHinsList(SharedPrefHelper.getSearchHints());
+                    showHintList();
                     updateFragments(mCropList, query);
                     return false;
                 } else if (newQuerry.length() < 2) {
                     searchHintController.setHinsList(SharedPrefHelper.getSearchHints());
+                    showHintList();
                     updateFragments(mCropList, query);
                     return false;
                 } else {
@@ -357,6 +359,11 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                 return false;
             }
         });
+    }
+
+    private void showHintList(){
+        if (!searchHintController.isShowing())
+            searchHintController.show();
     }
 
     @Override

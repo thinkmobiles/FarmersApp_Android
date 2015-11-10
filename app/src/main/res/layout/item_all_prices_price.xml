@@ -45,6 +45,8 @@
         custom:customFont="regular" />
 
     <com.farmers.underground.ui.custom_views.CustomTextView
+
+        android:layout_marginBottom="@dimen/margin_default_normal"
         android:id="@+id/tv_RefresPrice_CropsItem"
         style="@style/TV_Small_CropsItem"
         android:layout_width="wrap_content"

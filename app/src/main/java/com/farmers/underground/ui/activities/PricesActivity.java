@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -571,10 +570,9 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
             mDateRange = dateRange;
             mFullRange = dateRange;
-        } else {
-            /*nothing now */
-        }
-
+        } /*else {
+            *//*nothing now *//*
+        }*/
 
         RetrofitSingleton.getInstance().getCropPricesForPeriod(dateRange.getDateFrom(), dateRange.getDateTo(),
                 mCropModel.displayName,
