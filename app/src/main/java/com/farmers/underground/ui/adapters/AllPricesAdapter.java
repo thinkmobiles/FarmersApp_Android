@@ -30,6 +30,7 @@ public class AllPricesAdapter extends RecyclerView.Adapter<AllPricesVH> {
     }
 
     public void addDataList(List<AllPricesDH> dataList) {
+        this.dataList.clear();
         this.dataList.addAll(dataList);
         notifyDataSetChanged();
     }

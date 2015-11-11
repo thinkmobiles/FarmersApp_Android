@@ -41,6 +41,7 @@ import com.farmers.underground.ui.adapters.ProjectPagerAdapter;
 import com.farmers.underground.ui.adapters.ToolbarSpinnerAdapter;
 import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.base.BaseFragment;
+import com.farmers.underground.ui.base.BasePagerPricesFragment;
 import com.farmers.underground.ui.custom_views.CustomSearchView;
 import com.farmers.underground.ui.dialogs.InviteDialogFragment;
 import com.farmers.underground.ui.dialogs.MorePriecesDialogFragment;
@@ -105,7 +106,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     protected Spinner spinner;
 
     private LastCropPricesModel mCropModel;
-    private ProjectPagerAdapter<BaseFragment<PricesActivity>> pagerAdapter;
+    private ProjectPagerAdapter<BasePagerPricesFragment> pagerAdapter;
 
     private boolean isVisibleBurger;
     private DateRange mDateRange, mFullRange;
@@ -167,7 +168,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     }
 
     private void getDataOnStart(Intent intent) {
-        Gson gson = new GsonBuilder().create();
+        final Gson gson = new GsonBuilder().create();
         mCropModel = gson.fromJson(intent.getStringExtra(ProjectConstants.KEY_DATA), LastCropPricesModel.class);
         if (mCropModel == null)
             throw new IllegalAccessError("Create this activity with start(Context, CropModel) " + "method only!");
@@ -175,20 +176,18 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
             ((TextView) mToolbar.findViewById(R.id.toolbar_title)).setText(mCropModel.displayName);
     }
 
-    //ViewPager
+    // ViewPager
 
     public void setViewPager() {
 
         pagerAdapter = new ProjectPagerAdapter<>(getFragmentManager());
         viewPager.setAdapter(pagerAdapter);
-        pagerAdapter.setFragments(getFragmentList());
+        pagerAdapter.setFragments(createFragmentList());
         pagerAdapter.setTitles(getTitlesList());
         pagerAdapter.notifyDataSetChanged();
         viewPager.setCurrentItem(pagerAdapter.getCount() - 1);
         isVisibleBurger = true;
 
-        //done in onResume
-        //viewPager.addOnPageChangeListener(pageChangeListener);
     }
 
     private ViewPager.OnPageChangeListener pageChangeListener  = new ViewPager.OnPageChangeListener() {
@@ -239,8 +238,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         return titles;
     }
 
-    private List<BaseFragment<PricesActivity>> getFragmentList() {
-        List<BaseFragment<PricesActivity>> fragmentList = new ArrayList<>();
+    private List<BasePagerPricesFragment> createFragmentList() {
+        List<BasePagerPricesFragment> fragmentList = new ArrayList<>();
 
         fragmentList.add(createStatisticsPricesFragment(mCropModel));
         fragmentList.add(createMarketeerPricesFragment(mCropModel));
@@ -268,13 +267,13 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     // all prices fragment callbacks
     @Override
     public void onAddPricesClicked(String date) {
+        pagerAdapter.getItem(viewPager.getCurrentItem()).setCurrentTypeRequest(BasePagerPricesFragment.TypeRequest.Refresh);
         AddPriceActivity.start(this, mCropModel, date);
     }
 
     @Override
     public void onMorePricesClicked(PriceBase priceBase) {
-        if(getCurrentFragment() !=null && getCurrentFragment() instanceof AllPricesFragment)
-            ((AllPricesFragment)getCurrentFragment()).setTypeRequestNothing();
+        pagerAdapter.getItem(viewPager.getCurrentItem()).setCurrentTypeRequest(BasePagerPricesFragment.TypeRequest.Nothing);
         TransparentActivity.startWithFragment(this, MorePriecesDialogFragment.newInstanse(priceBase, mCropModel.displayName));
     }
 
@@ -380,16 +379,18 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                     Bundle bundle = data.getExtras();
                     Calendar dateFrom = (Calendar) bundle.getSerializable(PeriodPickerFragment.KEY_DATE_FROM);
                     Calendar dateTo = (Calendar) bundle.getSerializable(PeriodPickerFragment.KEY_DATE_TO);
+
                     mDateRange = new DateRange();
                     mDateRange.setDateFrom(StringFormaterUtil.parseToServerResponse(dateFrom));
                     mDateRange.setDateTo(StringFormaterUtil.parseToServerResponse(dateTo));
-                    mFullRange = new DateRange();
-                    mFullRange.setDateFrom(StringFormaterUtil.parseToServerResponse(dateFrom));
-                    mFullRange.setDateTo(StringFormaterUtil.parseToServerResponse(dateTo));
-                    ((PricesActivity.DateRangeSetter) pagerAdapter.getItem(viewPager.getCurrentItem())).setDateRange(
-                            mDateRange,
-                            bundle.getBoolean(PeriodPickerFragment.KEY_ALL_TIME)
-                    );
+
+                    for (BasePagerPricesFragment basePagerPricesFragment : pagerAdapter.getFragmentList()) {
+
+                        basePagerPricesFragment.setCurrentTypeRequest(BasePagerPricesFragment.TypeRequest.Search);
+
+                        basePagerPricesFragment.setDateRange(mDateRange,
+                                bundle.getBoolean(PeriodPickerFragment.KEY_ALL_TIME));
+                    }
                     break;
                 case REQUEST_CODE_DIALOG_WHY:
                     onAddPricesClicked(StringFormaterUtil.parseToServerResponse(Calendar.getInstance()));
@@ -401,17 +402,17 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
 
     private void setUPSpinner(ArrayList<String> spinnerData, int selection) {
-        final ToolbarSpinnerAdapter spinnerAdatper = new ToolbarSpinnerAdapter(this,
+        final ToolbarSpinnerAdapter spinnerAdapter = new ToolbarSpinnerAdapter(this,
                 spinnerData);
 
-        spinner.setAdapter(spinnerAdatper);
+        spinner.setAdapter(spinnerAdapter);
         spinner.setSelection(selection);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 for (BaseFragment item : pagerAdapter.getFragmentList()) {
                     if (item instanceof ToolbarSpinnerAdapter.SpinnerCallback) {
-                        ((ToolbarSpinnerAdapter.SpinnerCallback) item).onSpinnerItemSelected(spinnerAdatper.getItem(i));
+                        ((ToolbarSpinnerAdapter.SpinnerCallback) item).onSpinnerItemSelected(spinnerAdapter.getItem(i));
                         break;
                     }
                 }
@@ -529,12 +530,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     public void onBackPressed() {
         if (drawerOpened && mDrawerLayout != null) {
             mDrawerLayout.closeDrawers();
-        }
-        /*else if ( ) {
-           //todo
-        }*/
-        else super.onBackPressed();
-
+        }   else super.onBackPressed();
     }
 
     /**
@@ -543,10 +539,6 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     private Calendar prevMonth;
 
-    public void makeRequestGetPriceForPeriod(final CropAllPricesCallback callback) {
-        makeRequestGetPriceForPeriod(mDateRange, callback);
-    }
-
     public void makeRequestGetPriceForPeriod(boolean isFull, final CropAllPricesCallback callback) {
         if(isFull){
             makeRequestGetPriceForPeriod(mFullRange, callback);
@@ -554,7 +546,6 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
             makeRequestGetPriceForPeriod(mDateRange, callback);
         }
     }
-
 
     public void makeRequestGetPriceForPeriodAddMonth(final CropAllPricesCallback callback) {
         prevMonth.set(Calendar.MONTH, prevMonth.get(Calendar.MONTH) - 1);
@@ -576,9 +567,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
             mDateRange = dateRange;
             mFullRange = dateRange;
-        } /*else {
-            *//*nothing now *//*
-        }*/
+        }
 
         RetrofitSingleton.getInstance().getCropPricesForPeriod(dateRange.getDateFrom(), dateRange.getDateTo(),
                 mCropModel.displayName,
@@ -587,14 +576,17 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                     public void onSuccess(List<PricesByDateModel> result) {
                         if (result != null && !result.isEmpty()) {
                             callback.onGetResult(result);
-                        } else
+                        } else {
                             if(BuildConfig.DEBUG)
                                 onError(new ErrorMsg("No More Prices Fetched"));
+                            callback.onError();
+                        }
                     }
 
                     @Override
                     public void onError(@NonNull ErrorMsg error) {
                         showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
+                        callback.onError();
                     }
                 }
         );
@@ -602,5 +594,6 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     public interface CropAllPricesCallback {
         void onGetResult(List<PricesByDateModel> result);
+        void onError(); //result is empty or network/server error
     }
 }

@@ -185,7 +185,7 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
     @SuppressWarnings("unused")
     @OnClick(R.id.cb_FavouriteCropsItem)
     protected void onFaveChecked() {
-        dateHolder.getCallback().onFavChecked(dateHolder.getModel(), cb_Fav.isChecked());
+        dateHolder.getCallback().onFavChecked(dateHolder.getModel(), cb_Fav);
     }
 
     @SuppressWarnings("unused")

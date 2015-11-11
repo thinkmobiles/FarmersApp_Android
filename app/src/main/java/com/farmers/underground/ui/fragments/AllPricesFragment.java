@@ -5,7 +5,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -15,7 +14,7 @@ import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.remote.models.PricesByDateModel;
 import com.farmers.underground.ui.activities.PricesActivity;
 import com.farmers.underground.ui.adapters.AllPricesAdapter;
-import com.farmers.underground.ui.base.BaseFragment;
+import com.farmers.underground.ui.base.BasePagerPricesFragment;
 import com.farmers.underground.ui.custom_views.CropsItemDivider;
 import com.farmers.underground.ui.models.AllPricesDH;
 import com.farmers.underground.ui.models.DateRange;
@@ -24,56 +23,62 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
  * Created by omar
  * on 10/9/15.
  */
-public class AllPricesFragment extends BaseFragment<PricesActivity>
-        implements PricesActivity.DateRangeSetter, PricesActivity.CropAllPricesCallback {
+public class AllPricesFragment extends BasePagerPricesFragment
+        implements PricesActivity.CropAllPricesCallback  {
 
     @Bind(R.id.rv_BaseListFragment)
     protected RecyclerView recyclerView;
 
-   /* @Bind(R.id.tv_NoItemsBaseListFragment)
+   /* no need it yet
+      @Bind(R.id.tv_NoItemsBaseListFragment)
       protected TextView tv_NoItems;  */
 
-    private enum TypeRequest{Refresh, Search, Add, Nothing}
+    /**  Used for preventing duplicate date items prices in list
+     * items order is saved;
+     * interesting thing, by the way */
+    LinkedHashMap<String,PricesByDateModel> pricesByDate = new LinkedHashMap<>();
+
     private AllPricesAdapter adapter;
     private LinearLayoutManager mLayoutManager;
-    private TypeRequest mTypeRequest;
 
     public static AllPricesFragment getInstance(LastCropPricesModel cropModel) {
-        Bundle args = new Bundle();
-        Gson gson = new GsonBuilder().create();
-        args.putString(ProjectConstants.KEY_DATA, gson.toJson(cropModel));
 
-        AllPricesFragment fragment = new AllPricesFragment();
+        final Bundle args = new Bundle();
+        final Gson gson = new GsonBuilder().create();
+        final AllPricesFragment fragment = new AllPricesFragment();
+
+        args.putString(ProjectConstants.KEY_DATA, gson.toJson(cropModel));
         fragment.setArguments(args);
+
         return fragment;
     }
 
+    /** RecyclerView Scroll: if true - load next month*/
     private boolean loading = true;
-    private  int pastVisiblyItems, visibleItemCount, totalItemCount;
+    /** RecyclerView Scroll*/
+    private int pastVisiblyItems, visibleItemCount, totalItemCount;
 
     private void setSettingRecycler(){
+
         mLayoutManager = new LinearLayoutManager(getHostActivity(), LinearLayoutManager.VERTICAL, false);
+        adapter = new AllPricesAdapter();
+
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new CropsItemDivider(ResourceRetriever.retrievePX(getHostActivity(), R.dimen.margin_default_normal)));
-        adapter = new AllPricesAdapter();
         recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-          /*  @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                if(mLayoutManager.findLastVisibleItemPosition() == adapter.getItemCount() - 2){
-                    addMonth();
-                }
-            }*/
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+
                 visibleItemCount = mLayoutManager.getChildCount();
                 totalItemCount = mLayoutManager.getItemCount();
                 pastVisiblyItems = mLayoutManager.findFirstVisibleItemPosition();
@@ -112,17 +117,22 @@ public class AllPricesFragment extends BaseFragment<PricesActivity>
     public void onResume() {
         super.onResume();
 
-        //test todo
-        if( mTypeRequest==null ||  mTypeRequest != TypeRequest.Nothing){
-            mTypeRequest = mTypeRequest != TypeRequest.Search ? TypeRequest.Refresh : TypeRequest.Search;
+        if(mTypeRequest == null) {
+            // load default (first month items)
+            getHostActivity().makeRequestGetPriceForPeriod(true, this);
+            mTypeRequest = TypeRequest.Add;
+
+        } else if (mTypeRequest != TypeRequest.Nothing) {
 
             if(mTypeRequest == TypeRequest.Refresh)
                 getHostActivity().makeRequestGetPriceForPeriod(true,this);
-            else
+            else if (mTypeRequest == TypeRequest.Search)
                 getHostActivity().makeRequestGetPriceForPeriod(false,this);
+
+        } else if (!pricesByDate.isEmpty()) {
+            adapter.setDataList(generateDH(new ArrayList<>(pricesByDate.values())));
         }
     }
-
 
     @Override
     protected int getLayoutResId() {
@@ -131,20 +141,48 @@ public class AllPricesFragment extends BaseFragment<PricesActivity>
 
     @Override
     public void setDateRange(DateRange dateRange, boolean isAllTime) {
-        mTypeRequest = isAllTime ? TypeRequest.Refresh : TypeRequest.Search;
-        //todo - test it  search request
-        getHostActivity().makeRequestGetPriceForPeriod(this);
+
+        /*allow or prevent loading more on scroll */
+        if (mTypeRequest == TypeRequest.Search){
+            loading = isAllTime;
+        } else if (mTypeRequest == TypeRequest.Add) {
+            loading = true;
+        }
+
     }
 
     @Override
     public void onGetResult(List<PricesByDateModel> result) {
-        if(mTypeRequest == TypeRequest.Nothing)  return;
-        else if(mTypeRequest == TypeRequest.Add)  adapter.addDataList(generateDH(result));
-        else adapter.setDataList(generateDH(result));
+
+        if(mTypeRequest == TypeRequest.Nothing) {
+            return;
+        } else if(mTypeRequest == TypeRequest.Add) {
+            adapter.addDataList(generateDH(updateCachedPrices(result,false)));
+        } else if(mTypeRequest == TypeRequest.Refresh) {
+            adapter.setDataList(generateDH(updateCachedPrices(result,true)));
+        } else if(mTypeRequest == TypeRequest.Search) {
+            adapter.setDataList(generateDH(updateCachedPrices(result,true)));
+        }
 
         setTypeRequestNothing();
 
-        loading = true;
+    }
+
+    @Override
+    public void onError() {
+        setTypeRequestNothing();
+        loading = false;
+    }
+
+    private List<PricesByDateModel> updateCachedPrices(List<PricesByDateModel> result, boolean doClear){
+        if (doClear)
+            pricesByDate.clear();
+
+        for (PricesByDateModel pricesByDateModel : result) {
+            pricesByDate.put(pricesByDateModel.prices.get(0).data,pricesByDateModel);
+        }
+
+        return new ArrayList<>(pricesByDate.values());
     }
 
     private List<AllPricesDH> generateDH(List<PricesByDateModel> result) {

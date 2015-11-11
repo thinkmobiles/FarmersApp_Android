@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 /**
  * List<PricesByDateModel> - will be prices by period
- * and PricesByDateModel - is one day item
+ * and PricesByDateModel - is one day item with prices for Marketer, PC, WH
  * */
 public class PricesByDateModel {
     public ArrayList<PriceBase> prices;

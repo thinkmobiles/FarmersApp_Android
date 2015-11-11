@@ -58,7 +58,7 @@ public class RetrofitSingleton {
         client.interceptors().add(new AddCookiesInterceptor());
         client.interceptors().add(new ReceivedCookiesInterceptor());
 
-        /*OR try this
+        /*OR try this later
         CookieManager cookieManager = new CookieManager();
         cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
         client.setCookieHandler(cookieManager);*/
@@ -101,7 +101,7 @@ public class RetrofitSingleton {
 
             @Override
             public void onFailure(Throwable t) {
-                callback.onError(new ErrorMsg("Network Error"));
+                callback.onError(new ErrorMsg("Network/Server Error"));
                 callback.anyway();
             }
         });
@@ -118,7 +118,7 @@ public class RetrofitSingleton {
 
             @Override
             public void onFailure(Throwable t) {
-                callback.onError(new ErrorMsg("Network Error"));
+                callback.onError(new ErrorMsg("Network/Server Error"));
                 callback.anyway();
             }
         });
@@ -134,7 +134,7 @@ public class RetrofitSingleton {
 
             @Override
             public void onFailure(Throwable t) {
-                callback.onError(new ErrorMsg("Network Error"));
+                callback.onError(new ErrorMsg("Network/Server Error"));
                 callback.anyway();
             }
         });
@@ -162,7 +162,7 @@ public class RetrofitSingleton {
 
             @Override
             public void onFailure(Throwable t) {
-                callback.onError(new ErrorMsg("Network Error"));
+                callback.onError(new ErrorMsg("Network/Server Error"));
                 callback.anyway();
             }
         });
@@ -178,7 +178,7 @@ public class RetrofitSingleton {
 
             @Override
             public void onFailure(Throwable t) {
-                callback.onError(new ErrorMsg("Unknown Error"));
+                callback.onError(new ErrorMsg("Network/Server Error"));
                 callback.anyway();
             }
         });
@@ -194,7 +194,7 @@ public class RetrofitSingleton {
 
             @Override
             public void onFailure(Throwable t) {
-                callback.onError(new ErrorMsg("Unknown Error"));
+                callback.onError(new ErrorMsg("Network/Server Error"));
                 callback.anyway();
             }
         });
@@ -225,7 +225,7 @@ public class RetrofitSingleton {
 
             @Override
             public void onFailure(Throwable t) {
-                callback.onError(new ErrorMsg("Network Error"));
+                callback.onError(new ErrorMsg("Network/Server Error"));
                 callback.anyway();
             }
 
@@ -243,7 +243,7 @@ public class RetrofitSingleton {
 
             @Override
             public void onFailure(Throwable t) {
-                callback.onError(new ErrorMsg("Network Error"));
+                callback.onError(new ErrorMsg("Network/Server Error"));
                 callback.anyway();
             }
         });
@@ -260,7 +260,7 @@ public class RetrofitSingleton {
 
             @Override
             public void onFailure(Throwable t) {
-                callback.onError(new ErrorMsg("Unknown Error"));
+                callback.onError(new ErrorMsg("Network/Server Error"));
                 callback.anyway();
             }
         });
@@ -278,7 +278,7 @@ public class RetrofitSingleton {
 
             @Override
             public void onFailure(Throwable t) {
-                callback.onError(new ErrorMsg("Unknown Error"));
+                callback.onError(new ErrorMsg("Network/Server Error"));
                 callback.anyway();
             }
         });
@@ -299,7 +299,7 @@ public class RetrofitSingleton {
                 //TODO
                 //do relogin maybe
 
-                callback.onError(new ErrorMsg("Unknown Error"));
+                callback.onError(new ErrorMsg("Network/Server Error"));
                 callback.anyway();
             }
         });
@@ -318,7 +318,7 @@ public class RetrofitSingleton {
 
             @Override
             public void onFailure(Throwable t) {
-                callback.onError(new ErrorMsg("Unknown Error"));
+                callback.onError(new ErrorMsg("Network/Server Error"));
                 callback.anyway();
             }
         });
@@ -336,7 +336,7 @@ public class RetrofitSingleton {
 
             @Override
             public void onFailure(Throwable t) {
-                callback.onError(new ErrorMsg("Unknown Error"));
+                callback.onError(new ErrorMsg("Network/Server Error"));
                 callback.anyway();
             }
         });
@@ -353,7 +353,7 @@ public class RetrofitSingleton {
 
             @Override
             public void onFailure(Throwable t) {
-                callback.onError(new ErrorMsg("Unknown Error"));
+                callback.onError(new ErrorMsg("Network/Server Error"));
                 callback.anyway();
             }
         });
@@ -371,7 +371,7 @@ public class RetrofitSingleton {
 
                 @Override
                 public void onFailure(Throwable t) {
-                    callback.onError(new ErrorMsg("Network Error"));
+                    callback.onError(new ErrorMsg("Network/Server Error"));
                     callback.anyway();
                 }
             });

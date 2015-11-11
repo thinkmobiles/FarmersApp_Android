@@ -20,6 +20,7 @@ import com.farmers.underground.ui.activities.PricesActivity;
 import com.farmers.underground.ui.activities.TransparentActivity;
 import com.farmers.underground.ui.adapters.MarketeerPricesAdapter;
 import com.farmers.underground.ui.base.BaseFragment;
+import com.farmers.underground.ui.base.BasePagerPricesFragment;
 import com.farmers.underground.ui.dialogs.CropQualitiesDialogFragment;
 import com.farmers.underground.ui.dialogs.WhyCanISeeThisPriceDialogFragment;
 import com.farmers.underground.ui.models.DateMarketeerPricesDH;
@@ -36,8 +37,7 @@ import java.util.List;
  * Created by omar
  * on 10/9/15.
  */
-public class MarketeerPricesFragment extends BaseFragment<PricesActivity>
-        implements PricesActivity.DateRangeSetter {
+public class MarketeerPricesFragment extends BasePagerPricesFragment {
 
     @Bind(R.id.rv_BaseListFragment)
     protected RecyclerView recyclerView;
@@ -69,30 +69,6 @@ public class MarketeerPricesFragment extends BaseFragment<PricesActivity>
         mCropModel = gson.fromJson(getArguments().getString(ProjectConstants.KEY_DATA), LastCropPricesModel.class);
         generateAdapterCB();
     }
-/*
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, v);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        */
-/**//*
-
-        adapter = new MarketeerPricesAdapter();
-        recyclerView.setAdapter(adapter);
-
-        final StickyRecyclerHeadersDecoration headersDecor = new StickyRecyclerHeadersDecoration(adapter);
-        recyclerView.addItemDecoration(headersDecor);
-        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onChanged() {
-                headersDecor.invalidateHeaders();
-            }
-        });
-        return v;
-    }
-*/
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -115,31 +91,14 @@ public class MarketeerPricesFragment extends BaseFragment<PricesActivity>
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
-    @Override
     protected int getLayoutResId() {
         return R.layout.fragment_marketeer_prices;
     }
 
-
-
     private List<PriceMarketeerPricesDH> generateDH(List<MarketeerPriceModel> cropModelList) {
         List<PriceMarketeerPricesDH> holders = new ArrayList<>();
         for (int i = 0; i < cropModelList.size(); i++) {
-           /* if (i == 0) holders.add(generateDateDH(cropModelList.get(i)));*/
-
             holders.add(generatePriceDH(cropModelList.get(i)));
-
-         /*   if (i > 0 && !equalsDate(cropModelList.get(i), cropModelList.get(i - 1)))
-                holders.add(generateDateDH(cropModelList.get(i)));*/
         }
         return holders;
     }
@@ -166,6 +125,7 @@ public class MarketeerPricesFragment extends BaseFragment<PricesActivity>
     }
 
 
+    /*todo remove later*/
     private List<MarketeerPriceModel> generateTestPriceList() {
         List<MarketeerPriceModel> priceModelList = new ArrayList<>();
         for (int i = 0; i < 5; i++) {

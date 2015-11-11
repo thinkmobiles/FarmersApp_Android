@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
@@ -22,6 +23,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+
+import com.farmers.underground.BuildConfig;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ApiConstants;
 import com.farmers.underground.config.ProjectConstants;
@@ -140,8 +143,18 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
 
     public void showDatePicker() {
         Calendar today = Calendar.getInstance();
-        new DatePickerDialog(this, this, today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH))
-                .show();
+        DatePickerDialog dpd;
+        if (Build.VERSION.SDK_INT >=21){
+            dpd = new DatePickerDialog(this,
+                    R.style.MyAlertDialogStyle,
+                    this, today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH));
+
+        } else {
+            dpd = new DatePickerDialog(this,
+                    this, today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH));
+        }
+        dpd.show();
+
     }
 
     @Override

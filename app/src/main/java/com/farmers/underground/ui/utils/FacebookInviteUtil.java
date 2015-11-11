@@ -15,16 +15,16 @@ import com.farmers.underground.ui.base.BaseActivity;
  */
 public class FacebookInviteUtil {
 
-    public static <A extends BaseActivity> void inviteFBpeopleMessage(A activity){
+    public static <A extends BaseActivity> void inviteFBpeopleMessage(A activity,String message){
         if (ShareDialog.canShow(ShareLinkContent.class)) {
             try {
                 PackageManager pm= activity.getPackageManager();
                 PackageInfo info = pm.getPackageInfo("com.facebook.katana", PackageManager.GET_META_DATA);
 
                 ShareLinkContent content = new ShareLinkContent.Builder()
-                        .setContentUrl(Uri.parse("https://developers.facebook.com"))
-                        .setContentTitle("Invitation to Farmers app")
-                        .setContentDescription("pls, join!!!")
+                        .setContentUrl(Uri.parse("https://developers.facebook.com")) //todo
+                        .setContentTitle("Invitation to Farmers App")
+                        .setContentDescription(message)
                         .build();
                 ShareDialog.show(activity, content);
             } catch (PackageManager.NameNotFoundException e) {

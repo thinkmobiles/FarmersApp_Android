@@ -40,17 +40,6 @@ public class TutorialItemFragment extends BaseFragment<TutorialActivity> {
         tutorialItemDataHolder = (TutorialItemDataHolder) getArguments().getSerializable(ProjectConstants.KEY_DATA);
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        callback = (Callback) context;
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        callback = null;
-    }
 
     @Override
     protected int getLayoutResId() {
@@ -61,8 +50,15 @@ public class TutorialItemFragment extends BaseFragment<TutorialActivity> {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+        callback = getHostActivity();
         setData();
         animateNextButton();
+    }
+
+    @Override
+    public void onDestroyView() {
+        callback = null;
+        super.onDestroyView();
     }
 
     private void setData() {

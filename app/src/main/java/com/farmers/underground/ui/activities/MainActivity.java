@@ -2,6 +2,7 @@ package com.farmers.underground.ui.activities;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,19 +10,24 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
+
 import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
@@ -42,7 +48,6 @@ import com.farmers.underground.ui.models.DrawerItem;
 import com.farmers.underground.ui.utils.*;
 
 import org.intellij.lang.annotations.MagicConstant;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +64,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     protected Toolbar mToolbar;
 
     @Bind(R.id.drawer_conainer_MainActivity)
-    protected DrawerLayout mDrawerlayout;
+    protected DrawerLayout mDrawerLayout;
 
     @Bind(R.id.lv_DrawerHolder_MainActivity)
     protected ListView lvDrawerContainer;
@@ -83,7 +88,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     protected View logoutView;
 
 
-    private SearchManager searchManager;
     private SearchHintController searchHintController;
     private ProjectPagerAdapter<CropsListFragment> pagerAdapter;
     private CropsListAdapter.CropsAdapterCallback cropsListCallback;
@@ -102,7 +106,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     }
 
     public static void startWithPageSelected(@NonNull Context context,
-            @MagicConstant(stringValues = {ProjectConstants.MAIN_ACTIVITY_PAGE_FAV, ProjectConstants.MAIN_ACTIVITY_PAGE_ALL}) final String pageSelected) {
+                                             @MagicConstant(stringValues = {ProjectConstants.MAIN_ACTIVITY_PAGE_FAV, ProjectConstants.MAIN_ACTIVITY_PAGE_ALL}) final String pageSelected) {
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra(ProjectConstants.KEY_START_MAIN_ACTIVITY_PAGE, pageSelected);
         context.startActivity(intent);
@@ -171,11 +175,9 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         return 0;
     }
 
-
     //crops list control
     private void getLastCrops() {
-        RetrofitSingleton.getInstance().getLastCropPricesList(new ACallback<List<LastCropPricesModel>, ErrorMsg>
-                () {
+        RetrofitSingleton.getInstance().getLastCropPricesList(new ACallback<List<LastCropPricesModel>, ErrorMsg>() {
             @Override
             public void onSuccess(List<LastCropPricesModel> result) {
                 mCropList = result;
@@ -184,10 +186,27 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
             @Override
             public void onError(@NonNull ErrorMsg error) {
-                showToast("BAD", Toast.LENGTH_SHORT);
+                showReloadDialogOnError(error);
+                //showToast("BAD", Toast.LENGTH_SHORT);
             }
         });
     }
+
+    private void showReloadDialogOnError(ErrorMsg error) {
+        //TODO
+        new AlertDialog.Builder(this)
+                .setTitle((TextUtils.isEmpty(error.getErrorMsg()) ? "Error" : error.getErrorMsg()))
+                .setMessage("Crops wasn't fetched.\nDo you want to reload list?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        getLastCrops();
+                    }
+                })
+                .setNegativeButton("No", null)
+                .create().show();
+    }
+
 
     private void updateFragments(List<LastCropPricesModel> cropList, String query) {
         for (BaseFragment f : pagerAdapter.getFragmentList()) {
@@ -232,8 +251,8 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
             }
 
             @Override
-            public void onFavChecked(final LastCropPricesModel cropModel, boolean isChecked) {
-                if (isChecked) {
+            public void onFavChecked(final LastCropPricesModel cropModel,final CheckBox checkBox) {
+                if (checkBox.isChecked()) {
                     showProgressDialog();
                     RetrofitSingleton.getInstance().addCropsToFavorites(cropModel.displayName, new ACallback<SuccessMsg,
                             ErrorMsg>() {
@@ -245,6 +264,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                         @Override
                         public void onError(@NonNull ErrorMsg error) {
                             showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
+                            checkBox.setChecked(checkBox.isChecked()); // do un-check
                         }
 
                         @Override
@@ -264,6 +284,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                         @Override
                         public void onError(@NonNull ErrorMsg error) {
                             showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
+                            checkBox.setChecked(checkBox.isChecked()); // do un-check
                         }
 
                         @Override
@@ -309,7 +330,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                 searchHintController.setQuerry(query);
             }
         };
-        searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setOnSearchClickListener(new View.OnClickListener() {
             @Override
@@ -332,20 +353,20 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
             @Override
             public boolean onQueryTextChange(final String newText) {
 
-                String newQuerry = "";
-                if (newText.length() > 0) newQuerry = newText.trim();
-                if (newQuerry.isEmpty()) {
+                String newQuery = "";
+                if (newText.length() > 0) newQuery = newText.trim();
+                if (newQuery.isEmpty()) {
                     searchHintController.setHinsList(SharedPrefHelper.getSearchHints());
                     showHintList();
                     updateFragments(mCropList, query);
                     return false;
-                } else if (newQuerry.length() < 2) {
+                } else if (newQuery.length() < 2) {
                     searchHintController.setHinsList(SharedPrefHelper.getSearchHints());
                     showHintList();
                     updateFragments(mCropList, query);
                     return false;
                 } else {
-                    generateQuerryList(newQuerry);
+                    generateQueryList(newQuery);
                     return false;
                 }
 
@@ -361,7 +382,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         });
     }
 
-    private void showHintList(){
+    private void showHintList() {
         if (!searchHintController.isShowing())
             searchHintController.show();
     }
@@ -384,13 +405,13 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     //drawer
     private void setDrawer() {
-        mDrawerlayout.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+        mDrawerLayout.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 /*lvDrawerContainer.bringToFront();*/
 
-                mDrawerlayout.requestLayout();
+                mDrawerLayout.requestLayout();
                 drawerOpened = true;
                 logoutView.bringToFront();
             }
@@ -404,10 +425,10 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     }
 
     private void openDrawer() {
-        if (mDrawerlayout.isDrawerOpen(fl_DrawerContainer)) {
-            mDrawerlayout.closeDrawer(fl_DrawerContainer);
+        if (mDrawerLayout.isDrawerOpen(fl_DrawerContainer)) {
+            mDrawerLayout.closeDrawer(fl_DrawerContainer);
         }
-        mDrawerlayout.openDrawer(fl_DrawerContainer);
+        mDrawerLayout.openDrawer(fl_DrawerContainer);
     }
 
     public void setDrawerList() {
@@ -421,19 +442,10 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_invite_friends, R.string.drawer_content_2));
         drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_favourites, R.string.drawer_content_3));
 
-
-        //FarmersApp.getInstance().getCurrentUser()!=null todo remove later (user cant be null here)
-        //FarmersApp.getInstance().getUserProfileAsync(null); - wtf
+        // (user cant be null here)
         final UserProfile user = FarmersApp.getInstance().getCurrentUser();
 
         FarmersApp.getInstance().getMarketerBySession(); //getting of target marketer
-
-        /*if (user != null && (!(user.hasMarketir() || user.isNewMarketeer()))) {
-            drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_invite_friends, R.string.drawer_content_5));
-        } else {
-
-        }*/
-
 
         if (user != null && !(user.hasMarketir() || user.isNewMarketeer())) {
             drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_plus, R.string.drawer_content_5));
@@ -481,10 +493,10 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     private List<CropsListFragment> getFragmentList() {
 
-         if(fragmentList.isEmpty()){
-             fragmentList.add(createFaaFragment()); //MAIN_ACTIVITY_PAGE_FAV
-             fragmentList.add(createCropFragment());//MAIN_ACTIVITY_PAGE_ALL
-         }
+        if (fragmentList.isEmpty()) {
+            fragmentList.add(createFaaFragment()); //MAIN_ACTIVITY_PAGE_FAV
+            fragmentList.add(createCropFragment());//MAIN_ACTIVITY_PAGE_ALL
+        }
 
         return fragmentList;
     }
@@ -558,7 +570,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                 finish();
                 break;
         }
-        mDrawerlayout.closeDrawers();
+        mDrawerLayout.closeDrawers();
     }
 
     @OnClick(R.id.searchView)
@@ -589,13 +601,13 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
             }
         });
 
-        mDrawerlayout.closeDrawers();
+        mDrawerLayout.closeDrawers();
     }
 
     @Override
     public void onBackPressed() {
         if (drawerOpened)
-            mDrawerlayout.closeDrawers();
+            mDrawerLayout.closeDrawers();
         else if (searchHintController.isShowing()) {
             hideSoftKeyboard();
             searchHintController.hide();
@@ -627,13 +639,13 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     }
 
 
-    private void updateFragmentsOnSearch(String newQuerry) {
-        searchResultProvider.loadSearchResults(newQuerry, mCropList);
+    private void updateFragmentsOnSearch(String newQuery) {
+        searchResultProvider.loadSearchResults(newQuery, mCropList);
     }
 
 
-    private void generateQuerryList(String newQuerry) {
-        searchResultProvider.loadSearchHints(newQuerry, mCropList);
+    private void generateQueryList(String newQuery) {
+        searchResultProvider.loadSearchHints(newQuery, mCropList);
     }
 
     @Override

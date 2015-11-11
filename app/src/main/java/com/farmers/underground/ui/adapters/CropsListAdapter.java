@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;/*
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;*/
+import android.widget.CheckBox;
+
 import com.farmers.underground.R;
 import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.ui.models.CropsListItemDH;
@@ -50,7 +52,7 @@ public class CropsListAdapter extends RecyclerView.Adapter<CropsListItemVH> {
     public interface CropsAdapterCallback {
         void onItemClicked(LastCropPricesModel cropModel);
 
-        void onFavChecked(LastCropPricesModel cropModel, boolean isChecked);
+        void onFavChecked(LastCropPricesModel cropModel, final CheckBox cb);
 
         void onPriceRefreshClicked(LastCropPricesModel cropModel);
     }

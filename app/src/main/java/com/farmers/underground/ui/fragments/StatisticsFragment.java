@@ -18,7 +18,7 @@ import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.ui.activities.PricesActivity;
 import com.farmers.underground.ui.adapters.ToolbarSpinnerAdapter;
-import com.farmers.underground.ui.base.BaseFragment;
+import com.farmers.underground.ui.base.BasePagerPricesFragment;
 import com.farmers.underground.ui.custom_views.PriceView;
 import com.farmers.underground.ui.models.ChartDataModel;
 import com.farmers.underground.ui.models.DateRange;
@@ -45,13 +45,8 @@ import java.util.List;
  * Created by omar
  * on 10/9/15.
  */
-public class StatisticsFragment
-        extends BaseFragment<PricesActivity>
-        implements PricesActivity.DateRangeSetter,
-        OnChartValueSelectedListener,
-        PricesActivity.PageListener,
-        ToolbarSpinnerAdapter.SpinnerCallback {
-
+public class StatisticsFragment extends BasePagerPricesFragment
+        implements OnChartValueSelectedListener,  PricesActivity.PageListener, ToolbarSpinnerAdapter.SpinnerCallback {
 
     //head block
     @Bind(R.id.tv_HeadTitle_SF)
