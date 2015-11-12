@@ -40,6 +40,9 @@ public class InviteDialogFragment extends BaseFragment<TransparentActivity> {
         "ההתנסות בחינם!\n" +
         "לחץ ותוריד\n"
 ;
+
+    private static final String TEXT_SUBJECT = "הזמנה ל\"העיקר האיכר\"";
+
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_dialog_invite;
@@ -55,7 +58,6 @@ public class InviteDialogFragment extends BaseFragment<TransparentActivity> {
     @OnClick(R.id.llSMS)
     protected void sendSMS(){
         Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-        //smsIntent.setType("vnd.android-dir/mms-sms");
         smsIntent.setData(Uri.parse("sms:"));
         smsIntent.putExtra("sms_body", TEXT_INVITE);
         try {
@@ -65,11 +67,12 @@ public class InviteDialogFragment extends BaseFragment<TransparentActivity> {
         }
     }
 
-    private void sendMail(){
+    @SuppressWarnings("unused")
+    @OnClick(R.id.llEmail)
+    protected void sendEmail(){
         Intent intent = new Intent(Intent.ACTION_SENDTO);
-        intent.putExtra(Intent.EXTRA_SUBJECT,/*getHostActivity().getString(R.string.invite_subject)*/ "Invitation to Farmers App");
-        intent.putExtra(Intent.EXTRA_TEXT, /*getHostActivity().getString(R.string.invite_text)*/
-                String.format(TEXT_INVITE_MAIL, FarmersApp.getInstance().getCurrentUser().getFullName()));
+        intent.putExtra(Intent.EXTRA_SUBJECT, TEXT_SUBJECT);
+        intent.putExtra(Intent.EXTRA_TEXT, String.format(TEXT_INVITE_MAIL, FarmersApp.getInstance().getCurrentUser().getFullName()));
 
         intent.setData(Uri.parse("mailto:"));
         try {
@@ -77,21 +80,6 @@ public class InviteDialogFragment extends BaseFragment<TransparentActivity> {
         } catch (ActivityNotFoundException e) {
             getHostActivity().showToast("There are no email clients installed.", Toast.LENGTH_SHORT);
         }
-    }
-
-    @SuppressWarnings("unused")
-    @OnClick(R.id.llEmail)
-    protected void sendEmail(){
-       /* Intent mailer = new Intent(Intent.ACTION_SEND);
-        mailer.setType("message/rfc822");
-        mailer.putExtra(Intent.EXTRA_TEXT, TEXT_INVITE);
-        try {
-                 getHostActivity().startActivity(Intent.createChooser(mailer, "Send"));
-        } catch (ActivityNotFoundException e) {
-            getHostActivity().showToast("There are no email clients installed.", Toast.LENGTH_SHORT);
-        }*/
-
-        sendMail();
     }
 
     @SuppressWarnings("unused")

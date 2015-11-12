@@ -11,27 +11,16 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ApiConstants;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.remote.models.base.PriceBase;
+import com.farmers.underground.ui.adapters.CropsListAdapter;
 import com.farmers.underground.ui.utils.DateHelper;
-import com.farmers.underground.ui.utils.ImageCacheManager;
 import com.farmers.underground.ui.utils.StringFormaterUtil;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
-
-//import android.graphics.Bitmap;
-//import com.squareup.picasso.Picasso;
-//import android.view.ViewTreeObserver;
-//import com.farmers.underground.ui.utils.PicassoHelper;
-//import com.farmers.underground.BuildConfig;
-
 
 /**
  * Created by omar
@@ -63,25 +52,13 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
     @Bind(R.id.crops_item_view)
     protected CardView container;
 
-    public CardView getContainer() {
+    /*public CardView getContainer() {
         return container;
-    }
-
-
-//    static int width = 0;
-
-
-    private final ImageLoader imageLoader = ImageCacheManager.getImageLoader(FarmersApp.ImageLoaders.CACHE_MAIN);
-
+    }*/
 
     private CropsListItemDH dateHolder;
 
-//    private LastCropPricesModel model;
-//    private DateHelper dateHelper;
-//    private SimpleDateFormat format;
-
     float radius;
-
 
     public CropsListItemVH(final View itemView) {
         super(itemView);
@@ -97,11 +74,11 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
 
         tv_CropsName.setText(model.displayName);
 
-        String fulldate = model.prices.get(0).data;
+        String fullDate = model.prices.get(0).data;
 
         SimpleDateFormat format = new SimpleDateFormat(ProjectConstants.SERVER_DATE_FORMAT, Locale.getDefault());
         try {
-            long time = format.parse(fulldate).getTime();
+            long time = format.parse(fullDate).getTime();
             String[] date = dateHelper.getDate(time);
             tv_Number.setText(date[0]);
             tv_MonthWord.setText(date[1]);
@@ -115,36 +92,7 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
 
         final String url = !TextUtils.isEmpty(dateHolder.getModel().image) ? ApiConstants.BASE_URL + dateHolder.getModel().image : null;
 
-//        if (url != null) {
-//
-            imageLoader.displayImage(url, iv_CropsImage);
-//
-//            if (width == 0)
-//                iv_CropsImage.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-//                    @Override
-//                    public boolean onPreDraw() {
-//                        PicassoHelper.getPicasso(iv_CropsImage.getContext())
-//                                    .load(url)
-//                                    .config(Bitmap.Config.RGB_565)
-//                                    .resize(iv_CropsImage.getMeasuredWidth(), iv_CropsImage.getMeasuredWidth())
-//                                    .centerInside()
-//                                    .placeholder(R.drawable.ic_drawer_crops)
-//                                    .error(R.drawable.ic_drawer_crops)
-//                                    .into(iv_CropsImage); //todo error
-//                        width = iv_CropsImage.getMeasuredWidth();
-//                         iv_CropsImage.getViewTreeObserver().removeOnPreDrawListener(this);
-//                        return false;
-//                    }
-//                });
-//            else
-//                PicassoHelper.getPicasso(iv_CropsImage.getContext())
-//                        .load(url)
-//                        .config(Bitmap.Config.RGB_565)
-//                        .resize(width, width).centerInside()
-//                        .placeholder(R.drawable.ic_drawer_crops)
-//                        .error(R.drawable.ic_drawer_crops)
-//                        .into(iv_CropsImage); //todo error
-//        }
+        CropsListAdapter.getImageLoader().displayImage(url, iv_CropsImage);
 
         for (int i = 0; i < ll_PriceContainer.getChildCount(); i++) {
             TextView tv_refreshDate = (TextView) ll_PriceContainer.getChildAt(i).findViewById(R.id.tv_PriceDate_CropItem);
@@ -160,17 +108,7 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
                 tv_Price.setText(StringFormaterUtil.parsePrice(priceModel.price));
                 tv_Marketeer_CropItem.setText(priceModel.source.name);
 
-                tv_refreshDate.setVisibility(View.GONE); //don't show date here anyway
-
-/*
-                try {
-                    long time = format.parse(priceModel.data).getTime();
-                    tv_refreshDate.setText(DateFormat.getDateInstance(DateFormat.SHORT).format(time));
-                } catch (ParseException e) {
-                    tv_refreshDate.setVisibility(View.INVISIBLE);
-                }
-*/
-
+                tv_refreshDate.setVisibility(View.GONE);
             }
             if (i != 0) {
                 tv_refreshDate.setVisibility(View.GONE);

@@ -24,7 +24,7 @@ import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-import com.farmers.underground.BuildConfig;
+import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ApiConstants;
 import com.farmers.underground.config.ProjectConstants;
@@ -37,18 +37,19 @@ import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.fragments.AddPriceFragment;
 import com.farmers.underground.ui.utils.DateHelper;
+import com.farmers.underground.ui.utils.ImageCacheManager;
 import com.farmers.underground.ui.utils.PicassoHelper;
 import com.farmers.underground.ui.utils.ResUtil;
 import com.farmers.underground.ui.utils.StringFormaterUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import butterknife.OnClick;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
-import java.text.DateFormat;
 import java.util.Calendar;
 
 /**

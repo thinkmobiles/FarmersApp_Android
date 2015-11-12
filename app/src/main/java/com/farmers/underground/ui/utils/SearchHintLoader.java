@@ -32,13 +32,9 @@ public class SearchHintLoader extends AsyncTaskLoader<List<SearchHint>> {
         List<SearchHint> newHintList = new ArrayList<>();
 
         for (LastCropPricesModel item : mCropList) {
-            if (BuildConfig.DEBUG) {
-                if (item.englishName.toLowerCase().contains(newQuerry.toLowerCase()))
-                    newHintList.add(new SearchHint(item.englishName, SearchHint.HintType.FROM_CROPS_LIST));
-            } else {
-                if (item.displayName.toLowerCase().contains(newQuerry.toLowerCase()))
-                    newHintList.add(new SearchHint(item.displayName, SearchHint.HintType.FROM_CROPS_LIST));
-            }
+            if (item.displayName.toLowerCase().contains(newQuerry.toLowerCase()))
+                newHintList.add(new SearchHint(item.displayName, SearchHint.HintType.FROM_CROPS_LIST));
+
         }
         return newHintList;
     }

@@ -32,16 +32,16 @@ public class SearchResultLoader extends AsyncTaskLoader<List<LastCropPricesModel
         List<LastCropPricesModel> searchResult = new ArrayList<>();
 
         for (LastCropPricesModel item : mCropList){
-            if (BuildConfig.DEBUG){
+           /* if (BuildConfig.DEBUG){
                 if (item.englishName.toLowerCase().contains(newQuerry.toLowerCase()))
                     searchResult.add(item);
-            } else if (BuildConfig.PRODUCTION) {
+            } else if (BuildConfig.PRODUCTION) {*/
                 if (item.displayName.toLowerCase().contains(newQuerry.toLowerCase()))
                     searchResult.add(item);
-            } else {
+            /*} else {
                 if (item.displayName.toLowerCase().contains(newQuerry.toLowerCase()) || item.englishName.toLowerCase().contains(newQuerry.toLowerCase()))
                     searchResult.add(item);
-            }
+            }*/
         }
 
         return searchResult;

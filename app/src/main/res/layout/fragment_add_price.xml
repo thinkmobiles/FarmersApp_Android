@@ -153,7 +153,7 @@
                         android:layout_marginBottom="@dimen/margin_default_tiny"
                         android:layout_marginTop="@dimen/margin_default_tiny"
                         android:background="@color/grey" />
-
+pic
                     <com.farmers.underground.ui.custom_views.CustomTextView
                         android:id="@+id/tvHintQuality_FAP"
                         style="@style/WhiteSmallRegularText"

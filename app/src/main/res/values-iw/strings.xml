@@ -92,7 +92,7 @@
     <string name="add_price_incorrect_price">מחיר לא תקין</string>
     <string name="add_price_example_type">דוגמה: איכות יצוא‬</string>
     <string name="add_price_add_button">‫הוסף‬</string>
-    <string name="add_price_add_type">+ לחץ כאן כדי להוסיף עוד קטגוריה</string>
+    <string name="add_price_add_type">+ לחץ כאן כדי להוסיף עוד קטגוריה\n(תאריך לאותו גידול אותו של)</string>
     <!--prices activity-->
     <string name="prices_activity_tab1">סטטיסטיקות</string>
     <string name="prices_activity_tab2">מחירי משווקים</string>

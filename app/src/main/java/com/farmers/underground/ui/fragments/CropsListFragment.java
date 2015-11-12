@@ -1,19 +1,15 @@
 package com.farmers.underground.ui.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.LastCropPricesModel;
-import com.farmers.underground.ui.activities.FragmentViewsCreatedCallback;
 import com.farmers.underground.ui.activities.MainActivity;
 import com.farmers.underground.ui.adapters.CropsListAdapter;
 import com.farmers.underground.ui.base.BaseFragment;
@@ -41,16 +37,14 @@ public class CropsListFragment
 
     private CropsListFragmentModel mFragmentModel;
     private CropsListAdapter adapter;
-  /*  private FragmentViewsCreatedCallback stateCallback;*/
+
     private CropsListAdapter.CropsAdapterCallback listCallback;
 
     @Override
     public void onDetach() {
         super.onDetach();
-        /*stateCallback = null;*/
         listCallback = null;
     }
-
 
     public static CropsListFragment getInstance(CropsListFragmentModel.TYPE type) {
         CropsListFragmentModel fragmentModel = new CropsListFragmentModel(type);
@@ -66,16 +60,6 @@ public class CropsListFragment
         return R.layout.fragment_base_list;
     }
 
-  /*  @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, v);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.addItemDecoration(new CropsItemDivider(ResourceRetriever.retrievePX(getContext(), R.dimen
-                .crops_card_layout_margin)));
-        return v;
-    }
-*/
     @Override
     public void onDestroyView() {
         getHostActivity().onFragmentViewDestroyed();
@@ -99,11 +83,11 @@ public class CropsListFragment
         getHostActivity().onFragmentViewCreated();
     }
 
-    private void showNoItems(String querry) {
+    private void showNoItems(String query) {
         tv_NoItems.setVisibility(View.VISIBLE);
         String itemsText;
 
-        itemsText = getActivity().getString(R.string.no_crops_found) + querry;
+        itemsText = getActivity().getString(R.string.no_crops_found) + query;
 
         tv_NoItems.setText(itemsText);
     }

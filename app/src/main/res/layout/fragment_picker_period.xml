@@ -62,7 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/WhiteRegularText"
-        android:text="All Time"
+        android:text="התאריכים לכל"
         android:textSize="@dimen/period_picker_date_text_size"
         android:layout_marginTop="30dp"
         android:id="@+id/tvAllTime"

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -96,7 +97,7 @@ public class FarmersApp extends Application {
     public static final class ImageLoaders implements ImageCacheManager.ImageLoaderCallbacks {
 
         public static final int CACHE_MAIN = 0;
-//        public static final int CACHE_ROUND = 1;
+/*        public static final int CACHE_ROUND = 1;*/
 
         private final Context context;
 
@@ -112,16 +113,17 @@ public class FarmersApp extends Application {
                 .showImageOnFail(R.drawable.ic_drawer_crops)
                 .imageScaleType(ImageScaleType.IN_SAMPLE_POWER_OF_2)
                 .resetViewBeforeLoading(true)
+                .bitmapConfig(Bitmap.Config.RGB_565)
                 .cacheOnDisk(true);
 
 //        public static DisplayImageOptions.Builder getCacheRoundPic = new DisplayImageOptions.Builder()
 //                .cacheInMemory(true)
-//                .displayer(new RoundedBitmapDisplayer(50))
+//                .displayer( new RoundedBitmapDisplayer(10))
 //                .showImageForEmptyUri(R.drawable.ic_drawer_crops)
 //                .showImageOnLoading(R.drawable.ic_drawer_crops)
 //                .showImageOnFail(R.drawable.ic_drawer_crops)
 //                .imageScaleType(ImageScaleType.IN_SAMPLE_POWER_OF_2)
-//                .resetViewBeforeLoading(true)
+//                .resetViewBeforeLoading(false)
 //                .cacheOnDisk(true);
 
         @NotNull
@@ -132,9 +134,9 @@ public class FarmersApp extends Application {
                 case CACHE_MAIN:
                     imageLoader = getCacheMain();
                     break;
-//                case CACHE_ROUND:
-//                imageLoader = getCacheRoundPic();
-//                    break;
+            /*    case CACHE_ROUND:
+                imageLoader = getCacheRoundPic();
+                    break;*/
                 //todo paste case here if need some more caches
                 default:
                     throw new Error("Bad loader id!");
