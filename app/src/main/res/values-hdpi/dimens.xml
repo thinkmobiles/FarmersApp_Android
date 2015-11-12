@@ -46,4 +46,6 @@
     <dimen name="stat_price_name_text_size_small">12sp</dimen>
     <dimen name="stat_price_name_text_size_big">15.9sp</dimen>
     <dimen name="stat_price_name_month">33sp</dimen>
+
+    <dimen name="login_margin_top_header">35dp</dimen>
 </resources>

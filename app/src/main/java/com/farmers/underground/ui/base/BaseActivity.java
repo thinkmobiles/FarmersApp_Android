@@ -67,7 +67,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void popBackStackUpTo(@Nullable Class<? extends BaseFragment<?>> fragmentClass, int flags) {
-        getSupportFragmentManager().popBackStackImmediate(fragmentClass != null ? fragmentClass.getName() : null, flags);
+        getFragmentManager().popBackStackImmediate(fragmentClass != null ? fragmentClass.getName() : null, flags);
     }
 
     public void popBackStackUpTo(@Nullable Class<? extends BaseFragment<?>> fragmentClass) {

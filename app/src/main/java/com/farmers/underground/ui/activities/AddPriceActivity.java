@@ -6,15 +6,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
@@ -38,17 +35,14 @@ import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.fragments.AddPriceFragment;
 import com.farmers.underground.ui.utils.DateHelper;
 import com.farmers.underground.ui.utils.ImageCacheManager;
-import com.farmers.underground.ui.utils.PicassoHelper;
 import com.farmers.underground.ui.utils.ResUtil;
 import com.farmers.underground.ui.utils.StringFormaterUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import butterknife.OnClick;
-import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 import java.util.Calendar;
 
@@ -61,8 +55,14 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
     @Bind(R.id.action_done)
     protected ImageView buttonDone;
 
+    @Bind(R.id.action_icon)
+    protected ImageView iconCrop;
+
     @Bind(R.id.toolbar)
     protected Toolbar toolbar;
+
+    private static final ImageLoader imageLoaderRound = ImageCacheManager.getImageLoader(FarmersApp.ImageLoaders.CACHE_ROUND);
+
 
     private Calendar today = Calendar.getInstance();
     private Calendar selectedDate = Calendar.getInstance();
@@ -125,6 +125,21 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
         switchFragment(new AddPriceFragment(), false);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        final String url = !TextUtils.isEmpty(mCropModel.image) ? ApiConstants.BASE_URL + mCropModel.image : null;
+
+        imageLoaderRound.displayImage(url, iconCrop, new SimpleImageLoadingListener() {
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                super.onLoadingComplete(imageUri, view, loadedImage);
+                iconCrop.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
     private void setData(){
         Gson gson = new GsonBuilder().create();
         mCropModel = gson.fromJson(getIntent().getStringExtra(ProjectConstants.KEY_DATA), LastCropPricesModel.class);
@@ -183,49 +198,12 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
 
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         menu.findItem(R.id.action_back).setVisible(true);
         menu.findItem(R.id.action_burger).setVisible(false);
-        menu.findItem(R.id.action_icon).setVisible(true);
-        final MenuItem icon = menu.findItem(R.id.action_icon);
-
-        Target target = new Target() {
-            @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                icon.setIcon(new BitmapDrawable(getResources(),bitmap));
-
-            }
-
-            @Override
-            public void onBitmapFailed(Drawable errorDrawable) {
-
-            }
-
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-            }
-        };
-
-        final String url = !TextUtils.isEmpty(mCropModel.image) ? ApiConstants.BASE_URL + mCropModel.image : null;
-        if (url != null)
-
-            PicassoHelper.getPicasso(this)
-                    .load(url)
-                    .config(Bitmap.Config.RGB_565)
-                    .transform(new CropCircleTransformation())
-                    .placeholder(R.drawable.ic_drawer_crops)
-                    .error(R.drawable.ic_drawer_crops)
-                    .into(target);
-
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_main, menu);
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
 
     @Override

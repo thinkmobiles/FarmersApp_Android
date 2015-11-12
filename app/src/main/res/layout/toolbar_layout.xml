@@ -24,6 +24,7 @@
         android:visibility="gone" />
 
     <ImageView
+        android:contentDescription="@null"
         android:id="@+id/action_calendar"
         android:layout_width="wrap_content"
         android:layout_height="?actionBarSize"
@@ -33,12 +34,25 @@
         android:visibility="gone" />
 
     <ImageView
+        android:contentDescription="@null"
         android:id="@+id/action_done"
         android:layout_width="wrap_content"
         android:layout_height="?actionBarSize"
         android:layout_gravity="left"
         android:clickable="true"
         android:src="@drawable/ic_done_noactive"
+        android:visibility="gone" />
+
+    <ImageView
+        android:contentDescription="@null"
+        android:id="@+id/action_icon"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_gravity="right"
+        android:layout_marginLeft="6dp"
+        android:scaleType="centerCrop"
+        android:clickable="false"
+        android:src="@null"
         android:visibility="gone" />
 
     <com.farmers.underground.ui.custom_views.CustomTextView
@@ -52,6 +66,7 @@
         android:textColor="#fff"
         android:textSize="@dimen/toolbar_text_size"
         custom:customFont="bold" />
+
 
 
 </android.support.v7.widget.Toolbar>

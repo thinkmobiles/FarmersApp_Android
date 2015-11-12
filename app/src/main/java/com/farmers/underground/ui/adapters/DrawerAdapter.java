@@ -2,16 +2,22 @@ package com.farmers.underground.ui.adapters;
 
 import android.content.Context;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
 import com.farmers.underground.ui.models.DrawerItem;
-import com.squareup.picasso.Picasso;
-import jp.wasabeef.picasso.transformations.CropCircleTransformation;
+import com.farmers.underground.ui.utils.ImageCacheManager;
+import com.farmers.underground.ui.utils.ResUtil;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.List;
 
@@ -25,6 +31,8 @@ public class DrawerAdapter extends BaseAdapter implements View.OnClickListener {
     private List<DrawerItem> mListItems;
     private DrawerCallback drawerCallback;
 
+
+    private static final ImageLoader imageLoaderRound = ImageCacheManager.getImageLoader(FarmersApp.ImageLoaders.CACHE_ROUND);
 
     public DrawerAdapter(List<DrawerItem> mListItems, Context mContext) {
         this.mContext = mContext;
@@ -90,12 +98,17 @@ public class DrawerAdapter extends BaseAdapter implements View.OnClickListener {
         viewHolder.ivContentIcon.setTag(position);
         viewHolder.ivContentIcon.setOnClickListener(this);
 
-        Picasso.with(mContext)
-                .load(Uri.parse(getItem(position).iconPath))
-                .transform(new CropCircleTransformation())
-                .placeholder(R.drawable.user_oval)
-                .error(R.drawable.user_oval)
-                .into(viewHolder.ivUserIcon);
+        final String url = String.valueOf(Uri.parse(getItem(position).iconPath));
+
+        if (!TextUtils.isEmpty(url))
+        imageLoaderRound.displayImage(url, viewHolder.ivUserIcon, new SimpleImageLoadingListener(){
+            @Override
+            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                super.onLoadingFailed(imageUri, view, failReason);
+                viewHolder.ivUserIcon.setImageDrawable(ResUtil.getDrawable(view.getContext().getResources(), R.drawable.user_oval));
+            }
+        });
+
         return view;
     }
 

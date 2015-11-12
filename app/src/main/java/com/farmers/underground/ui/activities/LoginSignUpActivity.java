@@ -255,7 +255,7 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
                 .setPositiveButton(getString(R.string.dialog_btn_understood), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        getSupportFragmentManager().popBackStackImmediate();
+                        getFragmentManager().popBackStackImmediate();
                         dialog.dismiss();
                     }
                 })

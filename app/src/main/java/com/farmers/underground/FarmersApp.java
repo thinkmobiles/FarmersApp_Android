@@ -26,6 +26,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 
 import org.jetbrains.annotations.NotNull;
@@ -97,7 +98,7 @@ public class FarmersApp extends Application {
     public static final class ImageLoaders implements ImageCacheManager.ImageLoaderCallbacks {
 
         public static final int CACHE_MAIN = 0;
-/*        public static final int CACHE_ROUND = 1;*/
+        public static final int CACHE_ROUND = 1;
 
         private final Context context;
 
@@ -116,15 +117,15 @@ public class FarmersApp extends Application {
                 .bitmapConfig(Bitmap.Config.RGB_565)
                 .cacheOnDisk(true);
 
-//        public static DisplayImageOptions.Builder getCacheRoundPic = new DisplayImageOptions.Builder()
-//                .cacheInMemory(true)
-//                .displayer( new RoundedBitmapDisplayer(10))
-//                .showImageForEmptyUri(R.drawable.ic_drawer_crops)
-//                .showImageOnLoading(R.drawable.ic_drawer_crops)
-//                .showImageOnFail(R.drawable.ic_drawer_crops)
-//                .imageScaleType(ImageScaleType.IN_SAMPLE_POWER_OF_2)
-//                .resetViewBeforeLoading(false)
-//                .cacheOnDisk(true);
+        public static DisplayImageOptions.Builder getCacheRoundPic = new DisplayImageOptions.Builder()
+                .cacheInMemory(true)
+                .displayer( new RoundedBitmapDisplayer(100))
+                .showImageForEmptyUri(R.drawable.ic_drawer_crops)
+                .showImageOnLoading(R.drawable.ic_drawer_crops)
+                .showImageOnFail(R.drawable.ic_drawer_crops)
+                .imageScaleType(ImageScaleType.IN_SAMPLE_POWER_OF_2)
+                .resetViewBeforeLoading(false)
+                .cacheOnDisk(true);
 
         @NotNull
         @Override
@@ -134,9 +135,9 @@ public class FarmersApp extends Application {
                 case CACHE_MAIN:
                     imageLoader = getCacheMain();
                     break;
-            /*    case CACHE_ROUND:
+                case CACHE_ROUND:
                 imageLoader = getCacheRoundPic();
-                    break;*/
+                    break;
                 //todo paste case here if need some more caches
                 default:
                     throw new Error("Bad loader id!");
@@ -159,21 +160,21 @@ public class FarmersApp extends Application {
             return new Im();
         }
 
-//        private ImageLoader getCacheRoundPic() {
-//            ImageLoader
-//                    imageLoader = newInstance();
-//            checkInit(imageLoader);
-//            imageLoader.init(
-//                    new ImageLoaderConfiguration.Builder(context)
-//                            .defaultDisplayImageOptions(getCacheRoundPic.build())
-//                            .denyCacheImageMultipleSizesInMemory()
-//                            .memoryCacheSizePercentage(5)
-//                            .build());
-//
-//            imageLoader.handleSlowNetwork(true);
-//
-//            return imageLoader;
-//        }
+        private ImageLoader getCacheRoundPic() {
+            ImageLoader
+                    imageLoader = newInstance();
+            checkInit(imageLoader);
+            imageLoader.init(
+                    new ImageLoaderConfiguration.Builder(context)
+                            .defaultDisplayImageOptions(getCacheRoundPic.build())
+                            .denyCacheImageMultipleSizesInMemory()
+                            .memoryCacheSizePercentage(5)
+                            .build());
+
+            imageLoader.handleSlowNetwork(true);
+
+            return imageLoader;
+        }
 
         private ImageLoader getCacheMain() {
             ImageLoader
@@ -182,8 +183,6 @@ public class FarmersApp extends Application {
             imageLoader.init(
                     new ImageLoaderConfiguration.Builder(context)
                             .defaultDisplayImageOptions(getCacheMain.build())
-                                    //  .imageDownloader(new BaseImageDownloader(context))
-                                    //  .imageDecoder(new BaseImageDecoder(BuildConfig.DEBUG))
                             .denyCacheImageMultipleSizesInMemory()
                             .memoryCacheSizePercentage(10)
                             .build());

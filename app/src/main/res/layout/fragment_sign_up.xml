@@ -26,6 +26,7 @@
                 style="@style/WhiteMainRegularText"/>
 
             <ImageView
+                android:contentDescription="@null"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/sign_up_arrow_padding"

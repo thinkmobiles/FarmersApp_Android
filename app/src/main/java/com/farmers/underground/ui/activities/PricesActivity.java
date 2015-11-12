@@ -3,8 +3,6 @@ package com.farmers.underground.ui.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -51,16 +49,16 @@ import com.farmers.underground.ui.fragments.PeriodPickerFragment;
 import com.farmers.underground.ui.fragments.StatisticsFragment;
 import com.farmers.underground.ui.models.DateRange;
 import com.farmers.underground.ui.models.DrawerItem;
+import com.farmers.underground.ui.utils.ImageCacheManager;
 import com.farmers.underground.ui.utils.NotYetHelper;
-import com.farmers.underground.ui.utils.PicassoHelper;
 import com.farmers.underground.ui.utils.StringFormaterUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+
 
 import butterknife.OnItemClick;
-import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -102,6 +100,12 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     @Bind(R.id.action_calendar)
     protected ImageView calendar;
 
+    @Bind(R.id.toolbar_title)
+    protected TextView toolbarTitle;
+
+    @Bind(R.id.action_icon)
+    protected ImageView iconCrop;
+
     @Bind(R.id.spinner_TB)
     protected Spinner spinner;
 
@@ -110,6 +114,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     private boolean isVisibleBurger;
     private DateRange mDateRange, mFullRange;
+
+    private static final ImageLoader imageLoaderRound = ImageCacheManager.getImageLoader(FarmersApp.ImageLoaders.CACHE_ROUND);
 
     public static void start(@NonNull Context context, LastCropPricesModel cropModel) {
         Gson gson = new GsonBuilder().create();
@@ -128,13 +134,16 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+
         getDataOnStart(getIntent());
+        updateToolBarCrop();
 
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         searchView.setVisibility(View.VISIBLE);
         calendar.setVisibility(View.VISIBLE);
+
         setDrawer();
         setViewPager();
         setTabs();
@@ -147,6 +156,35 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                 MainActivity.startWithSearchFocused(PricesActivity.this);
             }
         });
+    }
+
+
+    private void updateToolBarCrop(){
+
+        toolbarTitle.setText(mCropModel.displayName);
+
+        final String url = !TextUtils.isEmpty(mCropModel.image) ? ApiConstants.BASE_URL + mCropModel.image : null;
+
+        imageLoaderRound.displayImage(url, iconCrop, new SimpleImageLoadingListener() {
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                super.onLoadingComplete(imageUri, view, loadedImage);
+                iconCrop.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        getDataOnStart(intent);
+        updateToolBarCrop();
+
+        for (BasePagerPricesFragment basePagerPricesFragment : pagerAdapter.getFragmentList()) {
+            basePagerPricesFragment.setCurrentTypeRequest(BasePagerPricesFragment.TypeRequest.Refresh);
+        }
+
+        pagerAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -172,8 +210,6 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         mCropModel = gson.fromJson(intent.getStringExtra(ProjectConstants.KEY_DATA), LastCropPricesModel.class);
         if (mCropModel == null)
             throw new IllegalAccessError("Create this activity with start(Context, CropModel) " + "method only!");
-        else
-            ((TextView) mToolbar.findViewById(R.id.toolbar_title)).setText(mCropModel.displayName);
     }
 
     // ViewPager
@@ -181,13 +217,14 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     public void setViewPager() {
 
         pagerAdapter = new ProjectPagerAdapter<>(getFragmentManager());
-        viewPager.setAdapter(pagerAdapter);
-        pagerAdapter.setFragments(createFragmentList());
         pagerAdapter.setTitles(getTitlesList());
+        pagerAdapter.setFragments(createFragmentList());
         pagerAdapter.notifyDataSetChanged();
-        viewPager.setCurrentItem(pagerAdapter.getCount() - 1);
-        isVisibleBurger = true;
 
+        viewPager.setAdapter(pagerAdapter);
+        viewPager.setCurrentItem(pagerAdapter.getCount() - 1);
+
+        isVisibleBurger = true;
     }
 
     private ViewPager.OnPageChangeListener pageChangeListener  = new ViewPager.OnPageChangeListener() {
@@ -298,52 +335,16 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         void onPageSelected(int page);
     }
 
-    // options menu
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.findItem(R.id.action_back).setVisible(!isVisibleBurger);
-        menu.findItem(R.id.action_burger).setVisible(isVisibleBurger);
-        menu.findItem(R.id.action_icon).setVisible(true);
-        final MenuItem icon = menu.findItem(R.id.action_icon);
-
-        final Target target = new Target() {
-            @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                icon.setIcon(new BitmapDrawable(getResources(),bitmap));
-
-            }
-
-            @Override
-            public void onBitmapFailed(Drawable errorDrawable) {
-
-            }
-
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-            }
-        };
-        viewPager.setTag(target);
-
-        final String url = !TextUtils.isEmpty(mCropModel.image) ? ApiConstants.BASE_URL + mCropModel.image : null;
-        if (url != null)
-
-            PicassoHelper.getPicasso(this)
-                    .load(url)
-                    .config(Bitmap.Config.RGB_565)
-                    .transform(new CropCircleTransformation())
-                    .placeholder(R.drawable.ic_drawer_crops)
-                    .error(R.drawable.ic_drawer_crops)
-                    .into(target);
-
-
-        return super.onPrepareOptionsMenu(menu);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        return super.onCreateOptionsMenu(menu);
+
+        menu.findItem(R.id.action_back).setVisible(!isVisibleBurger);
+        menu.findItem(R.id.action_burger).setVisible(isVisibleBurger);
+
+        return true;
     }
 
     @Override
@@ -439,7 +440,6 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                /*lvDrawerContainer.bringToFront();*/
 
                 mDrawerLayout.requestLayout();
                 drawerOpened = true;
@@ -556,7 +556,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         makeRequestGetPriceForPeriod(mDateRange, callback);
     }
 
-    public void makeRequestGetPriceForPeriod(@Nullable DateRange dateRange, final CropAllPricesCallback callback) {
+    private void makeRequestGetPriceForPeriod(@Nullable DateRange dateRange, final CropAllPricesCallback callback) {
 
         if (dateRange == null) {
             prevMonth = Calendar.getInstance();

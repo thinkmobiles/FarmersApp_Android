@@ -177,19 +177,23 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     //crops list control
     private void getLastCrops() {
-        RetrofitSingleton.getInstance().getLastCropPricesList(new ACallback<List<LastCropPricesModel>, ErrorMsg>() {
-            @Override
-            public void onSuccess(List<LastCropPricesModel> result) {
-                mCropList = result;
-                updateFragments(mCropList, query);
-            }
+        if(mCropList==null ||  mCropList.isEmpty()){
+            RetrofitSingleton.getInstance().getLastCropPricesList(new ACallback<List<LastCropPricesModel>, ErrorMsg>() {
+                @Override
+                public void onSuccess(List<LastCropPricesModel> result) {
+                    mCropList = result;
+                    updateFragments(mCropList, query);
+                }
 
-            @Override
-            public void onError(@NonNull ErrorMsg error) {
-                showReloadDialogOnError(error);
-                //showToast("BAD", Toast.LENGTH_SHORT);
-            }
-        });
+                @Override
+                public void onError(@NonNull ErrorMsg error) {
+                    showReloadDialogOnError(error);
+                    //showToast("BAD", Toast.LENGTH_SHORT);
+                }
+            });
+        } else {
+            updateFragments(mCropList, query);
+        }
     }
 
     private void showReloadDialogOnError(ErrorMsg error) {

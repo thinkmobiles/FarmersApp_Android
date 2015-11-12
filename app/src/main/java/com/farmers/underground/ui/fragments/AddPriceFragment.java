@@ -161,15 +161,17 @@ public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements 
         if(counter < MAX_AMOUNT_PRICES) {
             ++counter;
             View view = LayoutInflater.from(getHostActivity()).inflate(R.layout.item_price_type, null);
-            EditText editText = (EditText) view.findViewById(R.id.etPrice_FAP);
-            setHint(editText);
-            editText.addTextChangedListener(getPriceWatcher(counter));
-            listPrice.add(editText);
-            editText = (EditText) view.findViewById(R.id.etQuality_FAP);
-            editText.addTextChangedListener(getQualityWatcher());
-            listQuality.add(editText);
+            EditText editTextP = (EditText) view.findViewById(R.id.etPrice_FAP);
+            setHint(editTextP);
+            editTextP.addTextChangedListener(getPriceWatcher(counter));
+            listPrice.add(editTextP);
+            EditText editTextQ = (EditText) view.findViewById(R.id.etQuality_FAP);
+            editTextQ.addTextChangedListener(getQualityWatcher());
+            listQuality.add(editTextQ);
             listError.add((TextView) view.findViewById(R.id.tvPriceError_FAP));
             container.addView(view);
+//            container.requestLayout();
+//            editTextP.requestFocus();
         }
     }
 
