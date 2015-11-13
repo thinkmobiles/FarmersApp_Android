@@ -80,6 +80,10 @@ public class CropsListFragment
     }
 
     private void showNoItems(String query) {
+
+        if (tv_NoItems==null)
+            return;
+
         tv_NoItems.setVisibility(View.VISIBLE);
         String itemsText;
 

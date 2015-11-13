@@ -169,6 +169,7 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
             dpd = new DatePickerDialog(this,
                     this, today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH));
         }
+        dpd.getDatePicker().setMaxDate(today.getTime().getTime()); //today max
         dpd.show();
 
     }
@@ -180,12 +181,12 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
         selectedDay.set(Calendar.MONTH, monthOfYear);
         selectedDay.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-        if (selectedDay.before(today)) {
+        //if (selectedDay.before(today)) {
             selectedDate = selectedDay;
             onChangeDateListener.onChangeDate();
-        } else {
-            showToast("Please select day before today", Toast.LENGTH_SHORT);
-        }
+//        } else {
+//            showToast("Please select current day or less", Toast.LENGTH_SHORT);
+//        }
     }
 
     public String getDate(){

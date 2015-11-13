@@ -187,23 +187,21 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
     public void onSuccess(SuccessMsg result) {
         // switch to add marketeer screen A or MainActivity
         FarmersApp.getInstance().onUserLogin();
+        hideProgressDialog();
         getUserProfileAsync();
 
         showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
-        anyway();
     }
 
     @Override
     public void onError(@NonNull ErrorMsg error) {
-        // TODO
-
         showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
-        anyway();
+        hideProgressDialog();
     }
 
     @Override
     public void anyway() {
-        hideProgressDialog();
+        /*stub*/
     }
 
     public String getNameMarketeer() {
@@ -225,7 +223,7 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
                         MainActivity.start(LoginSignUpActivity.this);
                         finish();
                     } else {
-                        if (FarmersApp.isSkipMode()){
+                        if (!FarmersApp.isSkipMode()){
                             MainActivity.start(LoginSignUpActivity.this);
                             finish();
                         } else {

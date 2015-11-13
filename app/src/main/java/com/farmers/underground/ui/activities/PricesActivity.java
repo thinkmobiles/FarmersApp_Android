@@ -20,7 +20,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import com.farmers.underground.BuildConfig;
 import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ApiConstants;
@@ -50,6 +49,7 @@ import com.farmers.underground.ui.fragments.PeriodPickerFragment;
 import com.farmers.underground.ui.fragments.StatisticsFragment;
 import com.farmers.underground.ui.models.DateRange;
 import com.farmers.underground.ui.models.DrawerItem;
+import com.farmers.underground.ui.utils.DateHelper;
 import com.farmers.underground.ui.utils.ImageCacheManager;
 import com.farmers.underground.ui.utils.NotYetHelper;
 import com.farmers.underground.ui.utils.StringFormaterUtil;
@@ -157,7 +157,6 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
             }
         });
     }
-
 
     private void updateToolBarCrop () {
 
@@ -388,15 +387,25 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                     Calendar dateTo = (Calendar) bundle.getSerializable(PeriodPickerFragment.KEY_DATE_TO);
 
                     mDateRange = new DateRange();
-                    mDateRange.setDateFrom(StringFormaterUtil.parseToServerResponse(dateFrom));
-                    mDateRange.setDateTo(StringFormaterUtil.parseToServerResponse(dateTo));
+
+                    final boolean isFull = bundle.getBoolean(PeriodPickerFragment.KEY_ALL_TIME, false);
+
+                    if (isFull){
+                        prevMonth  = DateHelper.parseToCalendar(mCropModel.prices.get(0).data);
+                        prevMonth.set(Calendar.MONTH, prevMonth.get(Calendar.MONTH) - 1);
+                        mDateRange.setDateFrom(StringFormaterUtil.parseToServerResponse(DateHelper.parseToCalendar(mCropModel.prices.get(0).data)));
+                        mDateRange.setDateTo(StringFormaterUtil.parseToServerResponse(prevMonth));
+                        mFullRange = mDateRange;
+                    } else {
+                        mDateRange.setDateFrom(StringFormaterUtil.parseToServerResponse(dateFrom));
+                        mDateRange.setDateTo(StringFormaterUtil.parseToServerResponse(dateTo));
+                    }
 
                     for (BasePagerPricesFragment basePagerPricesFragment : pagerAdapter.getFragmentList()) {
 
                         basePagerPricesFragment.setCurrentTypeRequest(BasePagerPricesFragment.TypeRequest.Search);
 
-                        basePagerPricesFragment.setDateRange(mDateRange,
-                                bundle.getBoolean(PeriodPickerFragment.KEY_ALL_TIME));
+                        basePagerPricesFragment.setDateRange(mDateRange,isFull);
                     }
                     break;
                 case REQUEST_CODE_DIALOG_WHY:
@@ -432,7 +441,6 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         });
 
     }
-
 
     //todo remove later
     private ArrayList<String> spinnerTestData() {
@@ -567,10 +575,11 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     private void makeRequestGetPriceForPeriod(@Nullable DateRange dateRange, final CropAllPricesCallback callback) {
 
         if (dateRange == null) {
-            prevMonth = Calendar.getInstance();
+            prevMonth  = DateHelper.parseToCalendar(mCropModel.prices.get(0).data);
+
             prevMonth.set(Calendar.MONTH, prevMonth.get(Calendar.MONTH) - 1);
             dateRange = new DateRange();
-            dateRange.setDateFrom(StringFormaterUtil.parseToServerResponse(Calendar.getInstance()));
+            dateRange.setDateFrom(StringFormaterUtil.parseToServerResponse(DateHelper.parseToCalendar(mCropModel.prices.get(0).data)));
             dateRange.setDateTo(StringFormaterUtil.parseToServerResponse(prevMonth));
 
             mDateRange = dateRange;

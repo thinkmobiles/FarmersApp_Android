@@ -71,7 +71,7 @@ android {
         }
 
         release {
-            debuggable true
+            debuggable false
             versionNameSuffix 'release = ' + getDate()
             //noinspection GroovyAssignabilityCheck
             signingConfig signingConfigs.release

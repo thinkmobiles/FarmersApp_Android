@@ -122,7 +122,7 @@ public class FarmersApp extends Application {
 
         public static DisplayImageOptions.Builder getCacheRoundPic = new DisplayImageOptions.Builder()
                 .cacheInMemory(true)
-                .displayer( new RoundedBitmapDisplayer(100))
+                .displayer( new RoundedBitmapDisplayer(1000))
                 .showImageForEmptyUri(R.drawable.ic_drawer_crops)
                 .showImageOnLoading(R.drawable.ic_drawer_crops)
                 .showImageOnFail(R.drawable.ic_drawer_crops)
