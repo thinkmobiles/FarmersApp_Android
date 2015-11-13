@@ -13,7 +13,6 @@
 
 
         <ImageView
-            android:contentDescription="@null"
             android:background="@color/aqua_blue"
             android:src="@drawable/message_4_message_3_message_5"
             android:scaleType="center"
@@ -21,7 +20,7 @@
             android:layout_height="166dp" />
 
         <LinearLayout
-            android:id="@+id/llDate"
+            android:id="@+id/llDateAdd"
             android:layout_width="53dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right|top"
@@ -92,7 +91,7 @@
 
             <com.farmers.underground.ui.custom_views.CustomTextView
                 android:layout_marginTop="10dp"
-                android:id="@+id/tv_TitCropsNameCropItem"
+                android:id="@+id/tv_TitCropsNameCropItemADD"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
@@ -101,12 +100,12 @@
 
             <com.farmers.underground.ui.custom_views.CustomTextView
                 android:layout_marginBottom="@dimen/margin_default_medium"
-                android:id="@+id/tv_SubCropsNameCropItem"
+                android:id="@+id/tv_SubCropsNameCropItemADD"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:lines="2"
-                android:text="ככל שתשתף את מחירי המשווק שלך ברמה היומית כך תיחשף ליותר מחירי משווקים שאחרים שיתפו!"
+                android:text="בכדי להזין את מחירי המשווק שלך עליך להזין תחילה את שם המשווק"
                 style="@style/LightGreyMainRegularText"
                 android:textSize="@dimen/normal_text_size"/>
             <View
@@ -124,23 +123,23 @@
                 <com.farmers.underground.ui.custom_views.CustomTextView
                     android:drawableLeft="@drawable/rectangle_220"
                     android:drawablePadding="4dp"
-                    android:id="@+id/tvAddPrice_WhyDiag"
-                    android:text="עדכן מחיר"
+                    android:id="@+id/tvAddPrice_WhyDiagADD"
+                    android:text="אישור"
                     android:textColor="@color/aqua"
                     android:textSize="@dimen/normal_text_size"
-                    android:padding="6dp"
                     android:layout_width="wrap_content"
+                    android:padding="6dp"
                     android:layout_height="wrap_content" />
 
                 <com.farmers.underground.ui.custom_views.CustomTextView
                     android:layout_marginLeft="8dp"
-                    android:id="@+id/tvCancel_WhyDiag"
+                    android:id="@+id/tvCancel_WhyDiagADD"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/BlackMainRegularText"
-                    android:padding="6dp"
                     android:textSize="@dimen/normal_text_size"
-                    android:text="ביטול"/>
+                    android:padding="6dp"
+                    android:text="דחה  "/>
 
 
             </LinearLayout>

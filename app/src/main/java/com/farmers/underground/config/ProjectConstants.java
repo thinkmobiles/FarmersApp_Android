@@ -31,6 +31,8 @@ public class ProjectConstants {
 
     public static final String SERVER_DATE_FORMAT                   = "yyyy-MM-dd'T'hh:mm:ss.SSS'Z'";
 
+    public static final String TEMP_DATE_Format = "dd.mm.yy"; //todo change later
+
     public static final int MAX_RAM_CACHE_SIZE                      = 1024 * 1024 * 30; // 30MB
 
     private ProjectConstants(){/*prevent creation*/}

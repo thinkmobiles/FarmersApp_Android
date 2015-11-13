@@ -1,10 +1,12 @@
 package com.farmers.underground.remote.models;
 
 /**
- * Created by omar on 10/12/15.
+ * Created by omar
+ * on 10/12/15.
  */
 public class MarketeerPriceModel {
-    private  String date;
+
+    private String date;
     private String name;
     private String province;
     private PriceModel price;

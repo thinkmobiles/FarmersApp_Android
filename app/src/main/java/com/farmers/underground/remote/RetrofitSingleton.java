@@ -405,7 +405,7 @@ public class RetrofitSingleton {
             else
                 myError = new ErrorMsg("Unknown Error");
         } catch (JsonSyntaxException jsonSyntaxException){
-                myError = new ErrorMsg("Server Error");
+                myError = new ErrorMsg("Network/Server Error");
         }
         return myError;
     }

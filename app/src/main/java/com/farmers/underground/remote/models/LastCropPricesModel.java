@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * on 14-Oct-15.
  */
 public class LastCropPricesModel {
-    public String englishName;
+    public String englishName; //will be remover in release
     public String displayName;
     public Boolean isInFavorites;
     public String image;

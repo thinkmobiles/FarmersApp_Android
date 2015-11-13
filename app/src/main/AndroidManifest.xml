@@ -39,7 +39,7 @@
 
         <activity
                 android:name=".ui.activities.MainActivity"
-                android:launchMode="singleTop"
+                android:launchMode="singleInstance"
                 android:windowSoftInputMode="adjustNothing"
                 android:screenOrientation="sensorPortrait">
             <intent-filter>
@@ -70,6 +70,7 @@
                 android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 
         <activity android:name=".ui.activities.AddPriceActivity"
+            android:windowSoftInputMode="adjustResize"
             android:screenOrientation="sensorPortrait"/>
 
         <meta-data

@@ -33,7 +33,7 @@ import butterknife.OnTextChanged;
  */
 public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements AddPriceActivity.OnChangeDateListener {
 
-    private static final int MAX_AMOUNT_PRICES = 9;
+    private static final int MAX_AMOUNT_PRICES = 9; //+1
 
     @Bind(R.id.etPrice_FAP)
     protected EditText etPrice;
@@ -111,10 +111,12 @@ public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements 
     }
 
     private void setMarketer(){
-        String name = FarmersApp.getInstance().getCurrentMarketer().getFullName();
-        if(name != null) {
-            nameMarketer.setText(name);
-            tvLogo.setText(StringFormaterUtil.getLettersForLogo(name));
+        if( FarmersApp.getInstance().getCurrentMarketer()!=null ) {
+            String name = FarmersApp.getInstance().getCurrentMarketer().getFullName();
+            if(name != null) {
+                nameMarketer.setText(name);
+                tvLogo.setText(StringFormaterUtil.getLettersForLogo(name));
+            }
         }
     }
 
@@ -160,18 +162,19 @@ public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements 
     protected void addNewQuality(){
         if(counter < MAX_AMOUNT_PRICES) {
             ++counter;
-            View view = LayoutInflater.from(getHostActivity()).inflate(R.layout.item_price_type, null);
+            View view = LayoutInflater.from(getHostActivity()).inflate(R.layout.item_price_type, container, false);
             EditText editTextP = (EditText) view.findViewById(R.id.etPrice_FAP);
             setHint(editTextP);
             editTextP.addTextChangedListener(getPriceWatcher(counter));
             listPrice.add(editTextP);
             EditText editTextQ = (EditText) view.findViewById(R.id.etQuality_FAP);
             editTextQ.addTextChangedListener(getQualityWatcher());
+
             listQuality.add(editTextQ);
             listError.add((TextView) view.findViewById(R.id.tvPriceError_FAP));
             container.addView(view);
-//            container.requestLayout();
-//            editTextP.requestFocus();
+
+            editTextP.requestFocus();
         }
     }
 
@@ -199,7 +202,6 @@ public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements 
         } else {
             textViewError.setVisibility(View.VISIBLE);
         }
-
     }
 
     private TextWatcher getPriceWatcher(final int position){

@@ -2,6 +2,7 @@ package com.farmers.underground.remote.models;
 
 import android.text.TextUtils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -18,9 +19,9 @@ public class UserProfile {
     private String fbId;
     private String avatar;
 
-    private String updatedAt; //"2015-10-02T09:32:53.979Z"
-    private String createdAt; //"2015-10-02T09:32:53.979Z"
-    private String marketeer;  //"561270af9c8fd4643656abd2"  or null if user not select marketeer.  If (marketeer == null) AND (newMarketeer == false) SHOW ADD  marketeer screen
+    private String updatedAt;   //"2015-10-02T09:32:53.979Z"
+    private String createdAt;   //"2015-10-02T09:32:53.979Z"
+    private String marketeer;   //"561270af9c8fd4643656abd2"  or null if user not select marketeer.  If (marketeer == null) AND (newMarketeer == false) SHOW ADD  marketeer screen
 
     private boolean newMarketeer;
 
@@ -59,5 +60,13 @@ public class UserProfile {
      */
     public boolean isNewMarketeer() {
         return newMarketeer;
+    }
+
+    public String getId() {
+        return _id;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
     }
 }

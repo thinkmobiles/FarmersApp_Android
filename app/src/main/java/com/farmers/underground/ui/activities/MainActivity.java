@@ -41,6 +41,7 @@ import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.custom_views.CustomSearchView;
 import com.farmers.underground.ui.dialogs.InviteDialogFragment;
+import com.farmers.underground.ui.dialogs.WhyCanIAddThisPriceDialogFragment;
 import com.farmers.underground.ui.fragments.CropsFragmentCallback;
 import com.farmers.underground.ui.fragments.CropsListFragment;
 import com.farmers.underground.ui.models.CropsListFragmentModel;
@@ -157,7 +158,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
             searchView.setIconified(false);
         }
     }
-
 
     @Override
     protected void onResume() {
@@ -301,7 +301,17 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
             @Override
             public void onPriceRefreshClicked(LastCropPricesModel cropModel) {
-                AddPriceActivity.start(MainActivity.this, cropModel);
+
+                if (!TextUtils.isEmpty(FarmersApp.getInstance().getCurrentMarketer().getFullName()) || (FarmersApp.getInstance().getCurrentUser().hasMarketir() && !FarmersApp.getInstance().getCurrentUser().isNewMarketeer())){
+                    AddPriceActivity.start(MainActivity.this, cropModel);
+                } else {
+                    WhyCanIAddThisPriceDialogFragment fragment =  new WhyCanIAddThisPriceDialogFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("Date", cropModel.prices.get(0).data);
+                    fragment.setArguments(bundle);
+                    TransparentActivity.startWithFragment(MainActivity.this, fragment);
+                }
+
             }
         };
     }
@@ -364,7 +374,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                     showHintList();
                     updateFragments(mCropList, query);
                     return false;
-                } else if (newQuery.length() < 2) {
+                } else if (newQuery.length() < 1) {
                     searchHintController.setHinsList(SharedPrefHelper.getSearchHints());
                     showHintList();
                     updateFragments(mCropList, query);
@@ -393,6 +403,16 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     @Override
     protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        setSearchViewFocus(intent.getBooleanExtra(ProjectConstants.KEY_FOCUS_SEARCH_VIEW, false));
+
+        if (intent.hasExtra(ProjectConstants.KEY_START_MAIN_ACTIVITY_PAGE)) {
+            setViewPager(intent.getStringExtra(ProjectConstants.KEY_START_MAIN_ACTIVITY_PAGE));
+        } else {
+            setViewPager(null);
+        }
+
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             query = intent.getStringExtra(SearchManager.QUERY);
             updateFragmentsOnSearch(query);
@@ -449,7 +469,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         // (user cant be null here)
         final UserProfile user = FarmersApp.getInstance().getCurrentUser();
 
-        FarmersApp.getInstance().getMarketerBySession(); //getting of target marketer
+        /*FarmersApp.getInstance().getMarketerBySession(); //getting of target marketer*/
 
         if (user != null && !(user.hasMarketir() || user.isNewMarketeer())) {
             drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_plus, R.string.drawer_content_5));

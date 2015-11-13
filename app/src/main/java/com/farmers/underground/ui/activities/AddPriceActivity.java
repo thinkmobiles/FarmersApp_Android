@@ -235,7 +235,6 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         sendPrices(); //request
-//                        showToast("todo request", Toast.LENGTH_SHORT);
                         hideSoftKeyboard();
                         childFragment.refresh();
                         dialog.dismiss();
@@ -265,7 +264,7 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
 
             @Override
             public void onError(@NonNull ErrorMsg error) {
-                showToast("BAD", Toast.LENGTH_SHORT);
+                showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
                 anyway();
             }
 

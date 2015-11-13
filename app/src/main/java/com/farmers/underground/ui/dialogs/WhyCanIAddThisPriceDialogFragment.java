@@ -1,15 +1,13 @@
 package com.farmers.underground.ui.dialogs;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
+import com.farmers.underground.ui.activities.LoginSignUpActivity;
 import com.farmers.underground.ui.activities.TransparentActivity;
 import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.custom_views.CustomTextView;
@@ -26,10 +24,9 @@ import butterknife.OnClick;
  * Created by tZpace
  * on 12-Oct-15.
  */
-public class WhyCanISeeThisPriceDialogFragment extends BaseFragment<TransparentActivity> {
+public class WhyCanIAddThisPriceDialogFragment extends BaseFragment<TransparentActivity> {
 
-
-    @Bind(R.id.llDate )
+    @Bind(R.id.llDateAdd)
     protected LinearLayout dateContainer;
 
     @Bind(R.id.tv_DayCropsItem_D)
@@ -43,7 +40,7 @@ public class WhyCanISeeThisPriceDialogFragment extends BaseFragment<TransparentA
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.fragment_dialog_why_can_i_see_this_price;
+        return R.layout.fragment_dialog_why_can_i_add_this_price;
     }
 
     @Override
@@ -55,7 +52,7 @@ public class WhyCanISeeThisPriceDialogFragment extends BaseFragment<TransparentA
         if(dateF == null){
             dateContainer.setVisibility(View.GONE);
         } else {
-            SimpleDateFormat format = new SimpleDateFormat(ProjectConstants.TEMP_DATE_Format, Locale.getDefault());
+            SimpleDateFormat format = new SimpleDateFormat(ProjectConstants.SERVER_DATE_FORMAT, Locale.getDefault());
             try {
                 long time = format.parse(dateF).getTime();
                 String[] date = DateHelper.getInstance(getHostActivity()).getDate(time);
@@ -71,14 +68,15 @@ public class WhyCanISeeThisPriceDialogFragment extends BaseFragment<TransparentA
 
     }
 
-    @OnClick(R.id.tvCancel_WhyDiag)
+    @OnClick(R.id.tvCancel_WhyDiagADD)
     protected void onCancel(){
         getHostActivity().finish();
     }
 
-    @OnClick(R.id.tvAddPrice_WhyDiag)
+    @OnClick(R.id.tvAddPrice_WhyDiagADD)
     protected void addPrice(){
-        getHostActivity().setResult(Activity.RESULT_OK, new Intent());
+       // getHostActivity().setResult(Activity.RESULT_OK, new Intent());
+        LoginSignUpActivity.startAddMarketier(getHostActivity());
         getHostActivity().finish();
     }
 }

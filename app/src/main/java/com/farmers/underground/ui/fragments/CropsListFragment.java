@@ -40,12 +40,6 @@ public class CropsListFragment
 
     private CropsListAdapter.CropsAdapterCallback listCallback;
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        listCallback = null;
-    }
-
     public static CropsListFragment getInstance(CropsListFragmentModel.TYPE type) {
         CropsListFragmentModel fragmentModel = new CropsListFragmentModel(type);
         Bundle args = new Bundle();
@@ -62,8 +56,10 @@ public class CropsListFragment
 
     @Override
     public void onDestroyView() {
+        listCallback = null;
         getHostActivity().onFragmentViewDestroyed();
         super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 
     @Override
@@ -77,7 +73,7 @@ public class CropsListFragment
         if (savedInstanceState != null)
             mFragmentModel = (CropsListFragmentModel) savedInstanceState.getSerializable(ProjectConstants.KEY_DATA);
         else mFragmentModel = (CropsListFragmentModel) getArguments().getSerializable(ProjectConstants.KEY_DATA);
-        //showNoItems();
+        showNoItems("");
         adapter = new CropsListAdapter();
         recyclerView.setAdapter(adapter);
         getHostActivity().onFragmentViewCreated();
@@ -87,7 +83,7 @@ public class CropsListFragment
         tv_NoItems.setVisibility(View.VISIBLE);
         String itemsText;
 
-        itemsText = getActivity().getString(R.string.no_crops_found) + query;
+        itemsText = getHostActivity().getString(R.string.no_crops_found) + query;
 
         tv_NoItems.setText(itemsText);
     }

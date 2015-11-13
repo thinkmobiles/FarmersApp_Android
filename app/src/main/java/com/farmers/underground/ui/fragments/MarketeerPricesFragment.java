@@ -1,12 +1,9 @@
 package com.farmers.underground.ui.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -19,7 +16,6 @@ import com.farmers.underground.ui.activities.AddPriceActivity;
 import com.farmers.underground.ui.activities.PricesActivity;
 import com.farmers.underground.ui.activities.TransparentActivity;
 import com.farmers.underground.ui.adapters.MarketeerPricesAdapter;
-import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.base.BasePagerPricesFragment;
 import com.farmers.underground.ui.dialogs.CropQualitiesDialogFragment;
 import com.farmers.underground.ui.dialogs.WhyCanISeeThisPriceDialogFragment;
@@ -156,7 +152,11 @@ public class MarketeerPricesFragment extends BasePagerPricesFragment {
 
             @Override
             public void onNoPricesClicked(MarketeerPriceModel model) {
-                TransparentActivity.startWithFragmentForResult(getHostActivity(), new WhyCanISeeThisPriceDialogFragment(), PricesActivity.REQUEST_CODE_DIALOG_WHY);
+                WhyCanISeeThisPriceDialogFragment fragment =  new WhyCanISeeThisPriceDialogFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("Date",model.getDate());
+                fragment.setArguments(bundle);
+                TransparentActivity.startWithFragmentForResult(getHostActivity(), fragment, PricesActivity.REQUEST_CODE_DIALOG_WHY);
             }
         };
     }

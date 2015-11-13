@@ -90,12 +90,9 @@ public class DrawerManager implements AdapterView.OnItemClickListener {
         drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_invite_friends, R.string.drawer_content_2));
         drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_favourites, R.string.drawer_content_3));
 
+         final UserProfile user = FarmersApp.getInstance().getCurrentUser();
 
-        //FarmersApp.getInstance().getCurrentUser()!=null todo remove later (user cant be null here)
-        //FarmersApp.getInstance().getUserProfileAsync(null); - wtf
-        final UserProfile user = FarmersApp.getInstance().getCurrentUser();
-
-        FarmersApp.getInstance().getMarketerBySession(); //getting of target marketer
+        /*  FarmersApp.getInstance().getMarketerBySession(); //getting of target marketer*/
 
         if (user != null && !(user.hasMarketir() || user.isNewMarketeer())) {
             drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_plus, R.string.drawer_content_5));
@@ -109,7 +106,7 @@ public class DrawerManager implements AdapterView.OnItemClickListener {
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        String name = context.getClass().getName();
+//        String name = context.getClass().getName();
         switch (position) {
             case 2:
                 MainActivity.startWithPageSelected(context, ProjectConstants.MAIN_ACTIVITY_PAGE_ALL);
@@ -125,7 +122,6 @@ public class DrawerManager implements AdapterView.OnItemClickListener {
                     LoginSignUpActivity.startAddMarketier(context);
                 else
                     LoginSignUpActivity.startChooseMarketier(context);
-//                context.finish();
                 break;
         }
         drawerLayout.closeDrawers();

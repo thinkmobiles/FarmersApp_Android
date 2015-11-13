@@ -20,8 +20,11 @@ import com.farmers.underground.remote.models.base.MarketeerBase;
 import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.remote.util.ICallback;
 import com.farmers.underground.ui.activities.LoginSignUpActivity;
+import com.farmers.underground.ui.utils.DateHelper;
 import com.farmers.underground.ui.utils.ImageCacheManager;
 import com.farmers.underground.ui.utils.TypefaceManager;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -79,15 +82,15 @@ public class FarmersApp extends Application {
         FacebookSdk.sdkInitialize(getApplicationContext());
 
 
-        /* ImageCacheManager.init(*/imageCache = new ImageLoaders(this)/*)*/;
+        /*Init ImageCacheManager */
+        imageCache = new ImageLoaders(this);
 
         /**Set Hebrew LOCALE */
         Locale locale = new Locale("iw");
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;
-        getBaseContext().getResources().updateConfiguration(config,
-                getBaseContext().getResources().getDisplayMetrics());
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
 
     }
 
@@ -206,6 +209,8 @@ public class FarmersApp extends Application {
     private UserProfile currentUser;
 
     public UserProfile getCurrentUser() {
+        if (currentUser ==null)
+            getCachedUserProfile();
         return currentUser;
     }
 
@@ -213,14 +218,14 @@ public class FarmersApp extends Application {
         this.currentUser = currentUser;
     }
 
-    private MarketeerBase currentMarketer;
+    private static MarketeerBase currentMarketer;
 
     public MarketeerBase getCurrentMarketer() {
         return currentMarketer;
     }
 
     public void setCurrentMarketer(MarketeerBase currentMarketer) {
-        this.currentMarketer = currentMarketer;
+        FarmersApp.currentMarketer = currentMarketer;
     }
 
     public void getUserProfileAsync(@Nullable final ICallback<UserProfile, ErrorMsg> callback) {
@@ -231,6 +236,11 @@ public class FarmersApp extends Application {
                     onError(new ErrorMsg("Profile is not fetched"));
 
                 setCurrentUser(result);
+
+                cacheUserProfile(result);
+
+                getMarketerBySession();
+
                 if (callback != null) {
                     callback.onSuccess(getCurrentUser());
                     callback.anyway();
@@ -343,5 +353,38 @@ public class FarmersApp extends Application {
 
     public static boolean isSkipMode() {
         return getUsrPreferences().getBoolean(ProjectConstants.KEY_CURRENT_USER_SKIP_MODE, true);
+    }
+
+    private void cacheUserProfile(UserProfile result) {
+
+        Gson gson = new GsonBuilder().create();
+        String json = getUsrPreferences().getString("mUserProfile", "");
+
+        if(!json.isEmpty()){
+            UserProfile temp = gson.fromJson(json, UserProfile.class);
+            if (temp.getId().equals(result.getId()) && DateHelper.parseToCalendar(temp.getUpdatedAt()).before(DateHelper.parseToCalendar(result.getUpdatedAt()))){
+                gson = new GsonBuilder().create();
+                json = gson.toJson(result);
+                getUsrPreferences().edit().putString("mUserProfile", json).apply();
+            }
+        } else {
+            gson = new GsonBuilder().create();
+            json = gson.toJson(result);
+
+            getUsrPreferences().edit().putString("mUserProfile", json).apply();
+        }
+
+    }
+
+    /**false if no cached profile*/
+    private boolean getCachedUserProfile(){
+        Gson gson = new GsonBuilder().create();
+        String json = getUsrPreferences().getString("mUserProfile", "");
+        if(json.isEmpty())
+            return false;
+
+        currentUser = gson.fromJson(json, UserProfile.class);
+
+        return true;
     }
 }

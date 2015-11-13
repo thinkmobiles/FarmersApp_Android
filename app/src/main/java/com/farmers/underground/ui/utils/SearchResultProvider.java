@@ -16,23 +16,17 @@ import java.util.List;
  */
 public class SearchResultProvider {
 
-
-
     private LoaderManager loaderManager;
     private String querry;
     private List<LastCropPricesModel> cropList;
 
-
-
     private  LoaderManager.LoaderCallbacks<List<SearchHint>> hintLoaderCallback;
     private  LoaderManager.LoaderCallbacks<List<LastCropPricesModel>> resultLoaderCallback;
-
 
     private SearchResultProvider(final Context context, final LoaderManager loaderManager,  final SearchCallback
             callback) {
 
         this.loaderManager = loaderManager;
-
 
         hintLoaderCallback = new LoaderManager.LoaderCallbacks<List<SearchHint>>() {
             @Override
@@ -94,8 +88,6 @@ public class SearchResultProvider {
             loaderManager.initLoader(1, null, resultLoaderCallback);
 
     }
-
-
 
     public interface SearchCallback {
         void onSearchHintLoadFinished(List<SearchHint> searchHintList);

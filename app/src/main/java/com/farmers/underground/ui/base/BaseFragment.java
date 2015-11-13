@@ -38,13 +38,4 @@ public abstract class BaseFragment<A extends BaseActivity> extends Fragment {
         return inflater.inflate(getLayoutResId(), container, false);
     }
 
-   /* protected final boolean isRTL() {
-        return getResources().getBoolean(R.bool.isRTL);
-    }
-
-    protected void hideSoftKeyboard() {
-        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm.isActive() && getHostActivity().getCurrentFocus() != null)
-            imm.hideSoftInputFromWindow(getHostActivity().getCurrentFocus().getWindowToken(), 0);
-    }*/
 }

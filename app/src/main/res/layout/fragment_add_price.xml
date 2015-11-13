@@ -29,12 +29,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/margin_default_small"
-                android:text="כרמל יבולים" />
+                android:text=" שם משווק " />
 
             <com.farmers.underground.ui.custom_views.CustomTextView
                 android:id="@+id/tvLogo_FAP"
                 style="@style/LogoMarketer"
-                android:text="כי " />
+                android:text="" />
 
             <ImageView
                 android:id="@+id/ivIcon_FAP"

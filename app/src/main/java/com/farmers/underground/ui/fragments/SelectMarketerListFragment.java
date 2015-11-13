@@ -68,7 +68,6 @@ public class SelectMarketerListFragment extends BaseFragment<LoginSignUpActivity
 
         etMarketeer.requestFocus();
         getHostActivity().showSoftKeyboard(etMarketeer);
-//        getHostActivity().showProgressDialog();
         RetrofitSingleton.getInstance().getMarketterList(
                 new ACallback<ArrayList<String>, ErrorMsg>() {
                     @Override
@@ -82,11 +81,6 @@ public class SelectMarketerListFragment extends BaseFragment<LoginSignUpActivity
                     @Override
                     public void onError(@NonNull ErrorMsg error) {
                         getHostActivity().showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
-                    }
-
-                    @Override
-                    public void anyway() {
-//                        getHostActivity().hideProgressDialog();
                     }
                 });
 

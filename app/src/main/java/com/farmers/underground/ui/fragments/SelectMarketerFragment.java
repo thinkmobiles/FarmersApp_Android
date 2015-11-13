@@ -27,9 +27,6 @@ import com.farmers.underground.ui.base.BaseFragment;
  * on 25-Sep-15.
  */
 public class SelectMarketerFragment extends BaseFragment<LoginSignUpActivity> {
-
-    private static final String KEY_CHANGE_MARKETER = "change_marketer";
-
     @Bind(R.id.tvEnterMarketeer)
     protected TextView tvNameMarketer;
 
@@ -39,20 +36,9 @@ public class SelectMarketerFragment extends BaseFragment<LoginSignUpActivity> {
     @Bind(R.id.tvLetsGo)
     protected TextView tvGoOrSave;
 
-    private boolean isChangingMarketer;
-
     public enum Reason{FirstAddition, Add, Change, Accept}
 
     private Reason reason;
-
-    public static SelectMarketerFragment newInstance(boolean forChanging){
-        SelectMarketerFragment fragment = new SelectMarketerFragment();
-        Bundle bundle = new Bundle();
-        bundle.putBoolean(KEY_CHANGE_MARKETER, forChanging);
-        bundle.putInt("r", Reason.Add.ordinal());
-        fragment.setArguments(bundle);
-        return fragment;
-    }
 
     public static SelectMarketerFragment newInstance(Reason reason){
         SelectMarketerFragment fragment = new SelectMarketerFragment();
@@ -71,25 +57,12 @@ public class SelectMarketerFragment extends BaseFragment<LoginSignUpActivity> {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getFlag();
-//        isChangingMarketer = getArguments().getBoolean(KEY_CHANGE_MARKETER);
         ButterKnife.bind(this, view);
         setNameMarketer2();
     }
 
     private void getFlag(){
         reason = Reason.values()[getArguments().getInt("position_reason")];
-    }
-
-    private void setNameMarketer() {
-        if(isChangingMarketer){
-            getHostActivity().setNameMarketeer(FarmersApp.getInstance().getCurrentMarketer().getFullName());
-        }
-        String name = getHostActivity().getNameMarketeer();
-        if(name != null) {
-            tvNameMarketer.setText(name);
-        } else {
-            getHostActivity().setIsChanging(false);
-        }
     }
 
     private void setNameMarketer2() {

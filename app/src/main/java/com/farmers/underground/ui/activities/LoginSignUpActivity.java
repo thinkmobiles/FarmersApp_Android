@@ -185,7 +185,7 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
 
     @Override
     public void onSuccess(SuccessMsg result) {
-        //   switch to add marketire screen A or MainActivity
+        // switch to add marketeer screen A or MainActivity
         FarmersApp.getInstance().onUserLogin();
         getUserProfileAsync();
 
@@ -214,10 +214,6 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
         this.nameMarketeer = nameMarketeer;
     }
 
-    public void getUserMarketer(){
-        nameMarketeer = FarmersApp.getInstance().getCurrentUser().getMarketeer();
-    }
-
     public void getUserProfileAsync() {
         showProgressDialog();
         FarmersApp.getInstance().getUserProfileAsync(new ICallback<UserProfile, ErrorMsg>() {
@@ -229,7 +225,12 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
                         MainActivity.start(LoginSignUpActivity.this);
                         finish();
                     } else {
-                        switchFragment(SelectMarketerFragment.newInstance(SelectMarketerFragment.Reason.FirstAddition), false);
+                        if (FarmersApp.isSkipMode()){
+                            MainActivity.start(LoginSignUpActivity.this);
+                            finish();
+                        } else {
+                            switchFragment(SelectMarketerFragment.newInstance(SelectMarketerFragment.Reason.FirstAddition), false);
+                        }
                     }
                 } else {
                     onError(new ErrorMsg("Profile is not fetched"));

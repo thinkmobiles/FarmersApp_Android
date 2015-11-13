@@ -43,6 +43,7 @@ import com.farmers.underground.ui.base.BasePagerPricesFragment;
 import com.farmers.underground.ui.custom_views.CustomSearchView;
 import com.farmers.underground.ui.dialogs.InviteDialogFragment;
 import com.farmers.underground.ui.dialogs.MorePriecesDialogFragment;
+import com.farmers.underground.ui.dialogs.WhyCanIAddThisPriceDialogFragment;
 import com.farmers.underground.ui.fragments.AllPricesFragment;
 import com.farmers.underground.ui.fragments.MarketeerPricesFragment;
 import com.farmers.underground.ui.fragments.PeriodPickerFragment;
@@ -56,7 +57,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
-
 
 import butterknife.OnItemClick;
 
@@ -159,7 +159,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     }
 
 
-    private void updateToolBarCrop(){
+    private void updateToolBarCrop () {
 
         toolbarTitle.setText(mCropModel.displayName);
 
@@ -305,7 +305,16 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     @Override
     public void onAddPricesClicked(String date) {
         pagerAdapter.getItem(viewPager.getCurrentItem()).setCurrentTypeRequest(BasePagerPricesFragment.TypeRequest.Refresh);
-        AddPriceActivity.start(this, mCropModel, date);
+
+        if (!TextUtils.isEmpty(FarmersApp.getInstance().getCurrentMarketer().getFullName())  || (FarmersApp.getInstance().getCurrentUser().hasMarketir() && !FarmersApp.getInstance().getCurrentUser().isNewMarketeer())){
+            AddPriceActivity.start(this, mCropModel, date);
+        } else {
+            WhyCanIAddThisPriceDialogFragment fragment =  new WhyCanIAddThisPriceDialogFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("Date", date);
+            fragment.setArguments(bundle);
+            TransparentActivity.startWithFragment(PricesActivity.this, fragment);
+        }
     }
 
     @Override
@@ -321,8 +330,6 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         mDrawerLayout.closeDrawers();
     }
 
-
-
     public interface DateRangeSetter {
         void setDateRange(DateRange dateRange, boolean isAllTime);
     }
@@ -334,7 +341,6 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     public interface PageListener {
         void onPageSelected(int page);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -530,7 +536,9 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     public void onBackPressed() {
         if (drawerOpened && mDrawerLayout != null) {
             mDrawerLayout.closeDrawers();
-        }   else super.onBackPressed();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     /**
@@ -577,8 +585,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                         if (result != null && !result.isEmpty()) {
                             callback.onGetResult(result);
                         } else {
-                            if(BuildConfig.DEBUG)
-                                onError(new ErrorMsg("No More Prices Fetched"));
+                           /* if (BuildConfig.DEBUG)
+                                onError(new ErrorMsg("No More Prices Fetched"));*/
                             callback.onError();
                         }
                     }
