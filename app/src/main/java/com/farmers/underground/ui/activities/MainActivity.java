@@ -163,6 +163,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     protected void onResume() {
         super.onResume();
         setDrawerList();
+        updateLastCrops();
     }
 
     @Override
@@ -175,20 +176,39 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         return 0;
     }
 
-    //crops list control
-    private void getLastCrops() {
-        if(mCropList==null ||  mCropList.isEmpty()){
+    private void updateLastCrops() {
+        if (FarmersApp.getInstance().shouldUpdateLastCropsNextTime() || FarmersApp.getInstance().shouldUpdateLastCrops()) {
             RetrofitSingleton.getInstance().getLastCropPricesList(new ACallback<List<LastCropPricesModel>, ErrorMsg>() {
                 @Override
                 public void onSuccess(List<LastCropPricesModel> result) {
                     mCropList = result;
                     updateFragments(mCropList, query);
+                    FarmersApp.getInstance().setShouldUpdateLastCropsNextTime(false);
+                    FarmersApp.getInstance().setLastCopsUpdateTime();
                 }
 
                 @Override
                 public void onError(@NonNull ErrorMsg error) {
                     showReloadDialogOnError(error);
-                    //showToast("BAD", Toast.LENGTH_SHORT);
+                }
+            });
+        }
+    }
+
+    //crops list control
+    private void getLastCrops() {
+        if(mCropList==null || mCropList.isEmpty()){
+            RetrofitSingleton.getInstance().getLastCropPricesList(new ACallback<List<LastCropPricesModel>, ErrorMsg>() {
+                @Override
+                public void onSuccess(List<LastCropPricesModel> result) {
+                    mCropList = result;
+                    updateFragments(mCropList, query);
+                    FarmersApp.getInstance().setLastCopsUpdateTime();
+                }
+
+                @Override
+                public void onError(@NonNull ErrorMsg error) {
+                    showReloadDialogOnError(error);
                 }
             });
         } else {
@@ -341,10 +361,10 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                 SharedPrefHelper.saveSearchHint(query);
                 searchView.setQuery(query.getName(), true);
                 forceHideSearchList();
-                searchHintController.setQuerry(query);
+                searchHintController.setQuery(query);
             }
         };
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        final SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setOnSearchClickListener(new View.OnClickListener() {
             @Override
@@ -357,7 +377,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
             @Override
             public boolean onQueryTextSubmit(String query) {
                 SearchHint hint = new SearchHint(query, SearchHint.HintType.FROM_HISTORY);
-                searchHintController.setQuerry(hint);
+                searchHintController.setQuery(hint);
                 SharedPrefHelper.saveSearchHint(hint);
                 forceHideSearchList();
                 updateFragmentsOnSearch(query);
@@ -366,20 +386,22 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
             @Override
             public boolean onQueryTextChange(final String newText) {
-
                 String newQuery = "";
                 if (newText.length() > 0) newQuery = newText.trim();
                 if (newQuery.isEmpty()) {
-                    searchHintController.setHinsList(SharedPrefHelper.getSearchHints());
+                    searchView.setGravityRight();
+                    searchHintController.setHintsList(SharedPrefHelper.getSearchHints());
                     showHintList();
                     updateFragments(mCropList, query);
                     return false;
                 } else if (newQuery.length() < 1) {
-                    searchHintController.setHinsList(SharedPrefHelper.getSearchHints());
+                    searchView.setGravityLeft();
+                    searchHintController.setHintsList(SharedPrefHelper.getSearchHints());
                     showHintList();
                     updateFragments(mCropList, query);
                     return false;
                 } else {
+                    searchView.setGravityLeft();
                     generateQueryList(newQuery);
                     return false;
                 }
@@ -581,7 +603,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                 break;
             case 3:
                 TransparentActivity.startWithFragment(this, new InviteDialogFragment());
-//               WhatsAppUtil.getInstance(this).sendInvitation();
                 break;
             case 4:
                 viewPager.setCurrentItem(0);
@@ -591,7 +612,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                     LoginSignUpActivity.startAddMarketier(this);
                 else
                     LoginSignUpActivity.startChooseMarketier(this);
-                finish();
                 break;
         }
         mDrawerLayout.closeDrawers();
@@ -599,7 +619,8 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     @OnClick(R.id.searchView)
     protected void onSearchClicked() {
-        searchHintController.setHinsList(SharedPrefHelper.getSearchHints());
+        //searchView.setQuery("\u200F",false); //.replaceAll("\u200F","")
+        searchHintController.setHintsList(SharedPrefHelper.getSearchHints());
         searchHintController.show();
         invalidateOptionsMenu();
     }
@@ -674,7 +695,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     @Override
     public void onSearchHintLoadFinished(List<SearchHint> searchHintList) {
-        searchHintController.setHinsList(searchHintList);
+        searchHintController.setHintsList(searchHintList);
     }
 
     @Override

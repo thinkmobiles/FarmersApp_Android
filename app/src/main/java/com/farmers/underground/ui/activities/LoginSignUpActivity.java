@@ -223,7 +223,7 @@ public class LoginSignUpActivity extends BaseActivity implements ICallback<Succe
                         MainActivity.start(LoginSignUpActivity.this);
                         finish();
                     } else {
-                        if (!FarmersApp.isSkipMode()){
+                        if (FarmersApp.isSkipMode()){
                             MainActivity.start(LoginSignUpActivity.this);
                             finish();
                         } else {
