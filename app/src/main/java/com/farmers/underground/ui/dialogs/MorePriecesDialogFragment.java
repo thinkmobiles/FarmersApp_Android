@@ -8,18 +8,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.farmers.underground.R;
-import com.farmers.underground.remote.models.PriceModel;
-import com.farmers.underground.remote.models.SourceModel;
-import com.farmers.underground.remote.models.base.PriceBase;
+import com.farmers.underground.remote.models.CropPrices;
 import com.farmers.underground.ui.activities.TransparentActivity;
-import com.farmers.underground.ui.adapters.CropQualityPriecesAdapter;
 import com.farmers.underground.ui.adapters.MorePriecesAdapter;
 import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.custom_views.CustomTextView;
 import com.farmers.underground.ui.models.MorePriceItemModel;
 import com.farmers.underground.ui.utils.StringFormaterUtil;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +50,7 @@ public class MorePriecesDialogFragment extends BaseFragment<TransparentActivity>
     private static final String KEY_PRICE_BASE = "price_base";
     private static final String KEY_CROP_NAME = "crop_name";
 
-    public static MorePriecesDialogFragment newInstanse(PriceBase priceBase, String cropName){
+    public static MorePriecesDialogFragment newInstanse(CropPrices priceBase, String cropName){
         MorePriecesDialogFragment fragment = new MorePriecesDialogFragment();
         Bundle args = new Bundle();
         args.putSerializable(KEY_PRICE_BASE, priceBase);
@@ -82,7 +78,7 @@ public class MorePriecesDialogFragment extends BaseFragment<TransparentActivity>
     }
 
     private void setData(){
-        PriceBase model = (PriceBase) getArguments().getSerializable(KEY_PRICE_BASE);
+        CropPrices model = (CropPrices) getArguments().getSerializable(KEY_PRICE_BASE);
         String cropName = getArguments().getString(KEY_CROP_NAME);
 
         tvTitle.setText(model.source.name);
@@ -90,7 +86,7 @@ public class MorePriecesDialogFragment extends BaseFragment<TransparentActivity>
         tcSubtitle.setVisibility(View.INVISIBLE);
 
         List<MorePriceItemModel> list = new ArrayList<>();
-        for(PriceBase.More more : model.more){
+        for(CropPrices.More more : model.more){
             MorePriceItemModel itemModel =  new MorePriceItemModel();
             itemModel.setQuality(more.quality);
             itemModel.setPrice(StringFormaterUtil.parsePrice(more.price));
