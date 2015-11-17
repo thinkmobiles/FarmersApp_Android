@@ -25,12 +25,13 @@ import com.farmers.underground.R;
 import com.farmers.underground.config.ApiConstants;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.RetrofitSingleton;
+import com.farmers.underground.remote.models.CropPricesByDateModel;
 import com.farmers.underground.remote.models.ErrorMsg;
 import com.farmers.underground.remote.models.LastCropPricesModel;
-import com.farmers.underground.remote.models.PricesByDateModel;
+import com.farmers.underground.remote.models.MarketeerPricesByDateModel;
 import com.farmers.underground.remote.models.SuccessMsg;
 import com.farmers.underground.remote.models.UserProfile;
-import com.farmers.underground.remote.models.base.PriceBase;
+import com.farmers.underground.remote.models.CropPrices;
 import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.ui.adapters.AllPricesAdapter;
 import com.farmers.underground.ui.adapters.DrawerAdapter;
@@ -317,7 +318,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     }
 
     @Override
-    public void onMorePricesClicked(PriceBase priceBase) {
+    public void onMorePricesClicked(CropPrices priceBase) {
         pagerAdapter.getItem(viewPager.getCurrentItem()).setCurrentTypeRequest(BasePagerPricesFragment.TypeRequest.Nothing);
         TransparentActivity.startWithFragment(this, MorePriecesDialogFragment.newInstanse(priceBase, mCropModel.displayName));
     }
@@ -335,7 +336,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     /**
      * for
-     * StatisticsFragment -  has two pages;
+     * StatisticsFragment -  has two inner pages;
      */
     public interface PageListener {
         void onPageSelected(int page);
@@ -557,7 +558,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     public void makeRequestGetPriceForPeriod(boolean isFull, final CropAllPricesCallback callback) {
         if(isFull){
-            makeRequestGetPriceForPeriod(mFullRange, callback);
+            makeRequestGetPriceForPeriod(null, callback);
         } else {
             makeRequestGetPriceForPeriod(mDateRange, callback);
         }
@@ -588,14 +589,12 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
         RetrofitSingleton.getInstance().getCropPricesForPeriod(dateRange.getDateFrom(), dateRange.getDateTo(),
                 mCropModel.displayName,
-                new ACallback<List<PricesByDateModel>, ErrorMsg>() {
+                new ACallback<List<CropPricesByDateModel>, ErrorMsg>() {
                     @Override
-                    public void onSuccess(List<PricesByDateModel> result) {
+                    public void onSuccess(List<CropPricesByDateModel> result) {
                         if (result != null && !result.isEmpty()) {
                             callback.onGetResult(result);
                         } else {
-                           /* if (BuildConfig.DEBUG)
-                                onError(new ErrorMsg("No More Prices Fetched"));*/
                             callback.onError();
                         }
                     }
@@ -609,8 +608,35 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         );
     }
 
+    public void makeRequestGetMarketeerCropPricesForPeriod(final MarketeerAllPricesCallback callback) {
+        RetrofitSingleton.getInstance()
+                .getMarketeerCropPricesForPeriod("2015-11-16T12:09:12.000Z", "2014-10-24T12:09:12.000Z", "גזר",
+                        new ACallback<List<MarketeerPricesByDateModel>, ErrorMsg>() {
+                            @Override
+                            public void onSuccess(List<MarketeerPricesByDateModel> result) {
+                                if (result != null && !result.isEmpty()) {
+                                    callback.onGetResult(result);
+                                } else  {
+                                    callback.onError();
+                                }
+                            }
+
+                            @Override
+                            public void onError(@NonNull ErrorMsg error) {
+                                showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
+                                callback.onError();
+                            }
+        });
+    }
+
+
     public interface CropAllPricesCallback {
-        void onGetResult(List<PricesByDateModel> result);
+        void onGetResult(List<CropPricesByDateModel> result);
+        void onError(); //result is empty or network/server error
+    }
+
+    public interface MarketeerAllPricesCallback {
+        void onGetResult(List<MarketeerPricesByDateModel> result);
         void onError(); //result is empty or network/server error
     }
 }
