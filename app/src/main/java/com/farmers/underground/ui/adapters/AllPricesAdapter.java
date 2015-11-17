@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.farmers.underground.R;
-import com.farmers.underground.remote.models.base.PriceBase;
+import com.farmers.underground.remote.models.CropPrices;
 import com.farmers.underground.ui.models.AllPricesDH;
 import com.farmers.underground.ui.models.AllPricesVH;
 
@@ -54,6 +54,6 @@ public class AllPricesAdapter extends RecyclerView.Adapter<AllPricesVH> {
 
     public interface AllPricesCallback {
         void onAddPricesClicked(String date);
-        void onMorePricesClicked(PriceBase priceModel);
+        void onMorePricesClicked(CropPrices priceModel);
     }
 }

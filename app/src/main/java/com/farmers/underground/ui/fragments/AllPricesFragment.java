@@ -10,8 +10,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
+import com.farmers.underground.remote.models.CropPricesByDateModel;
 import com.farmers.underground.remote.models.LastCropPricesModel;
-import com.farmers.underground.remote.models.PricesByDateModel;
 import com.farmers.underground.ui.activities.PricesActivity;
 import com.farmers.underground.ui.adapters.AllPricesAdapter;
 import com.farmers.underground.ui.base.BasePagerPricesFragment;
@@ -43,7 +43,7 @@ public class AllPricesFragment extends BasePagerPricesFragment
     /**  Used for preventing duplicate date items prices in list
      * items order is saved;
      * interesting thing, by the way */
-    LinkedHashMap<String,PricesByDateModel> pricesByDate = new LinkedHashMap<>();
+    LinkedHashMap<String,CropPricesByDateModel> pricesByDate = new LinkedHashMap<>();
 
     private AllPricesAdapter adapter;
     private LinearLayoutManager mLayoutManager;
@@ -152,7 +152,7 @@ public class AllPricesFragment extends BasePagerPricesFragment
     }
 
     @Override
-    public void onGetResult(List<PricesByDateModel> result) {
+    public void onGetResult(List<CropPricesByDateModel> result) {
 
         if(mTypeRequest == TypeRequest.Nothing) {
             return;
@@ -174,20 +174,20 @@ public class AllPricesFragment extends BasePagerPricesFragment
         loading = false;
     }
 
-    private List<PricesByDateModel> updateCachedPrices(List<PricesByDateModel> result, boolean doClear){
+    private List<CropPricesByDateModel> updateCachedPrices(List<CropPricesByDateModel> result, boolean doClear){
         if (doClear)
             pricesByDate.clear();
 
-        for (PricesByDateModel pricesByDateModel : result) {
+        for (CropPricesByDateModel pricesByDateModel : result) {
             pricesByDate.put(pricesByDateModel.prices.get(0).data,pricesByDateModel);
         }
 
         return new ArrayList<>(pricesByDate.values());
     }
 
-    private List<AllPricesDH> generateDH(List<PricesByDateModel> result) {
+    private List<AllPricesDH> generateDH(List<CropPricesByDateModel> result) {
         List<AllPricesDH> allPricesDHs = new ArrayList<>();
-        for (PricesByDateModel item : result) {
+        for (CropPricesByDateModel item : result) {
             AllPricesDH allPricesDH = new AllPricesDH(item, getHostActivity());
             allPricesDHs.add(allPricesDH);
         }

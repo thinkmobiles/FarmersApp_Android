@@ -9,8 +9,9 @@ import butterknife.ButterKnife;
 
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
-import com.farmers.underground.remote.models.base.PriceBase;
+import com.farmers.underground.remote.models.CropPrices;
 import com.farmers.underground.ui.utils.DateHelper;
+import com.farmers.underground.ui.utils.ResUtil;
 import com.farmers.underground.ui.utils.StringFormaterUtil;
 
 import java.text.SimpleDateFormat;
@@ -22,6 +23,7 @@ import java.util.Locale;
  * on 10/2/15.
  */
 public class AllPricesVH extends RecyclerView.ViewHolder {
+    public static final int MAX_PRICES_USER_CAN_ADD = 100 ;
 
     @Bind(R.id.tv_DayAllPrices)
     protected TextView tv_Number;
@@ -70,7 +72,7 @@ public class AllPricesVH extends RecyclerView.ViewHolder {
 
         this.dateHolder = dateHolder;
 
-        List<PriceBase> prices =  dateHolder.getModel().prices;
+        List<CropPrices> prices =  dateHolder.getModel().prices;
 
         for(int i = 0; i < 3; ++i) {
             setSource(layouts[i].findViewById(R.id.tv_Marketeer_CropItem), prices.get(i).source.name);
@@ -95,13 +97,13 @@ public class AllPricesVH extends RecyclerView.ViewHolder {
     }
 
     private void setVisibilityAndListener(View view, final int pos){
-        final PriceBase priceBase = dateHolder.getModel().prices.get(pos);
+        final CropPrices priceBase = dateHolder.getModel().prices.get(pos);
         if(pos != 0) {
             int sizeMore = priceBase.more.size();
             view.setVisibility(sizeMore > 0 ? View.VISIBLE : View.INVISIBLE);
             ((TextView) view).setText(priceBase.quality);
             if(sizeMore == 1)
-                ((TextView) view).setTextColor(container.getResources().getColor(R.color.text_light_grey));
+                ((TextView) view).setTextColor(ResUtil.getColor(container.getResources(),R.color.text_light_grey));
             layouts[pos].setOnClickListener(sizeMore > 1 ? new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -110,7 +112,7 @@ public class AllPricesVH extends RecyclerView.ViewHolder {
             } : null);
 
         } else {
-            boolean isEnable = priceBase.more.size() < 10;
+            boolean isEnable = priceBase.more.size() < MAX_PRICES_USER_CAN_ADD; //great
             view.setVisibility(isEnable ? View.VISIBLE : View.INVISIBLE);
             layouts[pos].setOnClickListener(isEnable ? new View.OnClickListener() {
                 @Override

@@ -1,6 +1,6 @@
 package com.farmers.underground.ui.models;
 
-import com.farmers.underground.remote.models.PricesByDateModel;
+import com.farmers.underground.remote.models.CropPricesByDateModel;
 import com.farmers.underground.ui.adapters.AllPricesAdapter;
 
 /**
@@ -9,10 +9,10 @@ import com.farmers.underground.ui.adapters.AllPricesAdapter;
  */
 public class AllPricesDH {
 
-    private PricesByDateModel model;
+    private CropPricesByDateModel model;
     private AllPricesAdapter.AllPricesCallback callback;
 
-    public AllPricesDH(PricesByDateModel model, AllPricesAdapter.AllPricesCallback callback) {
+    public AllPricesDH(CropPricesByDateModel model, AllPricesAdapter.AllPricesCallback callback) {
         this.model = model;
         this.callback = callback;
     }
@@ -21,7 +21,7 @@ public class AllPricesDH {
         return callback;
     }
 
-    public PricesByDateModel getModel() {
+    public CropPricesByDateModel getModel() {
         return model;
     }
 }
