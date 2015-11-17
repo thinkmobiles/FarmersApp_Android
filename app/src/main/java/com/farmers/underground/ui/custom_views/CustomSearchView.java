@@ -9,17 +9,17 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import java.util.ArrayList;
+import com.farmers.underground.ui.utils.ResUtil;
 
+import java.util.ArrayList;
 /**
  * Created by omar
  * on 9/30/15.
  */
 public class CustomSearchView extends SearchView implements View.OnClickListener {
 
-    LinearLayout llSearchBar = (LinearLayout) this.findViewById(R.id.search_bar);
-    SearchAutoComplete searchEditArea;
-
+    //LinearLayout llSearchBar = (LinearLayout) this.findViewById(R.id.search_bar);
+    private SearchAutoComplete searchEditArea;
 
     public CustomSearchView(Context context) {
         super(context);
@@ -43,26 +43,44 @@ public class CustomSearchView extends SearchView implements View.OnClickListener
             views.add(llSearchHolder.getChildAt(x));
         }
         llSearchHolder.removeAllViews();
-        for (int x = views.size() - 1; x >= 0; x--) {
+          for (int x = views.size() - 1; x >= 0; x--) {
+
+            if (views.get(x) instanceof SearchAutoComplete) {
+                searchEditArea = (SearchAutoComplete) views.get(x);
+                llSearchHolder.addView(searchEditArea);
+                continue;
+            }
+
             llSearchHolder.addView(views.get(x));
         }
 
-
-        searchEditArea = (SearchAutoComplete) this.findViewById(R.id.search_src_text);
+        if (searchEditArea == null) {
+            searchEditArea = (SearchAutoComplete) this.findViewById(R.id.search_src_text);
+        }
+        //searchEditArea.setGravity(Gravity.RIGHT);
         searchEditArea.setGravity(Gravity.RIGHT);
-        searchEditArea.setHintTextColor(getResources().getColor(com.farmers.underground.R.color.text_white));
+        searchEditArea.setHintTextColor(ResUtil.getColor(getResources(), com.farmers.underground.R.color.text_white));
         searchEditArea.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "Fonts/ArialMT.ttf"));
         searchEditArea.setOnClickListener(this);
 
-
     }
+
+    public void setGravityRight(){
+        if (searchEditArea == null)
+            return;
+        searchEditArea.setGravity(Gravity.RIGHT);
+    }
+
+    public void setGravityLeft(){
+        if (searchEditArea == null)
+            return;
+        searchEditArea.setGravity(Gravity.NO_GRAVITY);
+    }
+
 
     @Override
     public void onClick(View view) {
         this.callOnClick();
     }
 
-    public SearchAutoComplete getSearchEditArea() {
-        return searchEditArea;
-    }
 }

@@ -9,12 +9,12 @@ import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 
-import com.farmers.underground.R;
-
 /**
- * Created by samson on 07.10.15.
+ * Created by samson
+ * on 07.10.15.
  */
 public class CustomTabLayout extends TabLayout {
+
     public CustomTabLayout(Context context) {
         super(context);
     }

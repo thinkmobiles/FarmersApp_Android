@@ -15,7 +15,7 @@ import com.farmers.underground.R;
 import com.farmers.underground.config.ApiConstants;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.LastCropPricesModel;
-import com.farmers.underground.remote.models.base.PriceBase;
+import com.farmers.underground.remote.models.CropPrices;
 import com.farmers.underground.ui.adapters.CropsListAdapter;
 import com.farmers.underground.ui.utils.DateHelper;
 import com.farmers.underground.ui.utils.StringFormaterUtil;
@@ -95,23 +95,21 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
         CropsListAdapter.getImageLoader().displayImage(url, iv_CropsImage);
 
         for (int i = 0; i < ll_PriceContainer.getChildCount(); i++) {
-            TextView tv_refreshDate = (TextView) ll_PriceContainer.getChildAt(i).findViewById(R.id.tv_PriceDate_CropItem);
+
             TextView tv_refresh = (TextView) ll_PriceContainer.getChildAt(i).findViewById(R.id.tv_RefresPrice_CropsItem);
             TextView tv_Price = (TextView) ll_PriceContainer.getChildAt(i).findViewById(R.id.tv_Price);
             TextView tv_Marketeer_CropItem = (TextView) ll_PriceContainer.getChildAt(i).findViewById(R.id.tv_Marketeer_CropItem);
 
-
-            PriceBase priceModel = model.prices.get(i);
+            CropPrices priceModel = model.prices.get(i);
 
             if (priceModel != null) {
 
                 tv_Price.setText(StringFormaterUtil.parsePrice(priceModel.price));
                 tv_Marketeer_CropItem.setText(priceModel.source.name);
 
-                tv_refreshDate.setVisibility(View.GONE);
             }
             if (i != 0) {
-                tv_refreshDate.setVisibility(View.GONE);
+
                 tv_refresh.setOnClickListener(null);
                 tv_refresh.setVisibility(View.INVISIBLE);
             }
