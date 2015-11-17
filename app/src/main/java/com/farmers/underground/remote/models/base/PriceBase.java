@@ -9,16 +9,9 @@ import java.util.ArrayList;
  */
 public class PriceBase implements Serializable {
 
-    public Source source;
     public Double price;
     public String quality;
-    public String data;
     public ArrayList<More> more;
-
-    public class Source {
-        public String type;
-        public String name;
-    }
 
     public class More {
         public Double price;
