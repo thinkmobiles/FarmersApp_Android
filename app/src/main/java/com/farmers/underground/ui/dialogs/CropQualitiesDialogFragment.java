@@ -67,7 +67,7 @@ public class CropQualitiesDialogFragment extends BaseFragment<TransparentActivit
     private CropQualityPriecesAdapter initListAdapterTest(){
 
         PriceModel priceModel = new PriceModel();
-        priceModel.setPrice(4.50f);
+        priceModel.setPrice(4.50d);
         SourceModel sourceModel = new SourceModel();
         sourceModel.setName("MarketeerName");
         sourceModel.setType("QualityName (Type)");

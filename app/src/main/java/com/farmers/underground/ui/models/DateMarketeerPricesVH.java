@@ -13,6 +13,7 @@ import com.farmers.underground.R;
 
     @Bind(R.id.tv_Date_MP)
     protected TextView tv_Date;
+
     @Bind(R.id.dateConainer_MP)
     protected View container;
 

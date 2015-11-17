@@ -12,7 +12,9 @@ import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.remote.models.MarketeerPriceModel;
+import com.farmers.underground.remote.models.MarketeerPrices;
 import com.farmers.underground.remote.models.MarketeerPricesByDateModel;
+import com.farmers.underground.remote.models.PriceModel;
 import com.farmers.underground.ui.activities.AddPriceActivity;
 import com.farmers.underground.ui.activities.PricesActivity;
 import com.farmers.underground.ui.activities.TransparentActivity;
@@ -84,7 +86,6 @@ public class MarketeerPricesFragment extends BasePagerPricesFragment implements 
                 headersDecor.invalidateHeaders();
             }
         });
-        setAdapterData(generateTestPriceList());
     }
 
     @Override
@@ -123,32 +124,28 @@ public class MarketeerPricesFragment extends BasePagerPricesFragment implements 
         return first.getDate().equalsIgnoreCase(second.getDate());
     }
 
-    private void setAdapterData(List<MarketeerPriceModel> cropModels) {
-        adapter.setDataList(generateDH(cropModels));
+    private void setAdapterData(List<MarketeerPricesByDateModel> response) {
+
+        List<MarketeerPriceModel> marketeerModelList = new ArrayList<>();
+
+        for (MarketeerPricesByDateModel marketeerPricesByDateModel : response) {
+            for (MarketeerPrices price : marketeerPricesByDateModel.prices) {
+                MarketeerPriceModel model = new MarketeerPriceModel();
+                model.setDate(marketeerPricesByDateModel.data);
+                model.setName(price.name);
+
+                PriceModel priceModel = new PriceModel();
+
+                priceModel.setPrice(price.price);
+                priceModel.setDate(marketeerPricesByDateModel.data);
+
+                model.setPrice(priceModel);
+                marketeerModelList.add(model);
+            }
+        }
+
+        adapter.setDataList(generateDH(marketeerModelList));
     }
-
-
-    /*todo remove later*/
-    private List<MarketeerPriceModel> generateTestPriceList() {
-        List<MarketeerPriceModel> priceModelList = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            MarketeerPriceModel model = new MarketeerPriceModel();
-            model.setDate("21.05.15");
-            priceModelList.add(model);
-        }
-        for (int i = 0; i < 5; i++) {
-            MarketeerPriceModel model = new MarketeerPriceModel();
-            model.setDate("20.05.15");
-            priceModelList.add(model);
-        }
-        for (int i = 0; i < 5; i++) {
-            MarketeerPriceModel model = new MarketeerPriceModel();
-            model.setDate("19.05.15");
-            priceModelList.add(model);
-        }
-        return priceModelList;
-    }
-
 
     private void generateAdapterCB(){
         adapterCallback = new MarketeerPricesAdapter.Callback() {
@@ -181,7 +178,7 @@ public class MarketeerPricesFragment extends BasePagerPricesFragment implements 
 
     @Override
     public void onGetResult(List<MarketeerPricesByDateModel> result) {
-        //setAdapterData(result);
+         setAdapterData(result);
     }
 
     @Override

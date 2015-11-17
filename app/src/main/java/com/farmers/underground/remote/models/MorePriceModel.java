@@ -7,17 +7,6 @@ import com.google.gson.annotations.SerializedName;
  * on 10/12/15.
  */
 public class MorePriceModel {
-    @SerializedName("minPrice")
-    private float minPrice;
-
-    @SerializedName("maxPrice")
-    private float maxPrice;
-
-    @SerializedName("avgPrice")
-    private float avgPrice;
-
-    @SerializedName("site")
-    private String site;
 
     @SerializedName("name")
     private String name;

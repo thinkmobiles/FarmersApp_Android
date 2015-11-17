@@ -11,7 +11,7 @@ import java.util.List;
 public class PriceModel {
 
     @SerializedName("value")
-    private float price;
+    private Double price;
 
     @SerializedName("data")
     private String date;
@@ -23,11 +23,11 @@ public class PriceModel {
     private List<MorePriceModel> morePicesList;
 
 
-    public float getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
