@@ -26,6 +26,8 @@ public class ProjectConstants {
     public static final String KEY_CURRENT_USER_LOGIN_SUCCESSFUL    = "currentUser::LoginSuccessful";
     public static final String KEY_CURRENT_USER_SKIP_MODE           = "currentUser::SkipMode";
 
+    public static final String KEY_CURRENT_USER_PROFILE           = "currentUser::mUserProfile";
+
     public static final String KEY_APP_SHOW_SKIP_TUTORIAL           = "application::TutorialShowSkip";
     public static final String KEY_APP_LAUNCHED_BEFORE              = "application::LaunchedBefore";
 
