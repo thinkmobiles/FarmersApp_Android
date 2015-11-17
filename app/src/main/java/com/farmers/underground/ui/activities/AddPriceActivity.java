@@ -158,16 +158,16 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
     }
 
     public void showDatePicker() {
-        Calendar today = Calendar.getInstance();
+        Calendar focusDate = (selectedDate!=null) ? selectedDate : today;
         DatePickerDialog dpd;
         if (Build.VERSION.SDK_INT >=21){
             dpd = new DatePickerDialog(this,
                     R.style.MyAlertDialogStyle,
-                    this, today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH));
+                    this, focusDate.get(Calendar.YEAR), focusDate.get(Calendar.MONTH), focusDate.get(Calendar.DAY_OF_MONTH));
 
         } else {
             dpd = new DatePickerDialog(this,
-                    this, today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH));
+                    this, focusDate.get(Calendar.YEAR), focusDate.get(Calendar.MONTH), focusDate.get(Calendar.DAY_OF_MONTH));
         }
         dpd.getDatePicker().setMaxDate(today.getTime().getTime()); //today max
         dpd.show();
@@ -176,17 +176,20 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
 
     @Override
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-        Calendar selectedDay = Calendar.getInstance();
-        selectedDay.set(Calendar.YEAR, year);
-        selectedDay.set(Calendar.MONTH, monthOfYear);
-        selectedDay.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        if (view.isShown()) {
+            Calendar selectedDay = Calendar.getInstance();
+            selectedDay.set(Calendar.YEAR, year);
+            selectedDay.set(Calendar.MONTH, monthOfYear);
+            selectedDay.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-        //if (selectedDay.before(today)) {
+            if (selectedDay.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || selectedDay.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {
+                showToast("You can't add prices for Friday or Saturday", Toast.LENGTH_SHORT);
+                return;
+            }
+
             selectedDate = selectedDay;
             onChangeDateListener.onChangeDate();
-//        } else {
-//            showToast("Please select current day or less", Toast.LENGTH_SHORT);
-//        }
+        }
     }
 
     public String getDate(){
@@ -250,6 +253,7 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
         FarmerPricesModel farmerPricesModel = new FarmerPricesModel();
         farmerPricesModel.cropName = mCropModel.displayName;
         farmerPricesModel.date = StringFormaterUtil.parseToServerResponse(selectedDate);
+        showProgressDialog();
         RetrofitSingleton.getInstance().addFarmerPriceForCrop(
                 new FarmerPricesModel(
                         mCropModel.displayName,
@@ -260,6 +264,7 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
             @Override
             public void onSuccess(SuccessMsg result) {
                 showToast(getString(R.string.alert_message_after_add_price), Toast.LENGTH_SHORT);
+                FarmersApp.getInstance().setShouldUpdateLastCropsNextTime(true);
                 anyway();
             }
 
