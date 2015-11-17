@@ -20,6 +20,7 @@ import com.farmers.underground.remote.models.base.MarketeerBase;
 import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.remote.util.ICallback;
 import com.farmers.underground.ui.activities.LoginSignUpActivity;
+import com.farmers.underground.ui.utils.CircleBitmapDisplayer;
 import com.farmers.underground.ui.utils.DateHelper;
 import com.farmers.underground.ui.utils.ImageCacheManager;
 import com.farmers.underground.ui.utils.TypefaceManager;
@@ -122,7 +123,7 @@ public class FarmersApp extends Application {
 
         public static DisplayImageOptions.Builder getCacheRoundPic = new DisplayImageOptions.Builder()
                 .cacheInMemory(true)
-                .displayer( new RoundedBitmapDisplayer(1000))
+                .displayer(new CircleBitmapDisplayer())
                 .showImageForEmptyUri(R.drawable.ic_drawer_crops)
                 .showImageOnLoading(R.drawable.ic_drawer_crops)
                 .showImageOnFail(R.drawable.ic_drawer_crops)
@@ -232,8 +233,11 @@ public class FarmersApp extends Application {
         RetrofitSingleton.getInstance().getUserProfileBySession(new ACallback<UserProfile, ErrorMsg>() {
             @Override
             public void onSuccess(UserProfile result) {
-                if (result == null)
+
+                if (result == null){
                     onError(new ErrorMsg("Profile is not fetched"));
+                    return;
+                }
 
                 setCurrentUser(result);
 
@@ -358,20 +362,19 @@ public class FarmersApp extends Application {
     private void cacheUserProfile(UserProfile result) {
 
         Gson gson = new GsonBuilder().create();
-        String json = getUsrPreferences().getString("mUserProfile", "");
-
-        if(!json.isEmpty()){
-            UserProfile temp = gson.fromJson(json, UserProfile.class);
+        String json = getUsrPreferences().getString(ProjectConstants.KEY_CURRENT_USER_PROFILE, "");
+        UserProfile temp = gson.fromJson(json, UserProfile.class);
+        if(!json.isEmpty() && temp!=null){
             if (temp.getId().equals(result.getId()) && DateHelper.parseToCalendar(temp.getUpdatedAt()).before(DateHelper.parseToCalendar(result.getUpdatedAt()))){
                 gson = new GsonBuilder().create();
                 json = gson.toJson(result);
-                getUsrPreferences().edit().putString("mUserProfile", json).apply();
+                getUsrPreferences().edit().putString(ProjectConstants.KEY_CURRENT_USER_PROFILE, json).apply();
             }
         } else {
             gson = new GsonBuilder().create();
             json = gson.toJson(result);
 
-            getUsrPreferences().edit().putString("mUserProfile", json).apply();
+            getUsrPreferences().edit().putString(ProjectConstants.KEY_CURRENT_USER_PROFILE, json).apply();
         }
 
     }
@@ -379,7 +382,7 @@ public class FarmersApp extends Application {
     /**false if no cached profile*/
     private boolean getCachedUserProfile(){
         Gson gson = new GsonBuilder().create();
-        String json = getUsrPreferences().getString("mUserProfile", "");
+        String json = getUsrPreferences().getString(ProjectConstants.KEY_CURRENT_USER_PROFILE, "");
         if(json.isEmpty())
             return false;
 
@@ -387,4 +390,24 @@ public class FarmersApp extends Application {
 
         return true;
     }
+
+    private boolean shouldUpdateLastCropsNextTime;
+    public boolean shouldUpdateLastCropsNextTime(){
+        return shouldUpdateLastCropsNextTime;
+    }
+    public void setShouldUpdateLastCropsNextTime(boolean flag){
+        this.shouldUpdateLastCropsNextTime = flag;
+    }
+
+    private long lastCopsUpdateTime;
+
+    public boolean shouldUpdateLastCrops() {
+        return lastCopsUpdateTime == 0 || (System.currentTimeMillis() - lastCopsUpdateTime) >= 900000;//15 min
+
+    }
+    public void setLastCopsUpdateTime(){
+        this.lastCopsUpdateTime = System.currentTimeMillis();
+    }
+
+
 }
