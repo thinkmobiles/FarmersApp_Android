@@ -33,7 +33,7 @@ import butterknife.OnTextChanged;
  */
 public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements AddPriceActivity.OnChangeDateListener {
 
-    private static final int MAX_AMOUNT_PRICES = 9; //+1
+    private static final int MAX_AMOUNT_PRICES = 8; //+1
 
     @Bind(R.id.etPrice_FAP)
     protected EditText etPrice;
