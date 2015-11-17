@@ -2,7 +2,8 @@ package com.farmers.underground.remote.services;
 
 import com.farmers.underground.remote.models.FarmerPricesModel;
 import com.farmers.underground.remote.models.LastCropPricesModel;
-import com.farmers.underground.remote.models.PricesByDateModel;
+import com.farmers.underground.remote.models.CropPricesByDateModel;
+import com.farmers.underground.remote.models.MarketeerPricesByDateModel;
 import com.farmers.underground.remote.models.SuccessMsg;
 
 import retrofit.Call;
@@ -20,15 +21,25 @@ import java.util.List;
 public interface PricesService {
 
     @GET("prices/getLast")
-    Call<List<LastCropPricesModel>> getLast();
+    Call<List<LastCropPricesModel>>
+    getLast();
 
    /**
-    * this is for fetch prices for cor for period
+    * this is for fetch prices for crop by period
     * */
     @GET("prices/getCropPricesForPeriod")
-    Call<List<PricesByDateModel>> getCropPricesForPeriod(@Query("cropName") String cropName, @Query("startDate") String startDate, @Query("endDate") String endDate);
+    Call<List<CropPricesByDateModel>>
+    getCropPricesForPeriod(@Query("cropName") String cropName, @Query("startDate") String startDate, @Query("endDate") String endDate);
+
+    /**
+     * this is for fetch prices from marketeers by period
+     * */
+    @GET("prices/getMarketeerCropPricesForPeriod")
+    Call<List<MarketeerPricesByDateModel>>
+    getMarketeerCropPricesForPeriod(@Query("cropName") String cropName, @Query("startDate") String startDate, @Query("endDate") String endDate);
 
     @POST("prices/addFarmerPrice")
-    Call<SuccessMsg> addFarmerPrice(@Body FarmerPricesModel farmerPrices);
+    Call<SuccessMsg>
+    addFarmerPrice(@Body FarmerPricesModel farmerPrices);
 
 }

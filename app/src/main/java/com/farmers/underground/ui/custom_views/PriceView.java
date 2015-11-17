@@ -21,9 +21,6 @@ public class PriceView  {
     @Bind(R.id.tv_Marketeer_CropItem)
     public TextView tv_Marketeer_CropItem;
 
-    @Bind(R.id.tv_PriceDate_CropItem)
-    public TextView tv_PriceDate_CropItem;
-
     @Bind(R.id.tv_RefresPrice_CropsItem)
     public TextView tv_RefresPrice_CropsItem;
 
