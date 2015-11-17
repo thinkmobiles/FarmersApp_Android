@@ -12,6 +12,7 @@ import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.remote.models.MarketeerPriceModel;
+import com.farmers.underground.remote.models.MarketeerPricesByDateModel;
 import com.farmers.underground.ui.activities.AddPriceActivity;
 import com.farmers.underground.ui.activities.PricesActivity;
 import com.farmers.underground.ui.activities.TransparentActivity;
@@ -33,7 +34,7 @@ import java.util.List;
  * Created by omar
  * on 10/9/15.
  */
-public class MarketeerPricesFragment extends BasePagerPricesFragment {
+public class MarketeerPricesFragment extends BasePagerPricesFragment implements PricesActivity.MarketeerAllPricesCallback {
 
     @Bind(R.id.rv_BaseListFragment)
     protected RecyclerView recyclerView;
@@ -84,6 +85,12 @@ public class MarketeerPricesFragment extends BasePagerPricesFragment {
             }
         });
         setAdapterData(generateTestPriceList());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getHostActivity().makeRequestGetMarketeerCropPricesForPeriod(this);
     }
 
     @Override
@@ -170,5 +177,15 @@ public class MarketeerPricesFragment extends BasePagerPricesFragment {
     @Override
     public void setDateRange(DateRange dateRange, boolean isAllTime) {
         mDateRange = dateRange;
+    }
+
+    @Override
+    public void onGetResult(List<MarketeerPricesByDateModel> result) {
+        //setAdapterData(result);
+    }
+
+    @Override
+    public void onError() {
+        //TODO
     }
 }
