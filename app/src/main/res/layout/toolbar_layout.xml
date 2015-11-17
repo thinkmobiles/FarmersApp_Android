@@ -17,6 +17,7 @@
         android:visibility="gone" />
 
     <com.farmers.underground.ui.custom_views.CustomSearchView
+        custom:searchHintIcon="@null"
         android:id="@+id/searchView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

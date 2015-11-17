@@ -126,11 +126,11 @@
     <!--Calendar-->
     <string name="month1">ינואר</string>
     <string name="month2">פבואר</string>
-    <string name="month3">חודש מרץ</string>
+    <string name="month3">מרץ</string>
     <string name="month4">אפריל</string>
-    <string name="month5">חודש מאי</string>
-    <string name="month6">חודש יוני</string>
-    <string name="month7">חודש יולי</string>
+    <string name="month5">מאי</string>
+    <string name="month6">יוני</string>
+    <string name="month7">יולי</string>
     <string name="month8">אוגוסט</string>
     <string name="month9">ספטמבר</string>
     <string name="month10">אוקטובר</string>

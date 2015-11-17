@@ -14,8 +14,9 @@
         android:clickable="true">
 
     <LinearLayout
+            android:background="#ffffff"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/crops_card_height"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
         <FrameLayout
@@ -96,9 +97,10 @@
 
         <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/crops_card_footer_height"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/crops_card_fav_cb_margin_small"
                 android:layout_marginRight="@dimen/crops_card_fav_cb_margin_small"
+                android:layout_marginBottom="8dp"
                 >
 
             <com.farmers.underground.ui.custom_views.CustomTextView

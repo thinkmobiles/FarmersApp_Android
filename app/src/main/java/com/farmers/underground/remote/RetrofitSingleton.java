@@ -5,7 +5,6 @@ import com.farmers.underground.BuildConfig;
 import com.farmers.underground.config.ApiConstants;
 import com.farmers.underground.remote.models.*;
 import com.farmers.underground.remote.models.base.MarketeerBase;
-import com.farmers.underground.remote.models.base.PriceBase;
 import com.farmers.underground.remote.services.AuthorizationService;
 import com.farmers.underground.remote.services.CropsService;
 import com.farmers.underground.remote.services.MarketeerService;
@@ -18,7 +17,6 @@ import retrofit.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -108,10 +106,27 @@ public class RetrofitSingleton {
     }
 
     public void getCropPricesForPeriod(@NonNull String startDate, @NonNull  String endDate, @NonNull  String cropName,
-                                       final ACallback<List<PricesByDateModel>,ErrorMsg> callback){
-        getPricesService().getCropPricesForPeriod(cropName,startDate,endDate).enqueue(new Callback<List<PricesByDateModel>>() {
+                                       final ACallback<List<CropPricesByDateModel>,ErrorMsg> callback){
+        getPricesService().getCropPricesForPeriod(cropName, startDate, endDate).enqueue(new Callback<List<CropPricesByDateModel>>() {
             @Override
-            public void onResponse(Response<List<PricesByDateModel>> response, Retrofit retrofit) {
+            public void onResponse(Response<List<CropPricesByDateModel>> response, Retrofit retrofit) {
+                performCallback(callback,response);
+                callback.anyway();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                callback.onError(new ErrorMsg("Network/Server Error"));
+                callback.anyway();
+            }
+        });
+    }
+
+    public void getMarketeerCropPricesForPeriod(@NonNull String startDate, @NonNull  String endDate, @NonNull  String cropName,
+                                       final ACallback<List<MarketeerPricesByDateModel>,ErrorMsg> callback){
+        getPricesService().getMarketeerCropPricesForPeriod(cropName, startDate, endDate).enqueue(new Callback<List<MarketeerPricesByDateModel>>() {
+            @Override
+            public void onResponse(Response<List<MarketeerPricesByDateModel>> response, Retrofit retrofit) {
                 performCallback(callback,response);
                 callback.anyway();
             }
