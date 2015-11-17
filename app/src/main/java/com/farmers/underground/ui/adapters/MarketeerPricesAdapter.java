@@ -15,13 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by omar on 10/2/15.
+ * Created by omar
+ * on 10/2/15.
  */
 public class MarketeerPricesAdapter extends RecyclerView.Adapter<PriceMarketeerPricesVH> implements StickyRecyclerHeadersAdapter<DateMarketeerPricesVH> {
 
     private List<PriceMarketeerPricesDH> dataList;
-    private int lastPosition;
-
 
     public MarketeerPricesAdapter() {
         dataList = new ArrayList<>();
@@ -40,18 +39,16 @@ public class MarketeerPricesAdapter extends RecyclerView.Adapter<PriceMarketeerP
 
     @Override
     public void onBindViewHolder(PriceMarketeerPricesVH holder, int position) {
-        boolean hideDevider = position == getItemCount() - 1;
+        boolean hideDivider = position == getItemCount() - 1;
 
         if(position < getItemCount() -1 && getHeaderId(position) != getHeaderId(position +1))
-            hideDevider = true;
-        holder.bindData(dataList.get(position), hideDevider);
+            hideDivider = true;
+        holder.bindData(dataList.get(position), hideDivider);
     }
 
     @Override
     public long getHeaderId(int position) {
-        long hash = Math.abs(dataList.get(position).getDateHashCode());
-        return hash;
-
+        return Math.abs(dataList.get(position).getDateHashCode());
     }
 
     @Override
