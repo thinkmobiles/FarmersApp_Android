@@ -8,10 +8,9 @@ public class MarketeerPriceModel {
 
     private String date;
     private String name;
-    private String province;
-    private PriceModel price;
-    private String logoUrl;
+    private String location;
 
+    private PriceModel price;
 
     public String getDate() {
         return date;
@@ -29,27 +28,11 @@ public class MarketeerPriceModel {
         this.name = name;
     }
 
-    public String getProvince() {
-        return province;
-    }
-
-    public void setProvince(String province) {
-        this.province = province;
-    }
-
     public PriceModel getPrice() {
         return price;
     }
 
     public void setPrice(PriceModel price) {
         this.price = price;
-    }
-
-    public String getLogoUrl() {
-        return logoUrl;
-    }
-
-    public void setLogoUrl(String logoUrl) {
-        this.logoUrl = logoUrl;
     }
 }
