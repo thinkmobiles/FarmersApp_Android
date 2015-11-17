@@ -20,15 +20,14 @@ abstract public class SearchHintController implements AdapterView.OnItemClickLis
     private SearchHintAdapter adapter;
     private List<SearchHint> hintList;
     private boolean isShowing;
-    private SearchHint querry;
-
+    private SearchHint query;
 
     public void initAdapter(SearchHintAdapter adapter) {
         this.adapter = adapter;
     }
 
-    public SearchHint getQuerry() {
-        return querry;
+    public SearchHint getQuery() {
+        return query;
     }
 
     public boolean isShowing() {
@@ -39,15 +38,15 @@ abstract public class SearchHintController implements AdapterView.OnItemClickLis
         setContainerListView(hintContainer);
     }
 
-    public void setContainerListView(ListView hitnContainer) {
-        this.lv_Container = hitnContainer;
-        hitnContainer.setOnItemClickListener(this);
+    public void setContainerListView(ListView hintContainer) {
+        this.lv_Container = hintContainer;
+        hintContainer.setOnItemClickListener(this);
         lv_Container.setTranslationY(-ResourceRetriever.retrievePX(lv_Container.getContext(), R.dimen
                 .search_hint_offset));
 
     }
 
-    public void setHinsList(List<SearchHint> hintList) {
+    public void setHintsList(List<SearchHint> hintList) {
         this.hintList = hintList;
         initAdapter(new SearchHintAdapter());
         adapter.setItems(hintList);
@@ -56,8 +55,8 @@ abstract public class SearchHintController implements AdapterView.OnItemClickLis
 
     }
 
-    public void setQuerry(SearchHint querry) {
-        this.querry = querry;
+    public void setQuery(SearchHint query) {
+        this.query = query;
     }
 
     public void show() {
