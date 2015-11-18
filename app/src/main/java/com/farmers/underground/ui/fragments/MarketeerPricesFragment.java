@@ -5,9 +5,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.LastCropPricesModel;
@@ -58,9 +60,13 @@ public class MarketeerPricesFragment extends BasePagerPricesFragment<MarketeerPr
         return fragment;
     }
 
-    /** RecyclerView Scroll: if true - load next month*/
+    /**
+     * RecyclerView Scroll: if true - load next month
+     */
     private boolean loading = true;
-    /** RecyclerView Scroll*/
+    /**
+     * RecyclerView Scroll
+     */
     private int pastVisiblyItems, visibleItemCount, totalItemCount;
     private LinearLayoutManager mLayoutManager;
 
@@ -111,27 +117,32 @@ public class MarketeerPricesFragment extends BasePagerPricesFragment<MarketeerPr
     public void onResume() {
         super.onResume();
 
-        if(mTypeRequest == null) {
+        if(getHostActivity().getTemp() != null){
+            mTypeRequest = getHostActivity().getTemp();
+        }
+
+
+        if (mTypeRequest == null) {
             // load default (first month items)
-            getHostActivity().makeRequestGetMarketeerCropPricesForPeriod(null, this);//todo
+            getHostActivity().makeRequestGetMarketeerPriceForPeriod(true, this);
             mTypeRequest = TypeRequest.Add;
 
         } else if (mTypeRequest != TypeRequest.Nothing) {
 
-            if(mTypeRequest == TypeRequest.Refresh)
-                getHostActivity().makeRequestGetMarketeerCropPricesForPeriod(null, this);//todo
+            if (mTypeRequest == TypeRequest.Refresh)
+                getHostActivity().makeRequestGetMarketeerPriceForPeriod(true, this);
             else if (mTypeRequest == TypeRequest.Search)
-                getHostActivity().makeRequestGetMarketeerCropPricesForPeriod(null, this);//todo
+                getHostActivity().makeRequestGetMarketeerPriceForPeriod(false, this);
 
         } else if (!dataFetched.isEmpty()) {
             adapter.setDataList(generateDH(new ArrayList<>(dataFetched.values())));
         }
     }
 
-    private void addMonth(){
-        if(mTypeRequest != TypeRequest.Search) {
+    private void addMonth() {
+        if (mTypeRequest != TypeRequest.Search) {
             mTypeRequest = TypeRequest.Add;
-            getHostActivity().makeRequestGetMarketeerCropPricesForPeriod(null, this); //todo
+            getHostActivity().makeRequestGetMarketeerPriceForPeriodAddMonth(this);
         }
     }
 
@@ -158,45 +169,22 @@ public class MarketeerPricesFragment extends BasePagerPricesFragment<MarketeerPr
     private boolean equalsDate(MarketeerPriceModel first, MarketeerPriceModel second) {
         return first.getDate().equalsIgnoreCase(second.getDate());
     }
-/*
-    private void setAdapterData(List<MarketeerPricesByDateModel> response) {
 
-        List<MarketeerPriceModel> marketeerModelList = new ArrayList<>();
-
-        for (MarketeerPricesByDateModel marketeerPricesByDateModel : response) {
-            for (MarketeerPrices price : marketeerPricesByDateModel.prices) {
-                MarketeerPriceModel model = new MarketeerPriceModel();
-
-                model.setDate(marketeerPricesByDateModel.data);
-                model.setName(price.name);
-                model.setLocation(price.location);
-                model.setPrice(price.price);
-                model.setMore(price.more);
-
-                model.setMarketeerPrices(price);
-
-                marketeerModelList.add(model);
-            }
-        }
-
-        adapter.setDataList(generateDH(marketeerModelList));
-    }*/
-
-    private void generateAdapterCB(){
+    private void generateAdapterCB() {
         adapterCallback = new MarketeerPricesAdapter.Callback() {
             @Override
             public void onMorePricesClicked(MarketeerPriceModel marketeerPriceModel) {
                 TransparentActivity.startWithFragment(getHostActivity(),
-                    CropQualitiesDialogFragment.newInstance(marketeerPriceModel.getMarketeerPrices(),
-                                                                marketeerPriceModel.getDisplayDate(),
-                                                                  getHostActivity().getCropModel().displayName));
+                        CropQualitiesDialogFragment.newInstance(marketeerPriceModel.getMarketeerPrices(),
+                                marketeerPriceModel.getDisplayDate(),
+                                getHostActivity().getCropModel().displayName));
             }
 
             @Override
             public void onNoPricesClicked(MarketeerPriceModel model) {
-                WhyCanISeeThisPriceDialogFragment fragment =  new WhyCanISeeThisPriceDialogFragment();
+                WhyCanISeeThisPriceDialogFragment fragment = new WhyCanISeeThisPriceDialogFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString("Date",model.getDate());
+                bundle.putString("Date", model.getDate());
                 fragment.setArguments(bundle);
                 TransparentActivity.startWithFragmentForResult(getHostActivity(), fragment, PricesActivity.REQUEST_CODE_DIALOG_WHY);
             }
@@ -213,7 +201,7 @@ public class MarketeerPricesFragment extends BasePagerPricesFragment<MarketeerPr
     public void setDateRange(DateRange dateRange, boolean isAllTime) {
 
          /*allow or prevent loading more on scroll */
-        if (mTypeRequest == TypeRequest.Search){
+        if (mTypeRequest == TypeRequest.Search) {
             loading = isAllTime;
         } else if (mTypeRequest == TypeRequest.Add) {
             loading = true;
@@ -223,14 +211,15 @@ public class MarketeerPricesFragment extends BasePagerPricesFragment<MarketeerPr
     @Override
     public void onGetResult(List<MarketeerPricesByDateModel> result) {
 
-        if(mTypeRequest == TypeRequest.Nothing) {
+        if (mTypeRequest == TypeRequest.Nothing) {
             return;
-        } else if(mTypeRequest == TypeRequest.Add) {
-            adapter.addDataList(generateDH(updateCachedPrices(result,false)));
-        } else if(mTypeRequest == TypeRequest.Refresh) {
-            adapter.setDataList(generateDH(updateCachedPrices(result,true)));
-        } else if(mTypeRequest == TypeRequest.Search) {
-            adapter.setDataList(generateDH(updateCachedPrices(result,true)));
+        } else if (mTypeRequest == TypeRequest.Add) {
+            adapter.addDataList(generateDH(updateCachedPrices(result, false)));
+            loading = true;
+        } else if (mTypeRequest == TypeRequest.Refresh) {
+            adapter.setDataList(generateDH(updateCachedPrices(result, true)));
+        } else if (mTypeRequest == TypeRequest.Search) {
+            adapter.setDataList(generateDH(updateCachedPrices(result, true)));
         }
         setTypeRequestNothing();
     }
@@ -241,7 +230,7 @@ public class MarketeerPricesFragment extends BasePagerPricesFragment<MarketeerPr
         loading = false;
     }
 
-    private List<MarketeerPriceModel> updateCachedPrices(List<MarketeerPricesByDateModel> result, boolean doClear){
+    private List<MarketeerPriceModel> updateCachedPrices(List<MarketeerPricesByDateModel> result, boolean doClear) {
         if (doClear)
             dataFetched.clear();
 
@@ -258,7 +247,7 @@ public class MarketeerPricesFragment extends BasePagerPricesFragment<MarketeerPr
 
                 model.setMarketeerPrices(price);
 
-                dataFetched.put(model.getDate(),model);
+                dataFetched.put(model.getDate() + model.getName(), model);
             }
         }
         return new ArrayList<>(dataFetched.values());

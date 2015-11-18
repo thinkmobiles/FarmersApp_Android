@@ -14,6 +14,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -145,9 +146,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         setFragmentStateController();
 
         searchView.setVisibility(View.VISIBLE);
-
-        if (savedInstanceState == null)
-            setSearchViewFocus(getIntent().getBooleanExtra(ProjectConstants.KEY_FOCUS_SEARCH_VIEW, false));
 
         searchResultProvider = SearchResultProvider.getInstance(this, this);
     }
@@ -441,6 +439,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             query = intent.getStringExtra(SearchManager.QUERY);
+            if(query!=null && !query.isEmpty())
             updateFragmentsOnSearch(query);
         }
     }
@@ -698,5 +697,18 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     public void onSearchResultLoadFinished(List<LastCropPricesModel> crops) {
         updateFragments(crops, query);
         cropListSearch = crops;
+    }
+
+    @Override
+    protected void onStop() {
+
+        if (drawerOpened)
+            mDrawerLayout.closeDrawers();
+        else if (searchHintController.isShowing()) {
+            hideSoftKeyboard();
+            searchHintController.hide();
+        }
+
+        super.onStop();
     }
 }

@@ -25,6 +25,8 @@ public class AllPricesAdapter extends RecyclerView.Adapter<AllPricesVH> {
     }
 
     public void setDataList(List<AllPricesDH> dataList) {
+        if(this.dataList !=null)
+            this.dataList.clear();
         this.dataList = dataList;
         notifyDataSetChanged();
     }

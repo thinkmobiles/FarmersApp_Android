@@ -8,6 +8,7 @@ import android.view.View;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.CropPrices;
@@ -58,12 +59,16 @@ public class AllPricesFragment extends BasePagerPricesFragment<CropPricesByDateM
         return fragment;
     }
 
-    /** RecyclerView Scroll: if true - load next month*/
+    /**
+     * RecyclerView Scroll: if true - load next month
+     */
     private boolean loading = true;
-    /** RecyclerView Scroll*/
+    /**
+     * RecyclerView Scroll
+     */
     private int pastVisiblyItems, visibleItemCount, totalItemCount;
 
-    private void setSettingRecycler(){
+    private void setSettingRecycler() {
 
         mLayoutManager = new LinearLayoutManager(getHostActivity(), LinearLayoutManager.VERTICAL, false);
 
@@ -91,8 +96,8 @@ public class AllPricesFragment extends BasePagerPricesFragment<CropPricesByDateM
         });
     }
 
-    private void addMonth(){
-        if(mTypeRequest != TypeRequest.Search) {
+    private void addMonth() {
+        if (mTypeRequest != TypeRequest.Search) {
             mTypeRequest = TypeRequest.Add;
             getHostActivity().makeRequestGetPriceForPeriodAddMonth(this);
         }
@@ -110,17 +115,21 @@ public class AllPricesFragment extends BasePagerPricesFragment<CropPricesByDateM
     public void onResume() {
         super.onResume();
 
-        if(mTypeRequest == null) {
+        if(getHostActivity().getTemp() != null){
+            mTypeRequest = getHostActivity().getTemp();
+        }
+
+        if (mTypeRequest == null) {
             // load default (first month items)
-            getHostActivity().makeRequestGetPriceForPeriod(true, this);
+            getHostActivity().makeRequestGetCropPriceForPeriod(true, this);
             mTypeRequest = TypeRequest.Add;
 
         } else if (mTypeRequest != TypeRequest.Nothing) {
 
-            if(mTypeRequest == TypeRequest.Refresh)
-                getHostActivity().makeRequestGetPriceForPeriod(true,this);
+            if (mTypeRequest == TypeRequest.Refresh)
+                getHostActivity().makeRequestGetCropPriceForPeriod(true, this);
             else if (mTypeRequest == TypeRequest.Search)
-                getHostActivity().makeRequestGetPriceForPeriod(false,this);
+                getHostActivity().makeRequestGetCropPriceForPeriod(false, this);
 
         } else if (!dataFetched.isEmpty()) {
             adapter.setDataList(generateDH(new ArrayList<>(dataFetched.values())));
@@ -136,7 +145,7 @@ public class AllPricesFragment extends BasePagerPricesFragment<CropPricesByDateM
     public void setDateRange(DateRange dateRange, boolean isAllTime) {
 
         /*allow or prevent loading more on scroll */
-        if (mTypeRequest == TypeRequest.Search){
+        if (mTypeRequest == TypeRequest.Search) {
             loading = isAllTime;
         } else if (mTypeRequest == TypeRequest.Add) {
             loading = true;
@@ -147,14 +156,15 @@ public class AllPricesFragment extends BasePagerPricesFragment<CropPricesByDateM
     @Override
     public void onGetResult(List<CropPricesByDateModel> result) {
 
-        if(mTypeRequest == TypeRequest.Nothing) {
+        if (mTypeRequest == TypeRequest.Nothing) {
             return;
-        } else if(mTypeRequest == TypeRequest.Add) {
-            adapter.addDataList(generateDH(updateCachedPrices(result,false)));
-        } else if(mTypeRequest == TypeRequest.Refresh) {
-            adapter.setDataList(generateDH(updateCachedPrices(result,true)));
-        } else if(mTypeRequest == TypeRequest.Search) {
-            adapter.setDataList(generateDH(updateCachedPrices(result,true)));
+        } else if (mTypeRequest == TypeRequest.Add) {
+            adapter.addDataList(generateDH(updateCachedPrices(result, false)));
+            loading = true;
+        } else if (mTypeRequest == TypeRequest.Refresh) {
+            adapter.setDataList(generateDH(updateCachedPrices(result, true)));
+        } else if (mTypeRequest == TypeRequest.Search) {
+            adapter.setDataList(generateDH(updateCachedPrices(result, true)));
         }
 
         setTypeRequestNothing();
@@ -167,12 +177,12 @@ public class AllPricesFragment extends BasePagerPricesFragment<CropPricesByDateM
         loading = false;
     }
 
-    private List<CropPricesByDateModel> updateCachedPrices(List<CropPricesByDateModel> result, boolean doClear){
+    private List<CropPricesByDateModel> updateCachedPrices(List<CropPricesByDateModel> result, boolean doClear) {
         if (doClear)
             dataFetched.clear();
 
         for (CropPricesByDateModel pricesByDateModel : result) {
-            dataFetched.put(pricesByDateModel.prices.get(0).data,pricesByDateModel);
+            dataFetched.put(pricesByDateModel.prices.get(0).data, pricesByDateModel);
         }
 
         return new ArrayList<>(dataFetched.values());
@@ -196,7 +206,9 @@ public class AllPricesFragment extends BasePagerPricesFragment<CropPricesByDateM
     @Override
     public void onMorePricesClicked(CropPrices priceModel) {
         setTypeRequestNothing();
-        TransparentActivity.startWithFragment(getHostActivity(), MorePricesDialogFragment.newInstance(priceModel, getHostActivity().getCropModel().displayName));
-
+        TransparentActivity.startWithFragment(
+                getHostActivity(),
+                MorePricesDialogFragment.newInstance(priceModel,
+                getHostActivity().getCropModel().displayName));
     }
 }

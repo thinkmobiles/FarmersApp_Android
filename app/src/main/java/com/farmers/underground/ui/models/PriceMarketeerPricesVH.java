@@ -70,11 +70,6 @@ public class PriceMarketeerPricesVH extends BaseMarketeerPricesVH {
 
         tv_MorePrice.setVisibility((!shoulShowWhyTextInsteadPrice && !dataHolder.getModel().getMore().isEmpty()) ? View.VISIBLE : View.GONE);
 
-//      boolean isShow = Math.random() > 0.5f;
-//      v_PriceContainer.setVisibility(!isShow ? View.VISIBLE : View.GONE);
-//      ll_why_c_container_MP.setVisibility(isShow ? View.VISIBLE : View.GONE);
-//      tv_MorePrice.setVisibility(Math.random() > 0.5f ? View.VISIBLE : View.GONE);
-
     }
 
     @Override

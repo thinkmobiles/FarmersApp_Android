@@ -116,7 +116,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     private ProjectPagerAdapter<BasePagerPricesFragment<?>> pagerAdapter;
 
     private boolean isVisibleBurger;
-    private DateRange mDateRange, mFullRange;
+    private DateRange mDateRangeMarketeers,mDateRangeCrop, mFullRangeCrop, mFullRangeMarketeers;
 
     private static final ImageLoader imageLoaderRound = ImageCacheManager.getImageLoader(FarmersApp.ImageLoaders.CACHE_ROUND);
 
@@ -189,11 +189,13 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         pagerAdapter.notifyDataSetChanged();
     }
 
+    private BasePagerPricesFragment.TypeRequest temp;
+
     @Override
     protected void onResume() {
+        viewPager.addOnPageChangeListener(pageChangeListener);
         super.onResume();
         setDrawerList();
-        viewPager.addOnPageChangeListener(pageChangeListener);
     }
 
     @Override
@@ -312,12 +314,20 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         mDrawerLayout.closeDrawers();
     }
 
+    public BasePagerPricesFragment.TypeRequest getTemp() {
+        return temp;
+    }
+
+    public void setTemp(BasePagerPricesFragment.TypeRequest temp) {
+        this.temp = temp;
+    }
+
     public interface DateRangeSetter {
         void setDateRange(DateRange dateRange, boolean isAllTime);
     }
 
     /**
-     * for
+     * Used for
      * StatisticsFragment -  has two inner pages;
      */
     public interface PageListener {
@@ -369,20 +379,24 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                     Calendar dateFrom = (Calendar) bundle.getSerializable(PeriodPickerFragment.KEY_DATE_FROM);
                     Calendar dateTo = (Calendar) bundle.getSerializable(PeriodPickerFragment.KEY_DATE_TO);
 
-                    mDateRange = new DateRange();
+                    DateRange mDateRange = new DateRange();
 
                     final boolean isFull = bundle.getBoolean(PeriodPickerFragment.KEY_ALL_TIME, false);
 
                     if (isFull){
-                        prevMonth  = DateHelper.parseToCalendar(mCropModel.prices.get(0).data);
+                        prevMonth = DateHelper.parseToCalendar(mCropModel.prices.get(0).data);
                         prevMonth.set(Calendar.MONTH, prevMonth.get(Calendar.MONTH) - 1);
                         mDateRange.setDateFrom(StringFormaterUtil.parseToServerResponse(DateHelper.parseToCalendar(mCropModel.prices.get(0).data)));
                         mDateRange.setDateTo(StringFormaterUtil.parseToServerResponse(prevMonth));
-                        mFullRange = mDateRange;
+                        mFullRangeCrop = mDateRange;
+                        mFullRangeMarketeers = mDateRange;
                     } else {
                         mDateRange.setDateFrom(StringFormaterUtil.parseToServerResponse(dateFrom));
                         mDateRange.setDateTo(StringFormaterUtil.parseToServerResponse(dateTo));
                     }
+
+                    mDateRangeCrop = mDateRange;
+                    mDateRangeMarketeers = mDateRange;
 
                     for (BasePagerPricesFragment basePagerPricesFragment : pagerAdapter.getFragmentList()) {
 
@@ -397,7 +411,6 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
                     showWhyDialogs(date);
 
-                   // onAddPricesClicked();
                     break;
             }
         }
@@ -405,7 +418,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     }
 
 
-    public void showWhyDialogs(String date){
+    public void showWhyDialogs(String date) {
 
         if (date ==null)
             date = StringFormaterUtil.parseToServerResponse(Calendar.getInstance());
@@ -549,6 +562,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     public void onBackPressed() {
         if (drawerOpened && mDrawerLayout != null) {
             mDrawerLayout.closeDrawers();
+        } else if (false){
+            MainActivity.start(this); //TODO after app opened from background - app is closed / not good
         } else {
             super.onBackPressed();
         }
@@ -560,24 +575,24 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     private Calendar prevMonth;
 
-    public void makeRequestGetPriceForPeriod(boolean isFull, final CropAllPricesCallback callback) {
+    public void makeRequestGetCropPriceForPeriod(boolean isFull, final CropAllPricesCallback callback) {
         if(isFull){
-            makeRequestGetPriceForPeriod(null, callback);
+            makeRequestGetCropPriceForPeriod(null, callback);
         } else {
-            makeRequestGetPriceForPeriod(mDateRange, callback);
+            makeRequestGetCropPriceForPeriod(mDateRangeCrop, callback);
         }
     }
 
     public void makeRequestGetPriceForPeriodAddMonth(final CropAllPricesCallback callback) {
         prevMonth.set(Calendar.MONTH, prevMonth.get(Calendar.MONTH) - 1);
-        mDateRange.setDateFrom(mDateRange.getDateTo());
-        mDateRange.setDateTo(StringFormaterUtil.parseToServerResponse(prevMonth));
-        mFullRange.setDateTo(StringFormaterUtil.parseToServerResponse(prevMonth));
+        mDateRangeCrop.setDateFrom(mDateRangeCrop.getDateTo());
+        mDateRangeCrop.setDateTo(StringFormaterUtil.parseToServerResponse(prevMonth));
+        mFullRangeCrop.setDateTo(StringFormaterUtil.parseToServerResponse(prevMonth));
 
-        makeRequestGetPriceForPeriod(mDateRange, callback);
+        makeRequestGetCropPriceForPeriod(mDateRangeCrop, callback);
     }
 
-    private void makeRequestGetPriceForPeriod(@Nullable DateRange dateRange, final CropAllPricesCallback callback) {
+    private void makeRequestGetCropPriceForPeriod(@Nullable DateRange dateRange, final CropAllPricesCallback callback) {
 
         if (dateRange == null) {
             prevMonth  = DateHelper.parseToCalendar(mCropModel.prices.get(0).data);
@@ -587,8 +602,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
             dateRange.setDateFrom(StringFormaterUtil.parseToServerResponse(DateHelper.parseToCalendar(mCropModel.prices.get(0).data)));
             dateRange.setDateTo(StringFormaterUtil.parseToServerResponse(prevMonth));
 
-            mDateRange = dateRange;
-            mFullRange = dateRange;
+            mDateRangeCrop = dateRange;
+            mFullRangeCrop = dateRange;
         }
 
         RetrofitSingleton.getInstance().getCropPricesForPeriod(dateRange.getDateFrom(), dateRange.getDateTo(),
@@ -613,38 +628,55 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     }
 
-    public void makeRequestGetMarketeerCropPricesForPeriod(@Nullable DateRange dateRange, final MarketeerAllPricesCallback callback) {
+    public void makeRequestGetMarketeerPriceForPeriod(boolean isFull, final MarketeerAllPricesCallback callback) {
+        if(isFull){
+            makeRequestGetMarketeerPricesForPeriod(null, callback);
+        } else {
+            makeRequestGetMarketeerPricesForPeriod(mDateRangeMarketeers, callback);
+        }
+    }
+
+    public void makeRequestGetMarketeerPriceForPeriodAddMonth(final MarketeerAllPricesCallback callback) {
+        prevMonth.set(Calendar.MONTH, prevMonth.get(Calendar.MONTH) - 1);
+        mDateRangeMarketeers.setDateFrom(mDateRangeMarketeers.getDateTo());
+        mDateRangeMarketeers.setDateTo(StringFormaterUtil.parseToServerResponse(prevMonth));
+        mFullRangeMarketeers.setDateTo(StringFormaterUtil.parseToServerResponse(prevMonth));
+
+        makeRequestGetMarketeerPricesForPeriod(mDateRangeMarketeers, callback);
+    }
+    public void makeRequestGetMarketeerPricesForPeriod(@Nullable DateRange dateRange, final MarketeerAllPricesCallback callback) {
 
         if (dateRange == null) {
             prevMonth  = DateHelper.parseToCalendar(mCropModel.prices.get(0).data);
-
             prevMonth.set(Calendar.MONTH, prevMonth.get(Calendar.MONTH) - 1);
             dateRange = new DateRange();
             dateRange.setDateFrom(StringFormaterUtil.parseToServerResponse(DateHelper.parseToCalendar(mCropModel.prices.get(0).data)));
             dateRange.setDateTo(StringFormaterUtil.parseToServerResponse(prevMonth));
-/*
-            mDateRange = dateRange;
-            mFullRange = dateRange;*/
+
+            mDateRangeMarketeers= dateRange;
+            mFullRangeMarketeers = dateRange;
         }
 
-                RetrofitSingleton.getInstance()
-                        .getMarketeerCropPricesForPeriod(dateRange.getDateFrom(), dateRange.getDateTo(), mCropModel.displayName,
-                                new ACallback<List<MarketeerPricesByDateModel>, ErrorMsg>() {
-                                    @Override
-                                    public void onSuccess(List<MarketeerPricesByDateModel> result) {
-                                        if (result != null && !result.isEmpty()) {
-                                            callback.onGetResult(result);
-                                        } else {
-                                            callback.onError();
-                                        }
-                                    }
+        RetrofitSingleton.getInstance().getMarketeerCropPricesForPeriod(
+                dateRange.getDateFrom(),
+                dateRange.getDateTo(),
+                mCropModel.displayName,
+                new ACallback<List<MarketeerPricesByDateModel>, ErrorMsg>() {
+                    @Override
+                    public void onSuccess(List<MarketeerPricesByDateModel> result) {
+                        if (result != null && !result.isEmpty()) {
+                            callback.onGetResult(result);
+                        } else {
+                            callback.onError();
+                        }
+                    }
 
-                                    @Override
-                                    public void onError(@NonNull ErrorMsg error) {
-                                        showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
-                                        callback.onError();
-                                    }
-                                });
+                    @Override
+                    public void onError(@NonNull ErrorMsg error) {
+                        showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
+                        callback.onError();
+                    }
+                });
     }
 
 

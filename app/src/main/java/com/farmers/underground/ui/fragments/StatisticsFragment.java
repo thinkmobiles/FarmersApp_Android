@@ -84,9 +84,6 @@ public class StatisticsFragment extends BasePagerPricesFragment
     @Bind(R.id.tv_page_number_title)
     protected TextView tvPageNumberTitle;
 
-    private LastCropPricesModel mCropModel;
-    private DateRange mDateRange;
-
     private float popupValue;
     private int popupIndexSelected;
     private int[] chartColor;
@@ -163,13 +160,6 @@ public class StatisticsFragment extends BasePagerPricesFragment
         return fragment;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Gson gson = new GsonBuilder().create();
-        mCropModel = gson.fromJson(getArguments().getString(ProjectConstants.KEY_DATA), LastCropPricesModel.class);
-
-    }
 
     @Override
     protected int getLayoutResId() {
@@ -552,6 +542,6 @@ public class StatisticsFragment extends BasePagerPricesFragment
 
     @Override
     public void setDateRange(DateRange dateRange, boolean isAllTime) {
-        mDateRange = dateRange;
+        //todo
     }
 }

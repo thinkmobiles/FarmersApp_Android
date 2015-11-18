@@ -28,7 +28,10 @@ public class MarketeerPricesAdapter extends RecyclerView.Adapter<PriceMarketeerP
     }
 
     public void setDataList(List<PriceMarketeerPricesDH> dataList) {
+        if(this.dataList !=null)
+            this.dataList.clear();
         this.dataList = dataList;
+        notifyDataSetChanged();
     }
 
     public void addDataList(List<PriceMarketeerPricesDH> dataList) {

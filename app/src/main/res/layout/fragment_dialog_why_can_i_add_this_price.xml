@@ -128,7 +128,7 @@
                     android:textColor="@color/aqua"
                     android:textSize="@dimen/normal_text_size"
                     android:layout_width="wrap_content"
-                    android:padding="6dp"
+                    android:padding="8dp"
                     android:layout_height="wrap_content" />
 
                 <com.farmers.underground.ui.custom_views.CustomTextView
@@ -138,7 +138,7 @@
                     android:layout_height="wrap_content"
                     style="@style/BlackMainRegularText"
                     android:textSize="@dimen/normal_text_size"
-                    android:padding="6dp"
+                    android:padding="8dp"
                     android:text="דחה  "/>
 
 

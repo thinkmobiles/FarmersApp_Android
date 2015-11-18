@@ -12,6 +12,7 @@ import android.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
+
 import com.farmers.underground.R;
 import com.farmers.underground.ui.dialogs.ProgressDialog;
 import org.intellij.lang.annotations.MagicConstant;
