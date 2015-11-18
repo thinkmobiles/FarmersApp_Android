@@ -6,8 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
 import com.farmers.underground.R;
-import com.farmers.underground.remote.models.PriceModel;
+import com.farmers.underground.ui.models.QualityPriceItemModel;
 
 import java.util.List;
 
@@ -16,10 +17,10 @@ import java.util.List;
  * Created by tZpace
  * on 11-Oct-15.
  */
-public class CropQualityPriecesAdapter extends BaseAdapter  {
+public class CropQualityPiecesAdapter extends BaseAdapter {
 
     private Context mContext;
-    private List<PriceModel> mListItems;
+    private List<QualityPriceItemModel> mListItems;
 
     static class ViewHolder {
         TextView tvPrice;   //tv_Price_crop_qualities_prieces_list
@@ -27,7 +28,7 @@ public class CropQualityPriecesAdapter extends BaseAdapter  {
         TextView tvSubitle; //tv_subtitle_crop_qualities_prieces_list
     }
 
-    public CropQualityPriecesAdapter(List<PriceModel> mListItems, Context mContext) {
+    public CropQualityPiecesAdapter(List<QualityPriceItemModel> mListItems, Context mContext) {
         this.mContext = mContext;
         this.mListItems = mListItems;
     }
@@ -38,7 +39,7 @@ public class CropQualityPriecesAdapter extends BaseAdapter  {
     }
 
     @Override
-    public PriceModel getItem(int i) {
+    public QualityPriceItemModel getItem(int i) {
         return mListItems.get(i);
     }
 
@@ -49,7 +50,7 @@ public class CropQualityPriecesAdapter extends BaseAdapter  {
 
     @Override
     public View getView(int i, View convertView, ViewGroup viewGroup) {
-        ViewHolder holder = null;
+        ViewHolder holder;
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_crop_qualities_prieces_list, viewGroup, false);
             holder = new ViewHolder();
@@ -66,8 +67,8 @@ public class CropQualityPriecesAdapter extends BaseAdapter  {
         //set data here
 
         holder.tvPrice.setText(String.valueOf(mListItems.get(i).getPrice()));
-        holder.tvTitle.setText(mListItems.get(i).getSource().getName());
-        holder.tvSubitle.setText(mListItems.get(i).getSource().getType());
+        holder.tvTitle.setText(mListItems.get(i).getCropName());
+        holder.tvSubitle.setText(mListItems.get(i).getQuality());
 
 
         return convertView;

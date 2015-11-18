@@ -402,7 +402,7 @@ public class FarmersApp extends Application {
     private long lastCopsUpdateTime;
 
     public boolean shouldUpdateLastCrops() {
-        return lastCopsUpdateTime == 0 || (System.currentTimeMillis() - lastCopsUpdateTime) >= 900000;//15 min
+        return lastCopsUpdateTime != 0 && (System.currentTimeMillis() - lastCopsUpdateTime) >= 900000;//15 min
 
     }
     public void setLastCopsUpdateTime(){

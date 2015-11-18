@@ -10,12 +10,15 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
+import com.farmers.underground.remote.models.CropPrices;
 import com.farmers.underground.remote.models.CropPricesByDateModel;
 import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.ui.activities.PricesActivity;
+import com.farmers.underground.ui.activities.TransparentActivity;
 import com.farmers.underground.ui.adapters.AllPricesAdapter;
 import com.farmers.underground.ui.base.BasePagerPricesFragment;
 import com.farmers.underground.ui.custom_views.CropsItemDivider;
+import com.farmers.underground.ui.dialogs.MorePricesDialogFragment;
 import com.farmers.underground.ui.models.AllPricesDH;
 import com.farmers.underground.ui.models.DateRange;
 import com.farmers.underground.ui.utils.ResourceRetriever;
@@ -23,15 +26,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
  * Created by omar
  * on 10/9/15.
  */
-public class AllPricesFragment extends BasePagerPricesFragment
-        implements PricesActivity.CropAllPricesCallback  {
+public class AllPricesFragment extends BasePagerPricesFragment<CropPricesByDateModel>
+        implements PricesActivity.CropAllPricesCallback, AllPricesAdapter.AllPricesCallback {
 
     @Bind(R.id.rv_BaseListFragment)
     protected RecyclerView recyclerView;
@@ -40,12 +42,8 @@ public class AllPricesFragment extends BasePagerPricesFragment
       @Bind(R.id.tv_NoItemsBaseListFragment)
       protected TextView tv_NoItems;  */
 
-    /**  Used for preventing duplicate date items prices in list
-     * items order is saved;
-     * interesting thing, by the way */
-    LinkedHashMap<String,CropPricesByDateModel> pricesByDate = new LinkedHashMap<>();
+    private AllPricesAdapter adapter = new AllPricesAdapter();
 
-    private AllPricesAdapter adapter;
     private LinearLayoutManager mLayoutManager;
 
     public static AllPricesFragment getInstance(LastCropPricesModel cropModel) {
@@ -68,7 +66,6 @@ public class AllPricesFragment extends BasePagerPricesFragment
     private void setSettingRecycler(){
 
         mLayoutManager = new LinearLayoutManager(getHostActivity(), LinearLayoutManager.VERTICAL, false);
-        adapter = new AllPricesAdapter();
 
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new CropsItemDivider(ResourceRetriever.retrievePX(getHostActivity(), R.dimen.margin_default_normal)));
@@ -92,10 +89,6 @@ public class AllPricesFragment extends BasePagerPricesFragment
                 }
             }
         });
-    }
-
-    public void setTypeRequestNothing(){
-        mTypeRequest = TypeRequest.Nothing;
     }
 
     private void addMonth(){
@@ -129,8 +122,8 @@ public class AllPricesFragment extends BasePagerPricesFragment
             else if (mTypeRequest == TypeRequest.Search)
                 getHostActivity().makeRequestGetPriceForPeriod(false,this);
 
-        } else if (!pricesByDate.isEmpty()) {
-            adapter.setDataList(generateDH(new ArrayList<>(pricesByDate.values())));
+        } else if (!dataFetched.isEmpty()) {
+            adapter.setDataList(generateDH(new ArrayList<>(dataFetched.values())));
         }
     }
 
@@ -176,21 +169,34 @@ public class AllPricesFragment extends BasePagerPricesFragment
 
     private List<CropPricesByDateModel> updateCachedPrices(List<CropPricesByDateModel> result, boolean doClear){
         if (doClear)
-            pricesByDate.clear();
+            dataFetched.clear();
 
         for (CropPricesByDateModel pricesByDateModel : result) {
-            pricesByDate.put(pricesByDateModel.prices.get(0).data,pricesByDateModel);
+            dataFetched.put(pricesByDateModel.prices.get(0).data,pricesByDateModel);
         }
 
-        return new ArrayList<>(pricesByDate.values());
+        return new ArrayList<>(dataFetched.values());
     }
 
     private List<AllPricesDH> generateDH(List<CropPricesByDateModel> result) {
         List<AllPricesDH> allPricesDHs = new ArrayList<>();
         for (CropPricesByDateModel item : result) {
-            AllPricesDH allPricesDH = new AllPricesDH(item, getHostActivity());
+            AllPricesDH allPricesDH = new AllPricesDH(item, this);
             allPricesDHs.add(allPricesDH);
         }
         return allPricesDHs;
+    }
+
+    @Override
+    public void onAddPricesClicked(String date) {
+        setCurrentTypeRequest(TypeRequest.Refresh);
+        getHostActivity().showWhyDialogs(date);
+    }
+
+    @Override
+    public void onMorePricesClicked(CropPrices priceModel) {
+        setTypeRequestNothing();
+        TransparentActivity.startWithFragment(getHostActivity(), MorePricesDialogFragment.newInstance(priceModel, getHostActivity().getCropModel().displayName));
+
     }
 }

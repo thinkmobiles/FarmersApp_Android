@@ -75,7 +75,6 @@ public class WhyCanIAddThisPriceDialogFragment extends BaseFragment<TransparentA
 
     @OnClick(R.id.tvAddPrice_WhyDiagADD)
     protected void addPrice(){
-       // getHostActivity().setResult(Activity.RESULT_OK, new Intent());
         LoginSignUpActivity.startAddMarketier(getHostActivity());
         getHostActivity().finish();
     }

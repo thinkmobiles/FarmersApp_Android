@@ -386,8 +386,12 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
             @Override
             public boolean onQueryTextChange(final String newText) {
+
                 String newQuery = "";
-                if (newText.length() > 0) newQuery = newText.trim();
+                if (newText.length() > 0)
+                    newQuery = newText.trim();
+
+
                 if (newQuery.isEmpty()) {
                     searchView.setGravityRight();
                     searchHintController.setHintsList(SharedPrefHelper.getSearchHints());
@@ -455,7 +459,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                /*lvDrawerContainer.bringToFront();*/
 
                 mDrawerLayout.requestLayout();
                 drawerOpened = true;
@@ -491,8 +494,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         // (user cant be null here)
         final UserProfile user = FarmersApp.getInstance().getCurrentUser();
 
-        /*FarmersApp.getInstance().getMarketerBySession(); //getting of target marketer*/
-
         if (user != null && !(user.hasMarketir() || user.isNewMarketeer())) {
             drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_plus, R.string.drawer_content_5));
         } else {
@@ -503,12 +504,10 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         lvDrawerContainer.setAdapter(new DrawerAdapter(drawerItemList, this));
     }
 
-
     //tabs
     private void setTabs() {
         tabLayout.setupWithViewPager(viewPager);
     }
-
 
     //view pager
     public void setViewPager(@Nullable String page) {
@@ -619,7 +618,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     @OnClick(R.id.searchView)
     protected void onSearchClicked() {
-        //searchView.setQuery("\u200F",false); //.replaceAll("\u200F","")
         searchHintController.setHintsList(SharedPrefHelper.getSearchHints());
         searchHintController.show();
         invalidateOptionsMenu();
@@ -683,11 +681,9 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         });
     }
 
-
     private void updateFragmentsOnSearch(String newQuery) {
         searchResultProvider.loadSearchResults(newQuery, mCropList);
     }
-
 
     private void generateQueryList(String newQuery) {
         searchResultProvider.loadSearchHints(newQuery, mCropList);

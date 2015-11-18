@@ -10,12 +10,19 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.farmers.underground.R;
+import com.farmers.underground.remote.models.CropPrices;
+import com.farmers.underground.remote.models.MarketeerPrices;
 import com.farmers.underground.remote.models.PriceModel;
 import com.farmers.underground.remote.models.SourceModel;
 import com.farmers.underground.ui.activities.TransparentActivity;
-import com.farmers.underground.ui.adapters.CropQualityPriecesAdapter;
+import com.farmers.underground.ui.adapters.CropQualityPiecesAdapter;
+import com.farmers.underground.ui.adapters.MorePriecesAdapter;
 import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.custom_views.CustomTextView;
+import com.farmers.underground.ui.models.MorePriceItemModel;
+import com.farmers.underground.ui.models.QualityPriceItemModel;
+import com.farmers.underground.ui.utils.DateHelper;
+import com.farmers.underground.ui.utils.StringFormaterUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +51,22 @@ public class CropQualitiesDialogFragment extends BaseFragment<TransparentActivit
     @Bind(R.id.tv_foot_dialog_crop_qualities)
     TextView tvFoot;
 
+    private static final String KEY_PRICE_BASE = "price_base";
+
+    private static final String KEY_DATE = "date";
+
+    private static final String KEY_CROP_NAME = "crop";
+
+    public static CropQualitiesDialogFragment newInstance (MarketeerPrices priceBase, String displayDate, String cropName) {
+        CropQualitiesDialogFragment fragment = new CropQualitiesDialogFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(KEY_PRICE_BASE, priceBase);
+        args.putString(KEY_DATE, displayDate);
+        args.putString(KEY_CROP_NAME,cropName);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
 
     @Override
     protected int getLayoutResId() {
@@ -55,7 +78,7 @@ public class CropQualitiesDialogFragment extends BaseFragment<TransparentActivit
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
-        listView.setAdapter(initListAdapterTest());
+        setData();
     }
 
     @OnClick(R.id.im_close_dialog_crop_qualities)
@@ -64,7 +87,34 @@ public class CropQualitiesDialogFragment extends BaseFragment<TransparentActivit
     }
 
 
-    private CropQualityPriecesAdapter initListAdapterTest(){
+    private void setData() {
+        MarketeerPrices model = (MarketeerPrices) getArguments().getSerializable(KEY_PRICE_BASE);
+
+        if(model==null){
+            closeDialog();
+            return;
+        }
+
+        String displayDate = getArguments().getString(KEY_DATE);
+        String cropName = getArguments().getString(KEY_CROP_NAME);
+
+        tvTitle.setText(model.name);
+        tvFoot.setText(displayDate);
+        tcSubtitle.setVisibility(View.VISIBLE);
+        tcSubtitle.setText(model.location);
+
+        List<QualityPriceItemModel> list = new ArrayList<>();
+        for (MarketeerPrices.More more : model.more) {
+            QualityPriceItemModel itemModel = new QualityPriceItemModel();
+            itemModel.setQuality(more.quality);
+            itemModel.setPrice(StringFormaterUtil.parsePrice(more.price));
+            itemModel.setCropName(cropName);
+            list.add(itemModel);
+        }
+        listView.setAdapter(new CropQualityPiecesAdapter(list, getHostActivity()));
+    }
+
+   /* private CropQualityPiecesAdapter initListAdapterTest(){
 
         PriceModel priceModel = new PriceModel();
         priceModel.setPrice(4.50d);
@@ -79,6 +129,6 @@ public class CropQualitiesDialogFragment extends BaseFragment<TransparentActivit
         mListItems.add(priceModel);
         mListItems.add(priceModel);
 
-        return new CropQualityPriecesAdapter(mListItems, getHostActivity());
-    }
+        return new CropQualityPiecesAdapter(mListItems, getHostActivity());
+    }*/
 }

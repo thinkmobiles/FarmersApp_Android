@@ -57,7 +57,7 @@ public class CustomSearchView extends SearchView implements View.OnClickListener
         if (searchEditArea == null) {
             searchEditArea = (SearchAutoComplete) this.findViewById(R.id.search_src_text);
         }
-        //searchEditArea.setGravity(Gravity.RIGHT);
+
         searchEditArea.setGravity(Gravity.RIGHT);
         searchEditArea.setHintTextColor(ResUtil.getColor(getResources(), com.farmers.underground.R.color.text_white));
         searchEditArea.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "Fonts/ArialMT.ttf"));

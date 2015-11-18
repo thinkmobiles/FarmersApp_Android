@@ -46,16 +46,19 @@ public class WhyCanISeeThisPriceDialogFragment extends BaseFragment<TransparentA
         return R.layout.fragment_dialog_why_can_i_see_this_price;
     }
 
+    private String dateF;
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
-        final String dateF = getArguments().getString("Date", null);
+        dateF = getArguments().getString("Date", null);
+
         if(dateF == null){
             dateContainer.setVisibility(View.GONE);
         } else {
-            SimpleDateFormat format = new SimpleDateFormat(ProjectConstants.TEMP_DATE_Format, Locale.getDefault());
+            SimpleDateFormat format = new SimpleDateFormat(ProjectConstants.SERVER_DATE_FORMAT, Locale.getDefault());
             try {
                 long time = format.parse(dateF).getTime();
                 String[] date = DateHelper.getInstance(getHostActivity()).getDate(time);
@@ -78,7 +81,9 @@ public class WhyCanISeeThisPriceDialogFragment extends BaseFragment<TransparentA
 
     @OnClick(R.id.tvAddPrice_WhyDiag)
     protected void addPrice(){
-        getHostActivity().setResult(Activity.RESULT_OK, new Intent());
+        Intent dat =  new Intent();
+        dat.putExtra("Date",dateF);
+        getHostActivity().setResult(Activity.RESULT_OK,dat);
         getHostActivity().finish();
     }
 }

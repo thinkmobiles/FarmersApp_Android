@@ -2,6 +2,7 @@ package com.farmers.underground.ui.models;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
 import butterknife.ButterKnife;
 
 /**
@@ -15,7 +16,7 @@ abstract public class BaseMarketeerPricesVH extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
-    abstract public <T extends  BaseMarketeerPricesDH> void  bindData(T dataHolder, boolean hideDivider);
+    abstract public void bindData(PriceMarketeerPricesDH dataHolder, boolean hideDivider);
 
     abstract public View getContainer();
 

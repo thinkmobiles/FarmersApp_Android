@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.farmers.underground.R;
 import com.farmers.underground.remote.models.MarketeerPriceModel;
 import com.farmers.underground.ui.models.DateMarketeerPricesVH;
@@ -30,6 +31,12 @@ public class MarketeerPricesAdapter extends RecyclerView.Adapter<PriceMarketeerP
         this.dataList = dataList;
     }
 
+    public void addDataList(List<PriceMarketeerPricesDH> dataList) {
+        this.dataList.clear();
+        this.dataList.addAll(dataList);
+        notifyDataSetChanged();
+    }
+
     @Override
     public PriceMarketeerPricesVH onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_marketeer_price, parent, false);
@@ -41,7 +48,7 @@ public class MarketeerPricesAdapter extends RecyclerView.Adapter<PriceMarketeerP
     public void onBindViewHolder(PriceMarketeerPricesVH holder, int position) {
         boolean hideDivider = position == getItemCount() - 1;
 
-        if(position < getItemCount() -1 && getHeaderId(position) != getHeaderId(position +1))
+        if (position < getItemCount() - 1 && getHeaderId(position) != getHeaderId(position + 1))
             hideDivider = true;
         holder.bindData(dataList.get(position), hideDivider);
     }
@@ -69,9 +76,11 @@ public class MarketeerPricesAdapter extends RecyclerView.Adapter<PriceMarketeerP
 
 
     public interface Callback {
+
         void onMorePricesClicked(MarketeerPriceModel marketeerPriceModel);
 
         void onNoPricesClicked(MarketeerPriceModel model);
+
     }
 
 }

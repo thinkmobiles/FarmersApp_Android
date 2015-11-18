@@ -3,8 +3,8 @@ package com.farmers.underground.ui.fragments;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -14,7 +14,6 @@ import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.remote.models.MarketeerPriceModel;
 import com.farmers.underground.remote.models.MarketeerPrices;
 import com.farmers.underground.remote.models.MarketeerPricesByDateModel;
-import com.farmers.underground.remote.models.PriceModel;
 import com.farmers.underground.ui.activities.AddPriceActivity;
 import com.farmers.underground.ui.activities.PricesActivity;
 import com.farmers.underground.ui.activities.TransparentActivity;
@@ -22,7 +21,6 @@ import com.farmers.underground.ui.adapters.MarketeerPricesAdapter;
 import com.farmers.underground.ui.base.BasePagerPricesFragment;
 import com.farmers.underground.ui.dialogs.CropQualitiesDialogFragment;
 import com.farmers.underground.ui.dialogs.WhyCanISeeThisPriceDialogFragment;
-import com.farmers.underground.ui.models.DateMarketeerPricesDH;
 import com.farmers.underground.ui.models.DateRange;
 import com.farmers.underground.ui.models.PriceMarketeerPricesDH;
 import com.google.gson.Gson;
@@ -36,17 +34,17 @@ import java.util.List;
  * Created by omar
  * on 10/9/15.
  */
-public class MarketeerPricesFragment extends BasePagerPricesFragment implements PricesActivity.MarketeerAllPricesCallback {
+public class MarketeerPricesFragment extends BasePagerPricesFragment<MarketeerPriceModel>
+        implements PricesActivity.MarketeerAllPricesCallback {
 
     @Bind(R.id.rv_BaseListFragment)
     protected RecyclerView recyclerView;
-
+ /* no need it yet
     @Bind(R.id.tv_NoItemsBaseListFragmentM)
-    protected TextView tv_NoItems;
+    protected TextView tv_NoItems; */
 
-    private MarketeerPricesAdapter adapter;
-    private LastCropPricesModel mCropModel;
-    private DateRange mDateRange;
+    private MarketeerPricesAdapter adapter = new MarketeerPricesAdapter();
+
     private MarketeerPricesAdapter.Callback adapterCallback;
 
 
@@ -60,23 +58,24 @@ public class MarketeerPricesFragment extends BasePagerPricesFragment implements 
         return fragment;
     }
 
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Gson gson = new GsonBuilder().create();
-        mCropModel = gson.fromJson(getArguments().getString(ProjectConstants.KEY_DATA), LastCropPricesModel.class);
-        generateAdapterCB();
-    }
+    /** RecyclerView Scroll: if true - load next month*/
+    private boolean loading = true;
+    /** RecyclerView Scroll*/
+    private int pastVisiblyItems, visibleItemCount, totalItemCount;
+    private LinearLayoutManager mLayoutManager;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        /**/
-        adapter = new MarketeerPricesAdapter();
+
+        generateAdapterCB();
+
+        mLayoutManager = new LinearLayoutManager(getHostActivity(), LinearLayoutManager.VERTICAL, false);
+
+        recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(adapter);
+
 
         final StickyRecyclerHeadersDecoration headersDecor = new StickyRecyclerHeadersDecoration(adapter);
         recyclerView.addItemDecoration(headersDecor);
@@ -86,12 +85,54 @@ public class MarketeerPricesFragment extends BasePagerPricesFragment implements 
                 headersDecor.invalidateHeaders();
             }
         });
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                visibleItemCount = mLayoutManager.getChildCount();
+                totalItemCount = mLayoutManager.getItemCount();
+                pastVisiblyItems = mLayoutManager.findFirstVisibleItemPosition();
+
+                if (loading) {
+                    if ((visibleItemCount + pastVisiblyItems) >= totalItemCount) {
+                        loading = false;
+                        Log.d("onScrolled", "Last Item Now! total = " + totalItemCount);
+                        addMonth();
+                    }
+                }
+            }
+        });
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        getHostActivity().makeRequestGetMarketeerCropPricesForPeriod(this);
+
+        if(mTypeRequest == null) {
+            // load default (first month items)
+            getHostActivity().makeRequestGetMarketeerCropPricesForPeriod(null, this);//todo
+            mTypeRequest = TypeRequest.Add;
+
+        } else if (mTypeRequest != TypeRequest.Nothing) {
+
+            if(mTypeRequest == TypeRequest.Refresh)
+                getHostActivity().makeRequestGetMarketeerCropPricesForPeriod(null, this);//todo
+            else if (mTypeRequest == TypeRequest.Search)
+                getHostActivity().makeRequestGetMarketeerCropPricesForPeriod(null, this);//todo
+
+        } else if (!dataFetched.isEmpty()) {
+            adapter.setDataList(generateDH(new ArrayList<>(dataFetched.values())));
+        }
+    }
+
+    private void addMonth(){
+        if(mTypeRequest != TypeRequest.Search) {
+            mTypeRequest = TypeRequest.Add;
+            getHostActivity().makeRequestGetMarketeerCropPricesForPeriod(null, this); //todo
+        }
     }
 
     @Override
@@ -107,12 +148,6 @@ public class MarketeerPricesFragment extends BasePagerPricesFragment implements 
         return holders;
     }
 
-    private DateMarketeerPricesDH generateDateDH(MarketeerPriceModel model) {
-        DateMarketeerPricesDH dataHolder =  new DateMarketeerPricesDH();
-        dataHolder.setDate(model.getDate());
-        return dataHolder;
-    }
-
     private PriceMarketeerPricesDH generatePriceDH(MarketeerPriceModel model) {
         PriceMarketeerPricesDH dataHolder = new PriceMarketeerPricesDH();
         dataHolder.setModel(model);
@@ -123,7 +158,7 @@ public class MarketeerPricesFragment extends BasePagerPricesFragment implements 
     private boolean equalsDate(MarketeerPriceModel first, MarketeerPriceModel second) {
         return first.getDate().equalsIgnoreCase(second.getDate());
     }
-
+/*
     private void setAdapterData(List<MarketeerPricesByDateModel> response) {
 
         List<MarketeerPriceModel> marketeerModelList = new ArrayList<>();
@@ -131,27 +166,30 @@ public class MarketeerPricesFragment extends BasePagerPricesFragment implements 
         for (MarketeerPricesByDateModel marketeerPricesByDateModel : response) {
             for (MarketeerPrices price : marketeerPricesByDateModel.prices) {
                 MarketeerPriceModel model = new MarketeerPriceModel();
+
                 model.setDate(marketeerPricesByDateModel.data);
                 model.setName(price.name);
+                model.setLocation(price.location);
+                model.setPrice(price.price);
+                model.setMore(price.more);
 
-                PriceModel priceModel = new PriceModel();
+                model.setMarketeerPrices(price);
 
-                priceModel.setPrice(price.price);
-                priceModel.setDate(marketeerPricesByDateModel.data);
-
-                model.setPrice(priceModel);
                 marketeerModelList.add(model);
             }
         }
 
         adapter.setDataList(generateDH(marketeerModelList));
-    }
+    }*/
 
     private void generateAdapterCB(){
         adapterCallback = new MarketeerPricesAdapter.Callback() {
             @Override
             public void onMorePricesClicked(MarketeerPriceModel marketeerPriceModel) {
-                TransparentActivity.startWithFragment(getHostActivity(), new CropQualitiesDialogFragment());
+                TransparentActivity.startWithFragment(getHostActivity(),
+                    CropQualitiesDialogFragment.newInstance(marketeerPriceModel.getMarketeerPrices(),
+                                                                marketeerPriceModel.getDisplayDate(),
+                                                                  getHostActivity().getCropModel().displayName));
             }
 
             @Override
@@ -168,21 +206,62 @@ public class MarketeerPricesFragment extends BasePagerPricesFragment implements 
     @SuppressWarnings("unused")
     @OnClick(R.id.ll_AddPrice_MP)
     protected void addPriceClicked() {
-        AddPriceActivity.start(getHostActivity(), mCropModel);
+        AddPriceActivity.start(getHostActivity(), getHostActivity().getCropModel());
     }
 
     @Override
     public void setDateRange(DateRange dateRange, boolean isAllTime) {
-        mDateRange = dateRange;
+
+         /*allow or prevent loading more on scroll */
+        if (mTypeRequest == TypeRequest.Search){
+            loading = isAllTime;
+        } else if (mTypeRequest == TypeRequest.Add) {
+            loading = true;
+        }
     }
 
     @Override
     public void onGetResult(List<MarketeerPricesByDateModel> result) {
-         setAdapterData(result);
+
+        if(mTypeRequest == TypeRequest.Nothing) {
+            return;
+        } else if(mTypeRequest == TypeRequest.Add) {
+            adapter.addDataList(generateDH(updateCachedPrices(result,false)));
+        } else if(mTypeRequest == TypeRequest.Refresh) {
+            adapter.setDataList(generateDH(updateCachedPrices(result,true)));
+        } else if(mTypeRequest == TypeRequest.Search) {
+            adapter.setDataList(generateDH(updateCachedPrices(result,true)));
+        }
+        setTypeRequestNothing();
     }
 
     @Override
     public void onError() {
-        //TODO
+        setTypeRequestNothing();
+        loading = false;
     }
+
+    private List<MarketeerPriceModel> updateCachedPrices(List<MarketeerPricesByDateModel> result, boolean doClear){
+        if (doClear)
+            dataFetched.clear();
+
+        for (MarketeerPricesByDateModel marketeerPricesByDateModel : result) {
+
+            for (MarketeerPrices price : marketeerPricesByDateModel.prices) {
+                MarketeerPriceModel model = new MarketeerPriceModel();
+
+                model.setDate(marketeerPricesByDateModel.data);
+                model.setName(price.name);
+                model.setLocation(price.location);
+                model.setPrice(price.price);
+                model.setMore(price.more);
+
+                model.setMarketeerPrices(price);
+
+                dataFetched.put(model.getDate(),model);
+            }
+        }
+        return new ArrayList<>(dataFetched.values());
+    }
+
 }

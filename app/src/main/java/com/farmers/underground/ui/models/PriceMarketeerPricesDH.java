@@ -7,7 +7,7 @@ import com.farmers.underground.ui.adapters.MarketeerPricesAdapter;
  * Created by omar
  * on 10/2/15.
  */
-public class PriceMarketeerPricesDH extends BaseMarketeerPricesDH {
+public class PriceMarketeerPricesDH {
 
     private MarketeerPriceModel model;
     private MarketeerPricesAdapter.Callback callback;

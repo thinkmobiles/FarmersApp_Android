@@ -53,4 +53,18 @@ public class DateHelper {
         }
         return calendar;
     }
+
+    /* 22.2.15 month*/
+    public static String parseToStickyHeaderFromat(String date) {
+
+        SimpleDateFormat formatIN = new SimpleDateFormat(ProjectConstants.SERVER_DATE_FORMAT, Locale.getDefault());
+        SimpleDateFormat formatOUT = new SimpleDateFormat(ProjectConstants.STICKY_HEADER_DATE_FORMAT, Locale.getDefault());
+
+        try {
+          date = formatOUT.format(formatIN.parse(date));
+        } catch (Exception e) {
+           return date;
+        }
+        return date;
+    }
 }

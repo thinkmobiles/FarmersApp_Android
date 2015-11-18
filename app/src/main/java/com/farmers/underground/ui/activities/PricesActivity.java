@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,9 +32,7 @@ import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.remote.models.MarketeerPricesByDateModel;
 import com.farmers.underground.remote.models.SuccessMsg;
 import com.farmers.underground.remote.models.UserProfile;
-import com.farmers.underground.remote.models.CropPrices;
 import com.farmers.underground.remote.util.ACallback;
-import com.farmers.underground.ui.adapters.AllPricesAdapter;
 import com.farmers.underground.ui.adapters.DrawerAdapter;
 import com.farmers.underground.ui.adapters.ProjectPagerAdapter;
 import com.farmers.underground.ui.adapters.ToolbarSpinnerAdapter;
@@ -42,7 +41,6 @@ import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.base.BasePagerPricesFragment;
 import com.farmers.underground.ui.custom_views.CustomSearchView;
 import com.farmers.underground.ui.dialogs.InviteDialogFragment;
-import com.farmers.underground.ui.dialogs.MorePriecesDialogFragment;
 import com.farmers.underground.ui.dialogs.WhyCanIAddThisPriceDialogFragment;
 import com.farmers.underground.ui.fragments.AllPricesFragment;
 import com.farmers.underground.ui.fragments.MarketeerPricesFragment;
@@ -70,7 +68,7 @@ import java.util.List;
  * Created by omar
  * on 10/9/15.
  */
-public class PricesActivity extends BaseActivity implements DrawerAdapter.DrawerCallback, AllPricesAdapter.AllPricesCallback {
+public class PricesActivity extends BaseActivity implements DrawerAdapter.DrawerCallback {
 
     public static final int REQUEST_CODE_PERIOD_PICKER = 5;
     public static final int REQUEST_CODE_DIALOG_WHY = 2;
@@ -110,8 +108,12 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     @Bind(R.id.spinner_TB)
     protected Spinner spinner;
 
+    public LastCropPricesModel getCropModel() {
+        return mCropModel;
+    }
+
     private LastCropPricesModel mCropModel;
-    private ProjectPagerAdapter<BasePagerPricesFragment> pagerAdapter;
+    private ProjectPagerAdapter<BasePagerPricesFragment<?>> pagerAdapter;
 
     private boolean isVisibleBurger;
     private DateRange mDateRange, mFullRange;
@@ -235,6 +237,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
         @Override
         public void onPageSelected(int position) {
+            Log.d("onPageSelected", "position = " + position);
             switch (position) {
                 case 0:
                     spinner.setVisibility(View.VISIBLE);
@@ -263,6 +266,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
         @Override
         public void onPageScrollStateChanged(int state) {
+            Log.d("onPageScrollSd", " state = " + state);
 
         }
     };
@@ -275,8 +279,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         return titles;
     }
 
-    private List<BasePagerPricesFragment> createFragmentList() {
-        List<BasePagerPricesFragment> fragmentList = new ArrayList<>();
+    private List<BasePagerPricesFragment<?>> createFragmentList() {
+        List<BasePagerPricesFragment<?>> fragmentList = new ArrayList<>();
 
         fragmentList.add(createStatisticsPricesFragment(mCropModel));
         fragmentList.add(createMarketeerPricesFragment(mCropModel));
@@ -299,28 +303,6 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     private void setTabs() {
         tabLayout.setupWithViewPager(viewPager);
-    }
-
-    // all prices fragment callbacks
-    @Override
-    public void onAddPricesClicked(String date) {
-        pagerAdapter.getItem(viewPager.getCurrentItem()).setCurrentTypeRequest(BasePagerPricesFragment.TypeRequest.Refresh);
-
-        if (!TextUtils.isEmpty(FarmersApp.getInstance().getCurrentMarketer().getFullName())  || (FarmersApp.getInstance().getCurrentUser().hasMarketir() && !FarmersApp.getInstance().getCurrentUser().isNewMarketeer())){
-            AddPriceActivity.start(this, mCropModel, date);
-        } else {
-            WhyCanIAddThisPriceDialogFragment fragment =  new WhyCanIAddThisPriceDialogFragment();
-            Bundle bundle = new Bundle();
-            bundle.putString("Date", date);
-            fragment.setArguments(bundle);
-            TransparentActivity.startWithFragment(PricesActivity.this, fragment);
-        }
-    }
-
-    @Override
-    public void onMorePricesClicked(CropPrices priceBase) {
-        pagerAdapter.getItem(viewPager.getCurrentItem()).setCurrentTypeRequest(BasePagerPricesFragment.TypeRequest.Nothing);
-        TransparentActivity.startWithFragment(this, MorePriecesDialogFragment.newInstanse(priceBase, mCropModel.displayName));
     }
 
     @Override
@@ -410,13 +392,35 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                     }
                     break;
                 case REQUEST_CODE_DIALOG_WHY:
-                    onAddPricesClicked(StringFormaterUtil.parseToServerResponse(Calendar.getInstance()));
+
+                    String date = data.getStringExtra("Date");
+
+                    showWhyDialogs(date);
+
+                   // onAddPricesClicked();
                     break;
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+
+    public void showWhyDialogs(String date){
+
+        if (date ==null)
+            date = StringFormaterUtil.parseToServerResponse(Calendar.getInstance());
+
+        pagerAdapter.getItem(viewPager.getCurrentItem()).setCurrentTypeRequest(BasePagerPricesFragment.TypeRequest.Refresh);
+
+        if (!TextUtils.isEmpty(FarmersApp.getInstance().getCurrentMarketer().getFullName()) || (FarmersApp.getInstance().getCurrentUser().hasMarketir() && !FarmersApp.getInstance().getCurrentUser().isNewMarketeer())){
+            AddPriceActivity.start(this, mCropModel, date );
+        } else {
+            WhyCanIAddThisPriceDialogFragment fragment =  new WhyCanIAddThisPriceDialogFragment();
+            Bundle bundle_W = new Bundle();
+            bundle_W.putString("Date", date);
+            fragment.setArguments(bundle_W);
+            TransparentActivity.startWithFragment(PricesActivity.this, fragment);
+        }}
 
     private void setUPSpinner(ArrayList<String> spinnerData, int selection) {
         final ToolbarSpinnerAdapter spinnerAdapter = new ToolbarSpinnerAdapter(this,
@@ -606,27 +610,41 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                     }
                 }
         );
+
     }
 
-    public void makeRequestGetMarketeerCropPricesForPeriod(final MarketeerAllPricesCallback callback) {
-        RetrofitSingleton.getInstance()
-                .getMarketeerCropPricesForPeriod("2015-11-16T12:09:12.000Z", "2014-10-24T12:09:12.000Z", "גזר",
-                        new ACallback<List<MarketeerPricesByDateModel>, ErrorMsg>() {
-                            @Override
-                            public void onSuccess(List<MarketeerPricesByDateModel> result) {
-                                if (result != null && !result.isEmpty()) {
-                                    callback.onGetResult(result);
-                                } else  {
-                                    callback.onError();
-                                }
-                            }
+    public void makeRequestGetMarketeerCropPricesForPeriod(@Nullable DateRange dateRange, final MarketeerAllPricesCallback callback) {
 
-                            @Override
-                            public void onError(@NonNull ErrorMsg error) {
-                                showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
-                                callback.onError();
-                            }
-        });
+        if (dateRange == null) {
+            prevMonth  = DateHelper.parseToCalendar(mCropModel.prices.get(0).data);
+
+            prevMonth.set(Calendar.MONTH, prevMonth.get(Calendar.MONTH) - 1);
+            dateRange = new DateRange();
+            dateRange.setDateFrom(StringFormaterUtil.parseToServerResponse(DateHelper.parseToCalendar(mCropModel.prices.get(0).data)));
+            dateRange.setDateTo(StringFormaterUtil.parseToServerResponse(prevMonth));
+/*
+            mDateRange = dateRange;
+            mFullRange = dateRange;*/
+        }
+
+                RetrofitSingleton.getInstance()
+                        .getMarketeerCropPricesForPeriod(dateRange.getDateFrom(), dateRange.getDateTo(), mCropModel.displayName,
+                                new ACallback<List<MarketeerPricesByDateModel>, ErrorMsg>() {
+                                    @Override
+                                    public void onSuccess(List<MarketeerPricesByDateModel> result) {
+                                        if (result != null && !result.isEmpty()) {
+                                            callback.onGetResult(result);
+                                        } else {
+                                            callback.onError();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onError(@NonNull ErrorMsg error) {
+                                        showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
+                                        callback.onError();
+                                    }
+                                });
     }
 
 

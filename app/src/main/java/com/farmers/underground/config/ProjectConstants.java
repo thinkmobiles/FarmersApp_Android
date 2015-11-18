@@ -35,6 +35,8 @@ public class ProjectConstants {
 
     public static final String TEMP_DATE_Format = "dd.mm.yy"; //todo change later
 
+    public static final String STICKY_HEADER_DATE_FORMAT  = "MMMM dd.MM.yy"; // in hebrew MMMM will be on right
+
     public static final int MAX_RAM_CACHE_SIZE                      = 1024 * 1024 * 30; // 30MB
 
     private ProjectConstants(){/*prevent creation*/}

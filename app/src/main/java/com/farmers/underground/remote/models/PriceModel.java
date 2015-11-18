@@ -8,6 +8,7 @@ import java.util.List;
  * Created by omar
  * on 10/9/15.
  */
+@Deprecated
 public class PriceModel {
 
     @SerializedName("value")
