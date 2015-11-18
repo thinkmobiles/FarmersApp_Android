@@ -91,7 +91,9 @@ public class InviteDialogFragment extends BaseFragment<TransparentActivity> {
     @SuppressWarnings("unused")
     @OnClick(R.id.llFacebook)
     protected void sendFacebook(){
-        FacebookInviteUtil.inviteFBpeopleMessage(getHostActivity(),TEXT_INVITE);
+//        FacebookInviteUtil.inviteFBpeopleMessage(getHostActivity(),TEXT_INVITE);
+//        using facebook messenger for invite via intent
+        FacebookInviteUtil.inviteFBpeopleMessenger(getHostActivity(),TEXT_INVITE);
     }
 
     @SuppressWarnings("unused")
