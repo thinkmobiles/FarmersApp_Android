@@ -59,10 +59,12 @@
     </LinearLayout>
 
     <com.farmers.underground.ui.custom_views.CustomTextView
+        android:padding="4dp"
+        android:background="@drawable/bd_bth_transperent_with_stroke"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/WhiteRegularText"
-        android:text="התאריכים לכל"
+        android:text="@string/show_all_time"
         android:textSize="@dimen/period_picker_date_text_size"
         android:layout_marginTop="30dp"
         android:id="@+id/tvAllTime"

@@ -152,6 +152,7 @@
     <string name="your_dealer">המשווק שלך</string>
     <string name="whole_sales">שוק סיטונאי</string>
     <string name="fill_prices_correctly">אנא בדוק שוב שהתאריך והמחירים שהכנסת נכונים</string>
+    <string name="show_all_time">לכל התאריכים</string>
 
 
 </resources>

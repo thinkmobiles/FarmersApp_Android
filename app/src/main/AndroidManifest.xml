@@ -39,7 +39,7 @@
 
         <activity
                 android:name=".ui.activities.MainActivity"
-                android:launchMode="singleInstance"
+                android:launchMode="singleTask"
                 android:noHistory="false"
                 android:windowSoftInputMode="adjustNothing"
                 android:screenOrientation="sensorPortrait">
@@ -52,7 +52,7 @@
         </activity>
 
         <activity android:name=".ui.activities.PricesActivity"
-                  android:launchMode="singleInstance"
+                  android:launchMode="singleTask"
                   android:windowSoftInputMode="adjustNothing"
                   android:screenOrientation="sensorPortrait">
         </activity>

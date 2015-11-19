@@ -58,7 +58,8 @@ public class PeriodPickerFragment extends BaseFragment<TransparentActivity> impl
 
     private void setData(){
         dayFromTo = Period.EndDate;
-        setDate(Calendar.getInstance());
+        dateEnd = Calendar.getInstance();
+        //setDate(Calendar.getInstance());
     }
 
     @SuppressWarnings("unused")

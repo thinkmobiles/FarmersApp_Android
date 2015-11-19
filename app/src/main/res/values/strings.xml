@@ -167,5 +167,6 @@
     <string name="whole_sales">שוק סיטונאי</string>
     <string name="plant_counsil">מועצת הצמחים</string>
     <string name="fill_prices_correctly">Please fill field correctly</string>
+    <string name="show_all_time">לכל התאריכים</string>
 
 </resources>
