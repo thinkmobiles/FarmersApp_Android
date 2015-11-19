@@ -99,8 +99,8 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     private boolean drawerOpened;
     private static String query = "";
 
-    private List<LastCropPricesModel> mCropList;
-    private List<LastCropPricesModel> cropListSearch;
+    private List<LastCropPricesModel> mCropList = new ArrayList<>();
+    private List<LastCropPricesModel> cropListSearch = new ArrayList<>();;
 
     public static void start(@NonNull Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -179,7 +179,15 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
             RetrofitSingleton.getInstance().getLastCropPricesList(new ACallback<List<LastCropPricesModel>, ErrorMsg>() {
                 @Override
                 public void onSuccess(List<LastCropPricesModel> result) {
-                    mCropList = result;
+
+                    if (result == null || result.isEmpty()){
+                        onError(new ErrorMsg("Empty"));
+                        return;
+                    }
+
+                    mCropList.clear();
+                    mCropList.addAll(result);
+                    //mCropList = result;
                     updateFragments(mCropList, query);
                     FarmersApp.getInstance().setShouldUpdateLastCropsNextTime(false);
                     FarmersApp.getInstance().setLastCopsUpdateTime();
@@ -199,7 +207,14 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
             RetrofitSingleton.getInstance().getLastCropPricesList(new ACallback<List<LastCropPricesModel>, ErrorMsg>() {
                 @Override
                 public void onSuccess(List<LastCropPricesModel> result) {
-                    mCropList = result;
+                    if (result == null || result.isEmpty()){
+                        onError(new ErrorMsg("Empty"));
+                        return;
+                    }
+
+                    mCropList.clear();
+                    mCropList.addAll(result);
+                   // mCropList = result;
                     updateFragments(mCropList, query);
                     FarmersApp.getInstance().setLastCopsUpdateTime();
                 }
@@ -269,6 +284,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
             @Override
             public void onItemClicked(LastCropPricesModel cropModel) {
+                query = "";
                 PricesActivity.start(MainActivity.this, cropModel);
             }
 
@@ -327,7 +343,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                     Bundle bundle = new Bundle();
                     bundle.putString("Date", cropModel.prices.get(0).data);
                     fragment.setArguments(bundle);
-                    TransparentActivity.startWithFragment(MainActivity.this, fragment);
+                    TransparentActivity.startWithFragmentForResult(MainActivity.this, fragment, ProjectConstants.REQUEST_CODE_NO_MARKETIER);
                 }
 
             }
@@ -445,7 +461,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     }
 
     private void forceHideSearchList() {
-
         hideSoftKeyboard();
         searchHintController.hide();
         invalidateOptionsMenu();
@@ -570,8 +585,11 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                 openDrawer();
                 return true;
             case R.id.action_back:
-                hideSoftKeyboard();
-                searchHintController.hide();
+                if (searchHintController.isShowing()) {
+                    hideSoftKeyboard();
+                    query="";
+                    searchHintController.hide();
+                }
                 invalidateOptionsMenu();
                 return true;
         }
@@ -600,7 +618,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                 viewPager.setCurrentItem(1);
                 break;
             case 3:
-                TransparentActivity.startWithFragment(this, new InviteDialogFragment());
+                TransparentActivity.startWithFragmentForResult(this, new InviteDialogFragment(), ProjectConstants.REQUEST_CODE_INVITE);
                 break;
             case 4:
                 viewPager.setCurrentItem(0);
@@ -648,6 +666,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     @Override
     public void onBackPressed() {
+        query="";
         if (drawerOpened)
             mDrawerLayout.closeDrawers();
         else if (searchHintController.isShowing()) {
@@ -707,6 +726,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         else if (searchHintController.isShowing()) {
             hideSoftKeyboard();
             searchHintController.hide();
+            query="";
         }
 
         super.onStop();

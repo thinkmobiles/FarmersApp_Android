@@ -174,10 +174,10 @@ public class MarketeerPricesFragment extends BasePagerPricesFragment<MarketeerPr
         adapterCallback = new MarketeerPricesAdapter.Callback() {
             @Override
             public void onMorePricesClicked(MarketeerPriceModel marketeerPriceModel) {
-                TransparentActivity.startWithFragment(getHostActivity(),
+                TransparentActivity.startWithFragmentForResult(getHostActivity(),
                         CropQualitiesDialogFragment.newInstance(marketeerPriceModel.getMarketeerPrices(),
                                 marketeerPriceModel.getDisplayDate(),
-                                getHostActivity().getCropModel().displayName));
+                                getHostActivity().getCropModel().displayName), ProjectConstants.REQUEST_CODE_MORE_QUALITIES);
             }
 
             @Override

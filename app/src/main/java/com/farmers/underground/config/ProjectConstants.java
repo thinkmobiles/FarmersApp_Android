@@ -39,5 +39,13 @@ public class ProjectConstants {
 
     public static final int MAX_RAM_CACHE_SIZE                      = 1024 * 1024 * 30; // 30MB
 
+
+    public static final int REQUEST_CODE_INVITE = 90;
+    public static final int REQUEST_CODE_MORE_PRICE = 91;
+    public static final int REQUEST_CODE_MORE_QUALITIES = 92;
+    public static final int REQUEST_CODE_NO_MARKETIER = 93;
+    public static final int REQUEST_CODE_SEE_ALL_PRIECES = 94;
+    public static final int REQUEST_CODE_ADD_PRIECE = 95;
+
     private ProjectConstants(){/*prevent creation*/}
 }

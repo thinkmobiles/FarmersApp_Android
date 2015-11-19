@@ -40,6 +40,7 @@
         <activity
                 android:name=".ui.activities.MainActivity"
                 android:launchMode="singleInstance"
+                android:noHistory="false"
                 android:windowSoftInputMode="adjustNothing"
                 android:screenOrientation="sensorPortrait">
             <intent-filter>
@@ -59,6 +60,7 @@
         <activity android:name=".ui.activities.TransparentActivity"
             android:theme="@style/Theme.AppCompat.Translucent"
             android:launchMode="singleTop"
+            android:noHistory="false"
             android:screenOrientation="sensorPortrait">
         </activity>
 

@@ -26,6 +26,7 @@ import java.util.List;
  * Created by samson
  * on 06.11.15.
  */
+@Deprecated //TODO
 public class DrawerManager implements AdapterView.OnItemClickListener {
 
     private Activity context;

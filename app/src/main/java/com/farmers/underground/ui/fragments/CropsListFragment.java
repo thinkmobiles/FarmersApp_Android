@@ -25,8 +25,7 @@ import java.util.List;
  * Created by omar
  * on 9/30/15.
  */
-public class CropsListFragment
-        extends BaseFragment<MainActivity>
+public class CropsListFragment extends BaseFragment<MainActivity>
         implements CropsFragmentCallback {
 
     @Bind(R.id.rv_BaseListFragment)
@@ -66,9 +65,10 @@ public class CropsListFragment
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.addItemDecoration(new CropsItemDivider(ResourceRetriever.retrievePX(getHostActivity(), R.dimen
-                .crops_card_layout_margin)));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),
+                                                            LinearLayoutManager.VERTICAL, false));
+        recyclerView.addItemDecoration(new CropsItemDivider(ResourceRetriever.retrievePX(getHostActivity(),
+                                                                R.dimen.crops_card_layout_margin)));
 
         if (savedInstanceState != null)
             mFragmentModel = (CropsListFragmentModel) savedInstanceState.getSerializable(ProjectConstants.KEY_DATA);
@@ -98,12 +98,10 @@ public class CropsListFragment
         outState.putSerializable(ProjectConstants.KEY_DATA, mFragmentModel);
     }
 
-
     @Override
     public void setListCallback(CropsListAdapter.CropsAdapterCallback callback) {
         listCallback = callback;
     }
-
 
     @Override
     public void onReceiveCrops(List<LastCropPricesModel> cropsList, String query) {
@@ -122,8 +120,10 @@ public class CropsListFragment
 
             adapter.notifyDataSetChanged();
 
-            if (cropsList.size() == 0) showNoItems(query);
-            else hideNoItems();
+            if (cropsList.size() == 0)
+                showNoItems(query);
+            else
+                hideNoItems();
 
         } else {
             showNoItems("");
@@ -132,9 +132,9 @@ public class CropsListFragment
     }
 
     private void hideNoItems() {
-        tv_NoItems.setVisibility(View.GONE);
+        if(tv_NoItems!=null)
+            tv_NoItems.setVisibility(View.GONE);
     }
-
 
     private List<CropsListItemDH> generateCropsDataHolders(List<LastCropPricesModel> cropsList) {
         List<CropsListItemDH> dhList = new ArrayList<>();

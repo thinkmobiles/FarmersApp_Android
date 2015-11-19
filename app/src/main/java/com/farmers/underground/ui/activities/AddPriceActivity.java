@@ -63,7 +63,6 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
 
     private static final ImageLoader imageLoaderRound = ImageCacheManager.getImageLoader(FarmersApp.ImageLoaders.CACHE_ROUND);
 
-
     private Calendar today = Calendar.getInstance();
     private Calendar selectedDate = Calendar.getInstance();
     private OnChangeDateListener onChangeDateListener;
@@ -71,21 +70,21 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
     private AddPriceFragment childFragment;
     private boolean enableDone = false;
 
-    public static void start(@NonNull Context context, LastCropPricesModel cropModel) {
+    public static <A extends BaseActivity> void start(@NonNull A activity, LastCropPricesModel cropModel) {
         Gson gson = new GsonBuilder().create();
         String s = gson.toJson(cropModel);
-        Intent intent = new Intent(context, AddPriceActivity.class);
+        Intent intent = new Intent(activity, AddPriceActivity.class);
         intent.putExtra(ProjectConstants.KEY_DATA, s);
-        context.startActivity(intent);
+        activity.startActivityForResult(intent, ProjectConstants.REQUEST_CODE_ADD_PRIECE);
     }
 
-    public static void start(@NonNull Context context, LastCropPricesModel cropModel, String date) {
+    public static <A extends BaseActivity> void start(@NonNull A activity, LastCropPricesModel cropModel, String date) {
         Gson gson = new GsonBuilder().create();
         String s = gson.toJson(cropModel);
-        Intent intent = new Intent(context, AddPriceActivity.class);
+        Intent intent = new Intent(activity, AddPriceActivity.class);
         intent.putExtra(ProjectConstants.KEY_DATA, s);
         intent.putExtra(ProjectConstants.KEY_DATE, date);
-        context.startActivity(intent);
+        activity.startActivityForResult(intent , ProjectConstants.REQUEST_CODE_ADD_PRIECE);
     }
 
     public void setEnableDone(boolean isEnableDone) {
@@ -227,7 +226,7 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
         if(enableDone){
             showCorrectDialog();
         } else {
-            showToast("Please fill field correctly", Toast.LENGTH_SHORT);
+            showToast(getString(R.string.fill_prices_correctly), Toast.LENGTH_SHORT);
         }
     }
 
@@ -266,6 +265,7 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
                 showToast(getString(R.string.alert_message_after_add_price), Toast.LENGTH_SHORT);
                 FarmersApp.getInstance().setShouldUpdateLastCropsNextTime(true);
                 anyway();
+                finish();
             }
 
             @Override
