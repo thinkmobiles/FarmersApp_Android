@@ -115,6 +115,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     private boolean isVisibleBurger;
     private DateRange mDateRangeMarketeers,mDateRangeCrop, mFullRangeCrop, mFullRangeMarketeers;
 
+    private MonthPickerCallback mMonthPickerCallback;
+
     private static final ImageLoader imageLoaderRound = ImageCacheManager.getImageLoader(FarmersApp.ImageLoaders.CACHE_ROUND);
 
     public static <A extends BaseActivity> void start(@NonNull A activity, LastCropPricesModel cropModel) {
@@ -408,7 +410,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                     showWhyDialogs(date);
                     break;
                 case ProjectConstants.REQUEST_CODE_MONTH_PICKER:
-
+                    String month = data.getStringExtra(ProjectConstants.KEY_DATA);
+                    mMonthPickerCallback.onPickMonth(month);
                     break;
             }
         }
@@ -507,7 +510,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         lvDrawerContainer.setAdapter(new DrawerAdapter(drawerItemList, this));
     }
 
-    public void showMonthPicker(){
+    public void showMonthPicker(final MonthPickerCallback callback){
+        this.mMonthPickerCallback = callback;
         TransparentActivity.startWithFragmentForResult(this, MonthPickerFragment.newInstanse("Title", 0), ProjectConstants.REQUEST_CODE_MONTH_PICKER);
     }
 
@@ -708,5 +712,9 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     public interface MarketeerAllPricesCallback {
         void onGetResult(List<MarketeerPricesByDateModel> result);
         void onError(); //result is empty or network/server error
+    }
+
+    public interface MonthPickerCallback{
+        void onPickMonth(String month);
     }
 }

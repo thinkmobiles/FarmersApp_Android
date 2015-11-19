@@ -48,7 +48,7 @@ import java.util.List;
  * on 10/9/15.
  */
 public class StatisticsFragment extends BasePagerPricesFragment<String>
-        implements OnChartValueSelectedListener,  PricesActivity.PageListener, ToolbarSpinnerAdapter.SpinnerCallback {
+        implements OnChartValueSelectedListener,  PricesActivity.PageListener, ToolbarSpinnerAdapter.SpinnerCallback, PricesActivity.MonthPickerCallback {
 
     //head block
     @Bind(R.id.tv_HeadTitle_SF)
@@ -134,9 +134,7 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
     }
 
     public void initMonthPicker() {
-        //TODO
-        getHostActivity().showMonthPicker();
-
+        getHostActivity().showMonthPicker(this);
     }
 
     public void setMonth(String month){
@@ -549,5 +547,10 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
     @Override
     public void setDateRange(DateRange dateRange, boolean isAllTime) {
         //todo
+    }
+
+    @Override
+    public void onPickMonth(String month) {
+        setMonth(month);
     }
 }
