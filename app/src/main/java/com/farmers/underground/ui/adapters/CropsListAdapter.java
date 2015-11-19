@@ -38,7 +38,14 @@ public class CropsListAdapter extends RecyclerView.Adapter<CropsListItemVH> {
     }
 
     public void setDataList(List<CropsListItemDH> dataList) {
-        this.dataList  =  dataList ;
+
+        if(this.dataList !=null){
+            this.dataList.clear();
+            this.dataList.addAll(dataList);
+        } else {
+            this.dataList  =  dataList ;
+        }
+
     }
 
 
