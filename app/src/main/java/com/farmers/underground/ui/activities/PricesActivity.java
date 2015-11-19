@@ -1,5 +1,6 @@
 package com.farmers.underground.ui.activities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -71,7 +72,7 @@ import java.util.List;
 public class PricesActivity extends BaseActivity implements DrawerAdapter.DrawerCallback {
 
     public static final int REQUEST_CODE_PERIOD_PICKER = 5;
-    public static final int REQUEST_CODE_DIALOG_WHY = 2;
+    public static final int REQUEST_CODE_DIALOG_WHY = 2; // todo move codes to project const
 
     @Bind(R.id.drawer_conainer_PriceActivity)
     protected DrawerLayout mDrawerLayout;
@@ -120,12 +121,12 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     private static final ImageLoader imageLoaderRound = ImageCacheManager.getImageLoader(FarmersApp.ImageLoaders.CACHE_ROUND);
 
-    public static void start(@NonNull Context context, LastCropPricesModel cropModel) {
+    public static <A extends BaseActivity> void start(@NonNull A activity, LastCropPricesModel cropModel) {
         Gson gson = new GsonBuilder().create();
         String s = gson.toJson(cropModel);
-        Intent intent = new Intent(context, PricesActivity.class);
+        Intent intent = new Intent(activity, PricesActivity.class);
         intent.putExtra(ProjectConstants.KEY_DATA, s);
-        context.startActivity(intent);
+        activity.startActivityForResult(intent, ProjectConstants.REQUEST_CODE_SEE_ALL_PRIECES);
     }
 
     @Override
@@ -432,7 +433,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
             Bundle bundle_W = new Bundle();
             bundle_W.putString("Date", date);
             fragment.setArguments(bundle_W);
-            TransparentActivity.startWithFragment(PricesActivity.this, fragment);
+            TransparentActivity.startWithFragmentForResult(PricesActivity.this, fragment, ProjectConstants.REQUEST_CODE_NO_MARKETIER);
         }}
 
     private void setUPSpinner(ArrayList<String> spinnerData, int selection) {
@@ -517,7 +518,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                 MainActivity.startWithPageSelected(this, ProjectConstants.MAIN_ACTIVITY_PAGE_ALL);
                 break;
             case 3:
-                TransparentActivity.startWithFragment(this, new InviteDialogFragment());
+                TransparentActivity.startWithFragmentForResult(this, new InviteDialogFragment(), ProjectConstants.REQUEST_CODE_INVITE);
                 break;
             case 4:
                 MainActivity.startWithPageSelected(this, ProjectConstants.MAIN_ACTIVITY_PAGE_FAV);
@@ -562,8 +563,6 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     public void onBackPressed() {
         if (drawerOpened && mDrawerLayout != null) {
             mDrawerLayout.closeDrawers();
-        } else if (false){
-            MainActivity.start(this); //TODO after app opened from background - app is closed / not good
         } else {
             super.onBackPressed();
         }

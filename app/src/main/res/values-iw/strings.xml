@@ -42,7 +42,7 @@
     <string name="dialog_progress_message_default">המתן בבקשה…</string>
     <string name="dialog_accept">אשר</string>
     <string name="dialog_correct">תקן</string>
-    <string name="dialog_please_correct">בדוק בבקשה שכל המידע שהזנת נכון</string>
+    <string name="dialog_please_correct">אנא בדוק שוב שהתאריך והמחירים שהכנסת נכונים</string>
 
     <!--  //sign_up-->
     <string name="sign_up_full_name">שם מלא</string>
@@ -151,6 +151,7 @@
     <string name="price_prefix">₪</string>
     <string name="your_dealer">המשווק שלך</string>
     <string name="whole_sales">שוק סיטונאי</string>
+    <string name="fill_prices_correctly">אנא בדוק שוב שהתאריך והמחירים שהכנסת נכונים</string>
 
 
 </resources>

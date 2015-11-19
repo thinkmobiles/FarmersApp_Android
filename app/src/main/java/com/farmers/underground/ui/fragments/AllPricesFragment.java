@@ -206,9 +206,9 @@ public class AllPricesFragment extends BasePagerPricesFragment<CropPricesByDateM
     @Override
     public void onMorePricesClicked(CropPrices priceModel) {
         setTypeRequestNothing();
-        TransparentActivity.startWithFragment(
+        TransparentActivity.startWithFragmentForResult(
                 getHostActivity(),
                 MorePricesDialogFragment.newInstance(priceModel,
-                getHostActivity().getCropModel().displayName));
+                        getHostActivity().getCropModel().displayName), ProjectConstants.REQUEST_CODE_MORE_PRICE);
     }
 }

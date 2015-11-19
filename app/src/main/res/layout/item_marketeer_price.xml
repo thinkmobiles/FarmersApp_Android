@@ -8,11 +8,11 @@
 
     <FrameLayout
         android:id="@+id/price_conainer"
-        android:layout_width="95dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="@dimen/margin_default_medium"
-        android:paddingRight="@dimen/padding_margin_default_tiny"
+        android:layout_marginRight="@dimen/padding_margin_default_tiny"
         android:visibility="visible">
 
 
@@ -25,11 +25,12 @@
             android:visibility="visible">
 
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:contentDescription="@null"
                     android:layout_width="@dimen/crop_price_icon_size"
                     android:layout_height="@dimen/crop_price_icon_size"
                     android:layout_gravity="bottom"
@@ -39,6 +40,7 @@
                     android:src="@drawable/ic_info" />
 
                 <ImageView
+                    android:contentDescription="@null"
                     android:layout_width="@dimen/crop_price_icon_size"
                     android:layout_height="@dimen/crop_price_icon_size"
                     android:layout_gravity="bottom"
@@ -53,14 +55,16 @@
                     android:text="--.--"
                     android:textColor="@color/text_dark_grey"
                     android:textSize="@dimen/price_text_size"
+                    android:singleLine="true"
                     custom:customFont="roboto_light" />
             </LinearLayout>
 
             <com.farmers.underground.ui.custom_views.CustomTextView
+                android:singleLine="true"
                 android:id="@+id/tv_MorePrice_MP"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left|center_vertical"
+                android:layout_gravity="center_horizontal|center_vertical"
                 android:gravity="left"
                 android:text="@string/more_prices"
                 android:textColor="@color/selector_tap_to_refresh"
