@@ -119,6 +119,18 @@
         <item name="android:textSize">@dimen/main_text_size</item>
     </style>
 
+    <style name="BlackMainBoldText">
+        <item name="android:textColor">@color/text_black</item>
+        <item name="customFont">bold</item>
+        <item name="android:textSize">@dimen/main_text_size</item>
+    </style>
+
+    <style name="DialogButton">
+        <item name="android:textColor">@color/text_aqua</item>
+        <item name="customFont">roboto_light</item>
+        <item name="android:textSize">@dimen/main_text_size</item>
+    </style>
+
 
 
 

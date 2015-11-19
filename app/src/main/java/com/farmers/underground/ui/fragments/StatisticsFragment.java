@@ -17,9 +17,11 @@ import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.ui.activities.PricesActivity;
+import com.farmers.underground.ui.activities.TransparentActivity;
 import com.farmers.underground.ui.adapters.ToolbarSpinnerAdapter;
 import com.farmers.underground.ui.base.BasePagerPricesFragment;
 import com.farmers.underground.ui.custom_views.PriceView;
+import com.farmers.underground.ui.dialogs.MonthPickerFragment;
 import com.farmers.underground.ui.models.ChartDataModel;
 import com.farmers.underground.ui.models.DateRange;
 import com.farmers.underground.ui.utils.ResUtil;
@@ -45,7 +47,7 @@ import java.util.List;
  * Created by omar
  * on 10/9/15.
  */
-public class StatisticsFragment extends BasePagerPricesFragment
+public class StatisticsFragment extends BasePagerPricesFragment<String>
         implements OnChartValueSelectedListener,  PricesActivity.PageListener, ToolbarSpinnerAdapter.SpinnerCallback {
 
     //head block
@@ -133,8 +135,12 @@ public class StatisticsFragment extends BasePagerPricesFragment
 
     public void initMonthPicker() {
         //TODO
-        getHostActivity().showToast("to be done", Toast.LENGTH_SHORT);
+        getHostActivity().showMonthPicker();
 
+    }
+
+    public void setMonth(String month){
+        tv_Month_SF.setText(month);
     }
 
     private void setupDefaultPage() {

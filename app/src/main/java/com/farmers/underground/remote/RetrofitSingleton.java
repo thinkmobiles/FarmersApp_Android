@@ -89,6 +89,22 @@ public class RetrofitSingleton {
         return pricesService;
     }
 
+    public void getCropQualityList(@NonNull String cropName, final ACallback<List<String>, ErrorMsg> callback){
+        getCropsService().cropQualitys(cropName).enqueue(new Callback<List<String>>() {
+            @Override
+            public void onResponse(Response<List<String>> response, Retrofit retrofit) {
+                performCallback(callback, response);
+                callback.anyway();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                callback.onError(new ErrorMsg("Network/Server Error"));
+                callback.anyway();
+            }
+        });
+    }
+
     public void getLastCropPricesList(final ACallback<List<LastCropPricesModel>,ErrorMsg> callback){
         getPricesService().getLast().enqueue(new Callback<List<LastCropPricesModel>>() {
             @Override

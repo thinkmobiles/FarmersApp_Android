@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:id="@+id/llPickerHeader"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/aqua"
+        android:paddingTop="@dimen/padding_margin_default_small"
+        android:gravity="right">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:textColor="@color/white"
+            android:layout_marginRight="30dp"
+            android:id="@+id/tvTitle_MP" />
+
+        <com.farmers.underground.ui.custom_views.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="new"
+            style="@style/WhiteBoldText"
+            android:layout_margin="@dimen/margin_default_medium"
+            android:textColor="@color/text_white"
+            android:textSize="28sp"
+            android:id="@+id/tvSelectedMonth_MP" />
+    </LinearLayout>
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lvMonths_MP"
+        android:divider="@null"
+        android:listSelector="@android:color/transparent"
+        android:layout_below="@+id/llPickerHeader"
+        android:layout_above="@+id/llPickerFooter" />
+
+    <RelativeLayout
+        android:id="@+id/llPickerFooter"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="@dimen/padding_margin_default_medium"
+        android:paddingBottom="@dimen/padding_margin_default_small"
+        android:layout_alignParentBottom="true">
+
+        <com.farmers.underground.ui.custom_views.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_btn_cancel"
+            android:id="@+id/tvCancel_MP"
+            style="@style/DialogButton"
+            android:layout_margin="@dimen/margin_default_medium"
+            android:layout_toLeftOf="@+id/tvOk_MP" />
+
+        <com.farmers.underground.ui.custom_views.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_btn_ok"
+            android:id="@+id/tvOk_MP"
+            style="@style/DialogButton"
+            android:layout_margin="@dimen/margin_default_medium"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+</RelativeLayout>

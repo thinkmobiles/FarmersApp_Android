@@ -1,4 +1,4 @@
-package com.farmers.underground.ui.fragments;
+package com.farmers.underground.ui.dialogs;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;

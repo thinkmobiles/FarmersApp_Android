@@ -41,10 +41,11 @@ import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.base.BasePagerPricesFragment;
 import com.farmers.underground.ui.custom_views.CustomSearchView;
 import com.farmers.underground.ui.dialogs.InviteDialogFragment;
+import com.farmers.underground.ui.dialogs.MonthPickerFragment;
 import com.farmers.underground.ui.dialogs.WhyCanIAddThisPriceDialogFragment;
 import com.farmers.underground.ui.fragments.AllPricesFragment;
 import com.farmers.underground.ui.fragments.MarketeerPricesFragment;
-import com.farmers.underground.ui.fragments.PeriodPickerFragment;
+import com.farmers.underground.ui.dialogs.PeriodPickerFragment;
 import com.farmers.underground.ui.fragments.StatisticsFragment;
 import com.farmers.underground.ui.models.DateRange;
 import com.farmers.underground.ui.models.DrawerItem;
@@ -71,6 +72,7 @@ import java.util.List;
 public class PricesActivity extends BaseActivity implements DrawerAdapter.DrawerCallback {
 
     public static final int REQUEST_CODE_PERIOD_PICKER = 5;
+    public static final int REQUEST_CODE_MONTH_PICKER = 6;
     public static final int REQUEST_CODE_DIALOG_WHY = 2;
 
     @Bind(R.id.drawer_conainer_PriceActivity)
@@ -150,7 +152,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         setDrawer();
         setViewPager();
         setTabs();
-        setUPSpinner(spinnerTestData(), 5);
+//        setUPSpinner(spinnerTestData(), 5);
+        makeRequestGetCropQualityList();
 
         searchView.setOnSearchClickListener(new View.OnClickListener() {
             @Override
@@ -406,10 +409,10 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                     }
                     break;
                 case REQUEST_CODE_DIALOG_WHY:
-
                     String date = data.getStringExtra("Date");
-
                     showWhyDialogs(date);
+                    break;
+                case REQUEST_CODE_MONTH_PICKER:
 
                     break;
             }
@@ -435,7 +438,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
             TransparentActivity.startWithFragment(PricesActivity.this, fragment);
         }}
 
-    private void setUPSpinner(ArrayList<String> spinnerData, int selection) {
+    private void setUPSpinner(List<String> spinnerData, int selection) {
         final ToolbarSpinnerAdapter spinnerAdapter = new ToolbarSpinnerAdapter(this,
                 spinnerData);
 
@@ -461,7 +464,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     }
 
     //todo remove later
-    private ArrayList<String> spinnerTestData() {
+    private List<String> spinnerTestData() {
         return new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.all_month)));
     }
 
@@ -507,6 +510,10 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
         drawerItemList.add(new DrawerItem());
         lvDrawerContainer.setAdapter(new DrawerAdapter(drawerItemList, this));
+    }
+
+    public void showMonthPicker(){
+        TransparentActivity.startWithFragmentForResult(this, MonthPickerFragment.newInstanse("Title", 0), REQUEST_CODE_MONTH_PICKER);
     }
 
     @SuppressWarnings("unused")
@@ -675,6 +682,26 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                     public void onError(@NonNull ErrorMsg error) {
                         showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
                         callback.onError();
+                    }
+                });
+    }
+
+    public void makeRequestGetCropQualityList(){
+        RetrofitSingleton.getInstance().getCropQualityList(
+                mCropModel.displayName,
+                new ACallback<List<String>, ErrorMsg>() {
+                    @Override
+                    public void onSuccess(List<String> result) {
+                        if (result != null && !result.isEmpty()) {
+                            setUPSpinner(result, 0);
+                        } else {
+                            showToast("List is empty", Toast.LENGTH_SHORT);
+                        }
+                    }
+
+                    @Override
+                    public void onError(@NonNull ErrorMsg error) {
+                        showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
                     }
                 });
     }
