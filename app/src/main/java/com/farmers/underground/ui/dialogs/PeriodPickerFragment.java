@@ -41,7 +41,7 @@ public class PeriodPickerFragment extends BaseFragment<TransparentActivity> impl
     }
 
     private Period dayFromTo;
-    private Calendar dateStart, dateEnd;
+    private Calendar dateStart, dateEnd, dateMax;
     private boolean isAllTme = false;
 
     @Override
@@ -58,8 +58,9 @@ public class PeriodPickerFragment extends BaseFragment<TransparentActivity> impl
 
     private void setData(){
         dayFromTo = Period.EndDate;
-        dateEnd = Calendar.getInstance();
+      /*  dateEnd = Calendar.getInstance();*/
         //setDate(Calendar.getInstance());
+        dateMax = Calendar.getInstance();
     }
 
     @SuppressWarnings("unused")
@@ -89,17 +90,20 @@ public class PeriodPickerFragment extends BaseFragment<TransparentActivity> impl
         showDatePicker();
     }
 
+    //todo clean after test
     public void onPickDate(Calendar date) {
-        if(dayFromTo == Period.StartDate) {
-            if (dateEnd.after(date)) {
+       /* if(dayFromTo == Period.StartDate) {
+            if (dateEnd == null){*/
                 setDate(date);
-                sendPeriod();
-            } else {
-                getHostActivity().showToast("Incorrect period", Toast.LENGTH_SHORT);
-            }
-        } else {
-            setDate(date);
-        }
+//            } else if (dateEnd.after(date)) {
+//                setDate(date);
+////                sendPeriod();
+//            } else {
+//                getHostActivity().showToast("Incorrect period", Toast.LENGTH_SHORT);
+//            }
+////        } else {
+//            setDate(date);
+//        }
     }
 
     private void setDate(Calendar date){
@@ -109,6 +113,14 @@ public class PeriodPickerFragment extends BaseFragment<TransparentActivity> impl
         } else {
             tvPeriodTo.setText(StringFormaterUtil.convertDate(date));
             dateEnd = date;
+        }
+
+        if(dateStart != null && dateEnd!=null) {
+            if (dateEnd.after(dateStart)) {
+                sendPeriod();
+            } else {
+                getHostActivity().showToast("Incorrect period", Toast.LENGTH_SHORT);
+            }
         }
     }
 
@@ -127,10 +139,21 @@ public class PeriodPickerFragment extends BaseFragment<TransparentActivity> impl
         DatePickerDialog datePickerDialog =  new DatePickerDialog(
                 getHostActivity(),
                 this,
-                dateEnd.get(Calendar.YEAR),
-                dateEnd.get(Calendar.MONTH),
-                dateEnd.get(Calendar.DAY_OF_MONTH)
+                dateMax.get(Calendar.YEAR),
+                dateMax.get(Calendar.MONTH),
+                dateMax.get(Calendar.DAY_OF_MONTH)
         );
+
+
+
+//        if(dateEnd!= null)
+//            datePickerDialog.getDatePicker().setMaxDate(dateStart.getTimeInMillis());
+//        else
+            datePickerDialog.getDatePicker().setMaxDate(dateMax.getTimeInMillis());
+
+//        if(dateStart!= null)
+//            datePickerDialog.getDatePicker().setMinDate(dateStart.getTimeInMillis());
+
         datePickerDialog.show();
     }
 
