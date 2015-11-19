@@ -46,6 +46,9 @@ public class ProjectConstants {
     public static final int REQUEST_CODE_NO_MARKETIER = 93;
     public static final int REQUEST_CODE_SEE_ALL_PRIECES = 94;
     public static final int REQUEST_CODE_ADD_PRIECE = 95;
+    public static final int REQUEST_CODE_PERIOD_PICKER = 5;
+    public static final int REQUEST_CODE_MONTH_PICKER = 6;
+    public static final int REQUEST_CODE_DIALOG_WHY = 2;
 
     private ProjectConstants(){/*prevent creation*/}
 }

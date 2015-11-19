@@ -186,7 +186,7 @@ public class MarketeerPricesFragment extends BasePagerPricesFragment<MarketeerPr
                 Bundle bundle = new Bundle();
                 bundle.putString("Date", model.getDate());
                 fragment.setArguments(bundle);
-                TransparentActivity.startWithFragmentForResult(getHostActivity(), fragment, PricesActivity.REQUEST_CODE_DIALOG_WHY);
+                TransparentActivity.startWithFragmentForResult(getHostActivity(), fragment, ProjectConstants.REQUEST_CODE_DIALOG_WHY);
             }
         };
     }

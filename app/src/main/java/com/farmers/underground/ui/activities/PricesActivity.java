@@ -1,7 +1,5 @@
 package com.farmers.underground.ui.activities;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -71,10 +69,6 @@ import java.util.List;
  * on 10/9/15.
  */
 public class PricesActivity extends BaseActivity implements DrawerAdapter.DrawerCallback {
-
-    public static final int REQUEST_CODE_PERIOD_PICKER = 5;
-    public static final int REQUEST_CODE_MONTH_PICKER = 6;
-    public static final int REQUEST_CODE_DIALOG_WHY = 2;
 
     @Bind(R.id.drawer_conainer_PriceActivity)
     protected DrawerLayout mDrawerLayout;
@@ -371,14 +365,14 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     @SuppressWarnings("unused")
     @OnClick(R.id.action_calendar)
     protected void onCalendarClick() {
-        TransparentActivity.startWithFragmentForResult(this, new PeriodPickerFragment(), REQUEST_CODE_PERIOD_PICKER);
+        TransparentActivity.startWithFragmentForResult(this, new PeriodPickerFragment(), ProjectConstants.REQUEST_CODE_PERIOD_PICKER);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                case REQUEST_CODE_PERIOD_PICKER:
+                case ProjectConstants.REQUEST_CODE_PERIOD_PICKER:
                     Bundle bundle = data.getExtras();
                     Calendar dateFrom = (Calendar) bundle.getSerializable(PeriodPickerFragment.KEY_DATE_FROM);
                     Calendar dateTo = (Calendar) bundle.getSerializable(PeriodPickerFragment.KEY_DATE_TO);
@@ -409,11 +403,11 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                         basePagerPricesFragment.setDateRange(mDateRange,isFull);
                     }
                     break;
-                case REQUEST_CODE_DIALOG_WHY:
+                case ProjectConstants.REQUEST_CODE_DIALOG_WHY:
                     String date = data.getStringExtra("Date");
                     showWhyDialogs(date);
                     break;
-                case REQUEST_CODE_MONTH_PICKER:
+                case ProjectConstants.REQUEST_CODE_MONTH_PICKER:
 
                     break;
             }
@@ -514,7 +508,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     }
 
     public void showMonthPicker(){
-        TransparentActivity.startWithFragmentForResult(this, MonthPickerFragment.newInstanse("Title", 0), REQUEST_CODE_MONTH_PICKER);
+        TransparentActivity.startWithFragmentForResult(this, MonthPickerFragment.newInstanse("Title", 0), ProjectConstants.REQUEST_CODE_MONTH_PICKER);
     }
 
     @SuppressWarnings("unused")
