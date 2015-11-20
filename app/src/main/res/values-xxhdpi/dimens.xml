@@ -5,4 +5,8 @@
     <dimen name="login_btn_login_height">38dp</dimen>
 
     <dimen name="drawer_item_height">55dp</dimen>
+
+    <dimen name="text_month_normal">6sp</dimen>
+    <dimen name="text_month_big">16sp</dimen>
+    <dimen name="text_selected_month">30sp</dimen>
 </resources>

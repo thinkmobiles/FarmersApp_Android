@@ -11,6 +11,10 @@
     <dimen name="tiny_text_size">8sp</dimen>
     <dimen name="crop_price_price_text_size">30sp</dimen>
     <dimen name="tab_text_size">14sp</dimen>
+
+    <dimen name="text_month_normal">8sp</dimen>
+    <dimen name="text_month_big">18sp</dimen>
+    <dimen name="text_selected_month">26sp</dimen>
     <!--toolbar-->
     <dimen name="toolbar_text_size">18sp</dimen>
 

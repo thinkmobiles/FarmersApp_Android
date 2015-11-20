@@ -13,6 +13,10 @@
     <dimen name="default_divider_height_1">1dp</dimen>
     <dimen name="tab_text_size">15sp</dimen>
 
+    <dimen name="text_month_normal">10sp</dimen>
+    <dimen name="text_month_big">20sp</dimen>
+    <dimen name="text_selected_month">28sp</dimen>
+
     <!--margins-->
     <dimen name="margin_default_tiny">5dp</dimen>
     <dimen name="margin_default_small">10dp</dimen>
