@@ -51,7 +51,7 @@ import com.farmers.underground.ui.models.DrawerItem;
 import com.farmers.underground.ui.utils.DateHelper;
 import com.farmers.underground.ui.utils.ImageCacheManager;
 import com.farmers.underground.ui.utils.NotYetHelper;
-import com.farmers.underground.ui.utils.StringFormaterUtil;
+import com.farmers.underground.ui.utils.StringFormatterUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -60,7 +60,6 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import butterknife.OnItemClick;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -113,7 +112,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     private ProjectPagerAdapter<BasePagerPricesFragment<?>> pagerAdapter;
 
     private boolean isVisibleBurger;
-    private DateRange mDateRangeMarketeers,mDateRangeCrop, mFullRangeCrop, mFullRangeMarketeers;
+    private DateRange mDateRangeMarketeers, mDateRangeCrop, mFullRangeCrop, mFullRangeMarketeers;
 
     private MonthPickerCallback mMonthPickerCallback;
 
@@ -161,7 +160,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         });
     }
 
-    private void updateToolBarCrop () {
+    private void updateToolBarCrop() {
 
         toolbarTitle.setText(mCropModel.displayName);
 
@@ -231,7 +230,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         isVisibleBurger = true;
     }
 
-    private ViewPager.OnPageChangeListener pageChangeListener  = new ViewPager.OnPageChangeListener() {
+    private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -383,16 +382,16 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
                     final boolean isFull = bundle.getBoolean(PeriodPickerFragment.KEY_ALL_TIME, false);
 
-                    if (isFull){
+                    if (isFull) {
                         prevMonth = DateHelper.parseToCalendar(mCropModel.prices.get(0).data);
                         prevMonth.set(Calendar.MONTH, prevMonth.get(Calendar.MONTH) - 1);
-                        mDateRange.setDateFrom(StringFormaterUtil.parseToServerResponse(DateHelper.parseToCalendar(mCropModel.prices.get(0).data)));
-                        mDateRange.setDateTo(StringFormaterUtil.parseToServerResponse(prevMonth));
+                        mDateRange.setDateFrom(StringFormatterUtil.parseToServerResponse(DateHelper.parseToCalendar(mCropModel.prices.get(0).data)));
+                        mDateRange.setDateTo(StringFormatterUtil.parseToServerResponse(prevMonth));
                         mFullRangeCrop = mDateRange;
                         mFullRangeMarketeers = mDateRange;
                     } else {
-                        mDateRange.setDateFrom(StringFormaterUtil.parseToServerResponse(dateFrom));
-                        mDateRange.setDateTo(StringFormaterUtil.parseToServerResponse(dateTo));
+                        mDateRange.setDateFrom(StringFormatterUtil.parseToServerResponse(dateFrom));
+                        mDateRange.setDateTo(StringFormatterUtil.parseToServerResponse(dateTo));
                     }
 
                     mDateRangeCrop = mDateRange;
@@ -402,7 +401,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
                         basePagerPricesFragment.setCurrentTypeRequest(BasePagerPricesFragment.TypeRequest.Search);
 
-                        basePagerPricesFragment.setDateRange(mDateRange,isFull);
+                        basePagerPricesFragment.setDateRange(mDateRange, isFull);
                     }
                     break;
                 case ProjectConstants.REQUEST_CODE_DIALOG_WHY:
@@ -421,20 +420,21 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     public void showWhyDialogs(String date) {
 
-        if (date ==null)
-            date = StringFormaterUtil.parseToServerResponse(Calendar.getInstance());
+        if (date == null)
+            date = StringFormatterUtil.parseToServerResponse(Calendar.getInstance());
 
         pagerAdapter.getItem(viewPager.getCurrentItem()).setCurrentTypeRequest(BasePagerPricesFragment.TypeRequest.Refresh);
 
-        if (!TextUtils.isEmpty(FarmersApp.getInstance().getCurrentMarketer().getFullName()) || (FarmersApp.getInstance().getCurrentUser().hasMarketir() && !FarmersApp.getInstance().getCurrentUser().isNewMarketeer())){
-            AddPriceActivity.start(this, mCropModel, date );
+        if (!TextUtils.isEmpty(FarmersApp.getInstance().getCurrentMarketer().getFullName()) || (FarmersApp.getInstance().getCurrentUser().hasMarketir() && !FarmersApp.getInstance().getCurrentUser().isNewMarketeer())) {
+            AddPriceActivity.start(this, mCropModel, date);
         } else {
-            WhyCanIAddThisPriceDialogFragment fragment =  new WhyCanIAddThisPriceDialogFragment();
+            WhyCanIAddThisPriceDialogFragment fragment = new WhyCanIAddThisPriceDialogFragment();
             Bundle bundle_W = new Bundle();
             bundle_W.putString("Date", date);
             fragment.setArguments(bundle_W);
             TransparentActivity.startWithFragmentForResult(PricesActivity.this, fragment, ProjectConstants.REQUEST_CODE_NO_MARKETIER);
-        }}
+        }
+    }
 
     private void setUPSpinner(List<String> spinnerData, int selection) {
         final ToolbarSpinnerAdapter spinnerAdapter = new ToolbarSpinnerAdapter(this,
@@ -460,12 +460,6 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         });
 
     }
-
-    //todo remove later
-    private List<String> spinnerTestData() {
-        return new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.all_month)));
-    }
-
 
     //drawer (from main Activity)
     private void setDrawer() {
@@ -510,7 +504,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         lvDrawerContainer.setAdapter(new DrawerAdapter(drawerItemList, this));
     }
 
-    public void showMonthPicker(final MonthPickerCallback callback){
+    public void showMonthPicker(final MonthPickerCallback callback) {
         this.mMonthPickerCallback = callback;
         TransparentActivity.startWithFragmentForResult(this, MonthPickerFragment.newInstanse("Title", 0), ProjectConstants.REQUEST_CODE_MONTH_PICKER);
     }
@@ -580,7 +574,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     private Calendar prevMonth;
 
     public void makeRequestGetCropPriceForPeriod(boolean isFull, final CropAllPricesCallback callback) {
-        if(isFull){
+        if (isFull) {
             makeRequestGetCropPriceForPeriod(null, callback);
         } else {
             makeRequestGetCropPriceForPeriod(mDateRangeCrop, callback);
@@ -590,8 +584,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     public void makeRequestGetPriceForPeriodAddMonth(final CropAllPricesCallback callback) {
         prevMonth.set(Calendar.MONTH, prevMonth.get(Calendar.MONTH) - 1);
         mDateRangeCrop.setDateFrom(mDateRangeCrop.getDateTo());
-        mDateRangeCrop.setDateTo(StringFormaterUtil.parseToServerResponse(prevMonth));
-        mFullRangeCrop.setDateTo(StringFormaterUtil.parseToServerResponse(prevMonth));
+        mDateRangeCrop.setDateTo(StringFormatterUtil.parseToServerResponse(prevMonth));
+        mFullRangeCrop.setDateTo(StringFormatterUtil.parseToServerResponse(prevMonth));
 
         makeRequestGetCropPriceForPeriod(mDateRangeCrop, callback);
     }
@@ -599,12 +593,12 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     private void makeRequestGetCropPriceForPeriod(@Nullable DateRange dateRange, final CropAllPricesCallback callback) {
 
         if (dateRange == null) {
-            prevMonth  = DateHelper.parseToCalendar(mCropModel.prices.get(0).data);
+            prevMonth = DateHelper.parseToCalendar(mCropModel.prices.get(0).data);
 
             prevMonth.set(Calendar.MONTH, prevMonth.get(Calendar.MONTH) - 1);
             dateRange = new DateRange();
-            dateRange.setDateFrom(StringFormaterUtil.parseToServerResponse(DateHelper.parseToCalendar(mCropModel.prices.get(0).data)));
-            dateRange.setDateTo(StringFormaterUtil.parseToServerResponse(prevMonth));
+            dateRange.setDateFrom(StringFormatterUtil.parseToServerResponse(DateHelper.parseToCalendar(mCropModel.prices.get(0).data)));
+            dateRange.setDateTo(StringFormatterUtil.parseToServerResponse(prevMonth));
 
             mDateRangeCrop = dateRange;
             mFullRangeCrop = dateRange;
@@ -633,7 +627,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     }
 
     public void makeRequestGetMarketeerPriceForPeriod(boolean isFull, final MarketeerAllPricesCallback callback) {
-        if(isFull){
+        if (isFull) {
             makeRequestGetMarketeerPricesForPeriod(null, callback);
         } else {
             makeRequestGetMarketeerPricesForPeriod(mDateRangeMarketeers, callback);
@@ -643,21 +637,22 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     public void makeRequestGetMarketeerPriceForPeriodAddMonth(final MarketeerAllPricesCallback callback) {
         prevMonth.set(Calendar.MONTH, prevMonth.get(Calendar.MONTH) - 1);
         mDateRangeMarketeers.setDateFrom(mDateRangeMarketeers.getDateTo());
-        mDateRangeMarketeers.setDateTo(StringFormaterUtil.parseToServerResponse(prevMonth));
-        mFullRangeMarketeers.setDateTo(StringFormaterUtil.parseToServerResponse(prevMonth));
+        mDateRangeMarketeers.setDateTo(StringFormatterUtil.parseToServerResponse(prevMonth));
+        mFullRangeMarketeers.setDateTo(StringFormatterUtil.parseToServerResponse(prevMonth));
 
         makeRequestGetMarketeerPricesForPeriod(mDateRangeMarketeers, callback);
     }
+
     public void makeRequestGetMarketeerPricesForPeriod(@Nullable DateRange dateRange, final MarketeerAllPricesCallback callback) {
 
         if (dateRange == null) {
-            prevMonth  = DateHelper.parseToCalendar(mCropModel.prices.get(0).data);
+            prevMonth = DateHelper.parseToCalendar(mCropModel.prices.get(0).data);
             prevMonth.set(Calendar.MONTH, prevMonth.get(Calendar.MONTH) - 1);
             dateRange = new DateRange();
-            dateRange.setDateFrom(StringFormaterUtil.parseToServerResponse(DateHelper.parseToCalendar(mCropModel.prices.get(0).data)));
-            dateRange.setDateTo(StringFormaterUtil.parseToServerResponse(prevMonth));
+            dateRange.setDateFrom(StringFormatterUtil.parseToServerResponse(DateHelper.parseToCalendar(mCropModel.prices.get(0).data)));
+            dateRange.setDateTo(StringFormatterUtil.parseToServerResponse(prevMonth));
 
-            mDateRangeMarketeers= dateRange;
+            mDateRangeMarketeers = dateRange;
             mFullRangeMarketeers = dateRange;
         }
 
@@ -683,7 +678,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                 });
     }
 
-    public void makeRequestGetCropQualityList(){
+    public void makeRequestGetCropQualityList() {
         RetrofitSingleton.getInstance().getCropQualityList(
                 mCropModel.displayName,
                 new ACallback<List<String>, ErrorMsg>() {
@@ -703,18 +698,19 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                 });
     }
 
-
     public interface CropAllPricesCallback {
         void onGetResult(List<CropPricesByDateModel> result);
+
         void onError(); //result is empty or network/server error
     }
 
     public interface MarketeerAllPricesCallback {
         void onGetResult(List<MarketeerPricesByDateModel> result);
+
         void onError(); //result is empty or network/server error
     }
 
-    public interface MonthPickerCallback{
+    public interface MonthPickerCallback {
         void onPickMonth(String month);
     }
 }

@@ -48,7 +48,7 @@ public class MarketeerPriceModel {
     }
 
     public String getDisplayDate(){
-       return DateHelper.parseToStickyHeaderFromat(getDate());
+       return DateHelper.parseToStickyHeaderFormat(getDate());
     }
 
     public void setName(String name) {

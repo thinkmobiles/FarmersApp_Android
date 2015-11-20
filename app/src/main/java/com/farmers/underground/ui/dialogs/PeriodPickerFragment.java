@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.farmers.underground.R;
 import com.farmers.underground.ui.activities.TransparentActivity;
 import com.farmers.underground.ui.base.BaseFragment;
-import com.farmers.underground.ui.utils.StringFormaterUtil;
+import com.farmers.underground.ui.utils.StringFormatterUtil;
 import java.util.Calendar;
 
 import butterknife.Bind;
@@ -57,9 +57,9 @@ public class PeriodPickerFragment extends BaseFragment<TransparentActivity> impl
     }
 
     private void setData(){
+
         dayFromTo = Period.EndDate;
-      /*  dateEnd = Calendar.getInstance();*/
-        //setDate(Calendar.getInstance());
+
         dateMax = Calendar.getInstance();
     }
 
@@ -90,28 +90,16 @@ public class PeriodPickerFragment extends BaseFragment<TransparentActivity> impl
         showDatePicker();
     }
 
-    //todo clean after test
     public void onPickDate(Calendar date) {
-       /* if(dayFromTo == Period.StartDate) {
-            if (dateEnd == null){*/
-                setDate(date);
-//            } else if (dateEnd.after(date)) {
-//                setDate(date);
-////                sendPeriod();
-//            } else {
-//                getHostActivity().showToast("Incorrect period", Toast.LENGTH_SHORT);
-//            }
-////        } else {
-//            setDate(date);
-//        }
+        setDate(date);
     }
 
     private void setDate(Calendar date){
         if(dayFromTo == Period.StartDate) {
-            tvPeriodFrom.setText(StringFormaterUtil.convertDate(date));
+            tvPeriodFrom.setText(StringFormatterUtil.convertDate(date));
             dateStart = date;
         } else {
-            tvPeriodTo.setText(StringFormaterUtil.convertDate(date));
+            tvPeriodTo.setText(StringFormatterUtil.convertDate(date));
             dateEnd = date;
         }
 
@@ -144,15 +132,7 @@ public class PeriodPickerFragment extends BaseFragment<TransparentActivity> impl
                 dateMax.get(Calendar.DAY_OF_MONTH)
         );
 
-
-
-//        if(dateEnd!= null)
-//            datePickerDialog.getDatePicker().setMaxDate(dateStart.getTimeInMillis());
-//        else
-            datePickerDialog.getDatePicker().setMaxDate(dateMax.getTimeInMillis());
-
-//        if(dateStart!= null)
-//            datePickerDialog.getDatePicker().setMinDate(dateStart.getTimeInMillis());
+        datePickerDialog.getDatePicker().setMaxDate(dateMax.getTimeInMillis());
 
         datePickerDialog.show();
     }

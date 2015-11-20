@@ -41,6 +41,7 @@ public class MarketeerPricesFragment extends BasePagerPricesFragment<MarketeerPr
 
     @Bind(R.id.rv_BaseListFragment)
     protected RecyclerView recyclerView;
+
  /* no need it yet
     @Bind(R.id.tv_NoItemsBaseListFragmentM)
     protected TextView tv_NoItems; */
@@ -166,9 +167,9 @@ public class MarketeerPricesFragment extends BasePagerPricesFragment<MarketeerPr
         return dataHolder;
     }
 
-    private boolean equalsDate(MarketeerPriceModel first, MarketeerPriceModel second) {
+   /* private boolean equalsDate(MarketeerPriceModel first, MarketeerPriceModel second) {
         return first.getDate().equalsIgnoreCase(second.getDate());
-    }
+    }*/
 
     private void generateAdapterCB() {
         adapterCallback = new MarketeerPricesAdapter.Callback() {
@@ -221,6 +222,7 @@ public class MarketeerPricesFragment extends BasePagerPricesFragment<MarketeerPr
         } else if (mTypeRequest == TypeRequest.Search) {
             adapter.setDataList(generateDH(updateCachedPrices(result, true)));
         }
+
         setTypeRequestNothing();
     }
 

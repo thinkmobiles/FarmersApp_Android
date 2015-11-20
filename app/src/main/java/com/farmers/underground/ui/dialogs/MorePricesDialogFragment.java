@@ -15,7 +15,7 @@ import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.custom_views.CustomTextView;
 import com.farmers.underground.ui.models.MorePriceItemModel;
 import com.farmers.underground.ui.utils.DateHelper;
-import com.farmers.underground.ui.utils.StringFormaterUtil;
+import com.farmers.underground.ui.utils.StringFormatterUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,14 +90,14 @@ public class MorePricesDialogFragment extends BaseFragment<TransparentActivity> 
         String cropName = getArguments().getString(KEY_CROP_NAME);
 
         tvTitle.setText(model.source.name);
-        tvFoot.setText(DateHelper.parseToStickyHeaderFromat(model.data));
+        tvFoot.setText(DateHelper.parseToStickyHeaderFormat(model.data));
         tcSubtitle.setVisibility(View.INVISIBLE);
 
         List<MorePriceItemModel> list = new ArrayList<>();
         for (CropPrices.More more : model.more) {
             MorePriceItemModel itemModel = new MorePriceItemModel();
             itemModel.setQuality(more.quality);
-            itemModel.setPrice(StringFormaterUtil.parsePrice(more.price));
+            itemModel.setPrice(StringFormatterUtil.parsePrice(more.price));
             itemModel.setCropName(cropName);
             list.add(itemModel);
         }

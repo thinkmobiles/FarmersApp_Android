@@ -187,7 +187,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
                     mCropList.clear();
                     mCropList.addAll(result);
-                    //mCropList = result;
+
                     updateFragments(mCropList, query);
                     FarmersApp.getInstance().setShouldUpdateLastCropsNextTime(false);
                     FarmersApp.getInstance().setLastCopsUpdateTime();
@@ -214,7 +214,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
                     mCropList.clear();
                     mCropList.addAll(result);
-                   // mCropList = result;
+
                     updateFragments(mCropList, query);
                     FarmersApp.getInstance().setLastCopsUpdateTime();
                 }
@@ -404,7 +404,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                 String newQuery = "";
                 if (newText.length() > 0)
                     newQuery = newText.trim();
-
 
                 if (newQuery.isEmpty()) {
                     searchView.setGravityRight();

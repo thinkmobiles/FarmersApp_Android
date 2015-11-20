@@ -10,19 +10,13 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.farmers.underground.R;
-import com.farmers.underground.remote.models.CropPrices;
 import com.farmers.underground.remote.models.MarketeerPrices;
-import com.farmers.underground.remote.models.PriceModel;
-import com.farmers.underground.remote.models.SourceModel;
 import com.farmers.underground.ui.activities.TransparentActivity;
 import com.farmers.underground.ui.adapters.CropQualityPiecesAdapter;
-import com.farmers.underground.ui.adapters.MorePriecesAdapter;
 import com.farmers.underground.ui.base.BaseFragment;
 import com.farmers.underground.ui.custom_views.CustomTextView;
-import com.farmers.underground.ui.models.MorePriceItemModel;
 import com.farmers.underground.ui.models.QualityPriceItemModel;
-import com.farmers.underground.ui.utils.DateHelper;
-import com.farmers.underground.ui.utils.StringFormaterUtil;
+import com.farmers.underground.ui.utils.StringFormatterUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,7 +101,7 @@ public class CropQualitiesDialogFragment extends BaseFragment<TransparentActivit
         for (MarketeerPrices.More more : model.more) {
             QualityPriceItemModel itemModel = new QualityPriceItemModel();
             itemModel.setQuality(more.quality);
-            itemModel.setPrice(StringFormaterUtil.parsePrice(more.price));
+            itemModel.setPrice(StringFormatterUtil.parsePrice(more.price));
             itemModel.setCropName(cropName);
             list.add(itemModel);
         }

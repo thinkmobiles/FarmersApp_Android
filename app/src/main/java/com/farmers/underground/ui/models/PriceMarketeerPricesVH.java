@@ -8,7 +8,7 @@ import butterknife.Bind;
 import butterknife.OnClick;
 
 import com.farmers.underground.R;
-import com.farmers.underground.ui.utils.StringFormaterUtil;
+import com.farmers.underground.ui.utils.StringFormatterUtil;
 
 /**
  * Created by omar
@@ -56,7 +56,7 @@ public class PriceMarketeerPricesVH extends BaseMarketeerPricesVH {
 
         tv_MarketeerName.setText(dataHolder.getModel().getName());
         tv_MarketeerArea.setText(dataHolder.getModel().getLocation());
-        tv_MarketeerLogoText.setText(StringFormaterUtil.getLettersForLogo(dataHolder.getModel().getName()));
+        tv_MarketeerLogoText.setText(StringFormatterUtil.getLettersForLogo(dataHolder.getModel().getName()));
 
 
         boolean shoulShowWhyTextInsteadPrice = dataHolder.getModel().getPrice() == null;
