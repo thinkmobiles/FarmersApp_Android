@@ -102,6 +102,7 @@ public class MonthPickerFragment extends BaseFragment<TransparentActivity> {
     protected void onClickOk(){
         Intent intent = new Intent();
         intent.putExtra(ProjectConstants.KEY_DATA, listMonth.get(adapter.getSelectedPos()));
+        intent.putExtra(ProjectConstants.KEY_POS, adapter.getSelectedPos());
         getHostActivity().setResult(Activity.RESULT_OK, intent);
         getHostActivity().finish();
     }

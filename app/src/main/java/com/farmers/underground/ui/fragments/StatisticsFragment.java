@@ -470,7 +470,7 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
 
     @Override
     public void onSpinnerItemSelected(String s) {
-
+        getHostActivity().makeRequestGetStatisticOfQuality(s);
     }
 
     private void downLightPriceView(PriceView priceView) {

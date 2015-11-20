@@ -9,6 +9,7 @@ import com.farmers.underground.remote.services.AuthorizationService;
 import com.farmers.underground.remote.services.CropsService;
 import com.farmers.underground.remote.services.MarketeerService;
 import com.farmers.underground.remote.services.PricesService;
+import com.farmers.underground.remote.services.StatisticsService;
 import com.farmers.underground.remote.util.*;
 import com.google.gson.JsonSyntaxException;
 import com.squareup.okhttp.OkHttpClient;
@@ -32,9 +33,9 @@ public class RetrofitSingleton {
     private final Retrofit retrofit;
     private MarketeerService marketeerService;
     private AuthorizationService authorizationService;
-
     private CropsService cropsService;
     private PricesService pricesService;
+    private StatisticsService statisticsService;
 
     private static RetrofitSingleton ourInstance = new RetrofitSingleton();
 
@@ -219,6 +220,51 @@ public class RetrofitSingleton {
         getMarketeerService().getMarketeerBySession().enqueue(new Callback<MarketeerBase>() {
             @Override
             public void onResponse(Response<MarketeerBase> response, Retrofit retrofit) {
+                performCallback(callback, response);
+                callback.anyway();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                callback.onError(new ErrorMsg("Network/Server Error"));
+                callback.anyway();
+            }
+        });
+    }
+
+    private void initStatisticService(Retrofit retrofit) {
+        statisticsService = retrofit.create(StatisticsService.class);
+    }
+
+    private StatisticsService getStatisticsService() {
+        if (statisticsService == null)
+            initStatisticService(retrofit);
+
+        return statisticsService;
+    }
+
+    public void getStatisticsOfQuality(@NonNull String cropName, @NonNull String quality,
+                                       final ACallback<List<StaticticModel>,ErrorMsg> callback){
+        getStatisticsService().price(cropName, quality).enqueue(new Callback<List<StaticticModel>>() {
+            @Override
+            public void onResponse(Response<List<StaticticModel>> response, Retrofit retrofit) {
+                performCallback(callback, response);
+                callback.anyway();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                callback.onError(new ErrorMsg("Network/Server Error"));
+                callback.anyway();
+            }
+        });
+    }
+
+    public void getStatisticsOfQualityAndMonth(@NonNull String cropName, @NonNull String quality, int month,
+                                               final ACallback<List<StaticticModel>,ErrorMsg> callback){
+        getStatisticsService().price(cropName, quality, month).enqueue(new Callback<List<StaticticModel>>() {
+            @Override
+            public void onResponse(Response<List<StaticticModel>> response, Retrofit retrofit) {
                 performCallback(callback, response);
                 callback.anyway();
             }
