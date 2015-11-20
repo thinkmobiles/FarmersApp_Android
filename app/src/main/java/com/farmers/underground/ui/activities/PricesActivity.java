@@ -118,6 +118,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     private MonthPickerCallback mMonthPickerCallback;
     private int numMonth;
     private ToolbarSpinnerAdapter spinnerAdapter;
+    private StatisticCallback mStatisticCallback;
 
     private static final ImageLoader imageLoaderRound = ImageCacheManager.getImageLoader(FarmersApp.ImageLoaders.CACHE_ROUND);
 
@@ -440,6 +441,10 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
             fragment.setArguments(bundle_W);
             TransparentActivity.startWithFragmentForResult(PricesActivity.this, fragment, ProjectConstants.REQUEST_CODE_NO_MARKETIER);
         }
+    }
+
+    public void setmStatisticCallback(StatisticCallback mStatisticCallback) {
+        this.mStatisticCallback = mStatisticCallback;
     }
 
     private void setUPSpinner(final List<String> spinnerData, int selection) {

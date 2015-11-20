@@ -16,6 +16,7 @@ import butterknife.OnClick;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.LastCropPricesModel;
+import com.farmers.underground.remote.models.StaticticModel;
 import com.farmers.underground.ui.activities.PricesActivity;
 import com.farmers.underground.ui.activities.TransparentActivity;
 import com.farmers.underground.ui.adapters.ToolbarSpinnerAdapter;
@@ -48,7 +49,7 @@ import java.util.List;
  * on 10/9/15.
  */
 public class StatisticsFragment extends BasePagerPricesFragment<String>
-        implements OnChartValueSelectedListener,  PricesActivity.PageListener, ToolbarSpinnerAdapter.SpinnerCallback, PricesActivity.MonthPickerCallback {
+        implements OnChartValueSelectedListener,  PricesActivity.PageListener, ToolbarSpinnerAdapter.SpinnerCallback, PricesActivity.MonthPickerCallback, PricesActivity.StatisticCallback {
 
     //head block
     @Bind(R.id.tv_HeadTitle_SF)
@@ -201,6 +202,7 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
         tv_GraphDescription_SF.setText(getHostActivity().getString(R.string.statistics_description_1));
 
         setChartData(generateChartData());
+        getHostActivity().setmStatisticCallback(this);
     }
 
     private void defChart() {
@@ -331,9 +333,9 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
     }
 
     private ChartDataModel generateChartData() {
-        ChartDataModel.ChartModel chart1 = new ChartDataModel.ChartModel(11.5f, 5.0f, 7.0f);
-        ChartDataModel.ChartModel chart2 = new ChartDataModel.ChartModel(1.5f, 50.0f, 17.0f);
-        ChartDataModel.ChartModel chart3 = new ChartDataModel.ChartModel(3.5f, 0, 7.0f);
+        ChartDataModel.ChartModel chart1 = new ChartDataModel.ChartModel(0.0f, 0.0f, 0.0f);
+        ChartDataModel.ChartModel chart2 = new ChartDataModel.ChartModel(0.0f, 0.0f, 0.0f);
+        ChartDataModel.ChartModel chart3 = new ChartDataModel.ChartModel(0.0f, 0.0f, 0.0f);
         return new ChartDataModel(chart1, chart2, chart3);
     }
 
@@ -552,5 +554,15 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
     @Override
     public void onPickMonth(String month) {
         setMonth(month);
+    }
+
+    @Override
+    public void onGetResult(List<StaticticModel> result) {
+
+    }
+
+    @Override
+    public void onError() {
+
     }
 }
