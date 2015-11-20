@@ -17,6 +17,7 @@ import com.farmers.underground.ui.base.BaseFragment;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -43,6 +44,7 @@ public class MonthPickerFragment extends BaseFragment<TransparentActivity> {
 
     private ArrayList<String> listMonth;
     private MonthPickerAdapter adapter;
+    private int numMonth;
 
     public static MonthPickerFragment newInstanse(String title, int selectedPosition){
         MonthPickerFragment fragment = new MonthPickerFragment();
@@ -61,34 +63,23 @@ public class MonthPickerFragment extends BaseFragment<TransparentActivity> {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        numMonth = getArguments().getInt(KEY_POSITION);
         ButterKnife.bind(this, view);
         prepareListMonth();
         setAdapter();
         tvTitle.setText(getArguments().getString(KEY_TITLE));
-        tvSelectedMonth.setText(listMonth.get(getArguments().getInt(KEY_POSITION)));
+        tvSelectedMonth.setText(listMonth.get(numMonth));
     }
 
     private void prepareListMonth(){
-        listMonth = new ArrayList<>();
-        listMonth.add(getString(R.string.month1));
-        listMonth.add(getString(R.string.month2));
-        listMonth.add(getString(R.string.month3));
-        listMonth.add(getString(R.string.month4));
-        listMonth.add(getString(R.string.month5));
-        listMonth.add(getString(R.string.month6));
-        listMonth.add(getString(R.string.month7));
-        listMonth.add(getString(R.string.month8));
-        listMonth.add(getString(R.string.month9));
-        listMonth.add(getString(R.string.month10));
-        listMonth.add(getString(R.string.month11));
-        listMonth.add(getString(R.string.month12));
+        listMonth = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.all_month)));
     }
 
     private void setAdapter(){
         adapter = new MonthPickerAdapter(getHostActivity(), listMonth);
         lvMonths.setAdapter(adapter);
-        adapter.setSelectedPos(getArguments().getInt(KEY_POSITION));
-        lvMonths.smoothScrollToPosition(getArguments().getInt(KEY_POSITION));
+        adapter.setSelectedPos(numMonth);
+        lvMonths.smoothScrollToPosition(numMonth);
     }
 
     @SuppressWarnings("unused")
@@ -103,7 +94,6 @@ public class MonthPickerFragment extends BaseFragment<TransparentActivity> {
     @OnClick(R.id.tvOk_MP)
     protected void onClickOk(){
         Intent intent = new Intent();
-        intent.putExtra(ProjectConstants.KEY_DATA, listMonth.get(adapter.getSelectedPos()));
         intent.putExtra(ProjectConstants.KEY_POS, adapter.getSelectedPos());
         getHostActivity().setResult(Activity.RESULT_OK, intent);
         getHostActivity().finish();

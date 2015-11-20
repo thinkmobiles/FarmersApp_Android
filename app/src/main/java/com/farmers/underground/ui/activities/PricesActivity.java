@@ -119,6 +119,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     private int numMonth;
     private ToolbarSpinnerAdapter spinnerAdapter;
     private StatisticCallback mStatisticCallback;
+    private StatisticsFragment.TypeStatistic mTypeStatistic;
 
     private static final ImageLoader imageLoaderRound = ImageCacheManager.getImageLoader(FarmersApp.ImageLoaders.CACHE_ROUND);
 
@@ -163,7 +164,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
             }
         });
 
-        numMonth = Calendar.getInstance().get(Calendar.MONTH);
+        numMonth = -1;
     }
 
     private void updateToolBarCrop() {
@@ -415,9 +416,9 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                     showWhyDialogs(date);
                     break;
                 case ProjectConstants.REQUEST_CODE_MONTH_PICKER:
-                    numMonth = data.getIntExtra(ProjectConstants.KEY_POS, 0);
-                    mMonthPickerCallback.onPickMonth(data.getStringExtra(ProjectConstants.KEY_DATA));
-                    makeRequestGetStatisticOfQualityAndMont(spinnerAdapter.getItem(spinner.getSelectedItemPosition()));
+                    numMonth = data.getIntExtra(ProjectConstants.KEY_POS, -1);
+                    mMonthPickerCallback.onPickMonth(numMonth);
+                    makeRequestGetStatistic();
                     break;
             }
         }
@@ -445,6 +446,10 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     public void setmStatisticCallback(StatisticCallback mStatisticCallback) {
         this.mStatisticCallback = mStatisticCallback;
+    }
+
+    public void setmTypeStatistic(StatisticsFragment.TypeStatistic mTypeStatistic) {
+        this.mTypeStatistic = mTypeStatistic;
     }
 
     private void setUPSpinner(final List<String> spinnerData, int selection) {
@@ -517,7 +522,14 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     public void showMonthPicker(final MonthPickerCallback callback) {
         this.mMonthPickerCallback = callback;
-        TransparentActivity.startWithFragmentForResult(this, MonthPickerFragment.newInstanse("2015", numMonth), ProjectConstants.REQUEST_CODE_MONTH_PICKER);
+        Calendar today = Calendar.getInstance();
+        TransparentActivity.startWithFragmentForResult(
+                this,
+                MonthPickerFragment.newInstanse(
+                        String.valueOf(today.get(Calendar.YEAR)),
+                        numMonth == -1 ? today.get(Calendar.MONTH) : numMonth),
+                ProjectConstants.REQUEST_CODE_MONTH_PICKER
+        );
     }
 
     @SuppressWarnings("unused")
@@ -709,10 +721,22 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                 });
     }
 
-    public void makeRequestGetStatisticOfQuality(String quality){
+    public void makeRequestGetStatistic(){
+        switch (mTypeStatistic){
+            case Quality:
+                makeRequestGetStatisticOfQuality();
+                break;
+            case Month:
+                if(numMonth != -1)
+                    makeRequestGetStatisticOfQualityAndMont();
+                break;
+        }
+    }
+
+    public void makeRequestGetStatisticOfQuality(){
         RetrofitSingleton.getInstance().getStatisticsOfQuality(
                 mCropModel.displayName,
-                quality,
+                spinnerAdapter.getItem(spinner.getSelectedItemPosition()),
                 new ACallback<List<StaticticModel>, ErrorMsg>() {
                     @Override
                     public void onSuccess(List<StaticticModel> result) {
@@ -726,10 +750,10 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                 });
     }
 
-    public void makeRequestGetStatisticOfQualityAndMont(String quality){
+    public void makeRequestGetStatisticOfQualityAndMont(){
         RetrofitSingleton.getInstance().getStatisticsOfQualityAndMonth(
                 mCropModel.displayName,
-                quality,
+                spinnerAdapter.getItem(spinner.getSelectedItemPosition()),
                 numMonth,
                 new ACallback<List<StaticticModel>, ErrorMsg>() {
                     @Override
@@ -763,7 +787,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     }
 
     public interface MonthPickerCallback {
-        void onPickMonth(String month);
+        void onPickMonth(int numMonth);
     }
 
 
