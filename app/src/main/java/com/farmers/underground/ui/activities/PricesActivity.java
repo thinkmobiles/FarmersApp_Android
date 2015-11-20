@@ -716,7 +716,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                 new ACallback<List<StaticticModel>, ErrorMsg>() {
                     @Override
                     public void onSuccess(List<StaticticModel> result) {
-                        showToast("to be done", Toast.LENGTH_SHORT);
+                        mStatisticCallback.onGetResult(result);
                     }
 
                     @Override
@@ -734,7 +734,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                 new ACallback<List<StaticticModel>, ErrorMsg>() {
                     @Override
                     public void onSuccess(List<StaticticModel> result) {
-                        showToast("to be done", Toast.LENGTH_SHORT);
+                        mStatisticCallback.onGetResult(result);
                     }
 
                     @Override
