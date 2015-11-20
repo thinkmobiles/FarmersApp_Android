@@ -219,7 +219,7 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
         getHostActivity().setmStatisticCallback(this);
 
         months = getResources().getStringArray(R.array.all_month);
-        setMonth(months[Calendar.getInstance().get(Calendar.MONTH)]);
+       // setMonth(months[Calendar.getInstance().get(Calendar.MONTH)]); /* choose by default*/
     }
 
     private void defChart() {
