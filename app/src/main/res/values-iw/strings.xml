@@ -147,6 +147,7 @@
     <string name="whole_sales">שוק סיטונאי</string>
     <string name="fill_prices_correctly">אנא בדוק שוב שהתאריך והמחירים שהכנסת נכונים</string>
     <string name="show_all_time">לכל התאריכים</string>
+    <string name="dialog_head_invite">הזמן</string>
 
 
 </resources>
