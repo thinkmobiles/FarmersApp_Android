@@ -16,6 +16,7 @@ import butterknife.OnClick;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.LastCropPricesModel;
+import com.farmers.underground.remote.models.StaticticModel;
 import com.farmers.underground.ui.activities.PricesActivity;
 import com.farmers.underground.ui.adapters.ToolbarSpinnerAdapter;
 import com.farmers.underground.ui.base.BasePagerPricesFragment;
@@ -23,6 +24,7 @@ import com.farmers.underground.ui.custom_views.PriceView;
 import com.farmers.underground.ui.models.ChartDataModel;
 import com.farmers.underground.ui.models.DateRange;
 import com.farmers.underground.ui.utils.ResUtil;
+import com.farmers.underground.ui.utils.StringFormatterUtil;
 import com.farmers.underground.ui.utils.TypefaceManager;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -46,7 +48,7 @@ import java.util.List;
  * on 10/9/15.
  */
 public class StatisticsFragment extends BasePagerPricesFragment<String>
-        implements OnChartValueSelectedListener,  PricesActivity.PageListener, ToolbarSpinnerAdapter.SpinnerCallback, PricesActivity.MonthPickerCallback {
+        implements OnChartValueSelectedListener,  PricesActivity.PageListener, ToolbarSpinnerAdapter.SpinnerCallback, PricesActivity.MonthPickerCallback, PricesActivity.StatisticCallback {
 
     //head block
     @Bind(R.id.tv_HeadTitle_SF)
@@ -83,6 +85,12 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
     protected ImageView imDotTwo;
     @Bind(R.id.tv_page_number_title)
     protected TextView tvPageNumberTitle;
+    @Bind(R.id.rb0_SF)
+    protected RadioButton rb0;
+    @Bind(R.id.rb1_SF)
+    protected RadioButton rb1;
+    @Bind(R.id.rb2_SF)
+    protected RadioButton rb2;
 
     private float popupValue;
     private int popupIndexSelected;
@@ -198,6 +206,7 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
         tv_GraphDescription_SF.setText(getHostActivity().getString(R.string.statistics_description_1));
 
         setChartData(generateChartData());
+        getHostActivity().setmStatisticCallback(this);
     }
 
     private void defChart() {
@@ -318,7 +327,7 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
         set1.setColors(chartColor, getHostActivity());
         set1.setDrawValues(false);
 
-        ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
+        ArrayList<BarDataSet> dataSets = new ArrayList<>();
         dataSets.add(set1);
 
 
@@ -328,9 +337,9 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
     }
 
     private ChartDataModel generateChartData() {
-        ChartDataModel.ChartModel chart1 = new ChartDataModel.ChartModel(11.5f, 5.0f, 7.0f);
-        ChartDataModel.ChartModel chart2 = new ChartDataModel.ChartModel(1.5f, 50.0f, 17.0f);
-        ChartDataModel.ChartModel chart3 = new ChartDataModel.ChartModel(3.5f, 0, 7.0f);
+        ChartDataModel.ChartModel chart1 = new ChartDataModel.ChartModel(0.0f, 0.0f, 0.0f);
+        ChartDataModel.ChartModel chart2 = new ChartDataModel.ChartModel(0.0f, 0.0f, 0.0f);
+        ChartDataModel.ChartModel chart3 = new ChartDataModel.ChartModel(0.0f, 0.0f, 0.0f);
         return new ChartDataModel(chart1, chart2, chart3);
     }
 
@@ -416,27 +425,43 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
     @SuppressWarnings("unused")
     @OnCheckedChanged(R.id.rb0_SF)
     protected void radio0(boolean isChecked) {
-        if (isChecked) {
-            for (RadioButton item : mRadioButtons)
-                if (item.getId() != R.id.rb0_SF) item.setChecked(false);
-        }
+//        if (isChecked) {
+//            for (RadioButton item : mRadioButtons)
+//                if (item.getId() != R.id.rb0_SF) item.setChecked(false);
+//        }
+        radio(isChecked, R.id.rb0_SF,0);
     }
 
     @SuppressWarnings("unused")
     @OnCheckedChanged(R.id.rb1_SF)
     protected void radio1(boolean isChecked) {
-        if (isChecked) {
-            for (RadioButton item : mRadioButtons)
-                if (item.getId() != R.id.rb1_SF) item.setChecked(false);
-        }
+//        if (isChecked) {
+//            for (RadioButton item : mRadioButtons)
+//                if (item.getId() != R.id.rb1_SF) item.setChecked(false);
+//        }
+
+        radio(isChecked, R.id.rb1_SF,1);
     }
 
     @SuppressWarnings("unused")
     @OnCheckedChanged(R.id.rb2_SF)
     protected void radio2(boolean isChecked) {
+//        if (isChecked) {
+//            for (RadioButton item : mRadioButtons)
+//                if (item.getId() != R.id.rb2_SF) item.setChecked(false);
+//        }
+        radio(isChecked, R.id.rb2_SF, 2);
+    }
+
+    private void radio(boolean isChecked, int idRb, int posRb){
         if (isChecked) {
             for (RadioButton item : mRadioButtons)
-                if (item.getId() != R.id.rb2_SF) item.setChecked(false);
+                if (item.getId() != idRb) item.setChecked(false);
+        }
+        if(chart != null) {
+            layout_marketer_SF.tv_Price.setText(StringFormatterUtil.parsePrice(chart[posRb].prices.get(0)));
+            layout_market_one_SF.tv_Price.setText(StringFormatterUtil.parsePrice(chart[posRb].prices.get(1)));
+            layout_market_two_SF.tv_Price.setText(StringFormatterUtil.parsePrice(chart[posRb].prices.get(2)));
         }
     }
 
@@ -540,6 +565,22 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
         }).start();
     }
 
+    ChartDataModel.ChartModel[] chart;
+
+    private ChartDataModel createChartData(List<StaticticModel> result) {
+        chart = new ChartDataModel.ChartModel[3];
+        StaticticModel model;
+        for(int i = 0; i < 3; ++i){
+            model = result.get(i);
+            chart[i] = new ChartDataModel.ChartModel(toFloat(model.priceMk), toFloat(model.priceWs), toFloat(model.pricePc));
+        }
+        return new ChartDataModel(chart[0], chart[1], chart[2]);
+    }
+
+    private float toFloat(Double val){
+        return  val != null ? Float.valueOf(Double.toString(val)) : 0.0f;
+    }
+
     @Override
     public void setDateRange(DateRange dateRange, boolean isAllTime) {
         //todo
@@ -548,5 +589,18 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
     @Override
     public void onPickMonth(String month) {
         setMonth(month);
+    }
+
+    @Override
+    public void onGetResult(List<StaticticModel> result) {
+        setChartData(createChartData(result));
+        rb0.setText(result.get(0).year);
+        rb1.setText(result.get(1).year);
+        rb2.setText(result.get(2).year);
+    }
+
+    @Override
+    public void onError() {
+
     }
 }

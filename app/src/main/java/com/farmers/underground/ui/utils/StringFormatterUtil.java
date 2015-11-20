@@ -27,4 +27,8 @@ public class StringFormatterUtil {
     public static String parsePrice(Double price){
         return price != 0 ? String.format("%.2f", price) : "--.--";
     }
+
+    public static String parsePrice(Float price){
+        return price != 0 ? String.format("%.2f", price) : "- -";
+    }
 }

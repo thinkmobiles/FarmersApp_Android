@@ -118,6 +118,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     private MonthPickerCallback mMonthPickerCallback;
     private int numMonth;
     private ToolbarSpinnerAdapter spinnerAdapter;
+    private StatisticCallback mStatisticCallback;
 
     private static final ImageLoader imageLoaderRound = ImageCacheManager.getImageLoader(FarmersApp.ImageLoaders.CACHE_ROUND);
 
@@ -442,6 +443,10 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         }
     }
 
+    public void setmStatisticCallback(StatisticCallback mStatisticCallback) {
+        this.mStatisticCallback = mStatisticCallback;
+    }
+
     private void setUPSpinner(final List<String> spinnerData, int selection) {
         spinnerAdapter = new ToolbarSpinnerAdapter(this,
                 spinnerData);
@@ -711,7 +716,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                 new ACallback<List<StaticticModel>, ErrorMsg>() {
                     @Override
                     public void onSuccess(List<StaticticModel> result) {
-                        showToast("to be done", Toast.LENGTH_SHORT);
+                        mStatisticCallback.onGetResult(result);
                     }
 
                     @Override
@@ -729,7 +734,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                 new ACallback<List<StaticticModel>, ErrorMsg>() {
                     @Override
                     public void onSuccess(List<StaticticModel> result) {
-                        showToast("to be done", Toast.LENGTH_SHORT);
+                        mStatisticCallback.onGetResult(result);
                     }
 
                     @Override
