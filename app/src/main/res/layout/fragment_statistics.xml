@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                android:text="אוקטובר"
+                android:text="בחר חודש"
                 android:textColor="#0a89a7"
                 android:textSize="@dimen/stat_price_name_month"
                 app:customFont="regular" />
@@ -132,7 +132,7 @@
                 style="@style/Radio_Statistics"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-             android:text="asdd"
+             android:text="year"
                  />
             </FrameLayout>
             <FrameLayout
@@ -144,7 +144,7 @@
                 style="@style/Radio_Statistics"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                 android:text="sad"/>
+                 android:text="year"/>
             </FrameLayout>
             <FrameLayout
                     android:layout_width="wrap_content"
@@ -155,7 +155,7 @@
                 style="@style/Radio_Statistics"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                 android:text="sad"/>
+                 android:text="year"/>
             </FrameLayout>
 
         </RadioGroup>
