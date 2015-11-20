@@ -1,5 +1,7 @@
 package com.farmers.underground.remote.services;
 
+import com.farmers.underground.remote.models.StaticticModel;
+
 import java.util.List;
 
 import retrofit.Call;
@@ -28,7 +30,7 @@ public interface StatisticsService {
     *       quality // required string
     * */
     @GET("statistics/price")
-    Call<List<?>>
+    Call<List<StaticticModel>>
     price(@Query("cropName") String cropName, @Query("quality") String quality);
 
     /**
@@ -38,7 +40,7 @@ public interface StatisticsService {
      * https://projects.invisionapp.com/share/383U0QUUG#/screens/95933323
      * */
     @GET("statistics/price")
-    Call<List<?>>
+    Call<List<StaticticModel>>
     price(@Query("cropName") String cropName, @Query("quality") String quality, @Query("month") Integer month);
 
 }
