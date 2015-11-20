@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
  * on 02-Oct-15.
  */
 public class UserSignUpFB {
+
     private String email = "email";
     private String fullName = "fullName";
     private String avatar = "avatar";

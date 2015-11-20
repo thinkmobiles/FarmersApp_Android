@@ -58,7 +58,7 @@
 
             <LinearLayout
                 android:padding="8dp"
-                android:gravity="top"
+                android:gravity="bottom"
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true"
                 android:id="@+id/ll_PricesContainer_SF"
@@ -183,7 +183,7 @@
             <ImageView
                 android:contentDescription="@null"
                 android:paddingRight="10dp"
-                android:paddingLeft="10dp"
+                android:paddingLeft="20dp"
                 android:id="@+id/im_arrow_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -234,7 +234,7 @@
 
 
             <ImageView
-                android:paddingRight="10dp"
+                android:paddingRight="20dp"
                 android:paddingLeft="10dp"
                 android:contentDescription="@null"
                 android:id="@+id/im_arrow_right"

@@ -7,6 +7,7 @@
     >
 
     <RelativeLayout
+        android:background="@drawable/bg_fr_dialog_rounded_aqua"
         android:id="@+id/rl_head_dialog_more_prieces"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,6 +23,7 @@
             android:orientation="vertical">
 
             <com.farmers.underground.ui.custom_views.CustomTextView
+                android:textColor="@color/white"
                 android:id="@+id/tv_title_dialog_more_prieces"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -30,6 +32,7 @@
                 custom:customFont="bold" />
 
             <com.farmers.underground.ui.custom_views.CustomTextView
+                android:textColor="@color/white"
                 android:id="@+id/tv_subtitle_dialog_more_prieces"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -52,6 +55,7 @@
     </RelativeLayout>
 
     <ImageView
+        android:contentDescription="@null"
         android:id="@+id/im_close_dialog_more_prieces"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

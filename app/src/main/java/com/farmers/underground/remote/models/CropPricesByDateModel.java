@@ -11,6 +11,5 @@ import java.util.ArrayList;
  *
  * */
 public class CropPricesByDateModel {
-
     public ArrayList<CropPrices> prices;
 }
