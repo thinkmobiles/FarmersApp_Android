@@ -28,7 +28,7 @@
             style="@style/WhiteBoldText"
             android:layout_margin="@dimen/margin_default_medium"
             android:textColor="@color/text_white"
-            android:textSize="28sp"
+            android:textSize="@dimen/text_selected_month"
             android:id="@+id/tvSelectedMonth_MP" />
     </LinearLayout>
 
@@ -37,6 +37,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/lvMonths_MP"
         android:divider="@null"
+        android:scrollbars="none"
         android:listSelector="@android:color/transparent"
         android:layout_below="@+id/llPickerHeader"
         android:layout_above="@+id/llPickerFooter" />

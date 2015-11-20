@@ -84,8 +84,8 @@ public class MonthPickerAdapter extends BaseAdapter {
             Resources res = context.getResources();
             colorNormal = res.getColor(R.color.text_dark_grey);
             colorSelected = res.getColor(R.color.text_aqua);
-            sizeNormal = res.getDimension(R.dimen.small_text_size);
-            sizeSelected = res.getDimension(R.dimen.large_text_size);
+            sizeNormal = res.getDimension(R.dimen.text_month_normal);
+            sizeSelected = res.getDimension(R.dimen.text_month_big);
         }
 
         public void setData(String month){

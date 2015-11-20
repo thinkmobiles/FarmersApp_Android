@@ -506,7 +506,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     public void showMonthPicker(final MonthPickerCallback callback) {
         this.mMonthPickerCallback = callback;
-        TransparentActivity.startWithFragmentForResult(this, MonthPickerFragment.newInstanse("Title", 0), ProjectConstants.REQUEST_CODE_MONTH_PICKER);
+        TransparentActivity.startWithFragmentForResult(this, MonthPickerFragment.newInstanse("2015", 0), ProjectConstants.REQUEST_CODE_MONTH_PICKER);
     }
 
     @SuppressWarnings("unused")

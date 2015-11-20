@@ -127,7 +127,7 @@
 
     <style name="DialogButton">
         <item name="android:textColor">@color/text_aqua</item>
-        <item name="customFont">roboto_light</item>
+        <item name="customFont">regular</item>
         <item name="android:textSize">@dimen/main_text_size</item>
     </style>
 
