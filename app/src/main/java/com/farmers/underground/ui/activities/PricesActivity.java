@@ -525,7 +525,9 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         Calendar today = Calendar.getInstance();
         TransparentActivity.startWithFragmentForResult(
                 this,
-                MonthPickerFragment.newInstanse(String.valueOf(today.get(Calendar.YEAR)), today.get(Calendar.MONTH)),
+                MonthPickerFragment.newInstanse(
+                        String.valueOf(today.get(Calendar.YEAR)),
+                        numMonth == -1 ? today.get(Calendar.MONTH) : numMonth),
                 ProjectConstants.REQUEST_CODE_MONTH_PICKER
         );
     }

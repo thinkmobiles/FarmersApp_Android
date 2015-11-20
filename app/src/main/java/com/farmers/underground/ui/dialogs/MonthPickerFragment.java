@@ -68,8 +68,7 @@ public class MonthPickerFragment extends BaseFragment<TransparentActivity> {
         prepareListMonth();
         setAdapter();
         tvTitle.setText(getArguments().getString(KEY_TITLE));
-        if(numMonth != -1)
-            tvSelectedMonth.setText(listMonth.get(numMonth));
+        tvSelectedMonth.setText(listMonth.get(numMonth));
     }
 
     private void prepareListMonth(){
@@ -79,8 +78,8 @@ public class MonthPickerFragment extends BaseFragment<TransparentActivity> {
     private void setAdapter(){
         adapter = new MonthPickerAdapter(getHostActivity(), listMonth);
         lvMonths.setAdapter(adapter);
-        adapter.setSelectedPos(getArguments().getInt(KEY_POSITION));
-        lvMonths.smoothScrollToPosition(getArguments().getInt(KEY_POSITION));
+        adapter.setSelectedPos(numMonth);
+        lvMonths.smoothScrollToPosition(numMonth);
     }
 
     @SuppressWarnings("unused")
