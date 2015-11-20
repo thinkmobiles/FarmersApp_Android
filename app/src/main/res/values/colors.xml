@@ -18,6 +18,8 @@
 
     <color name="grey_dot">#e1e1e1</color>
 
+    <color name="stat_color_month_in_text">#e1e1e1</color>
+
     //tutorial
     <color name="tutorial_next_bg_color">#dd009688</color>
     <color name="tutorial_next_bg_color_pressed">#dd20b6a8</color>

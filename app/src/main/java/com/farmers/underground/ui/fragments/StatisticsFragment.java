@@ -4,6 +4,9 @@ import android.content.res.Resources;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -588,7 +591,7 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
 
     @Override
     public void setDateRange(DateRange dateRange, boolean isAllTime) {
-        //todo
+        /*stub*/
     }
 
     @Override
@@ -608,5 +611,16 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
     @Override
     public void onError() {
 
+    }
+
+    //todo
+    private void showDifColoredText(String monthToShowInOtherColor){
+        String text =  "ממוצע המחירים לפי 3 השנים האחרונות"  ;
+        text =  text.replace("3 השנ", monthToShowInOtherColor) ;
+
+        Spannable wordToSpan = new SpannableString(text);
+        wordToSpan.setSpan(new ForegroundColorSpan(ResUtil.getColor(getResources(),R.color.stat_color_month_in_text)),12,22 , 0);
+
+        tv_GraphDescription_SF.setText(wordToSpan);
     }
 }
