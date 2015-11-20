@@ -21,7 +21,7 @@ public class ChartDataModel {
 
         public List<Float> prices;
 
-        public ChartModel( float data1, float data2, float data3) {
+        public ChartModel(float data1, float data2, float data3) {
 
             this.prices = new ArrayList<>();
             this.prices.add(data1);
