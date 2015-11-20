@@ -18,11 +18,9 @@ import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.remote.models.StaticticModel;
 import com.farmers.underground.ui.activities.PricesActivity;
-import com.farmers.underground.ui.activities.TransparentActivity;
 import com.farmers.underground.ui.adapters.ToolbarSpinnerAdapter;
 import com.farmers.underground.ui.base.BasePagerPricesFragment;
 import com.farmers.underground.ui.custom_views.PriceView;
-import com.farmers.underground.ui.dialogs.MonthPickerFragment;
 import com.farmers.underground.ui.models.ChartDataModel;
 import com.farmers.underground.ui.models.DateRange;
 import com.farmers.underground.ui.utils.ResUtil;
@@ -131,7 +129,6 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
     @OnClick(R.id.ll_Month_pick_Container_SF)
     protected void selectMonth() {
         initMonthPicker();
-
     }
 
     public void initMonthPicker() {
@@ -466,7 +463,6 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
             tv_HeadTitle_SF.setText(getString(R.string.page_head_two_statistics_fragment));
             ll_Month_pick_Container_SF.setVisibility(View.VISIBLE);
         }
-
     }
 
 

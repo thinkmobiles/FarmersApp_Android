@@ -72,6 +72,10 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
         LastCropPricesModel model = this.dateHolder.getModel();
         DateHelper dateHelper = new DateHelper(container.getContext());
 
+        /*if(!BuildConfig.PRODUCTION)
+            tv_CropsName.setText(model.englishName +  " " + model.displayName);
+        else*/
+
         tv_CropsName.setText(model.displayName);
 
         String fullDate = model.prices.get(0).data;

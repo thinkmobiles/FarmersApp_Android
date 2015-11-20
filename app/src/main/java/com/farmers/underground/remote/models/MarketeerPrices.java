@@ -7,7 +7,7 @@ import com.farmers.underground.remote.models.base.PriceBase;
  * on 17-Nov-15.
  */
 public class MarketeerPrices extends PriceBase {
-
     public String name;
     public String location;
+    public String data;
 }

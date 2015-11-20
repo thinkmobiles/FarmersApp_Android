@@ -59,7 +59,6 @@ public class MarketeerPriceModel {
         return price;
     }
 
-
     public void setPrice(Double price) {
         this.price = price;
     }
