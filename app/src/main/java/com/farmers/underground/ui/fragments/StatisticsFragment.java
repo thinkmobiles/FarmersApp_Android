@@ -128,7 +128,6 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
     @OnClick(R.id.ll_Month_pick_Container_SF)
     protected void selectMonth() {
         initMonthPicker();
-
     }
 
     public void initMonthPicker() {
@@ -462,7 +461,6 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
             tv_HeadTitle_SF.setText(getString(R.string.page_head_two_statistics_fragment));
             ll_Month_pick_Container_SF.setVisibility(View.VISIBLE);
         }
-
     }
 
 
