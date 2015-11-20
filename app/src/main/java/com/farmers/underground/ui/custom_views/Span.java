@@ -3,7 +3,8 @@ package com.farmers.underground.ui.custom_views;
 import android.view.View;
 
 /**
- * Created by omar on 9/25/15.
+ * Created by omar
+ * on 9/25/15.
  */
 public class Span {
 
