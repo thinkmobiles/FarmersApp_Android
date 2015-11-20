@@ -41,6 +41,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -95,6 +96,9 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
     private float popupValue;
     private int popupIndexSelected;
     private int[] chartColor;
+    private String[] months;
+
+    public enum TypeStatistic{Quality, Month}
 
     private void initPageToShow(int pageNumber) {
         final Resources res = getResources();
@@ -104,13 +108,16 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
             imDotOne.setImageDrawable(ResUtil.getDrawable(res, R.drawable.dot_blue));
             imDotTwo.setImageDrawable(ResUtil.getDrawable(res, R.drawable.dot_gray));
             tvPageNumberTitle.setText(res.getString(R.string.page_number_one_statistics_fragment));
+            getHostActivity().setmTypeStatistic(TypeStatistic.Quality);
         } else if (pageNumber == 2) { //2
             imArrowLeft.setImageDrawable(ResUtil.getDrawable(res, R.drawable.line_left_active));
             imArrowRight.setImageDrawable(ResUtil.getDrawable(res, R.drawable.line_right_not_active));
             imDotOne.setImageDrawable(ResUtil.getDrawable(res, R.drawable.dot_gray));
             imDotTwo.setImageDrawable(ResUtil.getDrawable(res, R.drawable.dot_blue));
             tvPageNumberTitle.setText(res.getString(R.string.page_number_two_statistics_fragment));
+            getHostActivity().setmTypeStatistic(TypeStatistic.Month);
         }
+        getHostActivity().makeRequestGetStatistic();
         currentPage = pageNumber;
         onPageSelected(currentPage);
         llPageSwitcherContainer.requestLayout();
@@ -207,6 +214,9 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
 
         setChartData(generateChartData());
         getHostActivity().setmStatisticCallback(this);
+
+        months = getResources().getStringArray(R.array.all_month);
+        setMonth(months[Calendar.getInstance().get(Calendar.MONTH)]);
     }
 
     private void defChart() {
@@ -347,7 +357,7 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
         for (int i = 0; i < mRadioButtons.size(); i++) {
             mRadioButtons.get(i).setTypeface(TypefaceManager.getInstance().getArialBold());
         }
-        mRadioButtons.get(2).setChecked(true);
+        mRadioButtons.get(0).setChecked(true);
     }
 
     private void showPopup(float touchX, float touchY, float value) {
@@ -425,35 +435,22 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
     @SuppressWarnings("unused")
     @OnCheckedChanged(R.id.rb0_SF)
     protected void radio0(boolean isChecked) {
-//        if (isChecked) {
-//            for (RadioButton item : mRadioButtons)
-//                if (item.getId() != R.id.rb0_SF) item.setChecked(false);
-//        }
-        radio(isChecked, R.id.rb0_SF,0);
+        onPickRadio(isChecked, R.id.rb0_SF, 0);
     }
 
     @SuppressWarnings("unused")
     @OnCheckedChanged(R.id.rb1_SF)
     protected void radio1(boolean isChecked) {
-//        if (isChecked) {
-//            for (RadioButton item : mRadioButtons)
-//                if (item.getId() != R.id.rb1_SF) item.setChecked(false);
-//        }
-
-        radio(isChecked, R.id.rb1_SF,1);
+        onPickRadio(isChecked, R.id.rb1_SF, 1);
     }
 
     @SuppressWarnings("unused")
     @OnCheckedChanged(R.id.rb2_SF)
     protected void radio2(boolean isChecked) {
-//        if (isChecked) {
-//            for (RadioButton item : mRadioButtons)
-//                if (item.getId() != R.id.rb2_SF) item.setChecked(false);
-//        }
-        radio(isChecked, R.id.rb2_SF, 2);
+        onPickRadio(isChecked, R.id.rb2_SF, 2);
     }
 
-    private void radio(boolean isChecked, int idRb, int posRb){
+    private void onPickRadio(boolean isChecked, int idRb, int posRb){
         if (isChecked) {
             for (RadioButton item : mRadioButtons)
                 if (item.getId() != idRb) item.setChecked(false);
@@ -491,7 +488,7 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
 
     @Override
     public void onSpinnerItemSelected(String s) {
-        getHostActivity().makeRequestGetStatisticOfQuality(s);
+        getHostActivity().makeRequestGetStatistic();
     }
 
     private void downLightPriceView(PriceView priceView) {
@@ -581,22 +578,31 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
         return  val != null ? Float.valueOf(Double.toString(val)) : 0.0f;
     }
 
+    private void chooseRB(){
+        for(int i = 0; i < 3; ++i){
+            if(mRadioButtons.get(i).isChecked()){
+                onPickRadio(true, mRadioButtons.get(i).getId(), 0);
+            }
+        }
+    }
+
     @Override
     public void setDateRange(DateRange dateRange, boolean isAllTime) {
         //todo
     }
 
     @Override
-    public void onPickMonth(String month) {
-        setMonth(month);
+    public void onPickMonth(int numMonth) {
+        setMonth(months[numMonth]);
     }
 
     @Override
     public void onGetResult(List<StaticticModel> result) {
         setChartData(createChartData(result));
-        rb0.setText(result.get(0).year);
-        rb1.setText(result.get(1).year);
-        rb2.setText(result.get(2).year);
+        rb2.setText(months[Integer.valueOf(result.get(0).month)] + " " + result.get(0).year);
+        rb1.setText(months[Integer.valueOf(result.get(1).month)] + " " + result.get(1).year);
+        rb0.setText(months[Integer.valueOf(result.get(2).month)] + " " + result.get(2).year);
+        chooseRB();
     }
 
     @Override

@@ -24,7 +24,7 @@ public class MonthPickerAdapter extends BaseAdapter {
     public MonthPickerAdapter(Context context, ArrayList<String> listMonth) {
         this.context = context;
         this.listMonth = listMonth;
-        this.selectedPos = 0;
+        this.selectedPos = -1;
     }
 
     public void setSelectedPos(int selectedPos) {
