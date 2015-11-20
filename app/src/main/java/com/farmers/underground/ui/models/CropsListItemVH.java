@@ -18,7 +18,7 @@ import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.remote.models.CropPrices;
 import com.farmers.underground.ui.adapters.CropsListAdapter;
 import com.farmers.underground.ui.utils.DateHelper;
-import com.farmers.underground.ui.utils.StringFormaterUtil;
+import com.farmers.underground.ui.utils.StringFormatterUtil;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
@@ -104,7 +104,7 @@ public class CropsListItemVH extends RecyclerView.ViewHolder {
 
             if (priceModel != null) {
 
-                tv_Price.setText(StringFormaterUtil.parsePrice(priceModel.price));
+                tv_Price.setText(StringFormatterUtil.parsePrice(priceModel.price));
                 tv_Marketeer_CropItem.setText(priceModel.source.name);
 
             }

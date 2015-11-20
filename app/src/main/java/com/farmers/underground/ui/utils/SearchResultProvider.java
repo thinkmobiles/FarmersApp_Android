@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.remote.models.SearchHint;
+import com.farmers.underground.ui.base.BaseActivity;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ import java.util.List;
 public class SearchResultProvider {
 
     private LoaderManager loaderManager;
-    private String querry;
+    private String query;
     private List<LastCropPricesModel> cropList;
 
     private  LoaderManager.LoaderCallbacks<List<SearchHint>> hintLoaderCallback;
@@ -31,13 +32,13 @@ public class SearchResultProvider {
         hintLoaderCallback = new LoaderManager.LoaderCallbacks<List<SearchHint>>() {
             @Override
             public Loader<List<SearchHint>> onCreateLoader(int i, Bundle bundle) {
-
-                return  new SearchHintLoader(context, querry, cropList);
+                return
+                        new SearchHintLoader(context, query, cropList);
             }
 
             @Override
-            public void onLoadFinished(Loader<List<SearchHint>> loader, List<SearchHint> hitnModels) {
-                callback.onSearchHintLoadFinished(hitnModels);
+            public void onLoadFinished(Loader<List<SearchHint>> loader, List<SearchHint> hintModels) {
+                callback.onSearchHintLoadFinished(hintModels);
             }
 
             @Override
@@ -45,10 +46,12 @@ public class SearchResultProvider {
 
             }
         };
+
         resultLoaderCallback = new LoaderManager.LoaderCallbacks<List<LastCropPricesModel>>() {
             @Override
             public Loader<List<LastCropPricesModel>> onCreateLoader(int i, Bundle bundle) {
-                return  new SearchResultLoader(context, querry, cropList);
+                return
+                        new SearchResultLoader(context, query, cropList);
             }
 
             @Override
@@ -63,30 +66,27 @@ public class SearchResultProvider {
         };
     }
 
-    public static SearchResultProvider getInstance(AppCompatActivity appCompatActivity,   SearchCallback callback) {
+    public static <A extends BaseActivity> SearchResultProvider getInstance(A appCompatActivity, SearchCallback callback) {
 
         return new SearchResultProvider(appCompatActivity, appCompatActivity.getLoaderManager(), callback);
     }
 
-
-    public void loadSearchHints(String querry, List<LastCropPricesModel> cropList) {
-        this.querry = querry;
+    public void loadSearchHints(String query, List<LastCropPricesModel> cropList) {
+        this.query = query;
         this.cropList = cropList;
         if (loaderManager.getLoader(0) != null)
             loaderManager.destroyLoader(0);
         if (cropList != null && cropList.size() > 0)
             loaderManager.initLoader(0, null, hintLoaderCallback);
-
     }
 
-    public void loadSearchResults(String querry, List<LastCropPricesModel> cropList) {
-        this.querry = querry;
+    public void loadSearchResults(String query, List<LastCropPricesModel> cropList) {
+        this.query = query;
         this.cropList = cropList;
         if (loaderManager.getLoader(1) != null)
             loaderManager.destroyLoader(1);
         if (cropList != null && cropList.size() > 0)
             loaderManager.initLoader(1, null, resultLoaderCallback);
-
     }
 
     public interface SearchCallback {

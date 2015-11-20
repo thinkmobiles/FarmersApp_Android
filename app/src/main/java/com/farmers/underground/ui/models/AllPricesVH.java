@@ -12,7 +12,7 @@ import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.CropPrices;
 import com.farmers.underground.ui.utils.DateHelper;
 import com.farmers.underground.ui.utils.ResUtil;
-import com.farmers.underground.ui.utils.StringFormaterUtil;
+import com.farmers.underground.ui.utils.StringFormatterUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -93,7 +93,7 @@ public class AllPricesVH extends RecyclerView.ViewHolder {
     }
 
     private void setPrice(View tvPrice, Double price){
-        ((TextView) tvPrice).setText(StringFormaterUtil.parsePrice(price));
+        ((TextView) tvPrice).setText(StringFormatterUtil.parsePrice(price));
     }
 
     private void setVisibilityAndListener(View view, final int pos){

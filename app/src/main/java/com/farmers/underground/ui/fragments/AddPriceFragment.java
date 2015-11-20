@@ -16,7 +16,7 @@ import com.farmers.underground.R;
 import com.farmers.underground.remote.models.UserPriceQualityModel;
 import com.farmers.underground.ui.activities.AddPriceActivity;
 import com.farmers.underground.ui.base.BaseFragment;
-import com.farmers.underground.ui.utils.StringFormaterUtil;
+import com.farmers.underground.ui.utils.StringFormatterUtil;
 import com.farmers.underground.ui.utils.ValidationUtil;
 
 import java.util.ArrayList;
@@ -115,7 +115,7 @@ public class AddPriceFragment extends BaseFragment<AddPriceActivity> implements 
             String name = FarmersApp.getInstance().getCurrentMarketer().getFullName();
             if(name != null) {
                 nameMarketer.setText(name);
-                tvLogo.setText(StringFormaterUtil.getLettersForLogo(name));
+                tvLogo.setText(StringFormatterUtil.getLettersForLogo(name));
             }
         }
     }

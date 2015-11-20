@@ -2,7 +2,7 @@ package com.farmers.underground.ui.utils;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
-import com.farmers.underground.BuildConfig;
+
 import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.remote.models.SearchHint;
 
@@ -15,26 +15,23 @@ import java.util.List;
  */
 public class SearchHintLoader extends AsyncTaskLoader<List<SearchHint>> {
 
-
-    private String newQuerry;
+    private String newQuery;
     private List<LastCropPricesModel> mCropList;
     private List<SearchHint> output;
 
-    public SearchHintLoader(Context context, String newQuerry, List<LastCropPricesModel> mCropList) {
+    public SearchHintLoader(Context context, String newQuery, List<LastCropPricesModel> mCropList) {
         super(context);
-        this.newQuerry = newQuerry;
+        this.newQuery = newQuery;
         this.mCropList = mCropList;
     }
-
 
     @Override
     public List<SearchHint> loadInBackground() {
         List<SearchHint> newHintList = new ArrayList<>();
 
         for (LastCropPricesModel item : mCropList) {
-            if (item.displayName.toLowerCase().contains(newQuerry.toLowerCase()))
+            if (item.displayName.toLowerCase().contains(newQuery.toLowerCase()))
                 newHintList.add(new SearchHint(item.displayName, SearchHint.HintType.FROM_CROPS_LIST));
-
         }
         return newHintList;
     }
@@ -52,7 +49,6 @@ public class SearchHintLoader extends AsyncTaskLoader<List<SearchHint>> {
     protected void onStopLoading() {
         cancelLoad();
     }
-
 
     @Override
     public void deliverResult(List<SearchHint> output) {

@@ -2,8 +2,8 @@
 <resources>
     <!-- \u200F (this is RIGHT-TO-LEFT MARK character)  -->
     <string name="app_name">העיקר האיכר</string>
-
-    <string name="facebook_app_id">889106887840848</string>
+    <!--
+        <string name="facebook_app_id">889106887840848</string>-->
 
     <string name="digits">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789</string>
 
@@ -64,9 +64,7 @@
     <string name="select_marketeer_text_name">שם המשווק</string>
     <string name="select_marketeer_add_name">הוסף שם משווק חדש</string>
 
-
     <!--//drawer-->
-
     <string name="drawer_content_0">כל הגידולים</string>
     <string name="drawer_content_1">הוספת מחיר משווק</string>
     <string name="drawer_content_2">הזמן חברים</string>
@@ -74,8 +72,6 @@
     <string name="drawer_content_4">להתנתק</string>
     <string name="drawer_content_5">הוסף שם משווק</string>
     <string name="drawer_content_6">מוטציה שם משווק</string>
-
-    <!--TODO-->
 
     <!--   //main activity-->
     <string name="main_activity_tab_all_crops">כל הגידולים</string>
@@ -106,7 +102,6 @@
     <string name="alert_message_after_registration_check_mail">הכנס אנא
 לתיבת הדואר שלך ואשר את הרישום</string>
 
-
     <string name="alert_message_after_add_price">תודה ששיתפת! ככל שתשתף יותר כך תחשף ליותר מחירים של משווקים אחרים</string>
     <string name="message_sure_change_marketer">אתה בטוח שברצונך להחליף את שם המשווק שלך ?</string>
 
@@ -115,13 +110,12 @@
     <!-- period picker-->
     <string name="period_picker_choose">בחר תאריך</string>
 
-    <!--Dialog Fragments--><!--TODO-->
+    <!--Dialog Fragments-->
     <string name="title">‏\u200Ftitle</string>
     <string name="subtilte">\u200F‏subtitle</string>
     <string name="foot">\u200F  text date</string>
     <string name="add_price">עדכן מחירים</string>
     <string name="more_prices">להראות יותר מחירים</string>
-
 
     <!--Calendar-->
     <string name="month1">ינואר</string>
@@ -140,7 +134,7 @@
     <!--Statistics-->
 
     <string name="statistics_description_1">ממוצע המחירים לפי 3 השנים האחרונות</string>
-     <string name="popup_name">מועצת הצמחים</string>
+    <string name="popup_name">מועצת הצמחים</string>
     <string name="page_number_one_statistics_fragment">1 מתוך 2</string>
     <string name="page_number_two_statistics_fragment">2 מתוך 2</string>
 

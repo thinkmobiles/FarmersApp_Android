@@ -10,7 +10,7 @@ import java.util.Locale;
  * Created by samson
  * on 14.10.15.
  */
-public class StringFormaterUtil {
+public class StringFormatterUtil {
 
     public static String convertDate(Calendar date){
         return new SimpleDateFormat("ccc dd.M.yy", Locale.getDefault()).format(date.getTime());

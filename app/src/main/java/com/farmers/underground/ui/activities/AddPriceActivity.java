@@ -2,7 +2,6 @@ package com.farmers.underground.ui.activities;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -36,7 +35,7 @@ import com.farmers.underground.ui.fragments.AddPriceFragment;
 import com.farmers.underground.ui.utils.DateHelper;
 import com.farmers.underground.ui.utils.ImageCacheManager;
 import com.farmers.underground.ui.utils.ResUtil;
-import com.farmers.underground.ui.utils.StringFormaterUtil;
+import com.farmers.underground.ui.utils.StringFormatterUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -192,7 +191,7 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
     }
 
     public String getDate(){
-        return StringFormaterUtil.convertDate(selectedDate);
+        return StringFormatterUtil.convertDate(selectedDate);
     }
 
     public interface OnChangeDateListener{
@@ -251,12 +250,12 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
     private void sendPrices(){
         FarmerPricesModel farmerPricesModel = new FarmerPricesModel();
         farmerPricesModel.cropName = mCropModel.displayName;
-        farmerPricesModel.date = StringFormaterUtil.parseToServerResponse(selectedDate);
+        farmerPricesModel.date = StringFormatterUtil.parseToServerResponse(selectedDate);
         showProgressDialog();
         RetrofitSingleton.getInstance().addFarmerPriceForCrop(
                 new FarmerPricesModel(
                         mCropModel.displayName,
-                        StringFormaterUtil.parseToServerResponse(selectedDate),
+                        StringFormatterUtil.parseToServerResponse(selectedDate),
                         childFragment.getPriceList()),
                 new ACallback<SuccessMsg, ErrorMsg>() {
 

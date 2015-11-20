@@ -3,10 +3,7 @@ package com.farmers.underground.ui.dialogs;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.Telephony;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
@@ -93,7 +90,7 @@ public class InviteDialogFragment extends BaseFragment<TransparentActivity> {
     protected void sendFacebook(){
 //        FacebookInviteUtil.inviteFBpeopleMessage(getHostActivity(),TEXT_INVITE);
 //        using facebook messenger for invite via intent
-        FacebookInviteUtil.inviteFBpeopleMessenger(getHostActivity(),TEXT_INVITE);
+        FacebookInviteUtil.invitePeopleByFBMessenger(getHostActivity(), TEXT_INVITE);
     }
 
     @SuppressWarnings("unused")

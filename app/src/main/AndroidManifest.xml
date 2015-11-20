@@ -7,6 +7,7 @@
 
     <uses-permission-sdk-23 android:name="android.permission.INTERNET"/>
     <uses-permission-sdk-23 android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission-sdk-23 android:name="android.permission.READ_CONTACTS"/>
 
     <application
             android:name=".FarmersApp"
@@ -60,7 +61,7 @@
         <activity android:name=".ui.activities.TransparentActivity"
             android:theme="@style/Theme.AppCompat.Translucent"
             android:launchMode="singleTop"
-            android:noHistory="false"
+            android:noHistory="true"
             android:screenOrientation="sensorPortrait">
         </activity>
 
@@ -83,9 +84,9 @@
                 android:name="io.fabric.ApiKey"
                 android:value="ba04084de2ee1304dbf733cb2e49654986aa4260"/>
 
-        <provider android:authorities="com.facebook.app.FacebookContentProvider889106887840848"
+       <!-- <provider android:authorities="com.facebook.app.FacebookContentProvider889106887840848"
             android:name="com.facebook.FacebookContentProvider"
-            android:exported="true" />
+            android:exported="true" />-->
 
     </application>
 

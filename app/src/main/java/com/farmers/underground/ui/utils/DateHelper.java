@@ -7,7 +7,6 @@ import com.farmers.underground.config.ProjectConstants;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -20,7 +19,6 @@ public class DateHelper {
 
     public DateHelper(Context context) {
         this.monthNames = context.getResources().getStringArray(R.array.all_month);
-
     }
 
     public static DateHelper getInstance(Context context) {
@@ -28,7 +26,7 @@ public class DateHelper {
     }
 
     public String[] getDate(long millis) {
-        String[] date = new String[3];
+        final String[] date = new String[3];
 
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(millis);
@@ -44,8 +42,8 @@ public class DateHelper {
     }
 
     public static Calendar parseToCalendar(String date){
-        SimpleDateFormat format = new SimpleDateFormat(ProjectConstants.SERVER_DATE_FORMAT, Locale.getDefault());
-        Calendar calendar = Calendar.getInstance();
+        final SimpleDateFormat format = new SimpleDateFormat(ProjectConstants.SERVER_DATE_FORMAT, Locale.getDefault());
+        final Calendar calendar = Calendar.getInstance();
         try {
             calendar.setTime(format.parse(date));
         } catch (Exception e) {
@@ -55,10 +53,10 @@ public class DateHelper {
     }
 
     /* 22.2.15 month*/
-    public static String parseToStickyHeaderFromat(String date) {
+    public static String parseToStickyHeaderFormat(String date) {
 
-        SimpleDateFormat formatIN = new SimpleDateFormat(ProjectConstants.SERVER_DATE_FORMAT, Locale.getDefault());
-        SimpleDateFormat formatOUT = new SimpleDateFormat(ProjectConstants.STICKY_HEADER_DATE_FORMAT, Locale.getDefault());
+        final SimpleDateFormat formatIN = new SimpleDateFormat(ProjectConstants.SERVER_DATE_FORMAT, Locale.getDefault());
+        final SimpleDateFormat formatOUT = new SimpleDateFormat(ProjectConstants.STICKY_HEADER_DATE_FORMAT, Locale.getDefault());
 
         try {
           date = formatOUT.format(formatIN.parse(date));
