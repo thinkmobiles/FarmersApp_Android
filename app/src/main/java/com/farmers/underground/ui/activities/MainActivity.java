@@ -724,7 +724,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         else if (searchHintController.isShowing()) {
             hideSoftKeyboard();
             searchHintController.hide();
-            query="";
+          /*  query="";*/
         }
 
         super.onStop();
