@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
             android:layout_toLeftOf="@+id/im_logo_dialog_crop_qualities"
+            android:layout_toRightOf="@+id/im_close_dialog_crop_qualities"
             android:gravity="center_vertical"
             android:orientation="vertical">
 
@@ -51,16 +52,16 @@
             android:layout_margin="4dp"
             android:src="@android:drawable/ic_dialog_info" />
 
-    </RelativeLayout>
+        <ImageView
+            android:contentDescription="@null"
+            android:id="@+id/im_close_dialog_crop_qualities"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:src="@android:drawable/ic_menu_close_clear_cancel" />
 
-    <ImageView
-        android:contentDescription="@null"
-        android:id="@+id/im_close_dialog_crop_qualities"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:src="@android:drawable/ic_menu_close_clear_cancel" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

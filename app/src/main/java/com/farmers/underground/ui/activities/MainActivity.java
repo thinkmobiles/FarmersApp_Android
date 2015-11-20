@@ -99,7 +99,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     private static String query = "";
 
     private List<LastCropPricesModel> mCropList = new ArrayList<>();
-    private List<LastCropPricesModel> cropListSearch = new ArrayList<>();;
+    private List<LastCropPricesModel> cropListSearch = new ArrayList<>();
 
     public static void start(@NonNull Context context) {
         Intent intent = new Intent(context, MainActivity.class);
