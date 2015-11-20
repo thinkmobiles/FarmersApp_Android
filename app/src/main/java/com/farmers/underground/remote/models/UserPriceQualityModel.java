@@ -5,6 +5,7 @@ package com.farmers.underground.remote.models;
  * on 28.10.15.
  */
 public class UserPriceQualityModel {
+
     private Double price;
     private String userQuality;
 

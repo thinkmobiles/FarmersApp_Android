@@ -13,11 +13,6 @@ import java.util.ArrayList;
  */
 public class MarketeerPriceModel {
 
-    private String date;
-    private String name;
-    private String location;
-    private Double price;
-
     private MarketeerPrices marketeerPrices;
 
     public String getPriceDisplay() {
@@ -25,50 +20,48 @@ public class MarketeerPriceModel {
         return formatter.format(getPrice());
     }
 
+    public String getDisplayDate() {
+        return DateHelper.parseToStickyHeaderFormat(getDate());
+    }
+
     public ArrayList<PriceBase.More> getMore() {
-        return more;
+        return this.marketeerPrices.more;
     }
 
     public void setMore(ArrayList<PriceBase.More> more) {
-        this.more = more;
+        this.marketeerPrices.more = more;
     }
 
-    public ArrayList<PriceBase.More> more;
-
     public String getDate() {
-        return date;
+        return this.marketeerPrices.data;
     }
 
     public void setDate(String date) {
-        this.date = date;
+        this.marketeerPrices.data = date;
     }
 
     public String getName() {
-        return name;
-    }
-
-    public String getDisplayDate(){
-       return DateHelper.parseToStickyHeaderFormat(getDate());
+        return this.marketeerPrices.name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.marketeerPrices.name = name;
     }
 
     public Double getPrice() {
-        return price;
+        return this.marketeerPrices.price;
     }
 
     public void setPrice(Double price) {
-        this.price = price;
+        this.marketeerPrices.price = price;
     }
 
     public String getLocation() {
-        return location;
+        return this.marketeerPrices.location;
     }
 
     public void setLocation(String location) {
-        this.location = location;
+        this.marketeerPrices.location = location;
     }
 
     public MarketeerPrices getMarketeerPrices() {
@@ -77,5 +70,13 @@ public class MarketeerPriceModel {
 
     public void setMarketeerPrices(MarketeerPrices marketeerPrices) {
         this.marketeerPrices = marketeerPrices;
+    }
+
+    public String getQuality() {
+        return this.marketeerPrices.quality;
+    }
+
+    public void setQuality(String quality) {
+        this.marketeerPrices.quality = quality;
     }
 }

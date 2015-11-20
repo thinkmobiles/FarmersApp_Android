@@ -32,7 +32,7 @@ public class UserProfile {
      * */
     private boolean canChangeMarketeer;
 
-    public boolean hasMarketir() {
+    public boolean hasMarketer() {
         return !TextUtils.isEmpty(marketeer) && !newMarketeer;
     }
 
@@ -40,7 +40,7 @@ public class UserProfile {
         return fullName;
     }
 
-    public String getMarketeer() {
+    public String getMarketer() {
         return marketeer;
     }
 

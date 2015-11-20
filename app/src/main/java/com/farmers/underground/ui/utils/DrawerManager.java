@@ -1,7 +1,6 @@
 package com.farmers.underground.ui.utils;
 
 import android.app.Activity;
-import android.content.Context;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.AdapterView;
@@ -95,7 +94,7 @@ public class DrawerManager implements AdapterView.OnItemClickListener {
 
         /*  FarmersApp.getInstance().getMarketerBySession(); //getting of target marketer*/
 
-        if (user != null && !(user.hasMarketir() || user.isNewMarketeer())) {
+        if (user != null && !(user.hasMarketer() || user.isNewMarketeer())) {
             drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_plus, R.string.drawer_content_5));
         } else {
             drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_plus, R.string.drawer_content_6));

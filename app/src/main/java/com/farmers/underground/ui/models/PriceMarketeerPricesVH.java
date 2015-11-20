@@ -70,6 +70,10 @@ public class PriceMarketeerPricesVH extends BaseMarketeerPricesVH {
 
         tv_MorePrice.setVisibility((!shoulShowWhyTextInsteadPrice && !dataHolder.getModel().getMore().isEmpty()) ? View.VISIBLE : View.GONE);
 
+        if (tv_MorePrice.getVisibility() == View.VISIBLE){
+            tv_MorePrice.setText(dataHolder.getModel().getQuality());
+        }
+
     }
 
     @Override
@@ -87,6 +91,13 @@ public class PriceMarketeerPricesVH extends BaseMarketeerPricesVH {
     @OnClick(R.id.tv_MorePrice_MP)
     protected void onMorePriceClick() {
         dataHolder.getCallback().onMorePricesClicked(dataHolder.getModel());
+    }
+
+    @SuppressWarnings("unused")
+    @OnClick(R.id.ll_price_text_conainer_MP)
+    protected void onPriceClick() {
+        if(tv_MorePrice !=null && tv_MorePrice.getVisibility() == View.VISIBLE)
+            dataHolder.getCallback().onMorePricesClicked(dataHolder.getModel());
     }
 
 }

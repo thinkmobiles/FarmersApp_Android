@@ -431,7 +431,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
         pagerAdapter.getItem(viewPager.getCurrentItem()).setCurrentTypeRequest(BasePagerPricesFragment.TypeRequest.Refresh);
 
-        if (!TextUtils.isEmpty(FarmersApp.getInstance().getCurrentMarketer().getFullName()) || (FarmersApp.getInstance().getCurrentUser().hasMarketir() && !FarmersApp.getInstance().getCurrentUser().isNewMarketeer())) {
+        if (!TextUtils.isEmpty(FarmersApp.getInstance().getCurrentMarketer().getFullName()) || (FarmersApp.getInstance().getCurrentUser().hasMarketer() && !FarmersApp.getInstance().getCurrentUser().isNewMarketeer())) {
             AddPriceActivity.start(this, mCropModel, date);
         } else {
             WhyCanIAddThisPriceDialogFragment fragment = new WhyCanIAddThisPriceDialogFragment();
@@ -500,7 +500,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
         final UserProfile user = FarmersApp.getInstance().getCurrentUser();
 
-        if (user != null && !(user.hasMarketir() || user.isNewMarketeer())) {
+        if (user != null && !(user.hasMarketer() || user.isNewMarketeer())) {
             drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_plus, R.string.drawer_content_5));
         } else {
             drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_plus, R.string.drawer_content_6));

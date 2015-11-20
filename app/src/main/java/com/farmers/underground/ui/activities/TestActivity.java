@@ -29,7 +29,7 @@ import java.util.List;
  */
 public class TestActivity extends BaseActivity {
 
-    Intent intent;
+    private Intent intent;
 
     @Override
     public int getLayoutResId() {
@@ -46,14 +46,11 @@ public class TestActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         if (BuildConfig.PRODUCTION) {
-
             if(FarmersApp.showTutorial()){
                 intent = new Intent(this, TutorialActivity.class);
-            } else /*if (true)*/{
-                //todo autologin
+            } else {
                 intent = new Intent(this, LoginSignUpActivity.class);
             }
-
             startActivity(intent);
             finish();
             return;
@@ -136,14 +133,6 @@ public class TestActivity extends BaseActivity {
             }
         });
 
-    }
-
-    @OnClick(R.id.tv_Prices_Activity)
-    void startPricesActivity(){
-        LastCropPricesModel basquiatCropModel = new LastCropPricesModel();
-        basquiatCropModel.displayName = "some id";
-        basquiatCropModel.image = "http://www.potomitan.info/ki_nov/images/basquiat_brownspots.jpg";
-        PricesActivity.start(this,basquiatCropModel);
     }
 
     @OnClick(R.id.tv_transp_Activity)

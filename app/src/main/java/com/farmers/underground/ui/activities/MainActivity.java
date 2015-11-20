@@ -14,7 +14,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -336,7 +335,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
             @Override
             public void onPriceRefreshClicked(LastCropPricesModel cropModel) {
 
-                if (!TextUtils.isEmpty(FarmersApp.getInstance().getCurrentMarketer().getFullName()) || (FarmersApp.getInstance().getCurrentUser().hasMarketir() && !FarmersApp.getInstance().getCurrentUser().isNewMarketeer())){
+                if (!TextUtils.isEmpty(FarmersApp.getInstance().getCurrentMarketer().getFullName()) || (FarmersApp.getInstance().getCurrentUser().hasMarketer() && !FarmersApp.getInstance().getCurrentUser().isNewMarketeer())){
                     AddPriceActivity.start(MainActivity.this, cropModel);
                 } else {
                     WhyCanIAddThisPriceDialogFragment fragment =  new WhyCanIAddThisPriceDialogFragment();
@@ -507,7 +506,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         // (user cant be null here)
         final UserProfile user = FarmersApp.getInstance().getCurrentUser();
 
-        if (user != null && !(user.hasMarketir() || user.isNewMarketeer())) {
+        if (user != null && !(user.hasMarketer() || user.isNewMarketeer())) {
             drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_plus, R.string.drawer_content_5));
         } else {
             drawerItemList.add(new DrawerItem(R.drawable.ic_drawer_plus, R.string.drawer_content_6));
