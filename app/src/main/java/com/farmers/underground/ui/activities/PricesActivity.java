@@ -29,6 +29,7 @@ import com.farmers.underground.remote.models.CropPricesByDateModel;
 import com.farmers.underground.remote.models.ErrorMsg;
 import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.remote.models.MarketeerPricesByDateModel;
+import com.farmers.underground.remote.models.StaticticModel;
 import com.farmers.underground.remote.models.SuccessMsg;
 import com.farmers.underground.remote.models.UserProfile;
 import com.farmers.underground.remote.util.ACallback;
@@ -115,6 +116,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     private DateRange mDateRangeMarketeers, mDateRangeCrop, mFullRangeCrop, mFullRangeMarketeers;
 
     private MonthPickerCallback mMonthPickerCallback;
+    private int numMonth;
+    private ToolbarSpinnerAdapter spinnerAdapter;
 
     private static final ImageLoader imageLoaderRound = ImageCacheManager.getImageLoader(FarmersApp.ImageLoaders.CACHE_ROUND);
 
@@ -158,6 +161,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                 MainActivity.startWithSearchFocused(PricesActivity.this);
             }
         });
+
+        numMonth = Calendar.getInstance().get(Calendar.MONTH);
     }
 
     private void updateToolBarCrop() {
@@ -409,8 +414,9 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                     showWhyDialogs(date);
                     break;
                 case ProjectConstants.REQUEST_CODE_MONTH_PICKER:
-                    String month = data.getStringExtra(ProjectConstants.KEY_DATA);
-                    mMonthPickerCallback.onPickMonth(month);
+                    numMonth = data.getIntExtra(ProjectConstants.KEY_POS, 0);
+                    mMonthPickerCallback.onPickMonth(data.getStringExtra(ProjectConstants.KEY_DATA));
+                    makeRequestGetStatisticOfQualityAndMont(spinnerAdapter.getItem(spinner.getSelectedItemPosition()));
                     break;
             }
         }
@@ -436,8 +442,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         }
     }
 
-    private void setUPSpinner(List<String> spinnerData, int selection) {
-        final ToolbarSpinnerAdapter spinnerAdapter = new ToolbarSpinnerAdapter(this,
+    private void setUPSpinner(final List<String> spinnerData, int selection) {
+        spinnerAdapter = new ToolbarSpinnerAdapter(this,
                 spinnerData);
 
         spinner.setAdapter(spinnerAdapter);
@@ -506,7 +512,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     public void showMonthPicker(final MonthPickerCallback callback) {
         this.mMonthPickerCallback = callback;
-        TransparentActivity.startWithFragmentForResult(this, MonthPickerFragment.newInstanse("2015", 0), ProjectConstants.REQUEST_CODE_MONTH_PICKER);
+        TransparentActivity.startWithFragmentForResult(this, MonthPickerFragment.newInstanse("2015", numMonth), ProjectConstants.REQUEST_CODE_MONTH_PICKER);
     }
 
     @SuppressWarnings("unused")
@@ -698,6 +704,41 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                 });
     }
 
+    public void makeRequestGetStatisticOfQuality(String quality){
+        RetrofitSingleton.getInstance().getStatisticsOfQuality(
+                mCropModel.displayName,
+                quality,
+                new ACallback<List<StaticticModel>, ErrorMsg>() {
+                    @Override
+                    public void onSuccess(List<StaticticModel> result) {
+                        showToast("to be done", Toast.LENGTH_SHORT);
+                    }
+
+                    @Override
+                    public void onError(@NonNull ErrorMsg error) {
+                        showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
+                    }
+                });
+    }
+
+    public void makeRequestGetStatisticOfQualityAndMont(String quality){
+        RetrofitSingleton.getInstance().getStatisticsOfQualityAndMonth(
+                mCropModel.displayName,
+                quality,
+                numMonth,
+                new ACallback<List<StaticticModel>, ErrorMsg>() {
+                    @Override
+                    public void onSuccess(List<StaticticModel> result) {
+                        showToast("to be done", Toast.LENGTH_SHORT);
+                    }
+
+                    @Override
+                    public void onError(@NonNull ErrorMsg error) {
+                        showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
+                    }
+                });
+    }
+
     public interface CropAllPricesCallback {
         void onGetResult(List<CropPricesByDateModel> result);
 
@@ -710,7 +751,15 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         void onError(); //result is empty or network/server error
     }
 
+    public interface StatisticCallback {
+        void onGetResult(List<StaticticModel> result);
+
+        void onError(); //result is empty or network/server error
+    }
+
     public interface MonthPickerCallback {
         void onPickMonth(String month);
     }
+
+
 }

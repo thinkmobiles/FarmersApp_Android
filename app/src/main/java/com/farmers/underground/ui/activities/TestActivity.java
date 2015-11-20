@@ -14,6 +14,7 @@ import com.farmers.underground.remote.models.ErrorMsg;
 import com.farmers.underground.remote.models.FarmerPricesModel;
 import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.remote.models.MarketeerPricesByDateModel;
+import com.farmers.underground.remote.models.StaticticModel;
 import com.farmers.underground.remote.models.SuccessMsg;
 import com.farmers.underground.remote.models.UserPriceQualityModel;
 import com.farmers.underground.remote.util.ACallback;
@@ -82,15 +83,15 @@ public class TestActivity extends BaseActivity {
     void testApiCallsReg() {
 
 
-        RetrofitSingleton.getInstance().getMarketeerCropPricesForPeriod("2015-11-16T12:09:12.000Z", "2014-10-24T12:09:12.000Z", "גזר", new ACallback<List<MarketeerPricesByDateModel>, ErrorMsg>() {
+        RetrofitSingleton.getInstance().getStatisticsOfQualityAndMonth("ארטישוק ירוק", "סוג א", 11, new ACallback<List<StaticticModel>, ErrorMsg>() {
             @Override
-            public void onSuccess(List<MarketeerPricesByDateModel> result) {
-                showToast("OK", Toast.LENGTH_SHORT);
+            public void onSuccess(List<StaticticModel> result) {
+                showToast("OK",Toast.LENGTH_SHORT);
             }
 
             @Override
             public void onError(@NonNull ErrorMsg error) {
-                showToast("BAD", Toast.LENGTH_SHORT);
+                showToast("Bad",Toast.LENGTH_SHORT);
             }
         });
     }

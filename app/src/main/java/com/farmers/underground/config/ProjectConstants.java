@@ -8,6 +8,7 @@ public class ProjectConstants {
 
     public static final String KEY_DATE = "date";
     public static final String KEY_DATA = "data";
+    public static final String KEY_POS  = "position";
     public static final String KEY_FOCUS_SEARCH_VIEW = "focus_search_view";
 
     public static final String KEY_START_MAIN_ACTIVITY_PAGE  = "StartWithPageSelected";
