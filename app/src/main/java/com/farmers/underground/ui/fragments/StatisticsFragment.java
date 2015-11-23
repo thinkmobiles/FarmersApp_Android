@@ -36,8 +36,11 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.ChartTouchListener;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -122,6 +125,7 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
             imArrowRight.setImageDrawable(ResUtil.getDrawable(res, R.drawable.line_left_active));
             imDotOne.setImageDrawable(ResUtil.getDrawable(res, R.drawable.dot_blue));
             imDotTwo.setImageDrawable(ResUtil.getDrawable(res, R.drawable.dot_gray));
+            tv_GraphDescription_SF.setText(getHostActivity().getString(R.string.statistics_description_1));
             tvPageNumberTitle.setText(res.getString(R.string.page_number_one_statistics_fragment));
             getHostActivity().setmTypeStatistic(TypeStatistic.Quality);
         } else if (pageNumber == 2) { //2
@@ -239,6 +243,7 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
         mChart.setMaxVisibleValueCount(11);
         mChart.setHighlightEnabled(false);
         mChart.setPinchZoom(false);
+        mChart.setScaleEnabled(false);
         mChart.setDrawBarShadow(false);
         mChart.setDrawGridBackground(false);
         mChart.getLegend().setEnabled(false);
@@ -272,10 +277,13 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
             @Override
             public void onChartSingleTapped(MotionEvent me) {
 
-                popupIndexSelected = mChart.getHighlightByTouchPoint(me.getX(), me.getY()).getXIndex();
-                popupValue = mChart.getEntryByTouchPoint(me.getX(), me.getY()).getVal();
+                float x = me.getX();
+                float y = me.getY();
 
-                showPopup(me.getX(), me.getY(), popupValue);
+                popupIndexSelected = mChart.getHighlightByTouchPoint(x, y).getXIndex();
+                popupValue = mChart.getEntryByTouchPoint(x, y).getVal();
+
+                showPopup(x, y, popupValue);
 
             }
 
@@ -389,9 +397,6 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
         popupWindow.setFocusable(true);
         popupView.measure(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        float offsetX = touchX - mChart.getLeft() - popupView.getMeasuredWidth() / 2;
-        float offsetY = touchY - mChart.getBottom() - popupView.getMeasuredHeight() / 4 * 3;
-
         boolean show = false;
         switch (popupIndexSelected) {
             case 0:
@@ -435,6 +440,9 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
             ((TextView) popupWindow.getContentView().findViewById(R.id.tv_Symbol_Popup))
                     .setTextColor(ResUtil.getColor(res, chartColor[popupIndexSelected]));
 
+            float offsetX = touchX - mChart.getLeft() - popupView.getMeasuredWidth() / 2;
+            float offsetY = touchY - mChart.getBottom() - popupView.getMeasuredHeight() / 4 * 3;
+
             popupWindow.showAsDropDown(mChart, (int) offsetX, (int) offsetY);
 
             popupView.postDelayed(new Runnable() {
@@ -448,8 +456,6 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
 
                                         if (popupWindow.isShowing())
                                             popupWindow.dismiss();
-
-                                        mChart.highlightValue(popupIndexSelected, -1);
                                     }
                                 }
                             });
@@ -459,6 +465,8 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
             if (popupIndexSelected < 3) setItemHighlight(popupIndexSelected, priceView);
             else if (popupIndexSelected < 7) setItemHighlight(popupIndexSelected - 1, priceView);
             else setItemHighlight(popupIndexSelected - 2, priceView);
+
+            mChart.highlightValue(popupIndexSelected, -1);
         }
     }
 

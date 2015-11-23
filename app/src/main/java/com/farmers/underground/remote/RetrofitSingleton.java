@@ -122,9 +122,9 @@ public class RetrofitSingleton {
         });
     }
 
-    public void getCropPricesForPeriod(@NonNull String startDate, @NonNull  String endDate, @NonNull  String cropName,
+    public void getCropPricesForPeriod(@NonNull String startDate, @NonNull  String endDate, @NonNull  String cropName, Boolean isScroll,
                                        final ACallback<List<CropPricesByDateModel>,ErrorMsg> callback){
-        getPricesService().getCropPricesForPeriod(cropName, startDate, endDate).enqueue(new Callback<List<CropPricesByDateModel>>() {
+        getPricesService().getCropPricesForPeriod(cropName, startDate, endDate, isScroll).enqueue(new Callback<List<CropPricesByDateModel>>() {
             @Override
             public void onResponse(Response<List<CropPricesByDateModel>> response, Retrofit retrofit) {
                 performCallback(callback,response);
@@ -139,9 +139,9 @@ public class RetrofitSingleton {
         });
     }
 
-    public void getMarketeerCropPricesForPeriod(@NonNull String startDate, @NonNull  String endDate, @NonNull  String cropName,
+    public void getMarketeerCropPricesForPeriod(@NonNull String startDate, @NonNull  String endDate, @NonNull  String cropName, Boolean isScroll,
                                        final ACallback<List<MarketeerPricesByDateModel>,ErrorMsg> callback){
-        getPricesService().getMarketeerCropPricesForPeriod(cropName, startDate, endDate).enqueue(new Callback<List<MarketeerPricesByDateModel>>() {
+        getPricesService().getMarketeerCropPricesForPeriod(cropName, startDate, endDate, isScroll).enqueue(new Callback<List<MarketeerPricesByDateModel>>() {
             @Override
             public void onResponse(Response<List<MarketeerPricesByDateModel>> response, Retrofit retrofit) {
                 performCallback(callback,response);

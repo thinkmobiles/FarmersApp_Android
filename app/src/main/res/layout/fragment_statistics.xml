@@ -207,31 +207,29 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:gravity="center">
-
-                    <ImageView
-                        android:id="@+id/im_dot_one"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_margin="4dp"
-                        android:contentDescription="@null"
-                        android:src="@drawable/dot_gray" />
-
                     <ImageView
                         android:id="@+id/im_dot_two"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_margin="4dp"
-                        android:layout_toLeftOf="@id/im_dot_one"
                         android:contentDescription="@null"
                         android:src="@drawable/dot_blue" />
-                </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/im_dot_one"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@id/im_dot_two"
+                        android:layout_margin="4dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/dot_gray" />
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/tv_page_number_title"
