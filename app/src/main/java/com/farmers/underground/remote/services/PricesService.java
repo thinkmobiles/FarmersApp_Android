@@ -29,14 +29,14 @@ public interface PricesService {
     * */
     @GET("prices/getCropPricesForPeriod")
     Call<List<CropPricesByDateModel>>
-    getCropPricesForPeriod(@Query("cropName") String cropName, @Query("startDate") String startDate, @Query("endDate") String endDate);
+    getCropPricesForPeriod(@Query("cropName") String cropName, @Query("startDate") String startDate, @Query("endDate") String endDate, @Query("isScroll") Boolean isScroll);
 
     /**
      * this is for fetch prices from marketeers by period
      * */
     @GET("prices/getMarketeerCropPricesForPeriod")
     Call<List<MarketeerPricesByDateModel>>
-    getMarketeerCropPricesForPeriod(@Query("cropName") String cropName, @Query("startDate") String startDate, @Query("endDate") String endDate);
+    getMarketeerCropPricesForPeriod(@Query("cropName") String cropName, @Query("startDate") String startDate, @Query("endDate") String endDate, @Query("isScroll") Boolean isScroll);
 
     @POST("prices/addFarmerPrice")
     Call<SuccessMsg>
