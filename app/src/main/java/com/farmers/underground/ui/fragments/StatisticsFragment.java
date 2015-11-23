@@ -347,18 +347,9 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
                 count++;
             }
         }
-        count = 0;
         ArrayList<String> xVals = new ArrayList<>();
-        for (ChartDataModel.ChartModel item : mChartModel.charts) {
-            for (Float childItem : item.prices) {
-                xVals.add("");
-                count++;
-            }
-            if (count < 10) {
-                xVals.add("");
-                count++;
-            }
-        }
+        for (int i = 0; i < 11; ++i)
+            xVals.add("");
         final BarDataSet set1 = new BarDataSet(yVals1, "Data Set");
 
         set1.setColors(chartColor, getHostActivity());
@@ -396,36 +387,21 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
         popupWindow.setOutsideTouchable(true);
         popupWindow.setFocusable(true);
-        popupView.measure(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
         boolean show = false;
-        switch (popupIndexSelected) {
-            case 0:
-            case 1:
-            case 2:
-            case 4:
-            case 5:
-            case 6:
-            case 8:
-            case 9:
-            case 10:
-                show = true;
-                break;
-            case 7:
-            case 3:
-                show = false;
-                break;
-        }
+        if(popupIndexSelected != 3 && popupIndexSelected != 7)
+            show = true;
 
         if (show) {
             ((TextView) popupWindow.getContentView().findViewById(R.id.tv_Value_Popup))
                     .setText(StringFormatterUtil.parsePrice(value));
+            int offsetPos;
 
-            final PriceView priceView;
+            if (popupIndexSelected < 3) offsetPos = 0;
+            else if (popupIndexSelected < 7) offsetPos = 1;
+            else offsetPos = 2;
 
-            if (popupIndexSelected < 3) priceView = getPriceViewBySelPos(popupIndexSelected);
-            else if (popupIndexSelected < 7) priceView = getPriceViewBySelPos(popupIndexSelected - 1);
-            else priceView = getPriceViewBySelPos(popupIndexSelected - 2);
+            final PriceView priceView = getPriceViewBySelPos(popupIndexSelected - offsetPos);
 
             if (priceView !=null) {
                 String popUpDescription = priceView.tv_Marketeer_CropItem.getText().toString();
@@ -452,25 +428,23 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
             popupView.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                        if (getHostActivity() != null)
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (getHostActivity() != null) {
+                    if (getHostActivity() != null)
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (getHostActivity() != null) {
 
-                                        if (popupWindow.isShowing())
-                                            popupWindow.dismiss();
+                                    if (popupWindow.isShowing()) {
+                                        popupWindow.dismiss();
                                     }
                                 }
-                            });
+                            }
+                        });
+                    mChart.highlightValue(popupIndexSelected, -1);
                 }
             }, POPUP_SHOW_TIME_MILIS);
 
-            if (popupIndexSelected < 3) setItemHighlight(popupIndexSelected, priceView);
-            else if (popupIndexSelected < 7) setItemHighlight(popupIndexSelected - 1, priceView);
-            else setItemHighlight(popupIndexSelected - 2, priceView);
-
-            mChart.highlightValue(popupIndexSelected, -1);
+            setItemHighlight(popupIndexSelected - offsetPos, priceView);
         }
     }
 
@@ -553,7 +527,7 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
         priceView.tv_Price_Prefix.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18.6F);
         priceView.tv_Price_Prefix.setTypeface(TypefaceManager.getInstance().getArialBold());
 
-        priceView.tv_Price.setTextSize(TypedValue.COMPLEX_UNIT_SP, 33.2F);
+        priceView.tv_Price.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30.0F);
         priceView.tv_Price.setTypeface(TypefaceManager.getInstance().getArialBold());
 
         priceView.tv_Marketeer_CropItem.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13.0F);
@@ -566,20 +540,14 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
         //remark: items coming  in 3 sets LTR:  0-1-2,  3-4-5,  6-7-8
 
         final PriceView priceView;
-        switch (item){
-            case 0:
-            case 3:
-            case 6:
+        switch (item / 3){
+            case 0: // 0,3,6
                 priceView = layout_marketer_SF;
                 break;
-            case 1:
-            case 4:
-            case 7:
+            case 1: // 1,4,7
                 priceView = layout_market_one_SF;
                 break;
-            case 2:
-            case 5:
-            case 8:
+            case 2: // 2,5,8
                 priceView = layout_market_two_SF;
                 break;
             default:
@@ -595,9 +563,10 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
         //remark: items coming  in 3 sets LTR:  0-1-2,  3-4-5,  6-7-8
 
         //skip Highlight price is this case =)
-        if((rb0.isChecked() && !(item == 0 || item == 1 || item == 2)) ||
-                (rb1.isChecked() && !(item == 3 || item == 4 || item == 5)) ||
-                (rb2.isChecked() && !(item == 6 || item == 7 || item == 8)))
+        int numBlock = item / 3;
+        if((rb0.isChecked() && numBlock != 0) || //0,1,2
+                (rb1.isChecked() && numBlock != 1) || //3,4,5
+                (rb2.isChecked() && numBlock != 2)) // 6,7,8
             return;
 
         if (priceView == null)
@@ -608,8 +577,9 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
         ll_PricesContainer_SF.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (getHostActivity() != null)
+                if (getHostActivity() != null) {
                     downLightPriceView(priceView);
+                }
             }
         }, POPUP_SHOW_TIME_MILIS);
     }
@@ -657,15 +627,15 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
 
         setChartData(createChartData(result));
 
-        final String string0 = months[Integer.valueOf(result.get(0).month)] + " " + result.get(0).year;
-        final String string1 = months[Integer.valueOf(result.get(1).month)] + " " + result.get(1).year;
-        final String string2 = months[Integer.valueOf(result.get(2).month)] + " " + result.get(2).year;
-
-        rb0.setText(string0);
-        rb1.setText(string1);
-        rb2.setText(string2);
+        rb0.setText(getTextForRBFromResult(result, 0));
+        rb1.setText(getTextForRBFromResult(result, 1));
+        rb2.setText(getTextForRBFromResult(result, 2));
 
         chooseRB();
+    }
+
+    private String getTextForRBFromResult(List<StaticticModel> result, int pos){
+        return months[Integer.valueOf(result.get(pos).month)] + " " + result.get(pos).year;
     }
 
     @Override
