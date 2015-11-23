@@ -15,13 +15,13 @@
         <RelativeLayout
             android:id="@+id/llTopDataContainer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <com.farmers.underground.ui.custom_views.CustomTextView
-                android:layout_alignParentTop="true"
                 android:id="@+id/tv_HeadTitle_SF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
                 android:gravity="center"
                 android:maxLines="2"
                 android:text="@string/page_head_one_statistics_fragment"
@@ -31,55 +31,62 @@
 
             <LinearLayout
                 android:id="@+id/ll_Month_pick_Container_SF"
-                android:layout_below="@id/tv_HeadTitle_SF"
-                android:orientation="vertical"
-                android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-
-            <com.farmers.underground.ui.custom_views.CustomTextView
-                android:id="@+id/tv_Month_SF" 
-                android:drawableLeft="@drawable/ic_arrow_drop_down_3_copy"
-                android:drawablePadding="13dp"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:text="בחר חודש"
-                android:textColor="#0a89a7"
-                android:textSize="@dimen/stat_price_name_month"
-                app:customFont="regular" />
-           <View
-                android:layout_marginLeft="13dp"
-                android:background="#0a89a7"
-                android:layout_width="120dp"
-                android:layout_height="1.5dp" />
+                android:layout_below="@id/tv_HeadTitle_SF"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <com.farmers.underground.ui.custom_views.CustomTextView
+                    android:id="@+id/tv_Month_SF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_arrow_drop_down_3_copy"
+                    android:drawablePadding="13dp"
+                    android:singleLine="true"
+                    android:text="בחר חודש"
+                    android:textColor="#0a89a7"
+                    android:textSize="@dimen/stat_price_name_month"
+                    app:customFont="regular" />
+
+                <View
+                    android:layout_width="120dp"
+                    android:layout_height="1.5dp"
+                    android:layout_marginLeft="13dp"
+                    android:background="#0a89a7" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:padding="8dp"
-                android:gravity="bottom"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentBottom="true"
                 android:id="@+id/ll_PricesContainer_SF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="bottom"
+                android:orientation="horizontal"
+                android:padding="8dp">
 
-                <include android:id="@+id/layout_marketer_SF" layout="@layout/item_crops_price" />
+                <include
+                    android:id="@+id/layout_marketer_SF"
+                    layout="@layout/item_crops_price" />
 
-                <View
-                    android:layout_width="12dp"
-                    android:layout_height="0dp"/>
+                <!--   <View
+                       android:layout_width="12dp"
+                       android:layout_height="0dp"/>
+   -->
+                <include
+                    android:id="@+id/layout_market_one_SF"
+                    layout="@layout/item_crops_price" />
 
-                <include android:id="@+id/layout_market_one_SF" layout="@layout/item_crops_price" />
 
+                <!--      <View
+                          android:layout_width="12dp"
+                          android:layout_height="0dp"/>-->
 
-                <View
-                    android:layout_width="12dp"
-                    android:layout_height="0dp"/>
-
-                <include android:id="@+id/layout_market_two_SF" layout="@layout/item_crops_price" />
+                <include
+                    android:id="@+id/layout_market_two_SF"
+                    layout="@layout/item_crops_price" />
 
             </LinearLayout>
 
@@ -123,39 +130,44 @@
             android:layout_marginLeft="@dimen/margin_default_medium"
             android:layout_marginRight="@dimen/margin_default_medium"
             android:orientation="horizontal">
+
             <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-            <RadioButton
-                android:id="@+id/rb0_SF"
-                style="@style/Radio_Statistics"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-             android:text="year"
-                 />
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <RadioButton
+                    android:id="@+id/rb0_SF"
+                    style="@style/Radio_Statistics"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="year" />
             </FrameLayout>
+
             <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-            <RadioButton
-                android:id="@+id/rb1_SF"
-                style="@style/Radio_Statistics"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                 android:text="year"/>
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <RadioButton
+                    android:id="@+id/rb1_SF"
+                    style="@style/Radio_Statistics"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="year" />
             </FrameLayout>
+
             <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-            <RadioButton
-                android:id="@+id/rb2_SF"
-                style="@style/Radio_Statistics"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                 android:text="year"/>
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <RadioButton
+                    android:id="@+id/rb2_SF"
+                    style="@style/Radio_Statistics"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="year" />
             </FrameLayout>
 
         </RadioGroup>
@@ -181,12 +193,12 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:contentDescription="@null"
-                android:paddingRight="10dp"
-                android:paddingLeft="20dp"
-                android:id="@+id/im_arrow_left"
+                android:id="@+id/im_arrow_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:contentDescription="@null"
+                android:paddingLeft="20dp"
+                android:paddingRight="10dp"
                 android:src="@drawable/line_left_not_active" />
 
             <LinearLayout
@@ -201,22 +213,22 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:contentDescription="@null"
                         android:id="@+id/im_dot_one"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_margin="4dp"
+                        android:contentDescription="@null"
                         android:src="@drawable/dot_gray" />
 
                     <ImageView
-                        android:contentDescription="@null"
                         android:id="@+id/im_dot_two"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_margin="4dp"
-                        android:layout_toRightOf="@id/im_dot_one"
+                        android:layout_toLeftOf="@id/im_dot_one"
+                        android:contentDescription="@null"
                         android:src="@drawable/dot_blue" />
                 </RelativeLayout>
 
@@ -232,14 +244,13 @@
 
             </LinearLayout>
 
-
             <ImageView
-                android:paddingRight="20dp"
-                android:paddingLeft="10dp"
-                android:contentDescription="@null"
-                android:id="@+id/im_arrow_right"
+                android:id="@+id/im_arrow_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:contentDescription="@null"
+                android:paddingLeft="10dp"
+                android:paddingRight="20dp"
                 android:src="@drawable/line_rigth_active" />
 
 

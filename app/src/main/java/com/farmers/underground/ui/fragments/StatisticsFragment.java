@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
+import android.support.annotation.Nullable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -35,16 +36,13 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.ChartTouchListener;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -52,7 +50,9 @@ import java.util.List;
  * on 10/9/15.
  */
 public class StatisticsFragment extends BasePagerPricesFragment<String>
-        implements OnChartValueSelectedListener,  PricesActivity.PageListener, ToolbarSpinnerAdapter.SpinnerCallback, PricesActivity.MonthPickerCallback, PricesActivity.StatisticCallback {
+        implements PricesActivity.PageListener, ToolbarSpinnerAdapter.SpinnerCallback, PricesActivity.MonthPickerCallback, PricesActivity.StatisticCallback {
+
+    private final static int POPUP_SHOW_TIME_MILIS = 3000;
 
     //head block
     @Bind(R.id.tv_HeadTitle_SF)
@@ -61,6 +61,16 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
     protected TextView tv_Month_SF; //picker
     @Bind(R.id.ll_Month_pick_Container_SF)
     protected LinearLayout ll_Month_pick_Container_SF;
+
+    @Bind(R.id.ll_PricesContainer_SF)
+    protected LinearLayout ll_PricesContainer_SF;
+
+    @Bind(R.id.layout_marketer_SF)
+    protected LinearLayout layout_marketer_SF_Container;
+    @Bind(R.id.layout_market_two_SF)
+    protected LinearLayout layout_market_two_SF_Container;
+    @Bind(R.id.layout_market_one_SF)
+    protected LinearLayout layout_market_one_SF_Container;
 
     private PriceView layout_marketer_SF = new PriceView();
     private PriceView layout_market_two_SF = new PriceView();
@@ -101,25 +111,28 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
     private int[] chartColor;
     private String[] months;
 
+    private int selectedMonth = -1;
+
     public enum TypeStatistic{Quality, Month}
 
     private void initPageToShow(int pageNumber) {
         final Resources res = getResources();
         if (pageNumber == 1) { //1
-            imArrowLeft.setImageDrawable(ResUtil.getDrawable(res, R.drawable.line_left_not_active));
-            imArrowRight.setImageDrawable(ResUtil.getDrawable(res, R.drawable.line_rigth_active));
+            imArrowLeft.setImageDrawable(ResUtil.getDrawable(res, R.drawable.line_right_not_active));
+            imArrowRight.setImageDrawable(ResUtil.getDrawable(res, R.drawable.line_left_active));
             imDotOne.setImageDrawable(ResUtil.getDrawable(res, R.drawable.dot_blue));
             imDotTwo.setImageDrawable(ResUtil.getDrawable(res, R.drawable.dot_gray));
             tvPageNumberTitle.setText(res.getString(R.string.page_number_one_statistics_fragment));
             getHostActivity().setmTypeStatistic(TypeStatistic.Quality);
         } else if (pageNumber == 2) { //2
-            imArrowLeft.setImageDrawable(ResUtil.getDrawable(res, R.drawable.line_left_active));
-            imArrowRight.setImageDrawable(ResUtil.getDrawable(res, R.drawable.line_right_not_active));
+            imArrowLeft.setImageDrawable(ResUtil.getDrawable(res, R.drawable.line_rigth_active));
+            imArrowRight.setImageDrawable(ResUtil.getDrawable(res, R.drawable.line_left_not_active));
             imDotOne.setImageDrawable(ResUtil.getDrawable(res, R.drawable.dot_gray));
             imDotTwo.setImageDrawable(ResUtil.getDrawable(res, R.drawable.dot_blue));
             tvPageNumberTitle.setText(res.getString(R.string.page_number_two_statistics_fragment));
             getHostActivity().setmTypeStatistic(TypeStatistic.Month);
         }
+        clearChartAndPrices();
         getHostActivity().makeRequestGetStatistic();
         currentPage = pageNumber;
         onPageSelected(currentPage);
@@ -191,9 +204,9 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
         super.onViewCreated(v, savedInstanceState);
         ButterKnife.bind(this, v);
 
-        ButterKnife.bind(layout_marketer_SF, v.findViewById(R.id.layout_marketer_SF));
-        ButterKnife.bind(layout_market_one_SF, v.findViewById(R.id.layout_market_one_SF));
-        ButterKnife.bind(layout_market_two_SF, v.findViewById(R.id.layout_market_two_SF));
+        ButterKnife.bind(layout_marketer_SF, layout_marketer_SF_Container);
+        ButterKnife.bind(layout_market_one_SF, layout_market_one_SF_Container);
+        ButterKnife.bind(layout_market_two_SF, layout_market_two_SF_Container);
 
         setupDefaultPage();
         //use currentPage int;
@@ -219,12 +232,12 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
         getHostActivity().setmStatisticCallback(this);
 
         months = getResources().getStringArray(R.array.all_month);
-       // setMonth(months[Calendar.getInstance().get(Calendar.MONTH)]); /* choose by default*/
     }
 
     private void defChart() {
         mChart.setDescription("");
         mChart.setMaxVisibleValueCount(11);
+        mChart.setHighlightEnabled(false);
         mChart.setPinchZoom(false);
         mChart.setDrawBarShadow(false);
         mChart.setDrawGridBackground(false);
@@ -258,6 +271,9 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
 
             @Override
             public void onChartSingleTapped(MotionEvent me) {
+
+                popupIndexSelected = mChart.getHighlightByTouchPoint(me.getX(), me.getY()).getXIndex();
+                popupValue = mChart.getEntryByTouchPoint(me.getX(), me.getY()).getVal();
 
                 showPopup(me.getX(), me.getY(), popupValue);
 
@@ -293,7 +309,6 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
         y.setAxisLineColor(ResUtil.getColor(res, R.color.bg_graph_devider));
 
         mChart.animateY(2500);
-        mChart.setOnChartValueSelectedListener(this);
     }
 
     private void setChartData(ChartDataModel mChartModel) {
@@ -398,7 +413,19 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
 
         if (show) {
             ((TextView) popupWindow.getContentView().findViewById(R.id.tv_Value_Popup))
-                    .setText(String.format("%.2f", value));
+                    .setText((value == 0.0f)? "- -" : String.format("%.2f", value));
+
+            final PriceView priceView;
+
+            if (popupIndexSelected < 3) priceView = getPriceViewBySelPos(popupIndexSelected);
+            else if (popupIndexSelected < 7) priceView = getPriceViewBySelPos(popupIndexSelected - 1);
+            else priceView = getPriceViewBySelPos(popupIndexSelected - 2);
+
+            if (priceView !=null) {
+                String popUpDescription = priceView.tv_Marketeer_CropItem.getText().toString();
+                ((TextView) popupWindow.getContentView().findViewById(R.id.tv_Name_Popup))
+                        .setText(popUpDescription);
+            }
 
             Resources res = getResources();
             ((TextView) popupWindow.getContentView().findViewById(R.id.tv_Value_Popup))
@@ -409,29 +436,29 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
                     .setTextColor(ResUtil.getColor(res, chartColor[popupIndexSelected]));
 
             popupWindow.showAsDropDown(mChart, (int) offsetX, (int) offsetY);
-            new Thread(new Runnable() {
+
+            popupView.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    try {
-                        Thread.sleep(3000);
-                        if(getHostActivity() != null)
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if(getHostActivity() != null)
-                                    if ( popupWindow.isShowing())
-                                    popupWindow.dismiss();
-                            }
-                        });
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
+                        if (getHostActivity() != null)
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (getHostActivity() != null) {
 
-            if (popupIndexSelected < 3) setItemHighlight(popupIndexSelected);
-            else if (popupIndexSelected < 7) setItemHighlight(popupIndexSelected - 1);
-            else setItemHighlight(popupIndexSelected - 2);
+                                        if (popupWindow.isShowing())
+                                            popupWindow.dismiss();
+
+                                        mChart.highlightValue(popupIndexSelected, -1);
+                                    }
+                                }
+                            });
+                }
+            }, POPUP_SHOW_TIME_MILIS);
+
+            if (popupIndexSelected < 3) setItemHighlight(popupIndexSelected, priceView);
+            else if (popupIndexSelected < 7) setItemHighlight(popupIndexSelected - 1, priceView);
+            else setItemHighlight(popupIndexSelected - 2, priceView);
         }
     }
 
@@ -466,22 +493,11 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
     }
 
     @Override
-    public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-        popupIndexSelected = e.getXIndex();
-        popupValue = e.getVal();
-
-    }
-
-    @Override
-    public void onNothingSelected() {
-
-    }
-
-    @Override
     public void onPageSelected(int page) {
         if (page == 1) {
             tv_HeadTitle_SF.setText(getString(R.string.page_head_one_statistics_fragment));
             ll_Month_pick_Container_SF.setVisibility(View.GONE);
+            tv_GraphDescription_SF.setText(getHostActivity().getString(R.string.statistics_description_1));
         } else if (page == 2) {
             tv_HeadTitle_SF.setText(getString(R.string.page_head_two_statistics_fragment));
             ll_Month_pick_Container_SF.setVisibility(View.VISIBLE);
@@ -491,7 +507,24 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
 
     @Override
     public void onSpinnerItemSelected(String s) {
+        clearChartAndPrices();
         getHostActivity().makeRequestGetStatistic();
+    }
+
+    private void clearChartAndPrices(){
+        if (selectedMonth == -1){
+            tv_GraphDescription_SF.setText("");
+        }
+
+        if (mChart!=null)
+            mChart.clear();
+
+        chooseRB();
+
+        layout_marketer_SF.tv_Price.setText("- -");
+        layout_market_one_SF.tv_Price.setText("- -");
+        layout_market_two_SF.tv_Price.setText("- -");
+
     }
 
     private void downLightPriceView(PriceView priceView) {
@@ -516,8 +549,10 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
     }
 
     /** item = [0;8] */
-    private void setItemHighlight(int item) {
+    @Nullable
+    private PriceView getPriceViewBySelPos(int item) {
         //remark: items coming  in 3 sets LTR:  0-1-2,  3-4-5,  6-7-8
+
         final PriceView priceView;
         switch (item){
             case 0:
@@ -525,44 +560,46 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
             case 6:
                 priceView = layout_marketer_SF;
                 break;
+            case 1:
             case 4:
             case 7:
-            case 1:
                 priceView = layout_market_one_SF;
                 break;
-            case 8:
-            case 5:
             case 2:
+            case 5:
+            case 8:
                 priceView = layout_market_two_SF;
                 break;
             default:
-                return;
+                priceView = null;
         }
 
-        if(priceView==null)
+        return priceView;
+
+    }
+
+        /** item = [0;8] */
+    private void setItemHighlight(int item, final PriceView priceView) {
+        //remark: items coming  in 3 sets LTR:  0-1-2,  3-4-5,  6-7-8
+
+        //skip Highlight price is this case =)
+        if((rb0.isChecked() && !(item == 0 || item == 1 || item == 2)) ||
+                (rb1.isChecked() && !(item == 3 || item == 4 || item == 5)) ||
+                (rb2.isChecked() && !(item == 6 || item == 7 || item == 8)))
+            return;
+
+        if (priceView == null)
             return;
 
         heightLightPriceView(priceView);
 
-        new Thread(new Runnable() {
+        ll_PricesContainer_SF.postDelayed(new Runnable() {
             @Override
             public void run() {
-                try {
-                    Thread.sleep(3000);
-                    if (getHostActivity()!=null)
-                        getHostActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (getHostActivity() != null)
-                                    downLightPriceView(priceView);
-
-                            }
-                        });
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                if (getHostActivity() != null)
+                    downLightPriceView(priceView);
             }
-        }).start();
+        }, POPUP_SHOW_TIME_MILIS);
     }
 
     ChartDataModel.ChartModel[] chart;
@@ -596,15 +633,26 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
 
     @Override
     public void onPickMonth(int numMonth) {
+        selectedMonth = numMonth;
         setMonth(months[numMonth]);
+        showDifColoredText(months[numMonth]);
     }
 
     @Override
     public void onGetResult(List<StaticticModel> result) {
+
+        Collections.reverse(result); // hebrew order =)
+
         setChartData(createChartData(result));
-        rb2.setText(months[Integer.valueOf(result.get(0).month)] + " " + result.get(0).year);
-        rb1.setText(months[Integer.valueOf(result.get(1).month)] + " " + result.get(1).year);
-        rb0.setText(months[Integer.valueOf(result.get(2).month)] + " " + result.get(2).year);
+
+        final String string0 = months[Integer.valueOf(result.get(0).month)] + " " + result.get(0).year;
+        final String string1 = months[Integer.valueOf(result.get(1).month)] + " " + result.get(1).year;
+        final String string2 = months[Integer.valueOf(result.get(2).month)] + " " + result.get(2).year;
+
+        rb0.setText(string0);
+        rb1.setText(string1);
+        rb2.setText(string2);
+
         chooseRB();
     }
 
@@ -613,13 +661,13 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
 
     }
 
-    //todo
     private void showDifColoredText(String monthToShowInOtherColor){
-        String text =  "ממוצע המחירים לפי 3 השנים האחרונות"  ;
-        text =  text.replace("3 השנ", monthToShowInOtherColor) ;
+
+        String text = String.format(getResources().getString(R.string.chart_head_page_two_statistics_fragment), monthToShowInOtherColor);
 
         Spannable wordToSpan = new SpannableString(text);
-        wordToSpan.setSpan(new ForegroundColorSpan(ResUtil.getColor(getResources(),R.color.stat_color_month_in_text)),12,22 , 0);
+        wordToSpan.setSpan(new ForegroundColorSpan(ResUtil.getColor(getResources(),R.color.stat_color_month_in_text)),
+                text.indexOf(monthToShowInOtherColor), text.indexOf(monthToShowInOtherColor) + monthToShowInOtherColor.length() , 0);
 
         tv_GraphDescription_SF.setText(wordToSpan);
     }

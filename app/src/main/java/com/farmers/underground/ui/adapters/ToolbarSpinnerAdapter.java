@@ -41,21 +41,21 @@ public class ToolbarSpinnerAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        View v = LayoutInflater.from(mContext).inflate(R.layout.item_statistic_spinner, viewGroup, false);
-        ((TextView) v.findViewById(R.id.TextView)).setText(getItem(i));
-        return v;
+    public View getView(int i, View convertView, ViewGroup viewGroup) {
+        convertView = LayoutInflater.from(mContext).inflate(R.layout.item_statistic_spinner, viewGroup, false);
+        ((TextView) convertView.findViewById(R.id.TextView)).setText(getItem(i));
+        return convertView;
     }
 
     @Override
-    public View getDropDownView(int i, View convertView, ViewGroup parent) {
-        View v = LayoutInflater.from(mContext).inflate(R.layout.item_statistic_spinner_dropdown, parent, false);
-        ((TextView) v.findViewById(R.id.TextView)).setText(getItem(i));
-        return v;
+    public View getDropDownView(int i, View convertView, ViewGroup viewGroup) {
+        convertView = LayoutInflater.from(mContext).inflate(R.layout.item_statistic_spinner_dropdown, viewGroup, false);
+        ((TextView) convertView.findViewById(R.id.TextView)).setText(getItem(i));
+        return convertView;
     }
 
 
-    public interface SpinnerCallback{
+    public interface SpinnerCallback {
         void onSpinnerItemSelected(String s);
     }
 }

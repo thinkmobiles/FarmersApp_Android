@@ -157,9 +157,11 @@
     <string name="page_number_two_statistics_fragment">2 of 2</string>
 
 
-    <string name="popup_name">popup name</string>
+
     <string name="page_head_one_statistics_fragment">In what month price /"agbniot ministers Tmr/" was the highest?</string>
     <string name="page_head_two_statistics_fragment">What is expected to pick first?</string>
+
+    <string name="chart_head_page_two_statistics_fragment">In %s month price was highest.</string>
 
     <!--//global-->
     <string name="price_prefix">₪</string>

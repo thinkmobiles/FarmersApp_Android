@@ -18,7 +18,7 @@
 
     <color name="grey_dot">#e1e1e1</color>
 
-    <color name="stat_color_month_in_text">#e1e1e1</color>
+    <color name="stat_color_month_in_text">@color/text_aqua</color>
 
     //tutorial
     <color name="tutorial_next_bg_color">#dd009688</color>
@@ -57,7 +57,6 @@
     <color name="text_red">#f44336</color>
     <color name="text_selected_month">#b1dfdb</color>
     <color name="text_top_statistic">#0a89a7</color>
-
 
     //drawer
     <color name="drawer_bg_color">#33000000</color>

@@ -153,7 +153,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         setDrawer();
         setViewPager();
         setTabs();
-//        setUPSpinner(spinnerTestData(), 5);
+
         makeRequestGetCropQualityList();
 
         searchView.setOnSearchClickListener(new View.OnClickListener() {
@@ -187,6 +187,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         super.onNewIntent(intent);
         getDataOnStart(intent);
         updateToolBarCrop();
+
+        makeRequestGetCropQualityList();
 
         for (BasePagerPricesFragment basePagerPricesFragment : pagerAdapter.getFragmentList()) {
             basePagerPricesFragment.setCurrentTypeRequest(BasePagerPricesFragment.TypeRequest.Refresh);
@@ -710,7 +712,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                         if (result != null && !result.isEmpty()) {
                             setUPSpinner(result, 0);
                         } else {
-                            showToast("List is empty", Toast.LENGTH_SHORT);
+                            showToast("No crop qualities found", Toast.LENGTH_SHORT);
                         }
                     }
 
@@ -736,7 +738,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     public void makeRequestGetStatisticOfQuality(){
         RetrofitSingleton.getInstance().getStatisticsOfQuality(
                 mCropModel.displayName,
-                spinnerAdapter.getItem(spinner.getSelectedItemPosition()),
+                spinnerAdapter.getItem(spinner.getSelectedItemPosition()),    //todo crashes here  spinnerAdapter = null
                 new ACallback<List<StaticticModel>, ErrorMsg>() {
                     @Override
                     public void onSuccess(List<StaticticModel> result) {

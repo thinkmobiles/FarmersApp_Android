@@ -175,6 +175,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     private void updateLastCrops() {
         if (FarmersApp.getInstance().shouldUpdateLastCropsNextTime() || FarmersApp.getInstance().shouldUpdateLastCrops()) {
+            showProgressDialog();
             RetrofitSingleton.getInstance().getLastCropPricesList(new ACallback<List<LastCropPricesModel>, ErrorMsg>() {
                 @Override
                 public void onSuccess(List<LastCropPricesModel> result) {
@@ -190,10 +191,12 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                     updateFragments(mCropList, query);
                     FarmersApp.getInstance().setShouldUpdateLastCropsNextTime(false);
                     FarmersApp.getInstance().setLastCopsUpdateTime();
+                    hideProgressDialog();
                 }
 
                 @Override
                 public void onError(@NonNull ErrorMsg error) {
+                    hideProgressDialog();
                     showReloadDialogOnError(error);
                 }
             });
@@ -203,6 +206,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     //crops list control
     private void getLastCrops() {
         if(mCropList==null || mCropList.isEmpty()){
+            showProgressDialog();
             RetrofitSingleton.getInstance().getLastCropPricesList(new ACallback<List<LastCropPricesModel>, ErrorMsg>() {
                 @Override
                 public void onSuccess(List<LastCropPricesModel> result) {
@@ -216,10 +220,12 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
                     updateFragments(mCropList, query);
                     FarmersApp.getInstance().setLastCopsUpdateTime();
+                    hideProgressDialog();
                 }
 
                 @Override
                 public void onError(@NonNull ErrorMsg error) {
+                    hideProgressDialog();
                     showReloadDialogOnError(error);
                 }
             });

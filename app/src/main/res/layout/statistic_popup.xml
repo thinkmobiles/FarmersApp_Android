@@ -35,7 +35,7 @@
             <com.farmers.underground.ui.custom_views.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="4.50"
+                    android:text="- -"
                     android:id="@+id/tv_Value_Popup"
                     android:textColor="@color/bg_graph_golden"
                     android:textSize="@dimen/large_text_size"
@@ -49,7 +49,7 @@
                 android:textColor="@color/bg_graph_golden"
                 android:textSize="@dimen/small_text_size"
                 app:customFont="regular"
-                android:text="@string/popup_name"
+                android:text=""
                 />
     </LinearLayout>
 

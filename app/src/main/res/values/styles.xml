@@ -235,7 +235,7 @@
         <item name="android:textSize">@dimen/small_text_size</item>
         <item name="android:textColor">@color/bg_graph_year</item>
         <item name="android:background">@color/opaque</item>
-        <item name="android:button">@null</item>
+        <item name="android:button">@color/opaque</item>
         <item name="android:drawableRight">@drawable/selector_radio_green</item>
         <item name="android:gravity">center</item>
         <item name="android:drawablePadding">2dp</item>
