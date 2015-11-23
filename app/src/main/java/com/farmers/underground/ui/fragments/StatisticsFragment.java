@@ -419,7 +419,7 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
 
         if (show) {
             ((TextView) popupWindow.getContentView().findViewById(R.id.tv_Value_Popup))
-                    .setText((value == 0.0f)? "- -" : String.format("%.2f", value));
+                    .setText(StringFormatterUtil.parsePrice(value));
 
             final PriceView priceView;
 
@@ -633,7 +633,7 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
     private void chooseRB(){
         for(int i = 0; i < 3; ++i){
             if(mRadioButtons.get(i).isChecked()){
-                onPickRadio(true, mRadioButtons.get(i).getId(), 0);
+                onPickRadio(true, mRadioButtons.get(i).getId(), i);
             }
         }
     }

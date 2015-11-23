@@ -116,7 +116,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     private DateRange mDateRangeMarketeers, mDateRangeCrop, mFullRangeCrop, mFullRangeMarketeers;
 
     private MonthPickerCallback mMonthPickerCallback;
-    private int numMonth;
+    private int numMonth, posQuality;
+    private List<String> listQuality;
     private ToolbarSpinnerAdapter spinnerAdapter;
     private StatisticCallback mStatisticCallback;
     private StatisticsFragment.TypeStatistic mTypeStatistic;
@@ -154,6 +155,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         setViewPager();
         setTabs();
 
+        listQuality = new ArrayList<>();
         makeRequestGetCropQualityList();
 
         searchView.setOnSearchClickListener(new View.OnClickListener() {
@@ -455,9 +457,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     }
 
     private void setUPSpinner(final List<String> spinnerData, int selection) {
-        spinnerAdapter = new ToolbarSpinnerAdapter(this,
-                spinnerData);
-
+        listQuality = spinnerData;
+        spinnerAdapter = new ToolbarSpinnerAdapter(this, spinnerData);
         spinner.setAdapter(spinnerAdapter);
         spinner.setSelection(selection);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -469,6 +470,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                         break;
                     }
                 }
+                posQuality = i;
             }
 
             @Override
@@ -748,21 +750,26 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     }
 
     public void makeRequestGetStatistic(){
-        switch (mTypeStatistic){
-            case Quality:
-                makeRequestGetStatisticOfQuality();
-                break;
-            case Month:
-                if(numMonth != -1)
-                    makeRequestGetStatisticOfQualityAndMont();
-                break;
+        if(spinnerAdapter != null) {
+            switch (mTypeStatistic) {
+                case Quality:
+                    makeRequestGetStatisticOfQuality();
+                    break;
+                case Month:
+                    if (numMonth != -1)
+                        makeRequestGetStatisticOfQualityAndMont();
+                    break;
+            }
+        } else {
+            setUPSpinner(listQuality, 0);
+            makeRequestGetStatistic();
         }
     }
 
     public void makeRequestGetStatisticOfQuality(){
         RetrofitSingleton.getInstance().getStatisticsOfQuality(
                 mCropModel.displayName,
-                spinnerAdapter.getItem(spinner.getSelectedItemPosition()),    //todo crashes here  spinnerAdapter = null
+                spinnerAdapter.getItem(posQuality),    //todo crashes here  spinnerAdapter = null
                 new ACallback<List<StaticticModel>, ErrorMsg>() {
                     @Override
                     public void onSuccess(List<StaticticModel> result) {
@@ -779,7 +786,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     public void makeRequestGetStatisticOfQualityAndMont(){
         RetrofitSingleton.getInstance().getStatisticsOfQualityAndMonth(
                 mCropModel.displayName,
-                spinnerAdapter.getItem(spinner.getSelectedItemPosition()),
+                spinnerAdapter.getItem(posQuality),
                 numMonth,
                 new ACallback<List<StaticticModel>, ErrorMsg>() {
                     @Override
