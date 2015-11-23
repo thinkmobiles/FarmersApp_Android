@@ -28,6 +28,7 @@ import com.farmers.underground.ui.custom_views.PriceView;
 import com.farmers.underground.ui.models.ChartDataModel;
 import com.farmers.underground.ui.models.DateRange;
 import com.farmers.underground.ui.utils.ResUtil;
+import com.farmers.underground.ui.utils.ResourceRetriever;
 import com.farmers.underground.ui.utils.StringFormatterUtil;
 import com.farmers.underground.ui.utils.TypefaceManager;
 import com.github.mikephil.charting.charts.BarChart;
@@ -440,7 +441,10 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
             ((TextView) popupWindow.getContentView().findViewById(R.id.tv_Symbol_Popup))
                     .setTextColor(ResUtil.getColor(res, chartColor[popupIndexSelected]));
 
-            float offsetX = touchX - mChart.getLeft() - popupView.getMeasuredWidth() / 2;
+            popupView.invalidate();
+            popupView.measure(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+            float offsetX = touchX - mChart.getLeft() - popupView.getMeasuredWidth() / 2 /*- ResourceRetriever.dpToPxRes(popupView.getContext(), R.dimen.padding_margin_default_small)*/;
             float offsetY = touchY - mChart.getBottom() - popupView.getMeasuredHeight() / 4 * 3;
 
             popupWindow.showAsDropDown(mChart, (int) offsetX, (int) offsetY);

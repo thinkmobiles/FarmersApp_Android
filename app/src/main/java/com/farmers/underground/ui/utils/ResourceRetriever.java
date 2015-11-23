@@ -26,8 +26,13 @@ public final class ResourceRetriever {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(resource), resources.getDisplayMetrics());
     }
 
-    public static int dpToPx(Context context,int dp) {
+    public static int dpToPx(Context context, int dp) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+    }
+
+    public static int dpToPxRes(Context context, int resource) {
+        Resources resources = context.getResources();
+        return  resources.getDimensionPixelSize(resource);
     }
 }
