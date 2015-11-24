@@ -394,10 +394,12 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                     final boolean isFull = bundle.getBoolean(PeriodPickerFragment.KEY_ALL_TIME, false);
 
                     if (isFull) {
-                        prevMonth = DateHelper.parseToCalendar(mCropModel.prices.get(0).data);
-                        prevMonth.set(Calendar.MONTH, prevMonth.get(Calendar.MONTH) - 1);
+                        prevMonthCrop = DateHelper.parseToCalendar(mCropModel.prices.get(0).data);
+                        prevMonthCrop.set(Calendar.MONTH, prevMonthCrop.get(Calendar.MONTH) - 1);
+                        prevMonthMarketers = DateHelper.parseToCalendar(mCropModel.prices.get(0).data);
+                        prevMonthMarketers.set(Calendar.MONTH, prevMonthCrop.get(Calendar.MONTH) - 1);
                         mDateRange.setDateFrom(StringFormatterUtil.parseToServerResponse(DateHelper.parseToCalendar(mCropModel.prices.get(0).data)));
-                        mDateRange.setDateTo(StringFormatterUtil.parseToServerResponse(prevMonth));
+                        mDateRange.setDateTo(StringFormatterUtil.parseToServerResponse(prevMonthCrop));
                         mFullRangeCrop = mDateRange;
                         mFullRangeMarketeers = mDateRange;
                     } else {
@@ -598,7 +600,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
      * if dateRange == null default date range is used
      */
 
-    private Calendar prevMonth;
+    private Calendar prevMonthCrop, prevMonthMarketers;
 
     public void makeRequestGetCropPriceForPeriod(boolean isFull, final CropAllPricesCallback callback) {
         if (isFull) {
@@ -609,13 +611,12 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     }
 
     public void makeRequestGetPriceForPeriodAddMonth(final CropAllPricesCallback callback) {
-        //prevMonth.set(Calendar.MONTH, prevMonth.get(Calendar.MONTH) - 1);
-        prevMonth.set(Calendar.MONTH, DateHelper.parseToCalendar(mDateRangeCrop.getDateTo()).get(Calendar.MONTH) -1);
         final Calendar from = DateHelper.parseToCalendar(mDateRangeCrop.getDateTo());
+        prevMonthCrop.set(Calendar.MONTH, from.get(Calendar.MONTH) -1);
         from.set(Calendar.DAY_OF_MONTH, from.get(Calendar.DAY_OF_MONTH) -1);
         mDateRangeCrop.setDateFrom(StringFormatterUtil.parseToServerResponse(from));
-        mDateRangeCrop.setDateTo(StringFormatterUtil.parseToServerResponse(prevMonth));
-        mFullRangeCrop.setDateTo(StringFormatterUtil.parseToServerResponse(prevMonth));
+        mDateRangeCrop.setDateTo(StringFormatterUtil.parseToServerResponse(prevMonthCrop));
+        mFullRangeCrop.setDateTo(StringFormatterUtil.parseToServerResponse(prevMonthCrop));
 
         makeRequestGetCropPriceForPeriod(mDateRangeCrop, true, callback);
     }
@@ -623,12 +624,12 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     private void makeRequestGetCropPriceForPeriod(@Nullable DateRange dateRange, final Boolean isScroll, final CropAllPricesCallback callback) {
 
         if (dateRange == null) {
-            prevMonth = DateHelper.parseToCalendar(mCropModel.prices.get(0).data);
+            prevMonthCrop = DateHelper.parseToCalendar(mCropModel.prices.get(0).data);
 
-            prevMonth.set(Calendar.MONTH, prevMonth.get(Calendar.MONTH) - 1);
+            prevMonthCrop.set(Calendar.MONTH, prevMonthCrop.get(Calendar.MONTH) - 1);
             dateRange = new DateRange();
             dateRange.setDateFrom(StringFormatterUtil.parseToServerResponse(DateHelper.parseToCalendar(mCropModel.prices.get(0).data)));
-            dateRange.setDateTo(StringFormatterUtil.parseToServerResponse(prevMonth));
+            dateRange.setDateTo(StringFormatterUtil.parseToServerResponse(prevMonthCrop));
 
             mDateRangeCrop = dateRange;
             mFullRangeCrop = dateRange;
@@ -642,10 +643,9 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                         if (result != null && !result.isEmpty()) {
 
                             if(isScroll){
-                                prevMonth = DateHelper.parseToCalendar(result.get(result.size() - 1).prices.get(0).data);
-//                                mDateRangeCrop.setDateFrom(StringFormatterUtil.parseToServerResponse(prevMonth));
-                                mDateRangeCrop.setDateTo(StringFormatterUtil.parseToServerResponse(prevMonth));
-                                mFullRangeCrop.setDateTo(StringFormatterUtil.parseToServerResponse(prevMonth));
+                                prevMonthCrop = DateHelper.parseToCalendar(result.get(result.size() - 1).prices.get(0).data);
+                                mDateRangeCrop.setDateTo(StringFormatterUtil.parseToServerResponse(prevMonthCrop));
+                                mFullRangeCrop.setDateTo(StringFormatterUtil.parseToServerResponse(prevMonthCrop));
                             }
 
                             callback.onGetResult(result);
@@ -673,14 +673,12 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     }
 
     public void makeRequestGetMarketeerPriceForPeriodAddMonth(final MarketeerAllPricesCallback callback) {
-        //prevMonth.set(Calendar.MONTH, prevMonth.get(Calendar.MONTH) - 1);
-        prevMonth.set(Calendar.MONTH,DateHelper.parseToCalendar(mDateRangeMarketeers.getDateTo()).get(Calendar.MONTH) -1);
-        final Calendar from = DateHelper.parseToCalendar(mDateRangeCrop.getDateTo());
+        final Calendar from = DateHelper.parseToCalendar(mDateRangeMarketeers.getDateTo());
+        prevMonthMarketers.set(Calendar.MONTH,from.get(Calendar.MONTH) -1);
         from.set(Calendar.DAY_OF_MONTH, from.get(Calendar.DAY_OF_MONTH) -1);
-        mDateRangeCrop.setDateFrom(StringFormatterUtil.parseToServerResponse(from));
-        //mDateRangeMarketeers.setDateFrom(mDateRangeMarketeers.getDateTo());
-        mDateRangeMarketeers.setDateTo(StringFormatterUtil.parseToServerResponse(prevMonth));
-        mFullRangeMarketeers.setDateTo(StringFormatterUtil.parseToServerResponse(prevMonth));
+        mDateRangeMarketeers.setDateFrom(StringFormatterUtil.parseToServerResponse(from));
+        mDateRangeMarketeers.setDateTo(StringFormatterUtil.parseToServerResponse(prevMonthMarketers));
+        mFullRangeMarketeers.setDateTo(StringFormatterUtil.parseToServerResponse(prevMonthMarketers));
 
         makeRequestGetMarketeerPricesForPeriod(mDateRangeMarketeers, true, callback);
     }
@@ -688,11 +686,11 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     public void makeRequestGetMarketeerPricesForPeriod(@Nullable DateRange dateRange, final Boolean isScroll, final MarketeerAllPricesCallback callback) {
 
         if (dateRange == null) {
-            prevMonth = DateHelper.parseToCalendar(mCropModel.prices.get(0).data);
-            prevMonth.set(Calendar.MONTH, prevMonth.get(Calendar.MONTH) - 1);
+            prevMonthMarketers = DateHelper.parseToCalendar(mCropModel.prices.get(0).data);
+            prevMonthMarketers.set(Calendar.MONTH, prevMonthMarketers.get(Calendar.MONTH) - 1);
             dateRange = new DateRange();
             dateRange.setDateFrom(StringFormatterUtil.parseToServerResponse(DateHelper.parseToCalendar(mCropModel.prices.get(0).data)));
-            dateRange.setDateTo(StringFormatterUtil.parseToServerResponse(prevMonth));
+            dateRange.setDateTo(StringFormatterUtil.parseToServerResponse(prevMonthMarketers));
 
             mDateRangeMarketeers = dateRange;
             mFullRangeMarketeers = dateRange;
@@ -709,10 +707,9 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                         if (result != null && !result.isEmpty()) {
 
                             if(isScroll){
-                                prevMonth = DateHelper.parseToCalendar(result.get(result.size() - 1).prices.get(0).data);
-                                //mDateRangeMarketeers.setDateFrom(StringFormatterUtil.parseToServerResponse(prevMonth));
-                                mDateRangeMarketeers.setDateTo(StringFormatterUtil.parseToServerResponse(prevMonth));
-                                mFullRangeMarketeers.setDateTo(StringFormatterUtil.parseToServerResponse(prevMonth));
+                                prevMonthMarketers = DateHelper.parseToCalendar(result.get(result.size() - 1).prices.get(0).data);
+                                mDateRangeMarketeers.setDateTo(StringFormatterUtil.parseToServerResponse(prevMonthMarketers));
+                                mFullRangeMarketeers.setDateTo(StringFormatterUtil.parseToServerResponse(prevMonthMarketers));
                             }
 
                             callback.onGetResult(result);

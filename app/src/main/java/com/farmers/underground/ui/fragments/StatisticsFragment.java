@@ -132,9 +132,9 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
             tvPageNumberTitle.setText(res.getString(R.string.page_number_two_statistics_fragment));
             getHostActivity().setmTypeStatistic(TypeStatistic.Month);
         }
+        currentPage = pageNumber;
         clearChartAndPrices();
         getHostActivity().makeRequestGetStatistic();
-        currentPage = pageNumber;
         onPageSelected(currentPage);
         llPageSwitcherContainer.requestLayout();
     }
@@ -383,9 +383,27 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
         popupWindow.setOutsideTouchable(true);
         popupWindow.setFocusable(true);
 
-        boolean show = false;
-        if(popupIndexSelected != 3 && popupIndexSelected != 7)
-            show = true;
+        boolean show;
+        switch (popupIndexSelected) {
+            case 0:
+            case 1:
+            case 2:
+            case 4:
+            case 5:
+            case 6:
+            case 8:
+            case 9:
+            case 10:
+                show = true;
+                break;
+            case 7:
+            case 3:
+                show = false;
+                break;
+            default:
+                show = false;
+                break;
+        }
 
         if (show) {
             ((TextView) popupWindow.getContentView().findViewById(R.id.tv_Value_Popup))
@@ -539,14 +557,20 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
         //remark: items coming  in 3 sets LTR:  0-1-2,  3-4-5,  6-7-8
 
         final PriceView priceView;
-        switch (item / 3){
-            case 0: // 0,3,6
+        switch (item){
+            case 0:
+            case 3:
+            case 6:
                 priceView = layout_marketer_SF;
                 break;
-            case 1: // 1,4,7
+            case 1:
+            case 4:
+            case 7:
                 priceView = layout_market_one_SF;
                 break;
-            case 2: // 2,5,8
+            case 2:
+            case 5:
+            case 8:
                 priceView = layout_market_two_SF;
                 break;
             default:
@@ -557,15 +581,14 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
 
     }
 
-        /** item = [0;8] */
+    /** item = [0;8] */
     private void setItemHighlight(int item, final PriceView priceView) {
         //remark: items coming  in 3 sets LTR:  0-1-2,  3-4-5,  6-7-8
 
         //skip Highlight price is this case =)
-        int numBlock = item / 3;
-        if((rb0.isChecked() && numBlock != 0) || //0,1,2
-                (rb1.isChecked() && numBlock != 1) || //3,4,5
-                (rb2.isChecked() && numBlock != 2)) // 6,7,8
+        if((rb0.isChecked() && !(item == 0 || item == 1 || item == 2)) ||
+                (rb1.isChecked() && !(item == 3 || item == 4 || item == 5)) ||
+                (rb2.isChecked() && !(item == 6 || item == 7 || item == 8)))
             return;
 
         if (priceView == null)

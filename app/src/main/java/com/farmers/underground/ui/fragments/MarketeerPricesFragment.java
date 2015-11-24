@@ -240,13 +240,6 @@ public class MarketeerPricesFragment extends BasePagerPricesFragment<MarketeerPr
 
             for (MarketeerPrices price : marketeerPricesByDateModel.prices) {
                 MarketeerPriceModel model = new MarketeerPriceModel();
-/*
-                model.setDate(marketeerPricesByDateModel.data);
-                model.setName(price.name);
-                model.setLocation(price.location);
-                model.setPrice(price.price);
-                model.setMore(price.more);
-                model.setQuality(price.quality);*/
 
                 model.setMarketeerPrices(price);
 
