@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -14,6 +15,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,6 +31,7 @@ import butterknife.OnClick;
 import butterknife.OnItemClick;
 
 import com.farmers.underground.FarmersApp;
+import com.farmers.underground.Notifier;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.RetrofitSingleton;
@@ -59,7 +62,8 @@ import java.util.List;
  */
 public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCallback,
         FragmentViewsCreatedCallback,
-        SearchResultProvider.SearchCallback {
+        SearchResultProvider.SearchCallback,
+        Notifier.Client {
 
     @Bind(R.id.toolbar)
     protected Toolbar mToolbar;
@@ -161,6 +165,40 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         super.onResume();
         setDrawerList();
         updateLastCrops();
+
+        if(!FarmersApp.getInstance().isConnected()){
+            showConnectionLostDialog();
+        } else {
+            hideConnectionLostDialog();
+        }
+
+
+        Notifier.registerClient(this);
+    }
+
+    @Override
+    public void handleMessage(Message msg) {
+        Log.d("handleMessage", getClass().getSimpleName() + " " + msg.toString());
+
+        Bundle bundle = msg.getData();
+        if (bundle != null && bundle.containsKey("isConnected")) {
+            boolean isConnected = bundle.getBoolean("isConnected");
+            if (isConnected){
+                hideConnectionLostDialog();
+                FarmersApp.getInstance().setShouldUpdateLastCropsNextTime(true);
+                updateLastCrops();
+            } else {
+                showConnectionLostDialog();
+            }
+        }
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        Notifier.unregisterClient(this);
     }
 
     @Override
@@ -175,7 +213,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     private void updateLastCrops() {
         if (FarmersApp.getInstance().shouldUpdateLastCropsNextTime() || FarmersApp.getInstance().shouldUpdateLastCrops()) {
-            showProgressDialog();
+           // showProgressDialog();
             RetrofitSingleton.getInstance().getLastCropPricesList(new ACallback<List<LastCropPricesModel>, ErrorMsg>() {
                 @Override
                 public void onSuccess(List<LastCropPricesModel> result) {
@@ -191,12 +229,12 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                     updateFragments(mCropList, query);
                     FarmersApp.getInstance().setShouldUpdateLastCropsNextTime(false);
                     FarmersApp.getInstance().setLastCopsUpdateTime();
-                    hideProgressDialog();
+                  //  hideProgressDialog();
                 }
 
                 @Override
                 public void onError(@NonNull ErrorMsg error) {
-                    hideProgressDialog();
+             //       hideProgressDialog();
                     showReloadDialogOnError(error);
                 }
             });
@@ -529,10 +567,15 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     //view pager
     public void setViewPager(@Nullable String page) {
-        pagerAdapter = new ProjectPagerAdapter<>(getFragmentManager());
-        viewPager.setAdapter(pagerAdapter);
+
+        if (pagerAdapter == null || viewPager.getAdapter() == null) {
+            pagerAdapter = new ProjectPagerAdapter<>(getFragmentManager());
+            viewPager.setAdapter(pagerAdapter);
+        }
+
         pagerAdapter.setFragments(getFragmentList());
         pagerAdapter.setTitles(getTitlesList());
+
         pagerAdapter.notifyDataSetChanged();
 
         if (page == null) {
@@ -728,9 +771,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         if (drawerOpened)
             mDrawerLayout.closeDrawers();
         else if (searchHintController.isShowing()) {
-            hideSoftKeyboard();
-            searchHintController.hide();
-          /*  query="";*/
+            forceHideSearchList();
         }
 
         super.onStop();

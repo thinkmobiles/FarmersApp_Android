@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -30,7 +32,6 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 
 import org.jetbrains.annotations.NotNull;
@@ -97,6 +98,14 @@ public class FarmersApp extends Application {
 
     public ImageLoaders getImageCache() {
         return imageCache;
+    }
+
+    public boolean isConnectionStateFromReceiver() {
+        return connectionStateFromReceiver;
+    }
+
+    public void setConnectionStateFromReceiver(boolean connectionStateFromReceiver) {
+        this.connectionStateFromReceiver = connectionStateFromReceiver;
     }
 
     public static final class ImageLoaders implements ImageCacheManager.ImageLoaderCallbacks {
@@ -409,5 +418,18 @@ public class FarmersApp extends Application {
         this.lastCopsUpdateTime = System.currentTimeMillis();
     }
 
+
+
+    private boolean connectionStateFromReceiver;
+
+    public boolean isConnected() {
+
+        ConnectivityManager conMan = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = conMan.getActiveNetworkInfo();
+        boolean isConnected = (activeNetwork != null && activeNetwork.isConnected()) || connectionStateFromReceiver;
+
+        return isConnected;
+    }
 
 }

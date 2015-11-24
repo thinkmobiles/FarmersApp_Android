@@ -3,6 +3,7 @@ package com.farmers.underground.ui.activities;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -21,6 +22,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import com.farmers.underground.FarmersApp;
+import com.farmers.underground.Notifier;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ApiConstants;
 import com.farmers.underground.config.ProjectConstants;
@@ -68,7 +70,7 @@ import java.util.List;
  * Created by omar
  * on 10/9/15.
  */
-public class PricesActivity extends BaseActivity implements DrawerAdapter.DrawerCallback {
+public class PricesActivity extends BaseActivity implements DrawerAdapter.DrawerCallback, Notifier.Client {
 
     @Bind(R.id.drawer_conainer_PriceActivity)
     protected DrawerLayout mDrawerLayout;
@@ -203,15 +205,51 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     @Override
     protected void onResume() {
+
         viewPager.addOnPageChangeListener(pageChangeListener);
         super.onResume();
         setDrawerList();
+
+
+
+        if(!FarmersApp.getInstance().isConnected()){
+            showConnectionLostDialog();
+        } else {
+            hideConnectionLostDialog();
+        }
+
+        Notifier.registerClient(this);
+
+    }
+
+    @Override
+    public void handleMessage(Message msg) {
+
+        Log.d("handleMessage", getClass().getSimpleName() + " " + msg.toString());
+
+        Bundle bundle = msg.getData();
+        if (bundle != null && bundle.containsKey("isConnected")) {
+            boolean isConnected = bundle.getBoolean("isConnected");
+
+            if(isConnected){
+                hideConnectionLostDialog();
+                for (BasePagerPricesFragment basePagerPricesFragment : pagerAdapter.getFragmentList()) {
+                    basePagerPricesFragment.setCurrentTypeRequest(BasePagerPricesFragment.TypeRequest.Refresh);
+                    basePagerPricesFragment.onResume();
+                }
+            } else {
+                showConnectionLostDialog();
+            }
+
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         viewPager.addOnPageChangeListener(null);
+
+        Notifier.unregisterClient(this);
     }
 
     @Override
@@ -747,7 +785,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     }
 
     public void makeRequestGetStatistic(){
-        if(spinnerAdapter != null) {
+        if(spinnerAdapter != null && !spinnerAdapter.isEmpty()) { //cant be empty ( only if network error))
             switch (mTypeStatistic) {
                 case Quality:
                     makeRequestGetStatisticOfQuality();
@@ -758,8 +796,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                     break;
             }
         } else {
-            setUPSpinner(listQuality, 0);
-            makeRequestGetStatistic();
+            //setUPSpinner(listQuality, 0);
+            makeRequestGetCropQualityList();
         }
     }
 
