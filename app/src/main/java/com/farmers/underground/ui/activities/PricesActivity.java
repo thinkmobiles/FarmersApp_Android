@@ -268,12 +268,16 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     public void setViewPager() {
 
-        pagerAdapter = new ProjectPagerAdapter<>(getFragmentManager());
+        if (pagerAdapter == null || viewPager.getAdapter() == null) {
+            pagerAdapter = new ProjectPagerAdapter<>(getFragmentManager());
+            viewPager.setAdapter(pagerAdapter);
+        }
+
         pagerAdapter.setTitles(getTitlesList());
         pagerAdapter.setFragments(createFragmentList());
+
         pagerAdapter.notifyDataSetChanged();
 
-        viewPager.setAdapter(pagerAdapter);
         viewPager.setCurrentItem(pagerAdapter.getCount() - 1);
 
         isVisibleBurger = true;

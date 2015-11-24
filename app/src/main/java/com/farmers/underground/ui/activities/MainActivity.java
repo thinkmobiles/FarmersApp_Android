@@ -573,8 +573,8 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
             viewPager.setAdapter(pagerAdapter);
         }
 
-        pagerAdapter.setFragments(getFragmentList());
         pagerAdapter.setTitles(getTitlesList());
+        pagerAdapter.setFragments(getFragmentList());
 
         pagerAdapter.notifyDataSetChanged();
 
