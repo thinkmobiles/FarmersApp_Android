@@ -1,7 +1,6 @@
 package com.farmers.underground.ui.fragments;
 
 import android.content.res.Resources;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
@@ -28,7 +27,6 @@ import com.farmers.underground.ui.custom_views.PriceView;
 import com.farmers.underground.ui.models.ChartDataModel;
 import com.farmers.underground.ui.models.DateRange;
 import com.farmers.underground.ui.utils.ResUtil;
-import com.farmers.underground.ui.utils.ResourceRetriever;
 import com.farmers.underground.ui.utils.StringFormatterUtil;
 import com.farmers.underground.ui.utils.TypefaceManager;
 import com.github.mikephil.charting.charts.BarChart;
@@ -37,11 +35,8 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.ChartTouchListener;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -388,12 +383,12 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
     }
 
     private void showPopup(float touchX, float touchY, float value) {
-        final View popupView = LayoutInflater.from(getHostActivity()).inflate(R.layout.statistic_popup, null, false);
+        final View popupView = LayoutInflater.from(getHostActivity()).inflate(R.layout.statistic_popup, new LinearLayout(getHostActivity()), false);
         final PopupWindow popupWindow = new PopupWindow(popupView,
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        //popupWindow.setBackgroundDrawable(new BitmapDrawable());
         popupWindow.setOutsideTouchable(true);
         popupWindow.setFocusable(true);
         popupView.measure(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -442,9 +437,10 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
                     .setTextColor(ResUtil.getColor(res, chartColor[popupIndexSelected]));
 
             popupView.invalidate();
+
             popupView.measure(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-            float offsetX = touchX - mChart.getLeft() - popupView.getMeasuredWidth() / 2 /*- ResourceRetriever.dpToPxRes(popupView.getContext(), R.dimen.padding_margin_default_small)*/;
+            float offsetX = touchX - mChart.getLeft() - popupView.getMeasuredWidth() / 2 ;
             float offsetY = touchY - mChart.getBottom() - popupView.getMeasuredHeight() / 4 * 3;
 
             popupWindow.showAsDropDown(mChart, (int) offsetX, (int) offsetY);
@@ -524,8 +520,11 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
     }
 
     private void clearChartAndPrices(){
-        if (selectedMonth == -1){
+
+        if (currentPage == 2 && selectedMonth == -1){
             tv_GraphDescription_SF.setText("");
+        } else if (currentPage ==1) {
+            tv_GraphDescription_SF.setText(getHostActivity().getString(R.string.statistics_description_1));
         }
 
         if (mChart!=null)
@@ -673,6 +672,7 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
 
     }
 
+    /*sub-page 2*/
     private void showDifColoredText(String monthToShowInOtherColor){
 
         String text = String.format(getResources().getString(R.string.chart_head_page_two_statistics_fragment), monthToShowInOtherColor);
