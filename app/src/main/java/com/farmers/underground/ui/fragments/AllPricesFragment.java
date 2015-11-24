@@ -22,6 +22,7 @@ import com.farmers.underground.ui.custom_views.CropsItemDivider;
 import com.farmers.underground.ui.dialogs.MorePricesDialogFragment;
 import com.farmers.underground.ui.models.AllPricesDH;
 import com.farmers.underground.ui.models.DateRange;
+import com.farmers.underground.ui.utils.AnalyticsTrackerUtil;
 import com.farmers.underground.ui.utils.ResourceRetriever;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -114,6 +115,7 @@ public class AllPricesFragment extends BasePagerPricesFragment<CropPricesByDateM
     @Override
     public void onResume() {
         super.onResume();
+        AnalyticsTrackerUtil.getInstance().trackScreenView("AllPriceFragment");
 
         if(getHostActivity().getTemp() != null){
             mTypeRequest = getHostActivity().getTemp();

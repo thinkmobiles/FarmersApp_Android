@@ -49,10 +49,12 @@ import com.farmers.underground.ui.dialogs.PeriodPickerFragment;
 import com.farmers.underground.ui.fragments.StatisticsFragment;
 import com.farmers.underground.ui.models.DateRange;
 import com.farmers.underground.ui.models.DrawerItem;
+import com.farmers.underground.ui.utils.AnalyticsTrackerUtil;
 import com.farmers.underground.ui.utils.DateHelper;
 import com.farmers.underground.ui.utils.ImageCacheManager;
 import com.farmers.underground.ui.utils.NotYetHelper;
 import com.farmers.underground.ui.utils.StringFormatterUtil;
+import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -167,6 +169,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         });
 
         numMonth = -1;
+        AnalyticsTrackerUtil.getInstance().trackScreenView("PriceActivity");
     }
 
     private void updateToolBarCrop() {
@@ -206,12 +209,22 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         viewPager.addOnPageChangeListener(pageChangeListener);
         super.onResume();
         setDrawerList();
+
+        AnalyticsTrackerUtil.getInstance().startActivityReport(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         viewPager.addOnPageChangeListener(null);
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        AnalyticsTrackerUtil.getInstance().stopActivityReport(this);
     }
 
     @Override
@@ -462,7 +475,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         listQuality = spinnerData;
         spinnerAdapter = new ToolbarSpinnerAdapter(this, spinnerData);
         spinner.setAdapter(spinnerAdapter);
-        spinner.setSelection(selection);
+//        spinner.setSelection(selection);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -735,7 +748,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                         if (result != null && !result.isEmpty()) {
                             setUPSpinner(result, 0);
                         } else {
-                            showToast("No crop qualities found", Toast.LENGTH_SHORT);
+                            onError(new ErrorMsg("No crop qualities found"));
                         }
                     }
 

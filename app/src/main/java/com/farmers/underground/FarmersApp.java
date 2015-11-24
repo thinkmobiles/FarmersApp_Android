@@ -20,10 +20,14 @@ import com.farmers.underground.remote.models.base.MarketeerBase;
 import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.remote.util.ICallback;
 import com.farmers.underground.ui.activities.LoginSignUpActivity;
+import com.farmers.underground.ui.utils.AnalyticsTrackerUtil;
 import com.farmers.underground.ui.utils.CircleBitmapDisplayer;
 import com.farmers.underground.ui.utils.DateHelper;
 import com.farmers.underground.ui.utils.ImageCacheManager;
 import com.farmers.underground.ui.utils.TypefaceManager;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -93,6 +97,9 @@ public class FarmersApp extends Application {
         config.locale = locale;
         getResources().updateConfiguration(config, getResources().getDisplayMetrics());
 
+        //Init Google Analytics
+        AnalyticsTrackerUtil.initialize(this);
+        AnalyticsTrackerUtil.getInstance().getTracker(AnalyticsTrackerUtil.TrackerName.APP); // start new session on GoogleAnalytics
     }
 
     public ImageLoaders getImageCache() {
@@ -408,6 +415,5 @@ public class FarmersApp extends Application {
     public void setLastCopsUpdateTime(){
         this.lastCopsUpdateTime = System.currentTimeMillis();
     }
-
 
 }

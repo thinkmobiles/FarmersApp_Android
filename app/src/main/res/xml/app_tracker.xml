@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The property id associated with this analytics tracker-->
+    <string name="ga_trackingId">UA-70623427-1</string>
+    <!-- sending report about uncaught exception-->
+    <bool name="ga_reportUncaughtExceptions">true</bool>
+    <!-- The frequency of the automatic sending of data (in seconds)-->
+    <integer name="ga_dispatchPeriod">60</integer>
+    <!-- End current session if app sleeps for a period of time (in seconds)-->
+    <integer name="ga_sessionTimeout">3600</integer>
+    <!-- true -> don't send reports on GoogleAnalytics; false -> send report -->
+    <bool name="ga_dryRun">false</bool>
+
+
+    <string name="ga_appName">Farmer App</string>
+    <string name="ga_appVersion">1.0.0</string>
+</resources>

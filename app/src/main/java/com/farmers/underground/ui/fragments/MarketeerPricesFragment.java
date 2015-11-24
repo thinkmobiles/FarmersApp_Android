@@ -25,6 +25,7 @@ import com.farmers.underground.ui.dialogs.CropQualitiesDialogFragment;
 import com.farmers.underground.ui.dialogs.WhyCanISeeThisPriceDialogFragment;
 import com.farmers.underground.ui.models.DateRange;
 import com.farmers.underground.ui.models.PriceMarketeerPricesDH;
+import com.farmers.underground.ui.utils.AnalyticsTrackerUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
@@ -117,6 +118,7 @@ public class MarketeerPricesFragment extends BasePagerPricesFragment<MarketeerPr
     @Override
     public void onResume() {
         super.onResume();
+        AnalyticsTrackerUtil.getInstance().trackScreenView("MarketerPriceFragment");
 
         if(getHostActivity().getTemp() != null){
             mTypeRequest = getHostActivity().getTemp();

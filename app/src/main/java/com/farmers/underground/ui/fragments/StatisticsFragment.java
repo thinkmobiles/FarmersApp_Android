@@ -16,6 +16,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
+
+import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.LastCropPricesModel;
@@ -26,6 +28,7 @@ import com.farmers.underground.ui.base.BasePagerPricesFragment;
 import com.farmers.underground.ui.custom_views.PriceView;
 import com.farmers.underground.ui.models.ChartDataModel;
 import com.farmers.underground.ui.models.DateRange;
+import com.farmers.underground.ui.utils.AnalyticsTrackerUtil;
 import com.farmers.underground.ui.utils.ResUtil;
 import com.farmers.underground.ui.utils.StringFormatterUtil;
 import com.farmers.underground.ui.utils.TypefaceManager;
@@ -198,6 +201,12 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
         return R.layout.fragment_statistics;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        AnalyticsTrackerUtil.getInstance().trackScreenView("StatisticFragment");
+        AnalyticsTrackerUtil.getInstance().trackEvent("tabs","open","statistic");
+    }
 
     @Override
     public void onViewCreated(View v, Bundle savedInstanceState) {
