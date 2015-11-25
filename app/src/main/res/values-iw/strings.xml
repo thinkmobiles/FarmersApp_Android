@@ -151,5 +151,8 @@
     <string name="show_all_time">לכל התאריכים</string>
     <string name="dialog_head_invite">הזמן</string>
 
+    <string name="dialog_titile_lost_connection">החיבור לאינטרנט אבד</string>
+    <string name="dilog_msg_lost_connection">בבקשה בדוק אם אתה מחובר לאינטרנט</string>
+
 
 </resources>

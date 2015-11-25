@@ -163,8 +163,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void showConnectionLostDialog() {
         if (connectionLostDialog==null || !connectionLostDialog.isShowing())
             connectionLostDialog = new AlertDialog.Builder(this)
-                    .setTitle("Internet Connection Lost")
-                    .setMessage("Please Check your internet connection.")
+                    .setTitle(R.string.dialog_titile_lost_connection)
+                    .setMessage(R.string.dilog_msg_lost_connection)
                     .setCancelable(false)
                     .create();
 

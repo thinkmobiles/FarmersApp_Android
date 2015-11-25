@@ -171,5 +171,7 @@
     <string name="fill_prices_correctly">Please fill field correctly</string>
     <string name="show_all_time">לכל התאריכים</string>
     <string name="dialog_head_invite">Invite</string>
+    <string name="dialog_titile_lost_connection">Internet Connection Lost</string>
+    <string name="dilog_msg_lost_connection">Please Check your internet connection.</string>
 
 </resources>
