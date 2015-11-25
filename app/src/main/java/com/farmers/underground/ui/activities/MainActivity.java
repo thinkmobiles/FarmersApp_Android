@@ -663,12 +663,14 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
         switch (pos) {
             case 2:
                 viewPager.setCurrentItem(1);
+                pagerAdapter.getItem(1).scrollToTop();
                 break;
             case 3:
                 TransparentActivity.startWithFragmentForResult(this, new InviteDialogFragment(), ProjectConstants.REQUEST_CODE_INVITE);
                 break;
             case 4:
                 viewPager.setCurrentItem(0);
+                pagerAdapter.getItem(0).scrollToTop();
                 break;
             case 5:
                 if (FarmersApp.isSkipMode())

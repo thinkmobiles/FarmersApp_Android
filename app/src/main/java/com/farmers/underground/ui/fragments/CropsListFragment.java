@@ -48,6 +48,12 @@ public class CropsListFragment extends BaseFragment<MainActivity>
         return fragment;
     }
 
+    public void scrollToTop(){
+        if(recyclerView!=null && recyclerView.getAdapter() !=null && recyclerView.getAdapter().getItemCount()>0){
+            recyclerView.smoothScrollToPosition(0);
+        }
+    }
+
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_base_list;
@@ -66,7 +72,7 @@ public class CropsListFragment extends BaseFragment<MainActivity>
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),
-                                                            LinearLayoutManager.VERTICAL, false));
+                LinearLayoutManager.VERTICAL, false));
         recyclerView.addItemDecoration(new CropsItemDivider(ResourceRetriever.retrievePX(getHostActivity(),
                                                                 R.dimen.crops_card_layout_margin)));
 
