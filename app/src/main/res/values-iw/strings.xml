@@ -2,7 +2,8 @@
 <resources>
     <!-- \u200F (this is RIGHT-TO-LEFT MARK character)  -->
     <string name="app_name">העיקר האיכר</string>
-    <string name="facebook_app_id">889106887840848</string>
+
+    <!--<string name="facebook_app_id">889106887840848</string>-->
 
     <string name="digits">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789</string>
 
