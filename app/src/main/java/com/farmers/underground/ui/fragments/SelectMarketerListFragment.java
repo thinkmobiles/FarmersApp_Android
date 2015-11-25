@@ -113,7 +113,7 @@ public class SelectMarketerListFragment extends BaseFragment<LoginSignUpActivity
     @SuppressWarnings("unused")
     @OnClick(R.id.tvSkip_FLM)
     protected void onSkip(){
-        FarmersApp.setSkipMode(FarmersApp.isSkipMode());
+        FarmersApp.setSkipMode(false/*FarmersApp.isSkipMode()*/);
         getHostActivity().finish();
         MainActivity.start(getHostActivity());
     }

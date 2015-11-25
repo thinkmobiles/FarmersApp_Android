@@ -30,6 +30,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
 
+import com.farmers.underground.BuildConfig;
 import com.farmers.underground.FarmersApp;
 import com.farmers.underground.Notifier;
 import com.farmers.underground.R;
@@ -691,24 +692,24 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     @Override
     public void onSettingsClicked() {
-        NotYetHelper.notYetImplemented(this, "drawer settings");
 
-        //todo remove IT later
+        if (!BuildConfig.PRODUCTION){
+            //todo remove IT later
+            showToast("Your Account will be DELETED, TEST", Toast.LENGTH_SHORT);
+            RetrofitSingleton.getInstance().dellAccountBySession(new ACallback<SuccessMsg, ErrorMsg>() {
+                @Override
+                public void onSuccess(SuccessMsg result) {
+                    showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
 
-        showToast("Your Account will be DELETED, TEST", Toast.LENGTH_SHORT);
-        RetrofitSingleton.getInstance().dellAccountBySession(new ACallback<SuccessMsg, ErrorMsg>() {
-            @Override
-            public void onSuccess(SuccessMsg result) {
-                showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
+                    logOut();
+                }
 
-                logOut();
-            }
-
-            @Override
-            public void onError(@NonNull ErrorMsg error) {
-                showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
-            }
-        });
+                @Override
+                public void onError(@NonNull ErrorMsg error) {
+                    showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
+                }
+            });
+        }
 
         mDrawerLayout.closeDrawers();
     }

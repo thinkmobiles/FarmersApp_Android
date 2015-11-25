@@ -9,7 +9,7 @@
     <dimen name="normal_text_size">12sp</dimen>
     <dimen name="small_text_size">10sp</dimen>
     <dimen name="tiny_text_size">8sp</dimen>
-    <dimen name="crop_price_price_text_size">30sp</dimen>
+    <dimen name="crop_price_price_text_size">24sp</dimen> <!--// was 30-->
     <dimen name="tab_text_size">14sp</dimen>
 
     <dimen name="text_month_normal">8sp</dimen>

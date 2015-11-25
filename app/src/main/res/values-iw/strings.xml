@@ -2,8 +2,8 @@
 <resources>
     <!-- \u200F (this is RIGHT-TO-LEFT MARK character)  -->
     <string name="app_name">העיקר האיכר</string>
-    <!--
-        <string name="facebook_app_id">889106887840848</string>-->
+
+    <!--<string name="facebook_app_id">889106887840848</string>-->
 
     <string name="digits">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789</string>
 
@@ -147,6 +147,7 @@
     <string name="price_prefix">₪</string>
     <string name="your_dealer">המשווק שלך</string>
     <string name="whole_sales">שוק סיטונאי</string>
+    <string name="plant_counsil">מועצת הצמחים</string>
     <string name="fill_prices_correctly">אנא בדוק שוב שהתאריך והמחירים שהכנסת נכונים</string>
     <string name="show_all_time">לכל התאריכים</string>
     <string name="dialog_head_invite">הזמן</string>
