@@ -37,7 +37,9 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:minWidth="60dp"
-                    android:text="4.50"
+                    android:text="--.--"
+                    android:singleLine="true"
+                    android:maxLength="6"
                     android:textColor="@color/text_dark_grey"
                     android:textSize="@dimen/crop_price_price_text_size"
                     custom:customFont="roboto_light"/>

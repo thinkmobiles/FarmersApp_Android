@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.farmers.underground.BuildConfig;
 import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
 import com.farmers.underground.ui.models.DrawerItem;
@@ -94,6 +95,11 @@ public class DrawerAdapter extends BaseAdapter implements View.OnClickListener {
         viewHolder.ivUserIcon = (ImageView) view.findViewById(R.id.iv_DrawerUserIcon);
         viewHolder.tvUserName = (TextView) view.findViewById(R.id.tv_DrawerUserName);
         viewHolder.ivContentIcon = (ImageView) view.findViewById(R.id.iv_DrawerSettingIcon);
+
+        if(!BuildConfig.PRODUCTION){
+            viewHolder.ivContentIcon.setVisibility(View.VISIBLE);
+        }
+
         viewHolder.tvUserName.setText(getItem(position).userName);
         viewHolder.ivContentIcon.setTag(position);
         viewHolder.ivContentIcon.setOnClickListener(this);

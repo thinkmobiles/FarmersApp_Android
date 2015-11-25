@@ -361,8 +361,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
     @Override
     public void onSettingsClicked() {
-        NotYetHelper.notYetImplemented(this, "drawer settings");
-
+       /* NotYetHelper.notYetImplemented(this, "drawer settings");
+*/
         mDrawerLayout.closeDrawers();
     }
 

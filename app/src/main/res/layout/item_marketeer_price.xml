@@ -53,6 +53,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="--.--"
+                    android:maxLength="6"
                     android:textColor="@color/text_dark_grey"
                     android:textSize="@dimen/price_text_size"
                     android:singleLine="true"
