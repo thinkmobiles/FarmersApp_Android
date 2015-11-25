@@ -202,13 +202,6 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        AnalyticsTrackerUtil.getInstance().trackScreenView("StatisticFragment");
-        AnalyticsTrackerUtil.getInstance().trackEvent("tabs","open","statistic");
-    }
-
-    @Override
     public void onViewCreated(View v, Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
         ButterKnife.bind(this, v);

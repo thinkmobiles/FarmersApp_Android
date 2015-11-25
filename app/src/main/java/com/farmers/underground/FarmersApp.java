@@ -233,6 +233,11 @@ public class FarmersApp extends Application {
 
     public void setCurrentUser(UserProfile currentUser) {
         this.currentUser = currentUser;
+        setUserInfoForGoogleAnalytics(currentUser.getFullName());
+    }
+
+    private void setUserInfoForGoogleAnalytics(String userInfo){
+        AnalyticsTrackerUtil.getInstance().setUserInfo(userInfo);
     }
 
     private static MarketeerBase currentMarketer;

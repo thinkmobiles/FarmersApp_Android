@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
 import com.farmers.underground.ui.dialogs.ProgressDialog;
+import com.farmers.underground.ui.utils.AnalyticsTrackerUtil;
+
 import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.NotNull;
 
@@ -52,6 +54,17 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getLayoutResId());
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        AnalyticsTrackerUtil.getInstance().startActivityReport(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        AnalyticsTrackerUtil.getInstance().stopActivityReport();
+    }
 
     public void switchFragment(@NotNull Fragment fragment, boolean saveInBackStack) {
         updateFragment(fragment, saveInBackStack, false);

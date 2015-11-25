@@ -171,7 +171,6 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         });
 
         numMonth = -1;
-        AnalyticsTrackerUtil.getInstance().trackScreenView("PriceActivity");
     }
 
     private void updateToolBarCrop() {
@@ -222,8 +221,6 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
         Notifier.registerClient(this);
 
-
-        AnalyticsTrackerUtil.getInstance().startActivityReport(this);
     }
 
     @Override
@@ -259,8 +256,6 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     @Override
     protected void onStop() {
         super.onStop();
-
-        AnalyticsTrackerUtil.getInstance().stopActivityReport(this);
     }
 
     @Override

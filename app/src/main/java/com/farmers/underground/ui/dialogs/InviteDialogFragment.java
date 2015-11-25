@@ -11,6 +11,7 @@ import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
 import com.farmers.underground.ui.activities.TransparentActivity;
 import com.farmers.underground.ui.base.BaseFragment;
+import com.farmers.underground.ui.utils.AnalyticsTrackerUtil;
 import com.farmers.underground.ui.utils.FacebookInviteUtil;
 import com.farmers.underground.ui.utils.WhatsAppUtil;
 
@@ -59,6 +60,7 @@ public class InviteDialogFragment extends BaseFragment<TransparentActivity> {
         smsIntent.putExtra("sms_body", TEXT_INVITE);
         try {
             getHostActivity().startActivity(Intent.createChooser(smsIntent, "SMS:"));
+            AnalyticsTrackerUtil.getInstance().trackEvent(AnalyticsTrackerUtil.TypeEvent.InviteSms);
         } catch (ActivityNotFoundException e) {
             getHostActivity().showToast("SMS is not available.", Toast.LENGTH_SHORT);
         }
@@ -74,6 +76,7 @@ public class InviteDialogFragment extends BaseFragment<TransparentActivity> {
         intent.setData(Uri.parse("mailto:"));
         try {
             getHostActivity().startActivity(Intent.createChooser(intent, "Send mail..."));
+            AnalyticsTrackerUtil.getInstance().trackEvent(AnalyticsTrackerUtil.TypeEvent.InviteEmail);
         } catch (ActivityNotFoundException e) {
             getHostActivity().showToast("There are no email clients installed.", Toast.LENGTH_SHORT);
         }
@@ -88,7 +91,6 @@ public class InviteDialogFragment extends BaseFragment<TransparentActivity> {
     @SuppressWarnings("unused")
     @OnClick(R.id.llFacebook)
     protected void sendFacebook(){
-//        FacebookInviteUtil.inviteFBpeopleMessage(getHostActivity(),TEXT_INVITE);
 //        using facebook messenger for invite via intent
         FacebookInviteUtil.invitePeopleByFBMessenger(getHostActivity(), TEXT_INVITE);
     }

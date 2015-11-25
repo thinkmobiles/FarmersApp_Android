@@ -115,7 +115,6 @@ public class AllPricesFragment extends BasePagerPricesFragment<CropPricesByDateM
     @Override
     public void onResume() {
         super.onResume();
-        AnalyticsTrackerUtil.getInstance().trackScreenView("AllPriceFragment");
 
         if(getHostActivity().getTemp() != null){
             mTypeRequest = getHostActivity().getTemp();

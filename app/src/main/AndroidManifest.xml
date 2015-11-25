@@ -94,9 +94,6 @@
                 android:name="io.fabric.ApiKey"
                 android:value="ba04084de2ee1304dbf733cb2e49654986aa4260"/>
 
-        <meta-data android:name="com.google.android.gms.analytics.appCongigResource"
-            android:resource="@xml/app_tracker" />
-
        <!-- <provider android:authorities="com.facebook.app.FacebookContentProvider889106887840848"
             android:name="com.facebook.FacebookContentProvider"
             android:exported="true" />-->

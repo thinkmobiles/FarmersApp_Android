@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.widget.Toast;
 
+import com.farmers.underground.FarmersApp;
 import com.farmers.underground.ui.base.BaseActivity;
 
 /**
@@ -21,6 +22,8 @@ public class FacebookInviteUtil {
             sendIntent.setPackage("com.facebook.orca");
             try {
                 activity.startActivity(sendIntent);
+                //track action on Google Analytics
+                AnalyticsTrackerUtil.getInstance().trackEvent(AnalyticsTrackerUtil.TypeEvent.InviteFacebook);
             } catch (android.content.ActivityNotFoundException ex) {
                 activity.showToast("Please Install Facebook Messenger", Toast.LENGTH_SHORT);
             }

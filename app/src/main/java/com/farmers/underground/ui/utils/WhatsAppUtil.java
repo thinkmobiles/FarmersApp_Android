@@ -6,6 +6,8 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.widget.Toast;
 
+import com.farmers.underground.FarmersApp;
+
 /**
  * Created by omar
  * on 10/27/15.
@@ -37,6 +39,9 @@ public class WhatsAppUtil {
             waIntent.setPackage("com.whatsapp");
             waIntent.putExtra(Intent.EXTRA_TEXT, text);
             context.startActivity(Intent.createChooser(waIntent, "Share with"));
+
+            //track action on Google Analytics
+            AnalyticsTrackerUtil.getInstance().trackEvent(AnalyticsTrackerUtil.TypeEvent.InviteWhatsApp);
 
         } catch (PackageManager.NameNotFoundException e) {
             Toast.makeText(context, "WhatsApp not Installed", Toast.LENGTH_SHORT)

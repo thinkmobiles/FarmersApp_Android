@@ -118,7 +118,6 @@ public class MarketeerPricesFragment extends BasePagerPricesFragment<MarketeerPr
     @Override
     public void onResume() {
         super.onResume();
-        AnalyticsTrackerUtil.getInstance().trackScreenView("MarketerPriceFragment");
 
         if(getHostActivity().getTemp() != null){
             mTypeRequest = getHostActivity().getTemp();
