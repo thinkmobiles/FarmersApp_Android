@@ -17,11 +17,21 @@ public class ProjectPagerAdapter<F extends BaseFragment<?>> extends FragmentPage
     private List<String> mFragmentTitles;
 
     public void setFragments(List<F> fragmentList) {
-        this.fragmentList = fragmentList;
+        if(this.fragmentList !=null){
+            this.fragmentList.clear();
+            this.fragmentList.addAll(fragmentList);
+        } else {
+            this.fragmentList = fragmentList;
+        }
     }
 
     public void setTitles(List<String> mFragmentTitles) {
-        this.mFragmentTitles = mFragmentTitles;
+        if(this.mFragmentTitles !=null){
+            this.mFragmentTitles.clear();
+            this.mFragmentTitles.addAll(mFragmentTitles);
+        } else {
+            this.mFragmentTitles = mFragmentTitles;
+        }
     }
 
 

@@ -1,5 +1,6 @@
 package com.farmers.underground.ui.base;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
@@ -13,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
 import com.farmers.underground.ui.dialogs.ProgressDialog;
 import org.intellij.lang.annotations.MagicConstant;
@@ -50,10 +52,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getLayoutResId());
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
 
     public void switchFragment(@NotNull Fragment fragment, boolean saveInBackStack) {
         updateFragment(fragment, saveInBackStack, false);
@@ -157,6 +155,25 @@ public abstract class BaseActivity extends AppCompatActivity {
             if (mProgressDialog.isShowing())
                 mProgressDialog.dismiss();
             mProgressDialog = null;
+        }
+    }
+
+    AlertDialog connectionLostDialog;
+
+    protected void showConnectionLostDialog() {
+        if (connectionLostDialog==null || !connectionLostDialog.isShowing())
+            connectionLostDialog = new AlertDialog.Builder(this)
+                    .setTitle(R.string.dialog_titile_lost_connection)
+                    .setMessage(R.string.dilog_msg_lost_connection)
+                    .setCancelable(false)
+                    .create();
+
+        connectionLostDialog.show();
+    }
+
+    protected void hideConnectionLostDialog(){
+        if (connectionLostDialog!=null && connectionLostDialog.isShowing()){
+            connectionLostDialog.dismiss();
         }
     }
 }
