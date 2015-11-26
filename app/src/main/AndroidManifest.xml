@@ -112,9 +112,8 @@
             </intent-filter>
         </receiver>
 
-        -->
-
         <service android:name="com.google.android.gms.analytics.CampaignTrackingService" android:exported="false" android:enabled="true"/>
+
     </application>
 
 </manifest>
