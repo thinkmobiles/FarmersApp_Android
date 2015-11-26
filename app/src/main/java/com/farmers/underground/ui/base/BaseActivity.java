@@ -52,17 +52,13 @@ public abstract class BaseActivity extends AppCompatActivity {
             throw new Error("WTF! add/override getLayoutResId.");
 
         setContentView(getLayoutResId());
-    }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
         AnalyticsTrackerUtil.getInstance().startActivityReport(this);
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
         AnalyticsTrackerUtil.getInstance().stopActivityReport();
     }
 
