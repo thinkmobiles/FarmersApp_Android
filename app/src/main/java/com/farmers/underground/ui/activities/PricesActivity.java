@@ -472,7 +472,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                 case ProjectConstants.REQUEST_CODE_MONTH_PICKER:
                     numMonth = data.getIntExtra(ProjectConstants.KEY_POS, -1);
                     mMonthPickerCallback.onPickMonth(numMonth);
-                    makeRequestGetStatistic();
+                    makeRequestGetStatistic(null);
                     break;
             }
         }
@@ -690,7 +690,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                     public void onSuccess(List<CropPricesByDateModel> result) {
                         if (result != null && !result.isEmpty()) {
 
-                            if(isScroll){
+                            if (isScroll) {
                                 prevMonthCrop = DateHelper.parseToCalendar(result.get(result.size() - 1).prices.get(0).data);
                                 mDateRangeCrop.setDateTo(StringFormatterUtil.parseToServerResponse(prevMonthCrop));
                                 mFullRangeCrop.setDateTo(StringFormatterUtil.parseToServerResponse(prevMonthCrop));
@@ -754,7 +754,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                     public void onSuccess(List<MarketeerPricesByDateModel> result) {
                         if (result != null && !result.isEmpty()) {
 
-                            if(isScroll){
+                            if (isScroll) {
                                 prevMonthMarketers = DateHelper.parseToCalendar(result.get(result.size() - 1).prices.get(0).data);
                                 mDateRangeMarketeers.setDateTo(StringFormatterUtil.parseToServerResponse(prevMonthMarketers));
                                 mFullRangeMarketeers.setDateTo(StringFormatterUtil.parseToServerResponse(prevMonthMarketers));
@@ -772,6 +772,12 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                         callback.onError();
                     }
                 });
+    }
+
+    private void showLoading(){
+        if (viewPager.getCurrentItem() == 0) {
+            showProgressDialog();
+        }
     }
 
     public void makeRequestGetCropQualityList() {
@@ -794,15 +800,15 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                 });
     }
 
-    public void makeRequestGetStatistic(){
+    public void makeRequestGetStatistic(@Nullable String quality) {
         if(spinnerAdapter != null && !spinnerAdapter.isEmpty()) { //cant be empty ( only if network error))
             switch (mTypeStatistic) {
                 case Quality:
-                    makeRequestGetStatisticOfQuality();
+                    makeRequestGetStatisticOfQuality(quality);
                     break;
                 case Month:
                     if (numMonth != -1)
-                        makeRequestGetStatisticOfQualityAndMont();
+                        makeRequestGetStatisticOfQualityAndMont(quality);
                     break;
             }
         } else {
@@ -811,38 +817,44 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         }
     }
 
-    public void makeRequestGetStatisticOfQuality(){
+    public void makeRequestGetStatisticOfQuality(@Nullable String quality){
+        showLoading();
         RetrofitSingleton.getInstance().getStatisticsOfQuality(
                 mCropModel.displayName,
-                spinnerAdapter.getItem(posQuality),
+                (TextUtils.isEmpty(quality)? spinnerAdapter.getItem(posQuality): quality),
                 new ACallback<List<StaticticModel>, ErrorMsg>() {
                     @Override
                     public void onSuccess(List<StaticticModel> result) {
                         if (result !=null && !result.isEmpty())
                             mStatisticCallback.onGetResult(result);
+                        hideProgressDialog();
                     }
 
                     @Override
                     public void onError(@NonNull ErrorMsg error) {
                         showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
+                        hideProgressDialog();
                     }
                 });
     }
 
-    public void makeRequestGetStatisticOfQualityAndMont(){
+    public void makeRequestGetStatisticOfQualityAndMont(@Nullable String quality){
+        showLoading();
         RetrofitSingleton.getInstance().getStatisticsOfQualityAndMonth(
                 mCropModel.displayName,
-                spinnerAdapter.getItem(posQuality),
+                (TextUtils.isEmpty(quality)? spinnerAdapter.getItem(posQuality): quality),
                 numMonth,
                 new ACallback<List<StaticticModel>, ErrorMsg>() {
                     @Override
                     public void onSuccess(List<StaticticModel> result) {
                         mStatisticCallback.onGetResult(result);
+                        hideProgressDialog();
                     }
 
                     @Override
                     public void onError(@NonNull ErrorMsg error) {
                         showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
+                        hideProgressDialog();
                     }
                 });
     }

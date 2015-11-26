@@ -122,6 +122,8 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
                                         R.color.bg_graph_light_blue};
     private String[] months;
 
+    private String spinerQuality;
+
     private int selectedMonth = -1;
 
     public enum TypeStatistic{Quality, Month}
@@ -146,7 +148,7 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
         }
         currentPage = pageNumber;
         clearChartAndPrices();
-        getHostActivity().makeRequestGetStatistic();
+        getHostActivity().makeRequestGetStatistic(spinerQuality);
         onPageSelected(currentPage);
         llPageSwitcherContainer.requestLayout();
     }
@@ -518,15 +520,18 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
 
     @Override
     public void onSpinnerItemSelected(String s) {
+        spinerQuality=s;
         clearChartAndPrices();
-        getHostActivity().makeRequestGetStatistic();
+        getHostActivity().makeRequestGetStatistic(s);
     }
 
     private void clearChartAndPrices(){
 
         if (currentPage == 2 && selectedMonth == -1){
             tv_GraphDescription_SF.setText("");
-        } else if (currentPage ==1) {
+        } else if(currentPage == 2 && selectedMonth > -1){
+            showDifColoredText(months[selectedMonth]);
+        } else if (currentPage == 1) {
             tv_GraphDescription_SF.setText(getHostActivity().getString(R.string.statistics_description_1));
         }
 
