@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Farmers en</string>
 
-    <string name="facebook_app_id">889106887840848</string>
+  <!--  <string name="facebook_app_id">889106887840848</string>-->
 
     <string name="digits">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789</string>
 
