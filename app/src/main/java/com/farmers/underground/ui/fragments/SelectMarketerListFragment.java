@@ -25,6 +25,7 @@ import com.farmers.underground.ui.activities.LoginSignUpActivity;
 import com.farmers.underground.ui.activities.MainActivity;
 import com.farmers.underground.ui.adapters.PickMarketeerAdapter;
 import com.farmers.underground.ui.base.BaseFragment;
+import com.farmers.underground.ui.utils.AnalyticsTrackerUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -113,6 +114,10 @@ public class SelectMarketerListFragment extends BaseFragment<LoginSignUpActivity
     @SuppressWarnings("unused")
     @OnClick(R.id.tvSkip_FLM)
     protected void onSkip(){
+        //track skip after registration on GoogleAnalitycs
+        if(getArguments().getBoolean(SelectMarketerFragment.KEY_AFTER_REG))
+            AnalyticsTrackerUtil.getInstance().trackEvent(AnalyticsTrackerUtil.TypeEvent.MarketerSkip);
+
         FarmersApp.setSkipMode(false/*FarmersApp.isSkipMode()*/);
         getHostActivity().finish();
         MainActivity.start(getHostActivity());
@@ -147,7 +152,7 @@ public class SelectMarketerListFragment extends BaseFragment<LoginSignUpActivity
         getHostActivity().setNameMarketeer(mAdapter.getItem(posMarketer));
         getHostActivity().popBackStackUpTo(getClass());
         getHostActivity().hideSoftKeyboard();
-        if(SelectMarketerFragment.Reason.values()[getArguments().getInt("position_reason")] == SelectMarketerFragment.Reason.FirstAddition){
+        if(SelectMarketerFragment.Reason.values()[getArguments().getInt(SelectMarketerFragment.KEY_REASON)] == SelectMarketerFragment.Reason.FirstAddition){
             getHostActivity().switchFragment(SelectMarketerFragment.newInstance(SelectMarketerFragment.Reason.FirstAddition), false);
         } else {
             getHostActivity().switchFragment(SelectMarketerFragment.newInstance(SelectMarketerFragment.Reason.Accept), false);

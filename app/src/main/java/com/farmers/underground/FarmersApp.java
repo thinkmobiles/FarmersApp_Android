@@ -98,7 +98,8 @@ public class FarmersApp extends Application {
 
         //Init Google Analytics
         AnalyticsTrackerUtil.initialize(this);
-        AnalyticsTrackerUtil.getInstance().getTracker(AnalyticsTrackerUtil.TrackerName.APP); // start new session on GoogleAnalytics
+        AnalyticsTrackerUtil.getInstance().getTracker(AnalyticsTrackerUtil.TrackerName.APP);
+        AnalyticsTrackerUtil.getInstance().trackEvent(AnalyticsTrackerUtil.TypeEvent.EnterApp); // start tracking
     }
 
     public ImageLoaders getImageCache() {

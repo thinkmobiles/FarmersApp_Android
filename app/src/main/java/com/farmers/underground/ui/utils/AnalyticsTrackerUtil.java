@@ -79,8 +79,7 @@ public class AnalyticsTrackerUtil {
     }
 
     private void dispatch(){
-        if (BuildConfig.DEBUG)              //if "true" reports are sent manually
-            analytics.dispatchLocalHits();  //else automatically (period of dispatch is set in app_tracker_reales.xml)
+        analytics.dispatchLocalHits();
     }
 
     public void startActivityReport(Activity activity){
@@ -143,7 +142,7 @@ public class AnalyticsTrackerUtil {
                 trackEventInvite(ACTION_FACEBOOK);
                 break;
             case AddPrice:
-                trackEvent(CATEGORY_PRICE, ACTION_ADD);
+                trackEvent(CATEGORY_PRICE, ACTION_ADD, mUserInfo);
                 break;
         }
     }
@@ -175,12 +174,4 @@ public class AnalyticsTrackerUtil {
         dispatch();
     }
 
-    public void trackTimeSession(String category, long time){
-        getTracker(TrackerName.APP).send(
-                new HitBuilders.TimingBuilder()
-                        .setCategory(category)
-                        .setValue(time)
-                        .build()
-        );
-    }
 }

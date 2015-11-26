@@ -32,6 +32,7 @@ import com.farmers.underground.remote.models.SuccessMsg;
 import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.ui.base.BaseActivity;
 import com.farmers.underground.ui.fragments.AddPriceFragment;
+import com.farmers.underground.ui.utils.AnalyticsTrackerUtil;
 import com.farmers.underground.ui.utils.DateHelper;
 import com.farmers.underground.ui.utils.ImageCacheManager;
 import com.farmers.underground.ui.utils.ResUtil;
@@ -264,6 +265,10 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
                 showToast(getString(R.string.alert_message_after_add_price), Toast.LENGTH_SHORT);
                 FarmersApp.getInstance().setShouldUpdateLastCropsNextTime(true);
                 anyway();
+
+                //track add price on GoogleAnalytics
+                AnalyticsTrackerUtil.getInstance().trackEvent(AnalyticsTrackerUtil.TypeEvent.AddPrice);
+
                 finish();
             }
 
