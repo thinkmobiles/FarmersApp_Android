@@ -126,7 +126,8 @@ public class SelectMarketerFragment extends BaseFragment<LoginSignUpActivity> {
             RetrofitSingleton.getInstance().addMarketeer(name, new ACallback<SuccessMsg, ErrorMsg>() {
                 @Override
                 public void onSuccess(SuccessMsg result) {
-                    getHostActivity().showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
+                    if(result != null)
+                        getHostActivity().showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
 
                     //track selection of marketer after registration on GoogleAnalitycs
                     if(afterReg)

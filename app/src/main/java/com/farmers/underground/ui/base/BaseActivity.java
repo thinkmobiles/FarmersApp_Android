@@ -52,14 +52,20 @@ public abstract class BaseActivity extends AppCompatActivity {
             throw new Error("WTF! add/override getLayoutResId.");
 
         setContentView(getLayoutResId());
-
-        AnalyticsTrackerUtil.getInstance().startActivityReport(this);
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        AnalyticsTrackerUtil.getInstance().stopActivityReport();
+    protected void onStart() {
+        super.onStart();
+        //uncomment if need tracking of screens
+//        AnalyticsTrackerUtil.getInstance().startActivityReport(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //uncomment if need tracking of screens
+//        AnalyticsTrackerUtil.getInstance().stopActivityReport();
     }
 
     public void switchFragment(@NotNull Fragment fragment, boolean saveInBackStack) {

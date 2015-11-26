@@ -174,13 +174,4 @@ public class AnalyticsTrackerUtil {
         dispatch();
     }
 
-
-    public void trackTimeSession(String category, long time){
-        getTracker(TrackerName.APP).send(
-                new HitBuilders.TimingBuilder()
-                        .setCategory(category)
-                        .setValue(time)
-                        .build()
-        );
-    }
 }
