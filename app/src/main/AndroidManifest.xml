@@ -99,10 +99,9 @@
             android:name="com.facebook.FacebookContentProvider"
             android:exported="true" />-->
 
-        <!--
-             Optionally, register CampaignTrackingReceiver and CampaignTrackingService to enable
+        <!-- Optionally, register CampaignTrackingReceiver and CampaignTrackingService to enable
              installation campaign reporting
-        -->
+
         <receiver
             android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"
             android:exported="false">
@@ -111,7 +110,9 @@
             </intent-filter>
         </receiver>
 
-        <service android:name="com.google.android.gms.analytics.CampaignTrackingService" />
+        -->
+
+        <service android:name="com.google.android.gms.analytics.CampaignTrackingService" android:exported="false" android:enabled="true"/>
     </application>
 
 </manifest>
