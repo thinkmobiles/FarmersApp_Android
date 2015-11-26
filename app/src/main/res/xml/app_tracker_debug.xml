@@ -5,7 +5,9 @@
     <!-- sending report about uncaught exception-->
     <bool name="ga_reportUncaughtExceptions">true</bool>
     <!-- The frequency of the automatic sending of data (in seconds)-->
-    <integer name="ga_dispatchPeriod">0</integer>
+    <integer name="ga_dispatchPeriod">180</integer>
+    <!-- End current session if app sleeps for a period of time (in seconds)-->
+    <integer name="ga_sessionTimeout">360</integer>
     <!-- true -> don't send reports on GoogleAnalytics; false -> send report -->
     <bool name="ga_dryRun">false</bool>
 

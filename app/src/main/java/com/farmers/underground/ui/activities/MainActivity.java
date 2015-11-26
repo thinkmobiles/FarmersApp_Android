@@ -165,6 +165,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     protected void onResume() {
         super.onResume();
         setDrawerList();
+
         updateLastCrops();
 
         if(!FarmersApp.getInstance().isConnected()){
@@ -199,6 +200,10 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     protected void onPause() {
         super.onPause();
 
+        if (cropListSearch != null) {
+            cropListSearch.clear();
+        }
+
         Notifier.unregisterClient(this);
     }
 
@@ -214,7 +219,6 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     private void updateLastCrops() {
         if (FarmersApp.getInstance().shouldUpdateLastCropsNextTime() || FarmersApp.getInstance().shouldUpdateLastCrops()) {
-           // showProgressDialog();
             RetrofitSingleton.getInstance().getLastCropPricesList(new ACallback<List<LastCropPricesModel>, ErrorMsg>() {
                 @Override
                 public void onSuccess(List<LastCropPricesModel> result) {
@@ -230,15 +234,16 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                     updateFragments(mCropList, query);
                     FarmersApp.getInstance().setShouldUpdateLastCropsNextTime(false);
                     FarmersApp.getInstance().setLastCopsUpdateTime();
-                  //  hideProgressDialog();
                 }
 
                 @Override
                 public void onError(@NonNull ErrorMsg error) {
-             //       hideProgressDialog();
                     showReloadDialogOnError(error);
                 }
             });
+        } else {
+            if (isInitedFragAdap)
+                updateFragments(mCropList, query);
         }
     }
 
@@ -274,7 +279,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     }
 
     private void showReloadDialogOnError(ErrorMsg error) {
-        //TODO
+        //TODO hebrew
         new AlertDialog.Builder(this)
                 .setTitle((TextUtils.isEmpty(error.getErrorMsg()) ? "Error" : error.getErrorMsg()))
                 .setMessage("Crops wasn't fetched.\nDo you want to reload list?")
@@ -296,10 +301,13 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     }
 
 
+    private boolean isInitedFragAdap;
+
     private void initCropFragmentAdapters() {
         for (BaseFragment f : pagerAdapter.getFragmentList()) {
             ((CropsFragmentCallback) f).setListCallback(cropsListCallback);
         }
+        isInitedFragAdap=true;
     }
 
     private void setFragmentStateController() {
@@ -314,12 +322,12 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
             initCropFragmentAdapters();
             getLastCrops();
         }
-
     }
 
     @Override
     public void onFragmentViewDestroyed() {
         cropsFragmentStateController.removeCreated();
+        isInitedFragAdap = false;
     }
 
 
@@ -329,6 +337,12 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
             @Override
             public void onItemClicked(LastCropPricesModel cropModel) {
                 query = "";
+
+                if(!TextUtils.isEmpty(searchView.getQuery())) {
+                    searchView.setQuery(query, false);
+                    updateFragments(mCropList,query);
+                }
+
                 PricesActivity.start(MainActivity.this, cropModel);
             }
 
@@ -401,7 +415,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
             if (item.displayName.equals(cropModel.displayName))
                 cropModel.isInFavorites = infavs;
 
-        if (cropListSearch != null && cropListSearch.size() > 0 && !query.isEmpty()) {
+        if (cropListSearch != null && !cropListSearch.isEmpty() && !query.isEmpty()) {
             for (LastCropPricesModel item : cropListSearch)
                 if (item.displayName.equals(cropModel.displayName))
                     cropModel.isInFavorites = infavs;
@@ -498,8 +512,8 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             query = intent.getStringExtra(SearchManager.QUERY);
-            if(query!=null && !query.isEmpty())
-            updateFragmentsOnSearch(query);
+            if(!TextUtils.isEmpty(query))
+                updateFragmentsOnSearch(query);
         }
     }
 
@@ -767,8 +781,11 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     @Override
     public void onSearchResultLoadFinished(List<LastCropPricesModel> crops) {
         updateFragments(crops, query);
+
         cropListSearch = crops;
     }
+
+
 
     @Override
     protected void onStop() {

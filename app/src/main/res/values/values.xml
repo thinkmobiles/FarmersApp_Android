@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <bool name="isRTL">false</bool>
+    <string translatable="false" name="facebook_app_id">889106887840848</string>
 </resources>

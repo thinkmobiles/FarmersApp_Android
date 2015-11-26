@@ -137,6 +137,7 @@
                 android:layout_weight="1">
 
                 <RadioButton
+                    android:padding="3dp"
                     android:id="@+id/rb0_SF"
                     style="@style/Radio_Statistics"
                     android:layout_width="wrap_content"
@@ -150,6 +151,7 @@
                 android:layout_weight="1">
 
                 <RadioButton
+                    android:padding="3dp"
                     android:id="@+id/rb1_SF"
                     style="@style/Radio_Statistics"
                     android:layout_width="wrap_content"
@@ -163,6 +165,7 @@
                 android:layout_weight="1">
 
                 <RadioButton
+                    android:padding="3dp"
                     android:id="@+id/rb2_SF"
                     style="@style/Radio_Statistics"
                     android:layout_width="wrap_content"

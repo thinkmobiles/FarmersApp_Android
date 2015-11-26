@@ -47,7 +47,7 @@ public class SelectMarketerListFragment extends BaseFragment<LoginSignUpActivity
 
     private PickMarketeerAdapter mAdapter;
 
-    List<String> listMarketeers = new ArrayList<String>(0);
+    List<String> listMarketeers = new ArrayList<>(0);
 
 
     public static SelectMarketerListFragment newInstance(Bundle args){

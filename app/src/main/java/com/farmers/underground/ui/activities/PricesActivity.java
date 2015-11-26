@@ -814,11 +814,12 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     public void makeRequestGetStatisticOfQuality(){
         RetrofitSingleton.getInstance().getStatisticsOfQuality(
                 mCropModel.displayName,
-                spinnerAdapter.getItem(posQuality),    //todo crashes here  spinnerAdapter = null
+                spinnerAdapter.getItem(posQuality),
                 new ACallback<List<StaticticModel>, ErrorMsg>() {
                     @Override
                     public void onSuccess(List<StaticticModel> result) {
-                        mStatisticCallback.onGetResult(result);
+                        if (result !=null && !result.isEmpty())
+                            mStatisticCallback.onGetResult(result);
                     }
 
                     @Override

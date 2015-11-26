@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.facebook.FacebookSdk;
 import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
 import com.farmers.underground.ui.dialogs.ProgressDialog;
@@ -50,6 +51,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         //TODO: maybe use some default layout for activity
         if(getLayoutResId() == 0)
             throw new Error("WTF! add/override getLayoutResId.");
+
+        if (!FacebookSdk.isInitialized()){
+            FacebookSdk.sdkInitialize(getApplicationContext());
+            FacebookSdk.setIsDebugEnabled(false);
+        }
 
         setContentView(getLayoutResId());
 

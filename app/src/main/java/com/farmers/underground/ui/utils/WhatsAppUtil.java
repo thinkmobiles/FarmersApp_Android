@@ -26,14 +26,14 @@ public class WhatsAppUtil {
         return sWhatsAppUtil;
     }
 
-    public void sendInvitation(){
+    public void sendInvitation(String text){
         PackageManager pm= context.getPackageManager();
         try {
 
             Intent waIntent = new Intent(Intent.ACTION_SEND);
             waIntent.setType("text/plain");
 
-            String text = "YOUR TEXT HERE";
+            //String text = "YOUR TEXT HERE";
 
             PackageInfo info = pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
             waIntent.setPackage("com.whatsapp");

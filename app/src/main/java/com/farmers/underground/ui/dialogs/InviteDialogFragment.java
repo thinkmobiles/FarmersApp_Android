@@ -85,7 +85,7 @@ public class InviteDialogFragment extends BaseFragment<TransparentActivity> {
     @SuppressWarnings("unused")
     @OnClick(R.id.llWhatsapp)
     protected void sendWhatsApp(){
-        WhatsAppUtil.getInstance(getHostActivity()).sendInvitation();
+        WhatsAppUtil.getInstance(getHostActivity()).sendInvitation(TEXT_INVITE);
     }
 
     @SuppressWarnings("unused")

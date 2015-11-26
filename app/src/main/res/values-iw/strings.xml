@@ -3,8 +3,6 @@
     <!-- \u200F (this is RIGHT-TO-LEFT MARK character)  -->
     <string name="app_name">העיקר האיכר</string>
 
-    <!--<string name="facebook_app_id">889106887840848</string>-->
-
     <string name="digits">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789</string>
 
     <!-- //tutorial-->
@@ -88,7 +86,7 @@
     <string name="add_price_incorrect_price">מחיר לא תקין</string>
     <string name="add_price_example_type">דוגמה: איכות יצוא‬</string>
     <string name="add_price_add_button">‫הוסף‬</string>
-    <string name="add_price_add_type">+ לחץ כאן כדי להוסיף עוד קטגוריה\n(תאריך לאותו גידול אותו של)</string>
+    <string name="add_price_add_type">+ לחץ כאן כדי להוסיף עוד קטגוריה\n(של אותו גידול ולאותו <b><i>תאריך</i></b>)</string>
     <!--prices activity-->
     <string name="prices_activity_tab1">סטטיסטיקות</string>
     <string name="prices_activity_tab2">מחירי משווקים</string>
@@ -119,7 +117,7 @@
 
     <!--Calendar-->
     <string name="month1">ינואר</string>
-    <string name="month2">פבואר</string>
+    <string name="month2">פברואר</string>
     <string name="month3">מרץ</string>
     <string name="month4">אפריל</string>
     <string name="month5">מאי</string>

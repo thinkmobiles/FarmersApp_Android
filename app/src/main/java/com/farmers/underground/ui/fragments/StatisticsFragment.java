@@ -28,7 +28,6 @@ import com.farmers.underground.ui.base.BasePagerPricesFragment;
 import com.farmers.underground.ui.custom_views.PriceView;
 import com.farmers.underground.ui.models.ChartDataModel;
 import com.farmers.underground.ui.models.DateRange;
-import com.farmers.underground.ui.utils.AnalyticsTrackerUtil;
 import com.farmers.underground.ui.utils.ResUtil;
 import com.farmers.underground.ui.utils.StringFormatterUtil;
 import com.farmers.underground.ui.utils.TypefaceManager;
@@ -110,7 +109,17 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
 
     private float popupValue;
     private int popupIndexSelected;
-    private int[] chartColor;
+    private final int[] chartColor = {  R.color.bg_graph_aqua,
+                                        R.color.bg_graph_golden,
+                                        R.color.bg_graph_light_blue,
+                                        R.color.opaque,
+                                        R.color.bg_graph_aqua,
+                                        R.color.bg_graph_golden,
+                                        R.color.bg_graph_light_blue,
+                                        R.color.opaque,
+                                        R.color.bg_graph_aqua,
+                                        R.color.bg_graph_golden,
+                                        R.color.bg_graph_light_blue};
     private String[] months;
 
     private int selectedMonth = -1;
@@ -318,7 +327,7 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
     }
 
     private void setChartData(ChartDataModel mChartModel) {
-        chartColor = new int[11];
+     /*   chartColor = new int[11];
         chartColor[0] = R.color.bg_graph_aqua;
         chartColor[1] = R.color.bg_graph_golden;
         chartColor[2] = R.color.bg_graph_light_blue;
@@ -329,9 +338,9 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
         chartColor[7] = R.color.opaque;
         chartColor[8] = R.color.bg_graph_aqua;
         chartColor[9] = R.color.bg_graph_golden;
-        chartColor[10] = R.color.bg_graph_light_blue;
+        chartColor[10]= R.color.bg_graph_light_blue;
 
-
+*/
         ArrayList<BarEntry> yVals1 = new ArrayList<>();
         int count = 0;
         for (ChartDataModel.ChartModel item : mChartModel.charts) {
@@ -349,7 +358,7 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
             xVals.add("");
         final BarDataSet set1 = new BarDataSet(yVals1, "Data Set");
 
-        set1.setColors(chartColor, getHostActivity());
+        set1.setColors(chartColor, FarmersApp.getInstance());
         set1.setDrawValues(false);
 
         ArrayList<BarDataSet> dataSets = new ArrayList<>();

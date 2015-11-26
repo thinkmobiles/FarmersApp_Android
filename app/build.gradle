@@ -132,5 +132,5 @@ dependencies {
 
 // Utilities
 def getDate() {
-    return new Date().format('dd/MM/yyyy')
+    return new Date().format('dd/MM/yyyy HH:mm:ss')
 }

@@ -3,6 +3,7 @@ package com.farmers.underground.ui.fragments;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -10,6 +11,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import com.farmers.underground.FarmersApp;
 import com.farmers.underground.R;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.models.LastCropPricesModel;
@@ -22,10 +24,10 @@ import com.farmers.underground.ui.activities.TransparentActivity;
 import com.farmers.underground.ui.adapters.MarketeerPricesAdapter;
 import com.farmers.underground.ui.base.BasePagerPricesFragment;
 import com.farmers.underground.ui.dialogs.CropQualitiesDialogFragment;
+import com.farmers.underground.ui.dialogs.WhyCanIAddThisPriceDialogFragment;
 import com.farmers.underground.ui.dialogs.WhyCanISeeThisPriceDialogFragment;
 import com.farmers.underground.ui.models.DateRange;
 import com.farmers.underground.ui.models.PriceMarketeerPricesDH;
-import com.farmers.underground.ui.utils.AnalyticsTrackerUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
@@ -196,7 +198,16 @@ public class MarketeerPricesFragment extends BasePagerPricesFragment<MarketeerPr
     @SuppressWarnings("unused")
     @OnClick(R.id.ll_AddPrice_MP)
     protected void addPriceClicked() {
-        AddPriceActivity.start(getHostActivity(), getHostActivity().getCropModel());
+        if (!TextUtils.isEmpty(FarmersApp.getInstance().getCurrentMarketer().getFullName()) || (FarmersApp.getInstance().getCurrentUser().hasMarketer() && !FarmersApp.getInstance().getCurrentUser().isNewMarketeer())){
+            AddPriceActivity.start(getHostActivity(), getHostActivity().getCropModel());
+        } else {
+            WhyCanIAddThisPriceDialogFragment fragment =  new WhyCanIAddThisPriceDialogFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("Date",  getHostActivity().getCropModel().prices.get(0).data);
+            fragment.setArguments(bundle);
+            TransparentActivity.startWithFragmentForResult( getHostActivity(), fragment, ProjectConstants.REQUEST_CODE_NO_MARKETIER);
+        }
+        //AddPriceActivity.start(getHostActivity(), getHostActivity().getCropModel());
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.farmers.underground.ui.fragments;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 import butterknife.Bind;
@@ -78,7 +79,9 @@ public class CropsListFragment extends BaseFragment<MainActivity>
 
         if (savedInstanceState != null)
             mFragmentModel = (CropsListFragmentModel) savedInstanceState.getSerializable(ProjectConstants.KEY_DATA);
-        else mFragmentModel = (CropsListFragmentModel) getArguments().getSerializable(ProjectConstants.KEY_DATA);
+        else
+            mFragmentModel = (CropsListFragmentModel) getArguments().getSerializable(ProjectConstants.KEY_DATA);
+
         showNoItems("");
         adapter = new CropsListAdapter();
         recyclerView.setAdapter(adapter);
@@ -93,7 +96,7 @@ public class CropsListFragment extends BaseFragment<MainActivity>
         tv_NoItems.setVisibility(View.VISIBLE);
         String itemsText;
 
-        itemsText = getHostActivity().getString(R.string.no_crops_found) + query;
+        itemsText = getHostActivity().getString(R.string.no_crops_found) +(query!=null? query: "");
 
         tv_NoItems.setText(itemsText);
     }
@@ -112,7 +115,7 @@ public class CropsListFragment extends BaseFragment<MainActivity>
     @Override
     public void onReceiveCrops(List<LastCropPricesModel> cropsList, String query) {
 
-        if (cropsList != null && mFragmentModel != null && query != null) {
+        if (cropsList != null && mFragmentModel != null /*&& query != null*/) {
             if (mFragmentModel.getType() == CropsListFragmentModel.TYPE
                     .FAVOURITES) {
                 List<LastCropPricesModel> favouritesList = new ArrayList<>();
