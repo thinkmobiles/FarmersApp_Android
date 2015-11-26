@@ -21,6 +21,7 @@ import com.farmers.underground.remote.util.ACallback;
 import com.farmers.underground.ui.activities.LoginSignUpActivity;
 import com.farmers.underground.ui.activities.MainActivity;
 import com.farmers.underground.ui.base.BaseFragment;
+import com.farmers.underground.ui.utils.AnalyticsTrackerUtil;
 
 /**
  * Created by tZpace
@@ -36,14 +37,19 @@ public class SelectMarketerFragment extends BaseFragment<LoginSignUpActivity> {
     @Bind(R.id.tvLetsGo)
     protected TextView tvGoOrSave;
 
+    public static final String KEY_REASON = "position_reason";
+    public static final String KEY_AFTER_REG = "after_registration";
+
     public enum Reason{FirstAddition, Add, Change, Accept}
 
     private Reason reason;
 
+    private boolean afterReg = false;
+
     public static SelectMarketerFragment newInstance(Reason reason){
         SelectMarketerFragment fragment = new SelectMarketerFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt("position_reason", reason.ordinal());
+        bundle.putInt(KEY_REASON, reason.ordinal());
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -62,13 +68,14 @@ public class SelectMarketerFragment extends BaseFragment<LoginSignUpActivity> {
     }
 
     private void getFlag(){
-        reason = Reason.values()[getArguments().getInt("position_reason")];
+        reason = Reason.values()[getArguments().getInt(KEY_REASON)];
     }
 
     private void setNameMarketer2() {
         getHostActivity().setIsChanging(false);
         switch (reason){
             case FirstAddition:
+                afterReg = true;
                 break;
             case Add:
                 llGoOrSave.setVisibility(View.INVISIBLE);
@@ -91,12 +98,18 @@ public class SelectMarketerFragment extends BaseFragment<LoginSignUpActivity> {
     @SuppressWarnings("unused")
     @OnClick(R.id.tvEnterMarketeer)
     protected void enterMarketeer() {
-        getHostActivity().showChangingMarketerDialog(getArguments());
+        Bundle args = getArguments();
+        args.putBoolean(KEY_AFTER_REG, afterReg);
+        getHostActivity().showChangingMarketerDialog(args);
     }
 
     @SuppressWarnings("unused")
     @OnClick(R.id.tvSkip)
     protected void skip() {
+        //track skip after registration on GoogleAnalitycs
+        if(afterReg)
+            AnalyticsTrackerUtil.getInstance().trackEvent(AnalyticsTrackerUtil.TypeEvent.MarketerSkip);
+
         FarmersApp.setSkipMode(false/*FarmersApp.isSkipMode()*/);
         MainActivity.start(getHostActivity());
         getHostActivity().finish();
@@ -114,6 +127,10 @@ public class SelectMarketerFragment extends BaseFragment<LoginSignUpActivity> {
                 @Override
                 public void onSuccess(SuccessMsg result) {
                     getHostActivity().showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
+
+                    //track selection of marketer after registration on GoogleAnalitycs
+                    if(afterReg)
+                        AnalyticsTrackerUtil.getInstance().trackEvent(AnalyticsTrackerUtil.TypeEvent.MarketerChoosed);
 
                     FarmersApp.setSkipMode(false);
                     MainActivity.start(getHostActivity());
