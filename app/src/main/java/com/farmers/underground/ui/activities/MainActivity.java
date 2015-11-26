@@ -634,11 +634,13 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                 return true;
             case R.id.action_back:
                 if (searchHintController.isShowing()) {
-                    hideSoftKeyboard();
                     query="";
-                    searchHintController.hide();
+                    searchView.setQuery(query,false);
+                    updateFragmentsOnSearch(query);
+                    forceHideSearchList();
+                } else {
+                    invalidateOptionsMenu();
                 }
-                invalidateOptionsMenu();
                 return true;
         }
         return false;

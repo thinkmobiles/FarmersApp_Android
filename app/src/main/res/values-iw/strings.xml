@@ -70,8 +70,8 @@
     <string name="drawer_content_2">הזמן חברים</string>
     <string name="drawer_content_3">המעודפים שלי</string>
     <string name="drawer_content_4">להתנתק</string>
-    <string name="drawer_content_5">הוסף שם משווק</string>
-    <string name="drawer_content_6">מוטציה שם משווק</string>
+    <string name="drawer_content_5">הוסף שם משווק</string><!-- this is add marketeer name-->
+    <string name="drawer_content_6">הוסף שם משווק</string><!--todo this should be change marketeer name-->
 
     <!--   //main activity-->
     <string name="main_activity_tab_all_crops">כל הגידולים</string>
