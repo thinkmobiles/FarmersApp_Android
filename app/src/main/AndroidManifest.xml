@@ -102,8 +102,8 @@
              android:exported="true" />-->
 
         <!-- Optionally, register CampaignTrackingReceiver and CampaignTrackingService to enable
-             installation campaign reporting
-
+             installation campaign reporting (both are required)
+        -->
         <receiver
             android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"
             android:exported="false">
@@ -114,10 +114,7 @@
 
         -->
 
-        <service
-            android:name="com.google.android.gms.analytics.CampaignTrackingService"
-            android:enabled="true"
-            android:exported="false" />
+        <service android:name="com.google.android.gms.analytics.CampaignTrackingService" android:exported="false" android:enabled="true"/>
     </application>
 
 </manifest>
