@@ -63,14 +63,14 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        //uncomment if need tracking of screens
+        //uncomment if need tracking of screens //todo turn on
 //        AnalyticsTrackerUtil.getInstance().startActivityReport(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        //uncomment if need tracking of screens
+        //uncomment if need tracking of screens //todo turn on
 //        AnalyticsTrackerUtil.getInstance().stopActivityReport();
     }
 

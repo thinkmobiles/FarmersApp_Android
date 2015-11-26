@@ -111,6 +111,8 @@ public class AnalyticsTrackerUtil {
         return mTrackers.get(target);
     }
 
+
+    /** call in on resume  and enable */
     public void trackScreenView(String screenName){
         Tracker tracker = getTracker(TrackerName.APP);
         tracker.setScreenName(screenName);
