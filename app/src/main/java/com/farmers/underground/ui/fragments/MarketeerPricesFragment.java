@@ -186,11 +186,19 @@ public class MarketeerPricesFragment extends BasePagerPricesFragment<MarketeerPr
 
             @Override
             public void onNoPricesClicked(MarketeerPriceModel model) {
-                WhyCanISeeThisPriceDialogFragment fragment = new WhyCanISeeThisPriceDialogFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("Date", model.getDate());
-                fragment.setArguments(bundle);
-                TransparentActivity.startWithFragmentForResult(getHostActivity(), fragment, ProjectConstants.REQUEST_CODE_DIALOG_WHY);
+                if (!TextUtils.isEmpty(FarmersApp.getInstance().getCurrentMarketer().getFullName()) || (FarmersApp.getInstance().getCurrentUser().hasMarketer() && !FarmersApp.getInstance().getCurrentUser().isNewMarketeer())){
+                    WhyCanISeeThisPriceDialogFragment fragment = new WhyCanISeeThisPriceDialogFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("Date", model.getDate());
+                    fragment.setArguments(bundle);
+                    TransparentActivity.startWithFragmentForResult(getHostActivity(), fragment, ProjectConstants.REQUEST_CODE_DIALOG_WHY);
+                } else {
+                    WhyCanIAddThisPriceDialogFragment fragment =  new WhyCanIAddThisPriceDialogFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("Date",  getHostActivity().getCropModel().prices.get(0).data);
+                    fragment.setArguments(bundle);
+                    TransparentActivity.startWithFragmentForResult( getHostActivity(), fragment, ProjectConstants.REQUEST_CODE_NO_MARKETIER);
+                }
             }
         };
     }
