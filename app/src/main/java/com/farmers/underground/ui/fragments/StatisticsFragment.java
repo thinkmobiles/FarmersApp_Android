@@ -240,11 +240,12 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
         layout_market_two_SF.tv_RefresPrice_CropsItem.setVisibility(View.GONE);
         layout_market_two_SF.tv_Marketeer_CropItem.setText(R.string.plant_counsil);
 
+        setChartData(generateChartData());
+
         defChart();
         defRadioButtons();
         tv_GraphDescription_SF.setText(getHostActivity().getString(R.string.statistics_description_1));
 
-        setChartData(generateChartData());
         getHostActivity().setmStatisticCallback(this);
         getHostActivity().setOnBackListenerForStatistic(this);
 
@@ -360,13 +361,6 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
         BarData data = new BarData(xVals, dataSets);
         mChart.setData(data);
         mChart.invalidate();
-    }
-
-    private ChartDataModel generateChartData() {
-        ChartDataModel.ChartModel chart1 = new ChartDataModel.ChartModel(0.0f, 0.0f, 0.0f);
-        ChartDataModel.ChartModel chart2 = new ChartDataModel.ChartModel(0.0f, 0.0f, 0.0f);
-        ChartDataModel.ChartModel chart3 = new ChartDataModel.ChartModel(0.0f, 0.0f, 0.0f);
-        return new ChartDataModel(chart1, chart2, chart3);
     }
 
     private void defRadioButtons() {
@@ -496,11 +490,11 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
             for (RadioButton item : mRadioButtons)
                 if (item.getId() != idRb) item.setChecked(false);
         }
-        if(chart != null) {
+//        if(chart != null) {
             layout_marketer_SF.tv_Price.setText(StringFormatterUtil.parsePrice(chart[posRb].prices.get(0)));
             layout_market_one_SF.tv_Price.setText(StringFormatterUtil.parsePrice(chart[posRb].prices.get(1)));
             layout_market_two_SF.tv_Price.setText(StringFormatterUtil.parsePrice(chart[posRb].prices.get(2)));
-        }
+//        }
     }
 
     @Override
@@ -524,6 +518,8 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
     }
 
     private void clearChartAndPrices(){
+
+        setChartData(generateChartData());
 
         if (currentPage == 2 && selectedMonth == -1){
             tv_GraphDescription_SF.setText("");
@@ -616,6 +612,15 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
     }
 
     ChartDataModel.ChartModel[] chart;
+
+    private ChartDataModel generateChartData() {
+
+        chart = new ChartDataModel.ChartModel[3];
+        for(int i = 0; i < 3; ++i){
+            chart[i] = new ChartDataModel.ChartModel(0.0f, 0.0f, 0.0f);
+        }
+        return new ChartDataModel(chart[0], chart[1], chart[2]);
+    }
 
     private ChartDataModel createChartData(List<StaticticModel> result) {
         chart = new ChartDataModel.ChartModel[3];
