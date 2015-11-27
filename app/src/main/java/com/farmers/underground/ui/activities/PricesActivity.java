@@ -51,12 +51,9 @@ import com.farmers.underground.ui.dialogs.PeriodPickerFragment;
 import com.farmers.underground.ui.fragments.StatisticsFragment;
 import com.farmers.underground.ui.models.DateRange;
 import com.farmers.underground.ui.models.DrawerItem;
-import com.farmers.underground.ui.utils.AnalyticsTrackerUtil;
 import com.farmers.underground.ui.utils.DateHelper;
 import com.farmers.underground.ui.utils.ImageCacheManager;
-import com.farmers.underground.ui.utils.NotYetHelper;
 import com.farmers.underground.ui.utils.StringFormatterUtil;
-import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -73,6 +70,10 @@ import java.util.List;
  * on 10/9/15.
  */
 public class PricesActivity extends BaseActivity implements DrawerAdapter.DrawerCallback, Notifier.Client {
+
+    public static final int STATISTICS_SCREEN = 0;
+    public static final int MARKETERS_SCREEN = 1;
+    public static final int PRICES_SCREEN = 2;
 
     @Bind(R.id.drawer_conainer_PriceActivity)
     protected DrawerLayout mDrawerLayout;
@@ -125,6 +126,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     private ToolbarSpinnerAdapter spinnerAdapter;
     private StatisticCallback mStatisticCallback;
     private StatisticsFragment.TypeStatistic mTypeStatistic;
+    private OnBackListenerForStatistic onBackListenerForStatistic;
 
     private static final ImageLoader imageLoaderRound = ImageCacheManager.getImageLoader(FarmersApp.ImageLoaders.CACHE_ROUND);
 
@@ -284,7 +286,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
         pagerAdapter.notifyDataSetChanged();
 
-        viewPager.setCurrentItem(pagerAdapter.getCount() - 1);
+//        viewPager.setCurrentItem(pagerAdapter.getCount() - 1);
+        viewPager.setCurrentItem(PRICES_SCREEN);
 
         isVisibleBurger = true;
     }
@@ -299,7 +302,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         public void onPageSelected(int position) {
             Log.d("onPageSelected", "position = " + position);
             switch (position) {
-                case 0:
+                case STATISTICS_SCREEN:
                     spinner.setVisibility(View.VISIBLE);
                     searchView.setVisibility(View.GONE);
                     calendar.setVisibility(View.GONE);
@@ -307,14 +310,14 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                     mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                     isVisibleBurger = false;
                     break;
-                case 1:
+                case MARKETERS_SCREEN:
                     spinner.setVisibility(View.GONE);
                     searchView.setVisibility(View.VISIBLE);
                     calendar.setVisibility(View.VISIBLE);
                     mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                     isVisibleBurger = false;
                     break;
-                case 2:
+                case PRICES_SCREEN:
                     spinner.setVisibility(View.GONE);
                     searchView.setVisibility(View.VISIBLE);
                     calendar.setVisibility(View.VISIBLE);
@@ -330,6 +333,10 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
 
         }
     };
+
+    public void changeScreen(int typeScreen){
+        viewPager.setCurrentItem(typeScreen);
+    }
 
     private List<String> getTitlesList() {
         List<String> titles = new ArrayList<>();
@@ -380,16 +387,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         this.temp = temp;
     }
 
-    public interface DateRangeSetter {
-        void setDateRange(DateRange dateRange, boolean isAllTime);
-    }
-
-    /**
-     * Used for
-     * StatisticsFragment -  has two inner pages;
-     */
-    public interface PageListener {
-        void onPageSelected(int page);
+    public void setOnBackListenerForStatistic(OnBackListenerForStatistic onBackListenerForStatistic) {
+        this.onBackListenerForStatistic = onBackListenerForStatistic;
     }
 
     @Override
@@ -407,7 +406,16 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_back:
-                onBackPressed();
+                switch (viewPager.getCurrentItem()){
+                    case STATISTICS_SCREEN:
+                        onBackListenerForStatistic.onBackPressed();
+                        break;
+                    case MARKETERS_SCREEN:
+                        viewPager.setCurrentItem(PRICES_SCREEN);
+                        break;
+                    default:
+                        break;
+                }
                 return true;
             case R.id.action_burger:
                 if (mDrawerLayout != null)
@@ -869,5 +877,19 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
         void onPickMonth(int numMonth);
     }
 
+    public interface DateRangeSetter {
+        void setDateRange(DateRange dateRange, boolean isAllTime);
+    }
 
+    /**
+     * Used for
+     * StatisticsFragment -  has two inner pages;
+     */
+    public interface PageListener {
+        void onPageSelected(int page);
+    }
+
+    public interface OnBackListenerForStatistic {
+        void onBackPressed();
+    }
 }
