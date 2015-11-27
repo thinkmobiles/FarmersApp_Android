@@ -242,7 +242,7 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
                     public void onClick(DialogInterface dialog, int which) {
                         sendPrices(); //request
                         hideSoftKeyboard();
-                        childFragment.refresh();
+                       // childFragment.refresh();
                         dialog.dismiss();
                     }
                 })
