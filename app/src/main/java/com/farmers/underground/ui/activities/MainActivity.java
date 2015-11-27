@@ -30,7 +30,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
 
-import com.farmers.underground.BuildConfig;
 import com.farmers.underground.FarmersApp;
 import com.farmers.underground.Notifier;
 import com.farmers.underground.R;
@@ -103,7 +102,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     private boolean drawerOpened;
     private static String query = "";
 
-    private List<LastCropPricesModel> mCropList = new ArrayList<>();
+    //private List<LastCropPricesModel> mCropList = new ArrayList<>();
     private List<LastCropPricesModel> cropListSearch = new ArrayList<>();
 
     public static void start(@NonNull Context context) {
@@ -228,10 +227,9 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                         return;
                     }
 
-                    mCropList.clear();
-                    mCropList.addAll(result);
+                    FarmersApp.updateCropList(result);
 
-                    updateFragments(mCropList, query);
+                    updateFragments(FarmersApp.getCropList(), query);
                     FarmersApp.getInstance().setShouldUpdateLastCropsNextTime(false);
                     FarmersApp.getInstance().setLastCopsUpdateTime();
                 }
@@ -243,13 +241,13 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
             });
         } else {
             if (isInitedFragAdap)
-                updateFragments(mCropList, query);
+                updateFragments(FarmersApp.getCropList(), query);
         }
     }
 
     //crops list control
     private void getLastCrops() {
-        if(mCropList==null || mCropList.isEmpty()){
+        if(FarmersApp.getCropList().isEmpty()){
             showProgressDialog();
             RetrofitSingleton.getInstance().getLastCropPricesList(new ACallback<List<LastCropPricesModel>, ErrorMsg>() {
                 @Override
@@ -259,10 +257,9 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                         return;
                     }
 
-                    mCropList.clear();
-                    mCropList.addAll(result);
+                    FarmersApp.updateCropList(result);
 
-                    updateFragments(mCropList, query);
+                    updateFragments(FarmersApp.getCropList(), query);
                     FarmersApp.getInstance().setLastCopsUpdateTime();
                     hideProgressDialog();
                 }
@@ -274,7 +271,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                 }
             });
         } else {
-            updateFragments(mCropList, query);
+            updateFragments(FarmersApp.getCropList(), query);
         }
     }
 
@@ -340,7 +337,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
                 if(!TextUtils.isEmpty(searchView.getQuery())) {
                     searchView.setQuery(query, false);
-                    updateFragments(mCropList,query);
+                    updateFragments(FarmersApp.getCropList(),query);
                 }
 
                 PricesActivity.start(MainActivity.this, cropModel);
@@ -411,7 +408,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     private void updateAfterFavsClick(SuccessMsg result, LastCropPricesModel cropModel, boolean infavs) {
         viewPager.requestFocus();
         if (result != null) showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
-        for (LastCropPricesModel item : mCropList)
+        for (LastCropPricesModel item : FarmersApp.getCropList())
             if (item.displayName.equals(cropModel.displayName))
                 cropModel.isInFavorites = infavs;
 
@@ -421,7 +418,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                     cropModel.isInFavorites = infavs;
             updateFragments(cropListSearch, query);
         } else
-            updateFragments(mCropList, query);
+            updateFragments(FarmersApp.getCropList(), query);
     }
 
 
@@ -467,13 +464,13 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                     searchView.setGravityRight();
                     searchHintController.setHintsList(SharedPrefHelper.getSearchHints());
                     showHintList();
-                    updateFragments(mCropList, query);
+                    updateFragments(FarmersApp.getCropList(), query);
                     return false;
                 } else if (newQuery.length() < 1) {
                     searchView.setGravityLeft();
                     searchHintController.setHintsList(SharedPrefHelper.getSearchHints());
                     showHintList();
-                    updateFragments(mCropList, query);
+                    updateFragments(FarmersApp.getCropList(), query);
                     return false;
                 } else {
                     searchView.setGravityLeft();
@@ -488,6 +485,9 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
             public boolean onClose() {
                 query = "";
                 forceHideSearchList();
+
+                updateFragments(FarmersApp.getCropList(), query); // check if need this here
+
                 return false;
             }
         });
@@ -709,7 +709,8 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     @Override
     public void onSettingsClicked() {
 
-        if (!BuildConfig.PRODUCTION){
+        //DELETE ACC
+      /*  if (!BuildConfig.PRODUCTION){
             //todo remove IT later
             showToast("Your Account will be DELETED, TEST", Toast.LENGTH_SHORT);
             RetrofitSingleton.getInstance().dellAccountBySession(new ACallback<SuccessMsg, ErrorMsg>() {
@@ -725,7 +726,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                     showToast(error.getErrorMsg(), Toast.LENGTH_SHORT);
                 }
             });
-        }
+        }*/
 
         mDrawerLayout.closeDrawers();
     }
@@ -742,6 +743,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.ll_logoutMainActivity)
     protected void logOut() {
         showProgressDialog();
@@ -766,11 +768,11 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
     }
 
     private void updateFragmentsOnSearch(String newQuery) {
-        searchResultProvider.loadSearchResults(newQuery, mCropList);
+        searchResultProvider.loadSearchResults(newQuery, FarmersApp.getCropList());
     }
 
     private void generateQueryList(String newQuery) {
-        searchResultProvider.loadSearchHints(newQuery, mCropList);
+        searchResultProvider.loadSearchHints(newQuery, FarmersApp.getCropList());
     }
 
     @Override

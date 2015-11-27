@@ -329,20 +329,6 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
     }
 
     private void setChartData(ChartDataModel mChartModel) {
-     /*   chartColor = new int[11];
-        chartColor[0] = R.color.bg_graph_aqua;
-        chartColor[1] = R.color.bg_graph_golden;
-        chartColor[2] = R.color.bg_graph_light_blue;
-        chartColor[3] = R.color.opaque;
-        chartColor[4] = R.color.bg_graph_aqua;
-        chartColor[5] = R.color.bg_graph_golden;
-        chartColor[6] = R.color.bg_graph_light_blue;
-        chartColor[7] = R.color.opaque;
-        chartColor[8] = R.color.bg_graph_aqua;
-        chartColor[9] = R.color.bg_graph_golden;
-        chartColor[10]= R.color.bg_graph_light_blue;
-
-*/
         ArrayList<BarEntry> yVals1 = new ArrayList<>();
         int count = 0;
         for (ChartDataModel.ChartModel item : mChartModel.charts) {
@@ -508,7 +494,7 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
     @Override
     public void onPageSelected(int page) {
         if (page == 1) {
-            tv_HeadTitle_SF.setText(getString(R.string.page_head_one_statistics_fragment));
+            tv_HeadTitle_SF.setText(String.format(getString(R.string.page_head_one_statistics_fragment), getHostActivity().getCropModel().displayName));
             ll_Month_pick_Container_SF.setVisibility(View.GONE);
             tv_GraphDescription_SF.setText(getHostActivity().getString(R.string.statistics_description_1));
         } else if (page == 2) {
