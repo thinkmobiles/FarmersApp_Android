@@ -2,7 +2,6 @@ package com.farmers.underground.ui.fragments;
 
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -382,9 +381,17 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        //popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         popupWindow.setOutsideTouchable(true);
         popupWindow.setFocusable(true);
+
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                if (mChart!=null)
+                    mChart.highlightValue(popupIndexSelected, -1);
+            }
+        });
 
         boolean show;
         switch (popupIndexSelected) {
@@ -457,7 +464,7 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
                                 }
                             }
                         });
-                    mChart.highlightValue(popupIndexSelected, -1);
+                  //  mChart.highlightValue(popupIndexSelected, -1);
                 }
             }, POPUP_SHOW_TIME_MILIS);
 
