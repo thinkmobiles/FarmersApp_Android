@@ -184,6 +184,9 @@ public class AddPriceActivity extends BaseActivity implements DatePickerDialog.O
             if (selectedDay.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || selectedDay.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {
                 showToast("You can't add prices for Friday or Saturday", Toast.LENGTH_SHORT);
                 return;
+            } else if (selectedDay.after(Calendar.getInstance())){
+                showToast("You can't add prices for future days", Toast.LENGTH_SHORT);
+                return;
             }
 
             selectedDate = selectedDay;
