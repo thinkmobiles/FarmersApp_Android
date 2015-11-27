@@ -246,6 +246,7 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
 
         setChartData(generateChartData());
         getHostActivity().setmStatisticCallback(this);
+        getHostActivity().setOnBackListenerForStatistic(this);
 
         months = getResources().getStringArray(R.array.all_month);
     }
