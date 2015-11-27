@@ -16,6 +16,7 @@ import com.facebook.FacebookSdk;
 import com.farmers.underground.config.ProjectConstants;
 import com.farmers.underground.remote.RetrofitSingleton;
 import com.farmers.underground.remote.models.ErrorMsg;
+import com.farmers.underground.remote.models.LastCropPricesModel;
 import com.farmers.underground.remote.models.UserCredentials;
 import com.farmers.underground.remote.models.UserProfile;
 import com.farmers.underground.remote.models.base.MarketeerBase;
@@ -39,7 +40,9 @@ import org.jetbrains.annotations.NotNull;
 
 import io.fabric.sdk.android.Fabric;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -284,6 +287,7 @@ public class FarmersApp extends Application {
         });
     }
 
+    //todo !!!
     public void getMarketerBySession() {
         RetrofitSingleton.getInstance().getMarketeerBySession(new ACallback<MarketeerBase, ErrorMsg>() {
             @Override
@@ -438,9 +442,22 @@ public class FarmersApp extends Application {
         ConnectivityManager conMan = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo activeNetwork = conMan.getActiveNetworkInfo();
-        boolean isConnected = (activeNetwork != null && activeNetwork.isConnected()) || connectionStateFromReceiver;
 
-        return isConnected;
+        return (activeNetwork != null && activeNetwork.isConnected()) || isConnectionStateFromReceiver();
+    }
+
+
+    private final List<LastCropPricesModel> mCropList = new ArrayList<>();
+
+    public static List<LastCropPricesModel> getCropList() {
+        return getInstance().mCropList;
+    }
+
+    public static void updateCropList(List<LastCropPricesModel> newList) {
+        if (newList!=null){
+            getInstance().mCropList.clear();
+            getInstance().mCropList.addAll(newList);
+        }
     }
 
 }

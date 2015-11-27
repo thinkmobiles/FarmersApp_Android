@@ -122,14 +122,12 @@ public class SignUpFragment extends BaseFragment<LoginSignUpActivity>  {
             return;
         }
         getHostActivity().showProgressDialog();
-        //        RetrofitSingleton.getInstance().registerViaEmail("FirstName LastName",/* "test" + System.currentTimeMillis() +*/   "tapacko7@gmail.com", "testpass", new ACallback<SuccessMsg, ErrorMsg>() {
         RetrofitSingleton.getInstance().registerViaEmail(name, email, password, new ACallback<SuccessMsg, ErrorMsg>() {
             @Override
             public void onSuccess(SuccessMsg result) {
 
                 FarmersApp.getInstance().saveUserCredentials(new UserCredentials(email,password));
-
-                getHostActivity().showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
+                //getHostActivity().showToast(result.getSuccessMsg(), Toast.LENGTH_SHORT);
                 getHostActivity().showDialogConfirm();
             }
 
