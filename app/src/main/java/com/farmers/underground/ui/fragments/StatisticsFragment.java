@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
@@ -54,7 +55,7 @@ import java.util.List;
  * on 10/9/15.
  */
 public class StatisticsFragment extends BasePagerPricesFragment<String>
-        implements PricesActivity.PageListener, ToolbarSpinnerAdapter.SpinnerCallback, PricesActivity.MonthPickerCallback, PricesActivity.StatisticCallback {
+        implements PricesActivity.PageListener, ToolbarSpinnerAdapter.SpinnerCallback, PricesActivity.MonthPickerCallback, PricesActivity.StatisticCallback, PricesActivity.OnBackListenerForStatistic {
 
     private final static int POPUP_SHOW_TIME_MILIS = 3000;
 
@@ -381,17 +382,9 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        //popupWindow.setBackgroundDrawable(new BitmapDrawable());
         popupWindow.setOutsideTouchable(true);
         popupWindow.setFocusable(true);
-
-        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                if (mChart!=null)
-                    mChart.highlightValue(popupIndexSelected, -1);
-            }
-        });
 
         boolean show;
         switch (popupIndexSelected) {
@@ -464,7 +457,7 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
                                 }
                             }
                         });
-                  //  mChart.highlightValue(popupIndexSelected, -1);
+                    mChart.highlightValue(popupIndexSelected, -1);
                 }
             }, POPUP_SHOW_TIME_MILIS);
 
@@ -544,26 +537,21 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
     }
 
     private void downLightPriceView(PriceView priceView) {
-        priceView.tv_Price_Prefix.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14F);
-        priceView.tv_Price_Prefix.setTypeface(TypefaceManager.getInstance().getArial());
-
-        priceView.tv_Price.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25F);
-        priceView.tv_Price.setTypeface(TypefaceManager.getInstance().getRobotoLight());
-
-        priceView.tv_Marketeer_CropItem.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11F);
-        priceView.tv_Marketeer_CropItem.setTypeface(TypefaceManager.getInstance().getArial());
+        changeFormatText(priceView.tv_Price_Prefix, 14F, TypefaceManager.getInstance().getArial());
+        changeFormatText(priceView.tv_Price, 25F, TypefaceManager.getInstance().getRobotoLight());
+        changeFormatText(priceView.tv_Marketeer_CropItem, 11F, TypefaceManager.getInstance().getArial());
     }
+
     private void heightLightPriceView(PriceView priceView) {
-        priceView.tv_Price_Prefix.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18.6F);
-        priceView.tv_Price_Prefix.setTypeface(TypefaceManager.getInstance().getArialBold());
-
-        priceView.tv_Price.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30.0F);
-        priceView.tv_Price.setTypeface(TypefaceManager.getInstance().getArialBold());
-
-        priceView.tv_Marketeer_CropItem.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13.0F);
-        priceView.tv_Marketeer_CropItem.setTypeface(TypefaceManager.getInstance().getArialBold());
+        changeFormatText(priceView.tv_Price_Prefix, 18.6F, TypefaceManager.getInstance().getArialBold());
+        changeFormatText(priceView.tv_Price, 30.0F, TypefaceManager.getInstance().getArialBold());
+        changeFormatText(priceView.tv_Marketeer_CropItem, 13.0F, TypefaceManager.getInstance().getArialBold());
     }
 
+    private void changeFormatText(TextView textView, float textSize, Typeface font){
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
+        textView.setTypeface(font);
+    }
     /** item = [0;8] */
     @Nullable
     private PriceView getPriceViewBySelPos(int item) {
@@ -688,5 +676,14 @@ public class StatisticsFragment extends BasePagerPricesFragment<String>
                 text.indexOf(monthToShowInOtherColor), text.indexOf(monthToShowInOtherColor) + monthToShowInOtherColor.length() , 0);
 
         tv_GraphDescription_SF.setText(wordToSpan);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(currentPage == 2){
+            initPageToShow(1);
+        } else {
+            getHostActivity().changeScreen(PricesActivity.MARKETERS_SCREEN);
+        }
     }
 }
