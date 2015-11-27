@@ -222,6 +222,7 @@ public class FarmersApp extends Application {
 
     public void onUserLogOut() {
         wipeUsrPreferences();
+        mCropList.clear();
         LoginSignUpActivity.startNew(this);
     }
 

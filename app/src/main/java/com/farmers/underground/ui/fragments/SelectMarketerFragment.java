@@ -82,7 +82,8 @@ public class SelectMarketerFragment extends BaseFragment<LoginSignUpActivity> {
                 break;
             case Change:
                 llGoOrSave.setVisibility(View.INVISIBLE);
-                getHostActivity().setNameMarketeer(FarmersApp.getInstance().getCurrentMarketer().getFullName());
+                if(FarmersApp.getInstance().getCurrentMarketer()!=null)
+                    getHostActivity().setNameMarketeer(FarmersApp.getInstance().getCurrentMarketer().getFullName());
                 getHostActivity().setIsChanging(true);
                 break;
             case Accept:

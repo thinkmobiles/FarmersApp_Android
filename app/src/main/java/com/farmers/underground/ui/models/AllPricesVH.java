@@ -102,8 +102,11 @@ public class AllPricesVH extends RecyclerView.ViewHolder {
             int sizeMore = priceBase.more.size();
             view.setVisibility(sizeMore > 0 ? View.VISIBLE : View.INVISIBLE);
             ((TextView) view).setText(priceBase.quality);
-            if(sizeMore == 1)
+            if(sizeMore == 1){
                 ((TextView) view).setTextColor(ResUtil.getColor(container.getResources(),R.color.text_light_grey));
+            } else {
+                ((TextView) view).setTextColor(ResUtil.getColor(container.getResources(),R.color.text_light_blue));
+            }
             layouts[pos].setOnClickListener(sizeMore > 1 ? new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

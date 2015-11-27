@@ -107,6 +107,8 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     public static void start(@NonNull Context context) {
         Intent intent = new Intent(context, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         context.startActivity(intent);
     }
 
@@ -335,10 +337,9 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
             public void onItemClicked(LastCropPricesModel cropModel) {
                 query = "";
 
-                if(!TextUtils.isEmpty(searchView.getQuery())) {
-                    searchView.setQuery(query, false);
-                    updateFragments(FarmersApp.getCropList(),query);
-                }
+              /*  if(!TextUtils.isEmpty(searchView.getQuery())) {
+                   searchView.setQuery(query, false);
+                }*/
 
                 PricesActivity.start(MainActivity.this, cropModel);
             }
@@ -486,7 +487,7 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
                 query = "";
                 forceHideSearchList();
 
-                updateFragments(FarmersApp.getCropList(), query); // check if need this here
+                //updateFragments(FarmersApp.getCropList(), query);
 
                 return false;
             }
@@ -791,6 +792,11 @@ public class MainActivity extends BaseActivity implements DrawerAdapter.DrawerCa
 
     @Override
     protected void onStop() {
+
+        if(searchView != null && !TextUtils.isEmpty(searchView.getQuery())) {
+            query="";
+            searchView.setQuery(query, false);
+        }
 
         if (drawerOpened)
             mDrawerLayout.closeDrawers();
