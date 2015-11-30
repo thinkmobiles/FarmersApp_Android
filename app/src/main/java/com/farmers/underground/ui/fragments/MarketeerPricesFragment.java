@@ -125,17 +125,21 @@ public class MarketeerPricesFragment extends BasePagerPricesFragment<MarketeerPr
             mTypeRequest = getHostActivity().getTemp();
         }
 
+        update(mTypeRequest);
+    }
 
-        if (mTypeRequest == null) {
+    public void update(TypeRequest type){
+        if (type == null) {
+
             // load default (first month items)
             getHostActivity().makeRequestGetMarketeerPriceForPeriod(true, this);
-            mTypeRequest = TypeRequest.Add;
+            type = TypeRequest.Add;
 
-        } else if (mTypeRequest != TypeRequest.Nothing) {
+        } else if (type != TypeRequest.Nothing) {
 
-            if (mTypeRequest == TypeRequest.Refresh)
+            if (type == TypeRequest.Refresh)
                 getHostActivity().makeRequestGetMarketeerPriceForPeriod(true, this);
-            else if (mTypeRequest == TypeRequest.Search)
+            else if (type == TypeRequest.Search)
                 getHostActivity().makeRequestGetMarketeerPriceForPeriod(false, this);
 
         } else if (!dataFetched.isEmpty()) {

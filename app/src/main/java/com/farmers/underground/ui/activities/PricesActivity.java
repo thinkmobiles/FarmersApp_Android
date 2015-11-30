@@ -833,7 +833,7 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                 new ACallback<List<StaticticModel>, ErrorMsg>() {
                     @Override
                     public void onSuccess(List<StaticticModel> result) {
-                        if (result !=null && !result.isEmpty())
+                        if (result !=null && !result.isEmpty() && result.size() ==3)
                             mStatisticCallback.onGetResult(result);
                         hideProgressDialog();
                     }
@@ -855,7 +855,8 @@ public class PricesActivity extends BaseActivity implements DrawerAdapter.Drawer
                 new ACallback<List<StaticticModel>, ErrorMsg>() {
                     @Override
                     public void onSuccess(List<StaticticModel> result) {
-                        mStatisticCallback.onGetResult(result);
+                        if (result !=null && !result.isEmpty() && result.size() == 3)
+                            mStatisticCallback.onGetResult(result);
                         hideProgressDialog();
                     }
 
